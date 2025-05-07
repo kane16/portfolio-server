@@ -1,7 +1,7 @@
 package pl.delukesoft.portfolioserver.exception
 
 import com.mongodb.MongoException
-import lombok.extern.slf4j.Slf4j
+import org.slf4j.LoggerFactory
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatusCode
@@ -21,8 +21,9 @@ private data class ResponsePair(
 
 @ControllerAdvice
 @RegisterReflectionForBinding(ResponsePair::class)
-@Slf4j
 class ErrorAdvisor : ResponseEntityExceptionHandler() {
+
+  private val log = LoggerFactory.getLogger(ErrorAdvisor::class.java)
 
   override fun handleMethodArgumentNotValid(ex: MethodArgumentNotValidException, headers: HttpHeaders, status: HttpStatusCode, request: WebRequest): ResponseEntity<Any>? {
     val body = mapOf<String, Any>(
@@ -52,7 +53,7 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
       Pair("status", 500),
       Pair("error", "Mongo exception encountered"),
     )
-    logger.error("Mongo exception encountered", exc)
+    log.error("Mongo exception encountered", exc)
     return ResponseEntity(body, HttpStatusCode.valueOf(500))
   }
 

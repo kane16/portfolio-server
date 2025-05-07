@@ -3,6 +3,9 @@ spring:
     name: portfolio-service
   profiles:
     active: ${ACTIVE_PROFILE:prod}
+  aop:
+    proxy-target-class: true
 server:
   error:
     include-message: always
+  port: 9090

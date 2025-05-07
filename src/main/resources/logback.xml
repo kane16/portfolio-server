@@ -10,8 +10,9 @@
   </appender>
 
   <logger name="pl.delukesoft.portfolioserver" level="INFO"/>
+  <logger name="com.avast.gradle.dockercompose" level="INFO"/>
 
-  <root level="ERROR">
+  <root level="INFO">
     <appender-ref ref="CONSOLE"/>
   </root>
 

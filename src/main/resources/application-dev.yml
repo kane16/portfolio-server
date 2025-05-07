@@ -1,7 +1,5 @@
-server:
-  port: 9090
 auth-service:
-  url: ${AUTH_URL:authserver:8080}
+  url: ${AUTH_URL:http://localhost:8080}
 spring:
   data:
     mongodb:
@@ -9,3 +7,6 @@ spring:
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
       uri: ${MONGO_CONNECTION_STRING}
+  devtools:
+    livereload:
+      enabled: true
