@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: portfolio
+auth-service:
+  url: http://localhost:8080
