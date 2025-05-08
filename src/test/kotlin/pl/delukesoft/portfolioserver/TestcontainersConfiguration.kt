@@ -14,7 +14,7 @@ class TestcontainersConfiguration {
   @Bean
   @ServiceConnection
   fun mongoDbContainer(): MongoDBContainer {
-    return MongoDBContainer(DockerImageName.parse("mongo:latest"))
+    return MongoDBContainer(DockerImageName.parse("kane16/prod_mongo_db:1.0.0").asCompatibleSubstituteFor("mongo"))
   }
 
 }

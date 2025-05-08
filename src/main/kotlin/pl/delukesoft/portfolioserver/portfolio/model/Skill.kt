@@ -1,0 +1,9 @@
+package pl.delukesoft.portfolioserver.portfolio.model
+
+import org.springframework.data.annotation.Id
+
+data class Skill(
+  @Id val id: Long? = null,
+  val name: String,
+  val description: String? = null,
+)
