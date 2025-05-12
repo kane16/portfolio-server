@@ -39,7 +39,6 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
   @ExceptionHandler(ResponseStatusException::class)
   fun handleResponseStatusException(exc: ResponseStatusException, response: WebRequest): ResponseEntity<Any> {
     val body = mapOf<String, Any>(
-      Pair("timestamp", LocalDateTime.now()),
       Pair("error", exc.reason!!),
       Pair("status", exc.statusCode.value())
     )

@@ -6,7 +6,7 @@ import pl.delukesoft.blog.image.Image
 import java.time.LocalDateTime
 
 @Document(collection = "CV")
-data class Curriculum(
+data class Resume(
   @Id val id: Long? = null,
   val shortDescription: String,
   val skills: List<Skill>,

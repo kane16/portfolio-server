@@ -16,6 +16,7 @@ class AuthInterceptor(
 
   @Before("@annotation(authRequired) && args(token)", argNames = "authRequired, token")
   fun interceptToken(authRequired: AuthRequired, token: String) {
+    log.debug("Intercepting token: $token")
     val authorities = authRequestService.getUserAuthorities(token)
     when (authorities.any { role -> authRequired.role == role }) {
       false -> throw AuthorizationException("User does not have required role: ${authRequired.role}")

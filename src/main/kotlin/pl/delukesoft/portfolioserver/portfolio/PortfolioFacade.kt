@@ -4,16 +4,16 @@ import org.springframework.stereotype.Component
 
 @Component
 class PortfolioFacade(
-  private val curriculumService: CurriculumService,
-  private val curriculumMapper: CurriculumMapper
+  private val resumeService: ResumeService,
+  private val resumeMapper: ResumeMapper
 ) {
 
   fun getCvById(id: Long): PortfolioDTO {
-    return curriculumMapper.mapToDTO(curriculumService.getCvById(id))
+    return resumeMapper.mapToDTO(resumeService.getCvById(id))
   }
 
   fun getDefaultCV(): PortfolioDTO {
-    return curriculumMapper.mapToDTO(curriculumService.getDefaultCV())
+    return resumeMapper.mapToDTO(resumeService.getDefaultCV())
   }
 
 }
