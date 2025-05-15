@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -48,17 +46,24 @@ repositories {
 
 extra["springCloudVersion"] = "2024.0.1"
 
+object Versions {
+  const val cucumber = "7.22.1"
+}
+
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-aop")
+  implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
   implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-  testImplementation("io.cucumber:cucumber-spring:7.22.1")
-  testImplementation("io.cucumber:cucumber-java:7.22.1")
-  testImplementation("io.cucumber:cucumber-junit:7.22.1")
-  testImplementation("io.cucumber:cucumber-java8:7.22.1")
+  implementation("com.itextpdf:itextpdf:5.5.13.3")
+  implementation("com.itextpdf:html2pdf:4.0.5")
+  testImplementation("io.cucumber:cucumber-spring:${Versions.cucumber}")
+  testImplementation("io.cucumber:cucumber-java:${Versions.cucumber}")
+  testImplementation("io.cucumber:cucumber-junit:${Versions.cucumber}")
+  testImplementation("io.cucumber:cucumber-java8:${Versions.cucumber}")
   developmentOnly("org.springframework.boot:spring-boot-devtools")
   developmentOnly("org.springframework.boot:spring-boot-docker-compose")
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
