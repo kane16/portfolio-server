@@ -7,7 +7,7 @@ Feature: Portfolio management
     """
     {
       "id" : 3,
-      "shortDescription" : "Backend specialist with leadership experience",
+      "shortDescription" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
       "dataMatrix" : [ {
         "name" : "Skills",
         "values" : [ "Kotlin", "Spring Boot", "MongoDB" ]
@@ -25,7 +25,7 @@ Feature: Portfolio management
     """
     {
       "id" : 2,
-      "shortDescription" : "Full Stack Developer with startup experience",
+      "shortDescription" : "Full Stack Developer with strong focus on modern web technologies and startup environment experience. Passionate about creating efficient and user-friendly applications.",
       "dataMatrix" : [ {
         "name" : "Skills",
         "values" : [ "Java", "JavaScript", "React" ]

@@ -9,7 +9,7 @@ class ResumeMapper {
   fun mapToDTO(resume: Resume): PortfolioDTO {
     return PortfolioDTO(
       id = resume.id,
-      shortDescription = resume.shortDescription,
+      shortDescription = resume.summary,
       dataMatrix = listOf(
         DataMatrixDTO(
           name = "Skills",

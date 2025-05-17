@@ -25,22 +25,22 @@
 <div class="">
     <div class="">
         <div class="flex-col bg-[#003d74] w-full px-4 py-6 text-white">
-            <div class="text-4xl font-bold">Łukasz Gumiński</div>
-            <div class="text-md">Lead Java Developer</div>
+            <div class="text-4xl font-bold" th:text="${fullname}"></div>
+            <div class="text-md" th:text="${title}"></div>
         </div>
     </div>
     <div class="w-full grid grid-cols-6">
         <div class="col-start-1 col-span-4 h-screen text-black p-4">
             <div>
                 <h2 class="font-bold text-lg pb-2">Summary:</h2>
-                <p class="">
-                    I am a highly skilled and experienced Java developer with a strong
-                    background in software development. I have a proven track record
-                    of delivering high-quality software solutions on time and within
-                    budget. I am passionate about technology and always strive to stay
-                    up-to-date with the latest trends and best practices in the
-                    industry.
+                <p class="" th:text="${summary}">
                 </p>
+            </div>
+            <div>
+                <h2 class="font-bold text-lg py-2">Skills</h2>
+                <ul th:each="skill : ${skills}">
+                    <li th:text="${skill}">Skill</li>
+                </ul>
             </div>
             <div>
                 <h2 class="font-bold text-lg py-2">Skills</h2>
