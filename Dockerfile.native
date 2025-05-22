@@ -1,0 +1,3 @@
+FROM ubuntu:jammy
+COPY build/native/nativeCompile/portfolio-server portfolio
+ENTRYPOINT ["/portfolio"]
