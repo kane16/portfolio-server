@@ -12,7 +12,7 @@ class DocumentGenerationService(
 
   fun generateResumeHtml(resumePrint: PrintDTO, webContext: WebContext): String {
     resumePrint.attachDataToContext(webContext)
-    return templateEngine.process("resume-template", webContext)
+    return templateEngine.process("portfolio-template", webContext)
   }
 
 }

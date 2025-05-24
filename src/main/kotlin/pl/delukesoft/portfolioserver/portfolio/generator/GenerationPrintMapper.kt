@@ -40,8 +40,8 @@ class GenerationPrintMapper {
 
   private fun mapTimespan(timespan: Timespan): TimespanDTO {
     return TimespanDTO(
-      timespan.start.format(DateTimeFormatter.ISO_LOCAL_DATE),
-      timespan.end?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: "",
+      timespan.start.year.toString(),
+      timespan.end?.year?.toString() ?: "",
     )
   }
 

@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>CV input form</title>
-    <link rel="stylesheet" th:href="@{/css/output.css}" media="screen"/>
-    <link rel="stylesheet" th:href="@{/css/print.css}" media="print"/>
-
+    <link rel="stylesheet" th:href="@{/css/output.css}"/>
     <style>
         body {
             background: #ccc; /* to visualize the page border */
@@ -16,44 +14,117 @@
             height: 29.7cm;
             background: white;
             margin: auto;
+            margin-top: 10px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             box-sizing: border-box;
         }
     </style>
 </head>
-<body class="bg-gray-200 page">
-<div class="">
-    <div class="">
-        <div class="flex-col bg-[#003d74] w-full px-4 py-6 text-white">
+<body class="bg-gray-200">
+<div class="page">
+    <div class="flex justify-between bg-[#003d74] p-2">
+        <div class="flex-col w-full px-2 py-2 text-white">
             <div class="text-4xl font-bold" th:text="${fullname}"></div>
             <div class="text-md" th:text="${title}"></div>
         </div>
+        <img class="w-32 h-32 rounded-sm" th:src="@{images/lg.jpg}"/>
     </div>
-    <div class="w-full grid grid-cols-6">
-        <div class="col-start-1 col-span-4 h-screen text-black p-4">
-            <div>
-                <h2 class="font-bold text-lg pb-2">Summary:</h2>
-                <p class="" th:text="${summary}">
-                </p>
+    <div class="w-full grid grid-cols-8">
+        <div class="col-start-1 col-span-6 h-screen text-black p-4">
+            <div class="border-2 border-black p-4">
+                <h2 class="font-bold underline text-lg pb-2 text-center">Summary:</h2>
+                <p class="text-sm" th:text="${summary}"></p>
             </div>
             <div>
-                <h2 class="font-bold text-lg py-2">Skills</h2>
-                <ul th:each="skill : ${skills}">
-                    <li th:text="${skill}">Skill</li>
-                </ul>
+                <h2 class="font-bold text-lg py-2 text-center">Skills</h2>
+                <div class="flex">
+                    <div class="p-2">
+                        <ul class="list-disc text-sm pl-4" th:each="skill : ${skills}">
+                            <li>
+                                <div>
+                                    <div><span th:text="${skill}"></span> <i class="fa-solid fa-star"></i></div>
+                                    <div class="text-xs italic">
+                                        Cutting edge
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h2 class="font-bold text-lg py-2">Skills</h2>
-                <ul th:each="skill : ${skills}">
-                    <li th:text="${skill}">Skill</li>
-                </ul>
+            <div class="">
+                <h2 class="font-bold text-xl py-2 text-center">Work History</h2>
+                <div class="flex" th:each="work: ${workHistory}">
+                    <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}" /> - <span th:text="${work.timespan.end}"/></div>
+                    <div class="flex flex-col gap-2 w-full">
+                        <div class="flex justify-between px-4 border-b-2">
+                            <div class="font-bold text-lg" th:text="${work.name}"></div>
+                            <div class="text-lg">Senior Java Developer</div>
+                        </div>
+                        <div class="flex justify-between px-4">
+                            <p class="font-semibold">Business Domain</p>
+                            <p class="">Banking</p>
+                        </div>
+                        <div class="px-4">
+                            <p class="font-semibold">Key tech stack</p>
+                            <ul class="list-disc pl-4 text-sm" th:each="tech : ${work.skills}">
+                                <li th:text="${tech}" />
+                            </ul>
+                        </div>
+                        <div class="px-4">
+                            <p class="font-semibold text-md">Responsibilities:</p>
+                            <p th:text="${work.description}"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-start-5 col-span-2 h-screen bg-gray-300 text-black p-2">
-            <div class="font-bold">Email:</div>
-            <div>lukasz.guminski629@gmail.com</div>
-            <div class="font-bold">Phone:</div>
-            <div>+48 668 020 777</div>
+        <div class="col-start-7 col-span-2 h-[102.5vh] bg-gray-300 text-black p-2">
+            <div class="font-bold text-md">Email:</div>
+            <a href="mailto:lukasz.guminski629@gmail.com" class="text-xs
+           text-blue-600 hover:text-blue-500 transition duration-300">lukasz.guminski629@gmail.com</a>
+            <div class="font-bold text-md">Phone:</div>
+            <a href="tel:+48668020777"
+               class="text-xs text-blue-600 hover:text-blue-500 transition duration-300 underline">+48 668 020 777</a>
+            <div>
+                <h2 class="font-bold text-md py-2">Languages</h2>
+                <ul class="list-disc text-sm pl-4">
+                    <li>
+                        <div>
+                            <div>Polish</div>
+                            <div class="italic text-xs">Native</div>
+                        </div>
+                    </li>
+                    <li>English</li>
+                    <li>German</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="font-bold text-md py-2">Side Projects</h2>
+                <ul class="list-disc text-sm pl-4">
+                    <li>
+                        <div>
+                            <div>Sport Bets App</div>
+                            <div class="italic text-xs">Desktop application</div>
+                            <div class="italic text-xs">.Net WPF</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div>Blog Application</div>
+                            <div class="italic text-xs">Web application</div>
+                            <div class="italic text-xs">React + Micronaut + Kotlin</div>
+                        </div>
+                    </li>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page">
+    <div class="w-full grid grid-cols-8">
+        <div class="col-start-1 col-span-6 h-screen text-black p-4">
+        </div>
+        <div class="col-start-7 col-span-2 bg-gray-300 text-black p-2 h-[29.7cm]">
         </div>
     </div>
 </div>

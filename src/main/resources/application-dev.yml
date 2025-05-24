@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      database: ${MONGO_DB_NAME}
+      database: ${PORTFOLIO_MONGO_DB_NAME}
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
       uri: ${MONGO_CONNECTION_STRING}
