@@ -1,166 +1,154 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>CV form</title>
-    <link rel="stylesheet" th:href="@{/css/output.css}"/>
-    <script src="https://kit.fontawesome.com/61f95dda41.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            background: #ccc; /* to visualize the page border */
-        }
+  <meta charset="UTF-8"/>
+  <title>CV form</title>
+  <link rel="stylesheet" th:href="@{/css/output.css}"/>
+  <script src="https://kit.fontawesome.com/61f95dda41.js" crossorigin="anonymous"></script>
+  <style>
+      body {
+          background: #ccc; /* to visualize the page border */
+      }
 
-        .page {
-            width: 21cm;
-            height: 29.7cm;
-            background: white;
-            margin: auto;
-            margin-top: 10px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            box-sizing: border-box;
-        }
-    </style>
+      .page {
+          width: 21cm;
+          height: 29.7cm;
+          background: white;
+          margin: auto;
+          margin-top: 10px;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+          box-sizing: border-box;
+      }
+  </style>
 </head>
 <body class="bg-gray-200">
 <div class="page">
-    <div class="flex justify-between bg-[#003d74] p-2 h-[3.8cm]">
-        <div class="flex-col w-full px-2 py-2 text-white">
-            <div class="text-4xl font-bold" th:text="${fullname}"></div>
-            <div class="text-md" th:text="${title}"></div>
-        </div>
-        <img class="w-32 h-32 rounded-sm" th:src="@{images/lg.jpg}" alt="Profile picture"/>
+  <div class="flex justify-between bg-[#003d74] p-2 h-[3.8cm]">
+    <div class="flex-col w-full px-2 py-2 text-white">
+      <div class="text-4xl font-bold" th:text="${fullname}"></div>
+      <div class="text-md" th:text="${title}"></div>
     </div>
-    <div class="w-full grid grid-cols-8">
-        <div class="hidden print:flex py-6 justify-evenly text-black p-2 print print:col-span-8 print:col-start-1">
-            <div class="flex flex-row gap-4">
-                <i class="fa-solid fa-envelope text-4xl pt-1"></i>
-                <div class="flex flex-col">
-                    <div class="font-bold text-md">Email:</div>
-                    <a href="mailto:lukasz.guminski629@gmail.com" class="text-xs
+    <img class="w-32 h-32 rounded-sm" th:src="@{images/lg.jpg}" alt="Profile picture"/>
+  </div>
+  <div class="w-full grid grid-cols-8">
+    <div class="hidden print:flex py-6 justify-evenly text-black p-2 print print:col-span-8 print:col-start-1">
+      <div class="flex flex-row gap-4">
+        <i class="fa-solid fa-envelope text-4xl pt-1"></i>
+        <div class="flex flex-col">
+          <div class="font-bold text-md">Email:</div>
+          <a href="mailto:lukasz.guminski629@gmail.com" class="text-xs
               text-blue-600 hover:text-blue-500 transition duration-300">lukasz.guminski629@gmail.com</a>
-                </div>
-            </div>
-            <div class="flex flex-row gap-4">
-                <i class="fa-solid fa-phone text-4xl pt-1"></i>
-                <div class="flex flex-col">
-                    <div class="font-bold text-md">Phone:</div>
-                    <a href="tel:+48668020777"
-                       class="text-xs text-blue-600 hover:text-blue-500 transition duration-300 underline">+48 668 020
-                        777</a>
-                </div>
-            </div>
         </div>
-        <div class="col-start-1 col-span-6 print:col-span-8 h-screen text-black p-4 py-8">
-            <div class="border-2 border-black p-4">
-                <h2 class="font-bold underline text-xl pb-2 text-center">Summary:</h2>
-                <p class="text-sm" th:text="${summary}"></p>
-            </div>
-            <div>
-                <h2 class="font-bold text-xl py-8 text-center">Skills</h2>
-                <div class="flex justify-center">
-                    <div class="p-2">
-                        <ul class="list-disc text-sm pl-4" th:each="skill : ${skills}">
-                            <li>
-                                <div>
-                                    <div><span th:text="${skill}"></span> <i class="fa-solid fa-star"></i></div>
-                                    <div class="text-xs italic">
-                                        Cutting edge
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="p-2">
-                        <ul class="list-disc text-sm pl-4" th:each="skill : ${skills}">
-                            <li>
-                                <div>
-                                    <div><span th:text="${skill}"></span> <i class="fa-solid fa-star"></i></div>
-                                    <div class="text-xs italic">
-                                        Cutting edge
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="">
-                <h2 class="font-bold text-xl py-8 text-center">Work History</h2>
-                <div class="flex" th:each="work: ${workHistory}">
-                    <div class="text-lg italic underline w-32"><span th:text="${work.timespan.start}"/> - <span
-                            th:text="${work.timespan.end}"/></div>
-                    <div class="flex flex-col gap-2 w-full">
-                        <div class="flex justify-between px-4 border-b-2">
-                            <div class="font-bold text-lg" th:text="${work.name}"></div>
-                            <div class="text-lg">Senior Java Developer</div>
-                        </div>
-                        <div class="flex justify-between px-4">
-                            <p class="font-semibold">Business Domain</p>
-                            <p class="">Banking</p>
-                        </div>
-                        <div class="px-4">
-                            <p class="font-semibold">Key tech stack</p>
-                            <ul class="list-disc pl-4 text-sm" th:each="tech : ${work.skills}">
-                                <li th:text="${tech}"/>
-                            </ul>
-                        </div>
-                        <div class="px-4">
-                            <p class="font-semibold text-md">Responsibilities:</p>
-                            <p th:text="${work.description}"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="flex flex-row gap-4">
+        <i class="fa-solid fa-phone text-4xl pt-1"></i>
+        <div class="flex flex-col">
+          <div class="font-bold text-md">Phone:</div>
+          <a href="tel:+48668020777"
+             class="text-xs text-blue-600 hover:text-blue-500 transition duration-300 underline">+48 668 020
+            777</a>
         </div>
-        <div class="col-start-7 col-span-2 h-[25.9cm] bg-gray-300 text-black p-2 print:hidden">
-            <div class="font-bold text-md">Email:</div>
-            <a href="mailto:lukasz.guminski629@gmail.com" class="text-xs
+      </div>
+    </div>
+    <div class="col-start-1 col-span-6 print:col-span-8 h-screen text-black p-4 py-8">
+      <div class="border-2 border-black p-4">
+        <h2 class="font-bold underline text-xl pb-2 text-center">Summary:</h2>
+        <p class="text-sm" th:text="${summary}"></p>
+      </div>
+      <div>
+        <h2 class="font-bold text-xl py-8 text-center">Skills</h2>
+        <div class="flex justify-center">
+          <div class="p-2">
+            <ul class="list-disc text-sm pl-4">
+              <li th:each="skill : ${skills1}">
+                <div>
+                  <div><span th:text="${skill.name}"></span> <i class="fa-solid fa-star"></i></div>
+                  <div class="text-xs italic" th:text="${skill.description}"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="p-2">
+            <ul class="list-disc text-sm pl-4" th:each="skill : ${skills2}">
+              <li>
+                <div>
+                  <div><span th:text="${skill.name}"></span> <i class="fa-solid fa-star"></i></div>
+                  <div class="text-xs italic" th:text="${skill.description}">
+
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-start-7 col-span-2 h-[25.9cm] bg-gray-300 text-black p-2 print:hidden">
+      <div class="font-bold text-md">Email:</div>
+      <a href="mailto:lukasz.guminski629@gmail.com" class="text-xs
                    text-blue-600 hover:text-blue-500 transition duration-300">lukasz.guminski629@gmail.com</a>
-            <div class="font-bold text-md">Phone:</div>
-            <a href="tel:+48668020777"
-               class="text-xs text-blue-600 hover:text-blue-500 transition duration-300 underline">+48 668 020 777</a>
+      <div class="font-bold text-md">Phone:</div>
+      <a href="tel:+48668020777"
+         class="text-xs text-blue-600 hover:text-blue-500 transition duration-300 underline">+48 668 020 777</a>
+      <div>
+        <h2 class="font-bold text-md py-2">Languages</h2>
+        <ul class="list-disc text-sm pl-4">
+          <li th:each="language: ${languages}">
             <div>
-                <h2 class="font-bold text-md py-2">Languages</h2>
-                <ul class="list-disc text-sm pl-4">
-                    <li>
-                        <div>
-                            <div>Polish</div>
-                            <div class="italic text-xs">Native</div>
-                        </div>
-                    </li>
-                    <li>English</li>
-                    <li>German</li>
-                </ul>
+              <div th:text="${language.name}"></div>
+              <div class="italic text-xs" th:text="${language.level}">Native</div>
             </div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-bold text-md py-2">Side Projects</h2>
+        <ul class="list-disc text-sm pl-4">
+          <li>
             <div>
-                <h2 class="font-bold text-md py-2">Side Projects</h2>
-                <ul class="list-disc text-sm pl-4">
-                    <li>
-                        <div>
-                            <div>Sport Bets App</div>
-                            <div class="italic text-xs">Desktop application</div>
-                            <div class="italic text-xs">.Net WPF</div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>Blog Application</div>
-                            <div class="italic text-xs">Web application</div>
-                            <div class="italic text-xs">React + Micronaut + Kotlin</div>
-                        </div>
-                    </li>
-                </ul>
+              <div>Sport Bets App</div>
+              <div class="italic text-xs">Desktop application</div>
+              <div class="italic text-xs">.Net WPF</div>
             </div>
-        </div>
+          </li>
+          <li>
+            <div>
+              <div>Blog Application</div>
+              <div class="italic text-xs">Web application</div>
+              <div class="italic text-xs">React + Micronaut + Kotlin</div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>
-<div class="page">
-    <div class="w-full grid grid-cols-8">
-        <div class="col-start-1 col-span-6 h-screen text-black p-4">
-        </div>
-        <div class="col-start-7 col-span-2 bg-gray-300 text-black p-2 h-[29.7cm]">
-        </div>
+<div class="page p-4">
+  <h2 class="font-bold text-xl text-center">Work History</h2>
+  <div class="flex" th:each="work: ${workHistory}">
+    <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
+      th:text="${work.timespan.end}"/></div>
+    <div class="flex flex-col gap-2 w-full">
+      <div class="flex justify-between px-4 border-b-2">
+        <div class="font-bold text-lg" th:text="${work.position}"></div>
+        <div class="text-lg" th:text="${work.business}"></div>
+      </div>
+      <div class="px-4">
+        <p th:text="${work.summary}"></p>
+        <p class="font-semibold">Key tech stack</p>
+        <ul class="list-disc pl-4 text-sm">
+          <li th:each="tech : ${work.skills}">
+            <div><span th:text="${tech.name}"></span> <i class="fa-solid fa-star"></i></div>
+            <div class="text-xs italic" th:text="${tech.description}"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="px-4">
+        <p class="font-semibold text-md">Responsibilities:</p>
+        <p th:text="${work.description}"></p>
+      </div>
     </div>
+  </div>
 </div>
 </body>
 </html>
