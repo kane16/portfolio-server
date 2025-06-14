@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.ReadingConverter
@@ -12,25 +13,10 @@ import org.springframework.data.mongodb.core.convert.MongoCustomConversions
 import pl.delukesoft.portfolioserver.portfolio.model.LanguageLevel
 
 @Configuration
-class MongoExtendedConfig(): AbstractMongoClientConfiguration() {
+class MongoExtendedConfig {
 
-  @Value("\${spring.data.mongodb.database}")
-  private lateinit var databaseName: String
-
-  @Value("\${spring.data.mongodb.uri}")
-  private lateinit var mongoUri: String
-
-  override fun getDatabaseName(): String {
-    return MongoClients.create(mongoUri)
-          .getDatabase(databaseName)
-          .name
-  }
-
-  override fun mongoClient(): MongoClient {
-    return MongoClients.create(mongoUri)
-  }
-
-  override fun customConversions(
+  @Bean
+  fun customConversions(
   ): MongoCustomConversions {
     return MongoCustomConversions(
       listOf(
