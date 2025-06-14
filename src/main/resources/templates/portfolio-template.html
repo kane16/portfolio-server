@@ -19,10 +19,23 @@
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
           box-sizing: border-box;
       }
+
+      @media print {
+          .print\:page {
+              margin: 0;
+              height: fit-content;
+              box-sizing: initial;
+              border: initial;
+              border-radius: initial;
+              width: initial;
+              min-height: initial;
+              box-shadow: initial;
+          }
+      }
   </style>
 </head>
 <body class="bg-gray-200">
-<div class="page">
+<div class="page print:page">
   <div class="flex justify-between bg-[#003d74] p-2 h-[3.8cm]">
     <div class="flex-col w-full px-2 py-2 text-white">
       <div class="text-4xl font-bold" th:text="${fullname}"></div>
@@ -31,7 +44,7 @@
     <img class="w-32 h-32 rounded-sm" th:src="@{images/lg.jpg}" alt="Profile picture"/>
   </div>
   <div class="w-full grid grid-cols-8">
-    <div class="hidden print:flex py-6 justify-evenly text-black p-2 print print:col-span-8 print:col-start-1">
+    <div class="hidden print:flex py-2 justify-evenly text-black p-2 print print:col-span-8 print:col-start-1 print:py-4">
       <div class="flex flex-row gap-4">
         <i class="fa-solid fa-envelope text-4xl pt-1"></i>
         <div class="flex flex-col">
@@ -50,13 +63,13 @@
         </div>
       </div>
     </div>
-    <div class="col-start-1 col-span-6 print:col-span-8 h-screen text-black p-4 py-8">
+    <div class="col-start-1 col-span-6 print:col-span-8 text-black p-4 py-8 print:p-0">
       <div class="border-2 border-black p-4">
         <h2 class="font-bold underline text-xl pb-2 text-center">Summary:</h2>
         <p class="text-sm" th:text="${summary}"></p>
       </div>
-      <div>
-        <h2 class="font-bold text-xl py-8 text-center">Skills</h2>
+      <div class="print:pb-4">
+        <h2 class="font-bold text-xl py-4 text-center print:pt-6">Skills</h2>
         <div class="flex justify-center">
           <div class="p-2">
             <ul class="list-disc text-sm pl-4">
@@ -123,17 +136,17 @@
     </div>
   </div>
 </div>
-<div class="page p-4">
-  <h2 class="font-bold text-xl text-center">Work History</h2>
-  <div class="flex" th:each="work: ${workHistory}">
+<div class="page p-4 print:p-0 print:page">
+  <h2 class="font-bold text-2xl text-center pb-2 print:pt-6">Work History</h2>
+  <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory1}">
     <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
       th:text="${work.timespan.end}"/></div>
     <div class="flex flex-col gap-2 w-full">
       <div class="flex justify-between px-4 border-b-2">
         <div class="font-bold text-lg" th:text="${work.position}"></div>
-        <div class="text-lg" th:text="${work.business}"></div>
       </div>
       <div class="px-4">
+        <p th:text="${work.business}" class="text-lg"></p>
         <p th:text="${work.summary}"></p>
         <p class="font-semibold">Key tech stack</p>
         <ul class="list-disc pl-4 text-sm">
@@ -149,6 +162,33 @@
       </div>
     </div>
   </div>
+</div>
+<div class="page p-4 print:p-0 print:page">
+  <div class="print:pt-6"></div>
+  <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory2}">
+      <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
+        th:text="${work.timespan.end}"/></div>
+      <div class="flex flex-col gap-2 w-full">
+        <div class="flex justify-between px-4 border-b-2">
+          <div class="font-bold text-lg" th:text="${work.position}"></div>
+        </div>
+        <div class="px-4">
+          <p th:text="${work.business}" class="text-lg"></p>
+          <p th:text="${work.summary}"></p>
+          <p class="font-semibold">Key tech stack</p>
+          <ul class="list-disc pl-4 text-sm">
+            <li th:each="tech : ${work.skills}">
+              <div><span th:text="${tech.name}"></span> <i class="fa-solid fa-star"></i></div>
+              <div class="text-xs italic" th:text="${tech.description}"></div>
+            </li>
+          </ul>
+        </div>
+        <div class="px-4">
+          <p class="font-semibold text-md">Responsibilities:</p>
+          <p th:text="${work.description}"></p>
+        </div>
+      </div>
+    </div>
 </div>
 </body>
 </html>

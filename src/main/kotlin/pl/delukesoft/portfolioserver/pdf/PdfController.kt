@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.portfolio.generator
+package pl.delukesoft.portfolioserver.pdf
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -10,7 +10,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication
 
 @RestController
 @RequestMapping("/pdf")
-class GeneratorController(
+class PdfController(
     val generationFacade: GenerationFacade
 ) {
 
@@ -20,4 +20,5 @@ class GeneratorController(
         val webContext = WebContext(webApplication.buildExchange(request, response), request.locale)
         return generationFacade.generateDefaultResumePdf(webContext)
     }
+
 }

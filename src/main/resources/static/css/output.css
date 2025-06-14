@@ -705,6 +705,11 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -717,6 +722,10 @@ video {
 
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
 }
 
 .pl-4 {
@@ -749,6 +758,11 @@ video {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-xs {
@@ -804,6 +818,10 @@ video {
   color: rgb(59 130 246 / var(--tw-text-opacity, 1));
 }
 
+.p-0 {
+    padding: 0;
+}
+
 @media print {
   .print\:col-span-8 {
     grid-column: span 8 / span 8;
@@ -817,7 +835,53 @@ video {
     display: flex;
   }
 
+  .print\:flex-col {
+    flex-direction: column;
+  }
+
+  .print\:justify-center {
+    justify-content: center;
+  }
+
+  .print\:items-center {
+    align-items: center;
+  }
+
+  .print\:gap-4 {
+    gap: 1rem;
+  }
+
+  .print\:rounded-sm {
+    border-radius: 0.125rem;
+  }
+
   .print\:hidden {
     display: none;
   }
+
+  .print\:py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .print\:pt-0 {
+    padding-top: 0;
+  }
+
+  .print\:pt-6 {
+    padding-top: 1.5rem;
+  }
+
+  .print\mt-6 {
+    margin-top: 1.5rem;
+  }
+
+  .print\:pb-4 {
+    padding-bottom: 1rem;
+  }
+
+  .print\:p-0 {
+    padding: 0;
+  }
+
 }

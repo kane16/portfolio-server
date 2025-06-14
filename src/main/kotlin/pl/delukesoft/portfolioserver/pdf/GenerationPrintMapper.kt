@@ -1,28 +1,27 @@
-package pl.delukesoft.portfolioserver.portfolio.generator
+package pl.delukesoft.portfolioserver.pdf
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.portfolio.generator.model.LanguageDTO
-import pl.delukesoft.portfolioserver.portfolio.generator.model.PrintDTO
-import pl.delukesoft.portfolioserver.portfolio.generator.model.ProjectDTO
-import pl.delukesoft.portfolioserver.portfolio.generator.model.ResumePrintDTO
-import pl.delukesoft.portfolioserver.portfolio.generator.model.SkillDTO
-import pl.delukesoft.portfolioserver.portfolio.generator.model.TimespanDTO
+import pl.delukesoft.portfolioserver.pdf.model.LanguageDTO
+import pl.delukesoft.portfolioserver.pdf.model.PrintDTO
+import pl.delukesoft.portfolioserver.pdf.model.ProjectDTO
+import pl.delukesoft.portfolioserver.pdf.model.ResumePrintDTO
+import pl.delukesoft.portfolioserver.pdf.model.SkillDTO
+import pl.delukesoft.portfolioserver.pdf.model.TimespanDTO
 import pl.delukesoft.portfolioserver.portfolio.model.Experience
 import pl.delukesoft.portfolioserver.portfolio.model.Resume
 import pl.delukesoft.portfolioserver.portfolio.model.Timespan
-import java.time.format.DateTimeFormatter
 
 @Component
 class GenerationPrintMapper {
 
-  fun mapToPrint(resume: Resume): PrintDTO{
+  fun mapToPrint(resume: Resume): PrintDTO {
     return ResumePrintDTO(
       fullname = "Łukasz Gumiński",
       imageSource = resume.image?.src ?: "",
       title = resume.title,
       summary = resume.summary,
       skills = resume.skills.map { SkillDTO(it.name, it.description, it.level) },
-      languages = resume.languages.map { LanguageDTO(it.name, "A1") },
+      languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },
       projects = emptyList(),
       workHistory = mapToProjects(resume.experience),
       hobbies = resume.hobbies
@@ -45,7 +44,7 @@ class GenerationPrintMapper {
   private fun mapTimespan(timespan: Timespan): TimespanDTO {
     return TimespanDTO(
       "${timespan.start.year}.${timespan.start.monthValue.toString().padStart(2, '0')}",
-       if (timespan.end != null) "${timespan.end.year}.${timespan.end.monthValue.toString().padStart(2, '0')}" else "",
+      if (timespan.end != null) "${timespan.end.year}.${timespan.end.monthValue.toString().padStart(2, '0')}" else "",
     )
   }
 

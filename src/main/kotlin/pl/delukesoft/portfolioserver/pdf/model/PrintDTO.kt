@@ -1,6 +1,5 @@
-package pl.delukesoft.portfolioserver.portfolio.generator.model
+package pl.delukesoft.portfolioserver.pdf.model
 
-import org.thymeleaf.context.Context
 import org.thymeleaf.context.WebContext
 
 interface PrintDTO {

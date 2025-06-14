@@ -1,6 +1,5 @@
-package pl.delukesoft.portfolioserver.portfolio.generator.model
+package pl.delukesoft.portfolioserver.pdf.model
 
-import org.thymeleaf.context.Context
 import org.thymeleaf.context.WebContext
 
 data class ResumePrintDTO(
@@ -25,11 +24,13 @@ data class ResumePrintDTO(
     context.setVariable("skills2", skills2)
     context.setVariable("languages", languages)
     context.setVariable("projects", projects)
-    context.setVariable("workHistory", workHistory)
+    val (workHistory1, workHistory2) = partitionToHalf(workHistory)
+    context.setVariable("workHistory1", workHistory1)
+    context.setVariable("workHistory2", workHistory2)
     context.setVariable("hobbies", hobbies)
   }
 
-  private fun partitionToHalf(list: List<SkillDTO>): Pair<List<SkillDTO>, List<SkillDTO>> {
+  private fun <T> partitionToHalf(list: List<T>): Pair<List<T>, List<T>> {
     val half = list.size / 2
     return list.take(half) to list.takeLast(list.size - half)
   }

@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.generator
+package pl.delukesoft.portfolioserver.pdf
 
 import org.springframework.cache.interceptor.KeyGenerator
 import org.springframework.stereotype.Component

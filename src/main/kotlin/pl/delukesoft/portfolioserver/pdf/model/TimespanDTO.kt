@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.portfolio.generator.model
+package pl.delukesoft.portfolioserver.pdf.model
 
 data class TimespanDTO(
   val start: String,

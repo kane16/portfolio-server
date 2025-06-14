@@ -1,9 +1,9 @@
-package pl.delukesoft.portfolioserver.portfolio.generator
+package pl.delukesoft.portfolioserver.pdf
 
 import org.springframework.stereotype.Component
 import org.thymeleaf.context.WebContext
+import pl.delukesoft.portfolioserver.pdf.model.PrintDTO
 import pl.delukesoft.portfolioserver.portfolio.ResumeService
-import pl.delukesoft.portfolioserver.portfolio.generator.model.PrintDTO
 
 @Component
 class GenerationFacade(
