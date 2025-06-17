@@ -7,16 +7,6 @@ services:
       - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
     ports:
       - 27017:27017
-    healthcheck:
-      # This line performs a health check by:
-      # 1. Using mongosh (MongoDB shell) to connect to MongoDB at localhost:27017/test
-      # 2. Running a "ping" command to verify the database is responsive
-      # 3. The --quiet flag suppresses extra output, only showing the command result
-      # 4. The command returns 1 if successful, 0 if failed
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 3s
-      timeout: 2s
-      retries: 5
   authserver:
     image: kane16/auth_server:3.0.0
     restart: always

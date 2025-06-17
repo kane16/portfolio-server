@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import pl.delukesoft.portfolioserver.auth.AuthRequired
 
 @RestController
 @RequestMapping("cv")
@@ -16,6 +17,7 @@ class PortfolioController(
 
   private val log = LoggerFactory.getLogger(PortfolioController::class.java)
 
+  @AuthRequired
   @GetMapping("/{id}")
   fun getCVById(
     @PathVariable("id") id: Long

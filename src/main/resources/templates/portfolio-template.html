@@ -44,7 +44,8 @@
     <img class="w-32 h-32 rounded-sm" th:src="@{images/lg.jpg}" alt="Profile picture"/>
   </div>
   <div class="w-full grid grid-cols-8">
-    <div class="hidden print:flex py-2 justify-evenly text-black p-2 print print:col-span-8 print:col-start-1 print:py-4">
+    <div
+      class="hidden print:flex py-2 justify-evenly text-black p-2 print print:col-span-8 print:col-start-1 print:py-4">
       <div class="flex flex-row gap-4">
         <i class="fa-solid fa-envelope text-4xl pt-1"></i>
         <div class="flex flex-col">
@@ -75,7 +76,15 @@
             <ul class="list-disc text-sm pl-4">
               <li th:each="skill : ${skills1}">
                 <div>
-                  <div><span th:text="${skill.name}"></span> <i class="fa-solid fa-star"></i></div>
+                  <div>
+                    <span th:text="${skill.name}"></span>
+                    <span>
+                      <i th:each="i: ${#numbers.sequence(1, skill.level)}" class="fa-solid fa-star"></i>
+                      <span class="-ml-3" ></span>
+                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}" class="fa-regular fa-star"></i>
+                      </span>
+                    </span>
+                  </div>
                   <div class="text-xs italic" th:text="${skill.description}"></div>
                 </div>
               </li>
@@ -85,7 +94,14 @@
             <ul class="list-disc text-sm pl-4" th:each="skill : ${skills2}">
               <li>
                 <div>
-                  <div><span th:text="${skill.name}"></span> <i class="fa-solid fa-star"></i></div>
+                  <div>
+                    <span th:text="${skill.name}"></span>
+                    <span>
+                      <i th:each="i: ${#numbers.sequence(1, skill.level)}" class="fa-solid fa-star"></i>
+                      <span class="-ml-3" ></span>
+                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}" class="fa-regular fa-star"></i>
+                    </span>
+                  </div>
                   <div class="text-xs italic" th:text="${skill.description}">
 
                   </div>
@@ -146,12 +162,52 @@
         <div class="font-bold text-lg" th:text="${work.position}"></div>
       </div>
       <div class="px-4">
-        <p th:text="${work.business}" class="text-lg"></p>
+        <span>Business domain: <span th:text="${work.business}"></span></span>
         <p th:text="${work.summary}"></p>
         <p class="font-semibold">Key tech stack</p>
         <ul class="list-disc pl-4 text-sm">
           <li th:each="tech : ${work.skills}">
-            <div><span th:text="${tech.name}"></span> <i class="fa-solid fa-star"></i></div>
+            <div><span th:text="${tech.name}"></span>
+              <span>
+                <i th:each="i: ${#numbers.sequence(1, tech.level)}" class="fa-solid fa-star"></i>
+                <span class="-ml-3" ></span>
+                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}" class="fa-regular fa-star"></i>
+              </span>
+            </div>
+            <div class="text-xs italic" th:text="${tech.description}"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="px-4">
+        <p class="font-semibold text-md">Responsibilities:</p>
+        <p th:text="${work.description}" class="text-sm"></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page p-4 print:p-0 print:page">
+  <div class="print:pt-16"></div>
+  <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory2}">
+    <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
+      th:text="${work.timespan.end}"/></div>
+    <div class="flex flex-col gap-2 w-full">
+      <div class="flex justify-between px-4 border-b-2">
+        <div class="font-bold text-lg" th:text="${work.position}"></div>
+      </div>
+      <div class="px-4">
+        <span>Business domain: <span th:text="${work.business}"></span></span>
+        <p th:text="${work.summary}"></p>
+        <p class="font-semibold">Key tech stack</p>
+        <ul class="list-disc pl-4 text-sm">
+          <li th:each="tech : ${work.skills}">
+            <div>
+              <span th:text="${tech.name}"></span>
+              <span>
+                <i th:each="i: ${#numbers.sequence(1, tech.level)}" class="fa-solid fa-star"></i>
+                <span class="-ml-3" ></span>
+                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}" class="fa-regular fa-star"></i>
+              </span>
+            </div>
             <div class="text-xs italic" th:text="${tech.description}"></div>
           </li>
         </ul>
@@ -162,33 +218,6 @@
       </div>
     </div>
   </div>
-</div>
-<div class="page p-4 print:p-0 print:page">
-  <div class="print:pt-6"></div>
-  <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory2}">
-      <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
-        th:text="${work.timespan.end}"/></div>
-      <div class="flex flex-col gap-2 w-full">
-        <div class="flex justify-between px-4 border-b-2">
-          <div class="font-bold text-lg" th:text="${work.position}"></div>
-        </div>
-        <div class="px-4">
-          <p th:text="${work.business}" class="text-lg"></p>
-          <p th:text="${work.summary}"></p>
-          <p class="font-semibold">Key tech stack</p>
-          <ul class="list-disc pl-4 text-sm">
-            <li th:each="tech : ${work.skills}">
-              <div><span th:text="${tech.name}"></span> <i class="fa-solid fa-star"></i></div>
-              <div class="text-xs italic" th:text="${tech.description}"></div>
-            </li>
-          </ul>
-        </div>
-        <div class="px-4">
-          <p class="font-semibold text-md">Responsibilities:</p>
-          <p th:text="${work.description}"></p>
-        </div>
-      </div>
-    </div>
 </div>
 </body>
 </html>
