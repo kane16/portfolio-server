@@ -9,7 +9,7 @@ data class ResumePrintDTO(
   val summary: String,
   val skills: List<SkillDTO>,
   val languages: List<LanguageDTO>,
-  val projects: List<ProjectDTO>,
+  val sideProjects: List<ProjectDTO>,
   val workHistory: List<ProjectDTO>,
   val hobbies: List<String>
 ): PrintDTO {
@@ -23,7 +23,7 @@ data class ResumePrintDTO(
     context.setVariable("skills1", skills1)
     context.setVariable("skills2", skills2)
     context.setVariable("languages", languages)
-    context.setVariable("projects", projects)
+    context.setVariable("sideProjects", sideProjects)
     val (workHistory1, workHistory2) = partitionToHalf(workHistory)
     context.setVariable("workHistory1", workHistory1)
     context.setVariable("workHistory2", workHistory2)

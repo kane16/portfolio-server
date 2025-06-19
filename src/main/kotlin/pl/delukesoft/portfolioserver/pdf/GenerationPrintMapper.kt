@@ -22,7 +22,7 @@ class GenerationPrintMapper {
       summary = resume.summary,
       skills = resume.skills.map { SkillDTO(it.name, it.description, it.level) },
       languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },
-      projects = emptyList(),
+      sideProjects = mapToProjects(resume.sideProjects),
       workHistory = mapToProjects(resume.experience),
       hobbies = resume.hobbies
     )

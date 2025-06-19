@@ -14,6 +14,7 @@ data class Resume(
   val summary: String,
   val skills: List<Skill>,
   val experience: List<Experience>,
+  val sideProjects: List<Experience>,
   val image: Image? = null,
   val hobbies: List<String>,
   val languages: List<WorkLanguage>,

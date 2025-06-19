@@ -80,8 +80,9 @@
                     <span th:text="${skill.name}"></span>
                     <span>
                       <i th:each="i: ${#numbers.sequence(1, skill.level)}" class="fa-solid fa-star"></i>
-                      <span class="-ml-3" ></span>
-                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}" class="fa-regular fa-star"></i>
+                      <span class="-ml-3"></span>
+                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}"
+                         class="fa-regular fa-star"></i>
                       </span>
                     </span>
                   </div>
@@ -98,8 +99,9 @@
                     <span th:text="${skill.name}"></span>
                     <span>
                       <i th:each="i: ${#numbers.sequence(1, skill.level)}" class="fa-solid fa-star"></i>
-                      <span class="-ml-3" ></span>
-                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}" class="fa-regular fa-star"></i>
+                      <span class="-ml-3"></span>
+                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}"
+                         class="fa-regular fa-star"></i>
                     </span>
                   </div>
                   <div class="text-xs italic" th:text="${skill.description}">
@@ -133,20 +135,19 @@
       <div>
         <h2 class="font-bold text-md py-2">Side Projects</h2>
         <ul class="list-disc text-sm pl-4">
-          <li>
+          <li th:each="project: ${sideProjects}">
             <div>
-              <div>Sport Bets App</div>
-              <div class="italic text-xs">Desktop application</div>
-              <div class="italic text-xs">.Net WPF</div>
+              <div th:text="${project.position}"></div>
+              <span th:text="${#strings.listJoin(project.skills.![name], ', ')}" class="text-sm italic"></span>
+              <div class="italic text-xs" th:text="${project.description}"></div>
             </div>
           </li>
-          <li>
-            <div>
-              <div>Blog Application</div>
-              <div class="italic text-xs">Web application</div>
-              <div class="italic text-xs">React + Micronaut + Kotlin</div>
-            </div>
-          </li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-bold text-md py-2">Hobbies</h2>
+        <ul class="list-disc text-sm pl-4">
+          <li th:each="hobby: ${hobbies}" th:text="${hobby}" class="text-xs italic"></li>
         </ul>
       </div>
     </div>
@@ -170,8 +171,9 @@
             <div><span th:text="${tech.name}"></span>
               <span>
                 <i th:each="i: ${#numbers.sequence(1, tech.level)}" class="fa-solid fa-star"></i>
-                <span class="-ml-3" ></span>
-                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}" class="fa-regular fa-star"></i>
+                <span class="-ml-3"></span>
+                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}"
+                   class="fa-regular fa-star"></i>
               </span>
             </div>
             <div class="text-xs italic" th:text="${tech.description}"></div>
@@ -204,8 +206,9 @@
               <span th:text="${tech.name}"></span>
               <span>
                 <i th:each="i: ${#numbers.sequence(1, tech.level)}" class="fa-solid fa-star"></i>
-                <span class="-ml-3" ></span>
-                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}" class="fa-regular fa-star"></i>
+                <span class="-ml-3"></span>
+                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}"
+                   class="fa-regular fa-star"></i>
               </span>
             </div>
             <div class="text-xs italic" th:text="${tech.description}"></div>
