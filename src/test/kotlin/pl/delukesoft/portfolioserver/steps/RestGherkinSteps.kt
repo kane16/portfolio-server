@@ -1,5 +1,7 @@
 package pl.delukesoft.portfolioserver.steps
 
+import com.fasterxml.jackson.module.kotlin.jsonMapper
+import com.jayway.jsonpath.internal.JsonFormatter.prettyPrint
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.skyscreamer.jsonassert.JSONAssert
@@ -12,6 +14,7 @@ class RestGherkinSteps(
 ) : En {
 
   var result = ResponseEntity.ok("OK")
+  private var logger = org.slf4j.LoggerFactory.getLogger(this::class.java)
 
   init {
     defineSteps()
@@ -45,6 +48,8 @@ class RestGherkinSteps(
       if (!responseBody.contains("{")) {
         assertEquals(responseBody, result.body)
       } else {
+        logger.error("Invalid response body:\n{}", prettyPrint(result.body))
+        logger.error("Response should be JSON:\n{}", prettyPrint(result.body))
         JSONAssert.assertEquals(responseBody, result.body, true)
       }
     }

@@ -6,15 +6,39 @@ Feature: Portfolio management
     And Response body should be:
     """
     {
-      "id" : 3,
-      "shortDescription" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
-      "dataMatrix" : [ {
-        "name" : "Skills",
-        "values" : [ "Kotlin", "Spring Boot", "MongoDB" ]
-      }, {
-        "name" : "Experience",
-        "values" : [ "E-commerce Platform", "IT Consulting" ]
-      } ]
+       "id" : 3,
+       "title" : "Lead Java Developer",
+       "description" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+       "skills" : {
+          "name" : "Skills",
+          "values" : [
+             "Kotlin",
+             "Spring Boot",
+             "MongoDB"
+          ]
+       },
+       "experience" : {
+          "name" : "Experience",
+          "values" : [
+             "Backend Developer",
+             "Technical Lead"
+          ]
+       },
+       "business" : {
+          "name" : "Business",
+          "values" : [
+             "E-commerce Platform",
+             "IT Consulting"
+          ]
+       },
+       "languages" : {
+          "name" : "Languages",
+          "values" : [
+             "English",
+             "Spanish",
+             "French"
+          ]
+       }
     }
     """
     
@@ -24,15 +48,37 @@ Feature: Portfolio management
     And Response body should be:
     """
     {
-      "id" : 2,
-      "shortDescription" : "Full Stack Developer with strong focus on modern web technologies and startup environment experience. Passionate about creating efficient and user-friendly applications.",
-      "dataMatrix" : [ {
-        "name" : "Skills",
-        "values" : [ "Java", "JavaScript", "React" ]
-      }, {
-        "name" : "Experience",
-        "values" : [ "Tech Startup" ]
-      } ]
+       "id" : 2,
+       "title" : "Lead Java Developer",
+       "description" : "Full Stack Developer with strong focus on modern web technologies and startup environment experience. Passionate about creating efficient and user-friendly applications.",
+       "skills" : {
+          "name" : "Skills",
+          "values" : [
+             "Java",
+             "JavaScript",
+             "React"
+          ]
+       },
+       "experience" : {
+          "name" : "Experience",
+          "values" : [
+             "Full Stack Developer"
+          ]
+       },
+       "business" : {
+          "name" : "Business",
+          "values" : [
+             "Tech Startup"
+          ]
+       },
+       "languages" : {
+          "name" : "Languages",
+          "values" : [
+             "English",
+             "Spanish",
+             "French"
+          ]
+       }
     }
     """
 
