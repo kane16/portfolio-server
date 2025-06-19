@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <title>CV form</title>
-  <link rel="stylesheet" th:href="@{/css/output.css}"/>
+  <link rel="stylesheet" th:href="@{/resources/css/output.css}"/>
   <script src="https://kit.fontawesome.com/61f95dda41.js" crossorigin="anonymous"></script>
   <style>
       body {
@@ -41,7 +41,7 @@
       <div class="text-4xl font-bold" th:text="${fullname}"></div>
       <div class="text-md" th:text="${title}"></div>
     </div>
-    <img class="w-32 h-32 rounded-sm" th:src="@{images/lg.jpg}" alt="Profile picture"/>
+    <img class="w-32 h-32 rounded-sm" th:src="@{resources/images/lg.jpg}" alt="Profile picture"/>
   </div>
   <div class="w-full grid grid-cols-8">
     <div
@@ -70,7 +70,7 @@
         <p class="text-sm" th:text="${summary}"></p>
       </div>
       <div class="print:pb-4">
-        <h2 class="font-bold text-xl py-4 text-center print:pt-6">Skills</h2>
+        <h2 class="font-bold text-xl py-4 text-center print:pt-2">Skills</h2>
         <div class="flex justify-center">
           <div class="p-2">
             <ul class="list-disc text-sm pl-4">

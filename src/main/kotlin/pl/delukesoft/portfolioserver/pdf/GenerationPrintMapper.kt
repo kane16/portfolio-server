@@ -1,5 +1,6 @@
 package pl.delukesoft.portfolioserver.pdf
 
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.pdf.model.LanguageDTO
 import pl.delukesoft.portfolioserver.pdf.model.PrintDTO
@@ -12,6 +13,7 @@ import pl.delukesoft.portfolioserver.portfolio.model.Resume
 import pl.delukesoft.portfolioserver.portfolio.model.Timespan
 
 @Component
+@RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)
 class GenerationPrintMapper {
 
   fun mapToPrint(resume: Resume): PrintDTO {

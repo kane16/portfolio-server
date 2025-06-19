@@ -876,6 +876,10 @@ video {
         padding-top: 0;
     }
 
+    .print\:pt-2 {
+        padding-top: 0.5rem;
+    }
+
     .print\:pt-6 {
         padding-top: 1.5rem;
     }
