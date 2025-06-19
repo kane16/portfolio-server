@@ -1,7 +1,10 @@
 package pl.delukesoft.portfolioserver.portfolio
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.portfolio.model.Resume
+import pl.delukesoft.portfolioserver.portfolio.domain.model.Resume
+import pl.delukesoft.portfolioserver.portfolio.model.PortfolioInfoDTO
+import pl.delukesoft.portfolioserver.portfolio.model.PortfolioDTO
+import pl.delukesoft.portfolioserver.portfolio.model.PortfolioInfoEntryDTO
 
 @Component
 class ResumeMapper {
@@ -11,21 +14,29 @@ class ResumeMapper {
       id = resume.id,
       title = resume.title,
       description = resume.summary,
-      skills = DataMatrixDTO(
+      skills = PortfolioInfoDTO(
         name = "Skills",
-        values = resume.skills.map { it.name }
+        values = resume.skills.map {
+          PortfolioInfoEntryDTO(it.name, it.description ?: "")
+        }
       ),
-      experience = DataMatrixDTO(
+      experience = PortfolioInfoDTO(
         name = "Experience",
-        values = resume.experience.map { it.position }
+        values = resume.experience.map {
+          PortfolioInfoEntryDTO(it.position, it.description ?: "")
+        }
       ),
-      business = DataMatrixDTO(
+      business = PortfolioInfoDTO(
         name = "Business",
-        values = resume.experience.map { it.business.name }
+        values = resume.experience.map {
+          PortfolioInfoEntryDTO(it.business.name, it.description ?: "")
+        }
       ),
-      languages = DataMatrixDTO(
+      languages = PortfolioInfoDTO(
         name = "Languages",
-        values = resume.languages.map { it.name }
+        values = resume.languages.map {
+          PortfolioInfoEntryDTO(it.name, it.level.name)
+        }
       ),
     )
   }

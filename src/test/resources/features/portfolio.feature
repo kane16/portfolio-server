@@ -12,31 +12,61 @@ Feature: Portfolio management
        "skills" : {
           "name" : "Skills",
           "values" : [
-             "Kotlin",
-             "Spring Boot",
-             "MongoDB"
+             {
+                "name" : "Kotlin",
+                "description" : "JVM"
+             },
+             {
+                "name" : "Spring Boot",
+                "description" : "Backend Framework"
+             },
+             {
+                "name" : "MongoDB",
+                "description" : "Database"
+             }
           ]
        },
        "experience" : {
           "name" : "Experience",
           "values" : [
-             "Backend Developer",
-             "Technical Lead"
+             {
+                "name" : "Backend Developer",
+                "description" : "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance"
+             },
+             {
+                "name" : "Technical Lead",
+                "description" : "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes"
+             }
           ]
        },
        "business" : {
           "name" : "Business",
           "values" : [
-             "E-commerce Platform",
-             "IT Consulting"
+             {
+                "name" : "E-commerce Platform",
+                "description" : "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance"
+             },
+             {
+                "name" : "IT Consulting",
+                "description" : "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes"
+             }
           ]
        },
        "languages" : {
           "name" : "Languages",
           "values" : [
-             "English",
-             "Spanish",
-             "French"
+             {
+                "name" : "English",
+                "description" : "C1"
+             },
+             {
+                "name" : "Spanish",
+                "description" : "B2"
+             },
+             {
+                "name" : "French",
+                "description" : "A2"
+             }
           ]
        }
     }
@@ -54,29 +84,53 @@ Feature: Portfolio management
        "skills" : {
           "name" : "Skills",
           "values" : [
-             "Java",
-             "JavaScript",
-             "React"
+             {
+                "name" : "Java",
+                "description" : "JVM"
+             },
+             {
+                "name" : "JavaScript",
+                "description" : "Web Development"
+             },
+             {
+                "name" : "React",
+                "description" : "Frontend Framework"
+             }
           ]
        },
        "experience" : {
           "name" : "Experience",
           "values" : [
-             "Full Stack Developer"
+             {
+                "name" : "Full Stack Developer",
+                "description" : "Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components"
+             }
           ]
        },
        "business" : {
           "name" : "Business",
           "values" : [
-             "Tech Startup"
+             {
+                "name" : "Tech Startup",
+                "description" : "Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components"
+             }
           ]
        },
        "languages" : {
           "name" : "Languages",
           "values" : [
-             "English",
-             "Spanish",
-             "French"
+             {
+                "name" : "English",
+                "description" : "C1"
+             },
+             {
+                "name" : "Spanish",
+                "description" : "B2"
+             },
+             {
+                "name" : "French",
+                "description" : "A2"
+             }
           ]
        }
     }

@@ -1,7 +1,6 @@
 package pl.delukesoft.portfolioserver.portfolio.model
 
-data class WorkLanguage(
+data class PortfolioInfoDTO(
   val name: String,
-  val level: LanguageLevel,
-) {
-}
+  val values: List<PortfolioInfoEntryDTO>
+)

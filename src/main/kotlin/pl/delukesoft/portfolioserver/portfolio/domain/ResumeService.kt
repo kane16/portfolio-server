@@ -1,14 +1,15 @@
-package pl.delukesoft.portfolioserver.portfolio
+package pl.delukesoft.portfolioserver.portfolio.domain
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.CurriculumNotFound
-import pl.delukesoft.portfolioserver.portfolio.model.Resume
+import pl.delukesoft.portfolioserver.portfolio.domain.model.Resume
 
 @Service
 class ResumeService(
   private val resumeRepository: ResumeRepository,
 ) {
-  private val log = org.slf4j.LoggerFactory.getLogger(this.javaClass)
+  private val log = LoggerFactory.getLogger(this.javaClass)
 
   fun getCvById(id: Long): Resume {
     log.info("Getting CV with id: $id")

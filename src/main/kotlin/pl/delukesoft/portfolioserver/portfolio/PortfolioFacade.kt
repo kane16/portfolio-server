@@ -1,6 +1,8 @@
 package pl.delukesoft.portfolioserver.portfolio
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.portfolio.domain.ResumeService
+import pl.delukesoft.portfolioserver.portfolio.model.PortfolioDTO
 
 @Component
 class PortfolioFacade(

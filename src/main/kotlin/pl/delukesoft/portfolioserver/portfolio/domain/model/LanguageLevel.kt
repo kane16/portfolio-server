@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.portfolio.model
+package pl.delukesoft.portfolioserver.portfolio.domain.model
 
 
 enum class LanguageLevel(val level: Int) {

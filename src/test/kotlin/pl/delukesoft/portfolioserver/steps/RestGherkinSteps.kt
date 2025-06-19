@@ -49,7 +49,7 @@ class RestGherkinSteps(
         assertEquals(responseBody, result.body)
       } else {
         logger.error("Invalid response body:\n{}", prettyPrint(result.body))
-        logger.error("Response should be JSON:\n{}", prettyPrint(result.body))
+        logger.error("Response should be JSON:\n{}", prettyPrint(responseBody))
         JSONAssert.assertEquals(responseBody, result.body, true)
       }
     }

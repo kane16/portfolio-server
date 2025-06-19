@@ -15,7 +15,7 @@ class TestcontainersConfiguration {
   @ServiceConnection
   fun mongoDbContainer(): MongoDBContainer {
     return MongoDBContainer(
-      DockerImageName.parse("kane16/delukesoft_test_mongo_db:1.0.0").asCompatibleSubstituteFor("mongo")
+      DockerImageName.parse("kane16/delukesoft_dev_mongo_db:1.0.0").asCompatibleSubstituteFor("mongo")
     ).apply {
       withReuse(true)
     }
