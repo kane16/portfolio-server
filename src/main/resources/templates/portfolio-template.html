@@ -30,6 +30,7 @@
               width: initial;
               min-height: initial;
               box-shadow: initial;
+              break-after: page;
           }
       }
   </style>
@@ -154,7 +155,7 @@
   </div>
 </div>
 <div class="page p-4 print:p-0 print:page">
-  <h2 class="font-bold text-2xl text-center pb-2 print:pt-6">Work History</h2>
+  <h2 class="font-bold text-xl text-center pb-2">Work History</h2>
   <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory1}">
     <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
       th:text="${work.timespan.end}"/></div>
@@ -188,7 +189,6 @@
   </div>
 </div>
 <div class="page p-4 print:p-0 print:page">
-  <div class="print:pt-16"></div>
   <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory2}">
     <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
       th:text="${work.timespan.end}"/></div>
