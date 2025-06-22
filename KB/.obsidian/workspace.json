@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "92fd29fa85a64d6c",
+            "id": "810ae6515162f2ff",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,21 +20,8 @@
               "icon": "lucide-file",
               "title": "Portfolio App overview"
             }
-          },
-          {
-            "id": "810ae6515162f2ff",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Portfolio schema.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Portfolio schema"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -182,10 +169,11 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "46ee5bd2eca17b0f",
+  "active": "810ae6515162f2ff",
   "lastOpenFiles": [
-    "Portfolio App overview.md",
     "Excalidraw/Portfolio schema.md",
+    "Portfolio App overview.md",
+    "Excalidraw/Drawing 2025-06-22 09.31.31.excalidraw.md",
     "Excalidraw"
   ]
 }
