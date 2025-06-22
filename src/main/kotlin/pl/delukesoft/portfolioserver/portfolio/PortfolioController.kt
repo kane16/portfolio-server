@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import pl.delukesoft.portfolioserver.auth.AuthRequired
-import pl.delukesoft.portfolioserver.portfolio.model.PortfolioDTO
 
 @RestController
 @RequestMapping("cv")
