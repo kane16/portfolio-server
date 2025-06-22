@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestHeader
 
-@FeignClient(name = "auth", url = "\${auth-service.url}/users")
+@FeignClient(name = "auth", url = "\${auth-service.url}/users", primary = false)
 interface AuthRequestService {
 
   @GetMapping("contextUser")

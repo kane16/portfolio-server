@@ -5,6 +5,8 @@ import com.jayway.jsonpath.internal.JsonFormatter.prettyPrint
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompare
+import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
 
@@ -21,7 +23,7 @@ class RestGherkinSteps(
   }
 
   fun defineSteps() {
-    Given("User sign in with credentials: ", baseRestClient::attachTokenWithLoginRequest)
+    Given("User is authorized with token: {string}", baseRestClient::attachTokenWithLoginRequest)
     When("{string} request is sent to endpoint {string} with no body") { method: String, endpoint: String ->
       try {
         result = sendRequest(method, endpoint, "")
@@ -48,8 +50,10 @@ class RestGherkinSteps(
       if (!responseBody.contains("{")) {
         assertEquals(responseBody, result.body)
       } else {
-        logger.error("Invalid response body:\n{}", prettyPrint(result.body))
-        logger.error("Response should be JSON:\n{}", prettyPrint(responseBody))
+        if (JSONCompare.compareJSON(result.body.toString(), responseBody, JSONCompareMode.LENIENT).failed() ) {
+          logger.error("Invalid response body:\n{}", prettyPrint(result.body))
+          logger.error("Response should be JSON:\n{}", prettyPrint(responseBody))
+        }
         JSONAssert.assertEquals(responseBody, result.body, true)
       }
     }

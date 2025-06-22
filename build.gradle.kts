@@ -72,6 +72,7 @@ dependencies {
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
   testImplementation("org.testcontainers:junit-jupiter")
   testImplementation("org.testcontainers:mongodb")
+  testImplementation("io.mockk:mockk:1.13.2")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

@@ -1,4 +1,4 @@
-Feature: Portfolio management
+Feature: Resume data read from server
 
   Scenario: User pulls default portfolio
     When "GET" request is sent to endpoint "/cv" with no body

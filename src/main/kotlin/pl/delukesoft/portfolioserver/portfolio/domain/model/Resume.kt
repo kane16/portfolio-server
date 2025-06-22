@@ -18,6 +18,7 @@ data class Resume(
   val image: Image? = null,
   val hobbies: List<String>,
   val languages: List<WorkLanguage>,
+  val visible: Boolean,
   val createdOn: LocalDateTime,
   val lastModified: LocalDateTime
 )
