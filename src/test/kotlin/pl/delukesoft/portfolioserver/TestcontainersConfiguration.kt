@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.utility.DockerImageName
-import pl.delukesoft.portfolioserver.auth.AuthRequestService
+import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
 
 @TestConfiguration(proxyBeanMethods = false)
 @Profile("test")

@@ -1,6 +1,5 @@
 package pl.delukesoft.portfolioserver.steps
 
-import com.fasterxml.jackson.module.kotlin.jsonMapper
 import com.jayway.jsonpath.internal.JsonFormatter.prettyPrint
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -23,7 +22,7 @@ class RestGherkinSteps(
   }
 
   fun defineSteps() {
-    Given("User is authorized with token: {string}", baseRestClient::attachTokenWithLoginRequest)
+    Given("User is authorized with token: {string}", baseRestClient::attachTokenToRequest)
     When("{string} request is sent to endpoint {string} with no body") { method: String, endpoint: String ->
       try {
         result = sendRequest(method, endpoint, "")
