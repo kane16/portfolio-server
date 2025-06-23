@@ -30,8 +30,8 @@ class TestcontainersConfiguration {
   @Primary
   fun authRequestService(): AuthRequestService {
     val service = mockk<AuthRequestService>()
-    every { service.getUserAuthorities("user") } returns listOf("ROLE_USER")
-    every { service.getUserAuthorities("admin") } returns listOf("ROLE_USER", "ROLE_ADMIN")
+    every { service.getUserAuthorities("Bearer user") } returns listOf("ROLE_USER")
+    every { service.getUserAuthorities("Bearer admin") } returns listOf("ROLE_USER", "ROLE_ADMIN")
     return service
   }
 

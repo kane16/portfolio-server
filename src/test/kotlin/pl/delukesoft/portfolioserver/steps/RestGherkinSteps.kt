@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.steps
 
 import com.jayway.jsonpath.internal.JsonFormatter.prettyPrint
+import io.cucumber.java.Before
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.skyscreamer.jsonassert.JSONAssert
@@ -19,6 +20,11 @@ class RestGherkinSteps(
 
   init {
     defineSteps()
+  }
+
+  @Before
+  fun resetToken() {
+    baseRestClient.resetToken()
   }
 
   fun defineSteps() {
@@ -42,7 +48,7 @@ class RestGherkinSteps(
     }
 
     Then("Response status code should be {int}") { statusCode: Int ->
-      assertEquals(result.statusCode.value(), statusCode)
+      assertEquals(statusCode, result.statusCode.value())
     }
 
     Then("Response body should be:") { responseBody: String ->

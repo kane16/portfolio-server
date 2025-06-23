@@ -63,12 +63,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Resume Core Functionalities/Resume Edit.md",
+                "file": "Resume Core Functionalities/Resume View.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Resume Edit"
+              "title": "Resume View"
             }
           }
         ],
@@ -222,15 +222,15 @@
   },
   "active": "8dece2f366aa1681",
   "lastOpenFiles": [
-    "Diagrams/Application model.md",
-    "Diagrams/Domain/Write Resume model.md",
-    "Diagrams/Domain/Read Resume model.md",
-    "Diagrams/Domain",
-    "Resume Core Functionalities/Resume View.md",
     "Portfolio App overview.md",
+    "Resume Core Functionalities/Resume View.md",
+    "Diagrams/Domain/Read Resume model.md",
+    "Diagrams/Domain/Write Resume model.md",
+    "Diagrams/Application model.md",
+    "Resume Core Functionalities/Resume Edit.md",
+    "Diagrams/Domain",
     "Diagrams/Untitled.md",
     "Diagrams",
-    "Resume Core Functionalities/Resume Edit.md",
     "Resume Core Functionalities",
     "Excalidraw/Drawing 2025-06-22 09.31.31.excalidraw.md",
     "Excalidraw"

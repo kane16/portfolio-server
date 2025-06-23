@@ -71,8 +71,8 @@ Feature: Resume data read from server
        }
     }
     """
-    
-  Scenario: User pulls specific portfolio
+
+  Scenario: Admin pulls specific portfolio
     Given User is authorized with token: "admin"
     When "GET" request is sent to endpoint "/cv/2" with no body
     Then Response status code should be 200
@@ -137,7 +137,19 @@ Feature: Resume data read from server
     }
     """
 
-  Scenario: User pulls non-existent portfolio
+  Scenario: Anonymous user tries to pull specific cv
+    When "GET" request is sent to endpoint "/cv/2" with no body
+    Then Response status code should be 401
+    And Response body should be:
+    """
+    {
+      "error": "Anonymous access is restricted to this endpoint",
+      "status": 401
+    }
+    """
+
+  Scenario: Admin user pulls non-existent portfolio
+    Given User is authorized with token: "admin"
     When "GET" request is sent to endpoint "/cv/999" with no body
     Then Response status code should be 404
     And Response body should be:

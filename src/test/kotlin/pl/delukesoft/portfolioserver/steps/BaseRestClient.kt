@@ -23,6 +23,11 @@ class BaseRestClient(
 
     private var token: String? = null
 
+    fun resetToken() {
+        logger.info("Resetting token")
+        this.token = null
+    }
+
     fun attachTokenToRequest(token: String) {
         logger.info("Attaching token to request")
         this.token = token

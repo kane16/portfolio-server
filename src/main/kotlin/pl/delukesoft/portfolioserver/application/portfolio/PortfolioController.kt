@@ -24,7 +24,7 @@ class PortfolioController(
   @GetMapping("/{id}")
   fun getCVById(
     @PathVariable("id") id: Long,
-    @RequestHeader("Authorization", required = true) token: String,
+    @RequestHeader("Authorization") token: String?,
   ): PortfolioDTO {
     log.info("Received request to fetch CV by id: {}", id)
     return portfolioFacade.getCvById(id)
