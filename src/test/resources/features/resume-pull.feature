@@ -1,6 +1,6 @@
 Feature: Resume data read from server
 
-  Scenario: User pulls default portfolio
+  Scenario: Guest pulls default portfolio
     When "GET" request is sent to endpoint "/cv" with no body
     Then Response status code should be 200
     And Response body should be:
@@ -137,7 +137,7 @@ Feature: Resume data read from server
     }
     """
 
-  Scenario: Anonymous user tries to pull specific cv
+  Scenario: Guest tries to pull specific cv
     When "GET" request is sent to endpoint "/cv/2" with no body
     Then Response status code should be 401
     And Response body should be:
