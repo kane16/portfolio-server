@@ -1,9 +1,7 @@
-After user opens main /portfolio page, [[Main page view]] should be shown. It will show errors in cases:
-* Resume doesn't exist
-* User being candidate and admin does not exist
-Main page should show error page with comment:
-* No default resume found
-To view specific resume, special authorities are needed - viewing entity should have ROLE_USER, anonymous access will be rejected.
+Portfolio View is a view where guest or user can read and identify skills and information about provided portfolio. There is dynamic side that allows user to choose which skills or other information he finds interesting, as well as specify concrete expectations and check if given portfolio contains information about it.
+### 1. Anonymous user enters portfolio view
+
+When anonymous user enters [[Main page view]], default portfolio should be shown. Customization of shown skills, business and search phrase is possible. 
 
 ```plantuml
 actor ANONYMOUS
@@ -20,6 +18,10 @@ ANONYMOUS -> SYSTEM: getDefaultCV()
 SYSTEM -> ANONYMOUS: <font color=red> 404 No default resume found
 end
 ```
+
+### 2. Candidate enters portfolio view
+
+When Candidate enters [[Main page view]] his default portfolio should be shown, or default in application if his own is not existing.
 
 ```plantuml
 actor ROLE_CANDIDATE as candidate
@@ -41,6 +43,10 @@ SYSTEM -> candidate: <font color=red> 404 No default resume found
 end
 ```
 
+### 3. Admin enters portfolio view
+
+When Admin enters [[Main page view]] his default portfolio should be shown, or default in application if his own is not existing.
+
 ```plantuml
 actor ROLE_ADMIN
 group Default resume
@@ -57,8 +63,13 @@ SYSTEM -> ROLE_ADMIN: <font color=red> 404 No default resume found
 end
 ```
 
-In case of Candidate, by default his CV should be shown first as he enters with authorization, if he doesn't have any then application default should be returned.
+### 4. Navigation to different pages
 
-Search part should be fulltext field that will be triggered with delay not to overwhelm server. It should cause changes on both lists below that shows Skills and Experiences. 
+There is Top Bar in [[Main page view]], so user can view CV and Blog page (which will point him to _blank_ page). After login, he will be able to see also Edit portfolio button that will navigate him to page which will show all portfolios that modification can be based on. 
 
-Two lists will also change depending on selected skills and businesses.
+> [!IMPORTANT]
+>Search part should be fulltext field that will be triggered with delay not to overwhelm server. It should cause changes on both lists below that shows Skills and Experiences. 
+
+> [!IMPORTANT]
+> Two lists will also change depending on selected skills and businesses.
+

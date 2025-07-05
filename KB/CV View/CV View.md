@@ -1,8 +1,4 @@
-After opening /portfolio/pdf link - [[CV print]] should show up. Behaviour of print should be different depending on user that calls it. There are 3 user cases:
 
-- Guest
-- Candidate
-- Admin
 
 ```plantuml
 actor ANONYMOUS as guest
@@ -48,4 +44,6 @@ SYSTEM -> admin: <font color=red> 404 No Admin Print Template found
 end
 ```
 
-All those cases should be covered with tests.
+>[!NOTE]
+>In case of Candidate, by default his CV should be shown first as he enters with authorization, if he doesn't have any then application default should be returned.
+

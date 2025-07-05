@@ -1,10 +1,4 @@
-Edit will consist set of operations that after opening the Resume will be available to user:
-* Admin - for any Resume
-* Candidate - for his own Resume
-
-Edit will 
-
-### Resume Flow for Candidate
+### 1. Resume Flow for Candidate
 
 ```plantuml
 actor ROLE_CANDIDATE as user
@@ -41,7 +35,7 @@ end
 
 ```
 
-## Resume Flow for Admin
+### 2. Resume Flow for Admin
 
 ```plantuml
 actor ROLE_ADMIN as user
