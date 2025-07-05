@@ -1,4 +1,4 @@
-
+[[CV print]] is shown to user, it's dynamically generated data based on portfolio that was filled 
 
 ```plantuml
 actor ANONYMOUS as guest

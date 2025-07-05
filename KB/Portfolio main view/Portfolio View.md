@@ -65,11 +65,15 @@ end
 
 ### 4. Navigation to different pages
 
-There is Top Bar in [[Main page view]], so user can view CV and Blog page (which will point him to _blank_ page). After login, he will be able to see also Edit portfolio button that will navigate him to page which will show all portfolios that modification can be based on. 
+There is Top Bar in [[Main page view]], so user can view [[CV View]] and Blog posts (which will point him to _blank_ page). After login, he will be able to see also Edit portfolio button that will navigate him to page which will show all portfolios that modification can be based on. 
 
 > [!IMPORTANT]
 >Search part should be fulltext field that will be triggered with delay not to overwhelm server. It should cause changes on both lists below that shows Skills and Experiences. 
 
 > [!IMPORTANT]
 > Two lists will also change depending on selected skills and businesses.
+
+### 5. Portfolio search
+
+Search functionality uses [[Read Resume model]] from server to retrieve specific. Whole backend part follows CQRS architectural pattern to divide read part from write part. Read part will be far simpler, there will be at most one resume per user. Write part will store different resume versions and user will be able to base new default resume on chosen version, not just default one.
 

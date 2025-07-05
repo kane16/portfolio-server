@@ -6,7 +6,7 @@ import pl.delukesoft.blog.image.exception.CurriculumNotFound
 import pl.delukesoft.portfolioserver.domain.resume.read.model.Resume
 
 @Service
-class ResumeResumeService(
+class ResumeService(
   private val resumeReadRepository: ResumeReadRepository,
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)

@@ -2,20 +2,20 @@ package pl.delukesoft.portfolioserver.adapters.portfolio
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
-import pl.delukesoft.portfolioserver.domain.resume.read.ResumeResumeService
+import pl.delukesoft.portfolioserver.domain.resume.read.ResumeService
 
 @Component
 class PortfolioFacade(
-  private val resumeResumeService: ResumeResumeService,
+  private val resumeService: ResumeService,
   private val resumeMapper: ResumeMapper
 ) {
 
   fun getCvById(id: Long): PortfolioDTO {
-    return resumeMapper.mapToDTO(resumeResumeService.getCvById(id))
+    return resumeMapper.mapToDTO(resumeService.getCvById(id))
   }
 
   fun getDefaultCV(): PortfolioDTO {
-    return resumeMapper.mapToDTO(resumeResumeService.getDefaultCV())
+    return resumeMapper.mapToDTO(resumeService.getDefaultCV())
   }
 
 }
