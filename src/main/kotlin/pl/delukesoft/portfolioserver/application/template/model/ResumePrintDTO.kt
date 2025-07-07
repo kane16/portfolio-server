@@ -6,6 +6,7 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 
 data class ResumePrintDTO(
+  val id: Long,
   val fullname: String,
   val imageSource: String,
   val title: String,
@@ -31,6 +32,10 @@ data class ResumePrintDTO(
     context.setVariable("workHistory1", workHistory1)
     context.setVariable("workHistory2", workHistory2)
     context.setVariable("hobbies", hobbies)
+  }
+
+  override fun getResumeId(): Long {
+    return id
   }
 
   private fun <T> partitionToHalf(list: List<T>): Pair<List<T>, List<T>> {

@@ -77,3 +77,5 @@ There is Top Bar in [[Main page view]], so user can view [[CV View]] and Blog po
 
 Search functionality uses [[Read Resume model]] from server to retrieve specific. Whole backend part follows CQRS architectural pattern to divide read part from write part. Read part will be far simpler, there will be at most one resume per user. Write part will store different resume versions and user will be able to base new default resume on chosen version, not just default one.
 
+>[!Important]
+>View will use [[Application connector model]]

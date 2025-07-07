@@ -4,13 +4,18 @@
 
 ```plantuml
 actor ANONYMOUS as guest
+actor SYSTEM as system
 group Default print
-guest -> SYSTEM: getDefaultCV() 
-SYSTEM -> guest: <font color=green> 200 HTML Print Template PDF
+guest -> system: GET /pdf
+system -> guest: 200 HTML Print Template PDF
+end
+group Default print with search
+guest -> system: POST /pdf with PortfolioSearchDTO 
+system -> guest: <font color=green> 200 HTML Print Template PDF
 end
 group Default print doesn't exist
-guest -> SYSTEM: getDefaultCV() 
-SYSTEM -> guest: <font color=red> 404 No Print Template found
+guest -> system: GET /pdf
+system -> guest: <font color=red> 404 No Print Template found
 end
 ```
 
@@ -25,9 +30,17 @@ group Candidate Default print
 candidate -> system: GET /pdf/{id} 
 system -> candidate: <font color=green> 200 HTML Print Specific to Candidate Template PDF
 end
+group Candidate Default print with search
+candidate -> system: POST /pdf/{id} PortfolioSearchDTO 
+system -> candidate: <font color=green> 200 HTML Print Specific to Candidate Template PDF
+end
 group Default print doesn't exist
 candidate -> system: GET /pdf/{id} 
 system -> candidate: <font color=red> 404 No Candidate Print Template found
+end
+group Candidate Default print with search doesn't exist
+candidate -> system: POST /pdf/{id} PortfolioSearchDTO 
+system -> candidate: <font color=green> 404 No Candidate Print Template found
 end
 group Candidate wants to view preview of his edited CV
 candidate -> system: GET /pdf/edit/{id}
@@ -83,3 +96,11 @@ end
 ```
 
 Admin should be able to see any CV on the website, by default he will see his own CV.
+
+### 4. Page usage
+
+View will be used as Iframe in [[Portfolio View]] and [[Resume Edit]]
+
+>[!Important]
+>View will use [[Application connector model]]
+

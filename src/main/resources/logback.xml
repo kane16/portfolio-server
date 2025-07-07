@@ -1,7 +1,7 @@
 <configuration>
   <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
   <conversionRule conversionWord="highlight"
-    converterClass="pl.delukesoft.portfolioserver.logs.HighlightingLogbackMessageColoring"/>
+    converterClass="pl.delukesoft.portfolioserver.utility.logs.HighlightingLogbackMessageColoring"/>
 
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>

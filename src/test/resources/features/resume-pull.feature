@@ -6,23 +6,23 @@ Feature: Resume data read from server
     And Response body should be:
     """
     {
-       "id" : 3,
+       "id" : 1,
        "title" : "Lead Java Developer",
-       "description" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+       "description" : "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
        "skills" : {
           "name" : "Skills",
           "values" : [
+             {
+                "name" : "Java",
+                "description" : "JVM"
+             },
              {
                 "name" : "Kotlin",
                 "description" : "JVM"
              },
              {
-                "name" : "Spring Boot",
-                "description" : "Backend Framework"
-             },
-             {
-                "name" : "MongoDB",
-                "description" : "Database"
+                "name" : "Scala",
+                "description" : "JVM"
              }
           ]
        },
@@ -30,12 +30,8 @@ Feature: Resume data read from server
           "name" : "Experience",
           "values" : [
              {
-                "name" : "Backend Developer",
-                "description" : "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance"
-             },
-             {
-                "name" : "Technical Lead",
-                "description" : "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes"
+                "name" : "Senior Developer",
+                "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services"
              }
           ]
        },
@@ -43,12 +39,8 @@ Feature: Resume data read from server
           "name" : "Business",
           "values" : [
              {
-                "name" : "E-commerce Platform",
-                "description" : "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance"
-             },
-             {
-                "name" : "IT Consulting",
-                "description" : "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes"
+                "name" : "Bank",
+                "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services"
              }
           ]
        },

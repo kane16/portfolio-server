@@ -53,10 +53,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "Portfolio main view/mockup/Main page view.md"
+                "file": "UML/Domain/Write Resume model.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Main page view"
+              "title": "Write Resume model"
             }
           }
         ],
@@ -210,17 +210,17 @@
   },
   "active": "c0439ed695e488d4",
   "lastOpenFiles": [
-    "print-solid.svg",
-    "CV View/mockup/CV print.md",
-    "Portfolio main view/mockup/Main page view.md",
-    "Portfolio main view/mockup/Delukesoft.jpg",
-    "Portfolio main view/Portfolio View.md",
-    "Edit View/mockup/Edit Page.md",
-    "CV View/CV View.md",
-    "Portfolio App overview.md",
-    "UML/Domain/Application connector model.md",
-    "UML/Domain/Read Resume model.md",
     "Edit View/Resume Edit.md",
+    "Edit View/mockup/Edit Page.md",
+    "UML/Domain/Application connector model.md",
+    "CV View/CV View.md",
+    "Portfolio main view/Portfolio View.md",
+    "Portfolio main view/mockup/Main page view.md",
+    "Portfolio main view/mockup/print-solid.svg",
+    "CV View/mockup/CV print.md",
+    "Portfolio main view/mockup/Delukesoft.jpg",
+    "Portfolio App overview.md",
+    "UML/Domain/Read Resume model.md",
     "Excalidraw/Drawing 2025-07-05 19.55.48.excalidraw.md",
     "Excalidraw",
     "UML/Domain/Write Resume model.md",
@@ -238,7 +238,6 @@
     "CV View/mockup/Pasted Image 20250628094342_669.png",
     "CV View/mockup/Pasted Image 20250628094342_667.png",
     "CV View/mockup/Pasted Image 20250628094342_663.png",
-    "CV View/mockup/Pasted Image 20250628094342_662.png",
     "Diagrams/View/cv",
     "Diagrams/View/edit",
     "Portfolio main view/mockup",

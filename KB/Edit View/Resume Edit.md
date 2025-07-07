@@ -1,73 +1,64 @@
 [[Edit Page]] is shown to the signed in user, error for unauthorized. 
-### 1. Resume Flow for Candidate
+### 1. Resume pulling flow
 
 ```plantuml
-actor ROLE_CANDIDATE as user
+actor ROLE_CANDIDATE as candidate
+actor ROLE_ADMIN as admin
 participant System as system
 boundary Auth as auth
 database portfolio_db as db
 
 group Edit candidate Resume
-user -> system: /edit
-system -> user: Lazily loaded PortfolioEdit.tsx
-user -> system: getPortfolioById(id: Long)
+candidate -> system: /edit
+system -> candidate: Lazily loaded PortfolioEdit.tsx
+candidate -> system: getPortfolioById(id: Long)
 system -> auth: getRolesForUser(token: String)
 auth -> system: <font color=green> 200 ROLE_CANDIDATE
 system -> db: findByIdAndUser(id: Long, user: User)
 db -> system: Resume
-system -> user: <font color=green> 200 EditPortfolioDTO
+system -> candidate: <font color=green> 200 EditPortfolioDTO
 end
 
 group Edit different Resume
-user -> system: /edit
-system -> user: Lazily loaded PortfolioEdit.tsx
+candidate -> system: /edit
+system -> candidate: Lazily loaded PortfolioEdit.tsx
 user -> system: getPortfolioById(id: Long)
 system -> auth: getRolesForUser(token: String)
 auth -> system: <font color=green> 200 ROLE_CANDIDATE
 system -> db: findByIdAndUser(id: Long, user: User)
 db -> system:  <font color=red> None
-system -> user: <font color=red> 404 Portfolio not found
+system -> candidate: <font color=red> 404 Portfolio not found
 end
-
-group Open Candidate Resume
-user -> system: /edit/opened
-system -> auth: getRolesForUser(token: String)
-end
-
-```
-
-### 2. Resume Flow for Admin
-
-```plantuml
-actor ROLE_ADMIN as user
-participant System as system
-boundary Auth as auth
-database portfolio_db as db
 
 group Edit candidate portfolio
-user -> system: /edit
-system -> user: Lazily loaded PortfolioEdit.tsx
-user -> system: getPortfolioById(id: Long)
+admin -> system: /edit
+system -> admin: Lazily loaded PortfolioEdit.tsx
+admin -> system: getPortfolioById(id: Long)
 system -> auth: getRolesForUser(token: String)
 auth -> system: <font color=green> 200 ROLE_ADMIN
 system -> db: findById(id: Long)
 db -> system: Resume
-system -> user: <font color=green> 200 EditPortfolioDTO
+system -> admin: <font color=green> 200 EditPortfolioDTO
 end
 
 group Edit different portfolio
-user -> system: /edit
-system -> user: Lazily loaded PortfolioEdit.tsx
-user -> system: getPortfolioById(id: Long)
+admin -> system: /edit
+system -> admin: Lazily loaded PortfolioEdit.tsx
+admin -> system: getPortfolioById(id: Long)
 system -> auth: getRolesForUser(token: String)
 auth -> system: <font color=green> 200 ROLE_ADMIN
 system -> db: findById(id: Long)
 db -> system:  <font color=red> None
-system -> user: <font color=red> 404 Portfolio not found
+system -> admin: <font color=red> 404 Portfolio not found
 end
 
 ```
+
+
 
 ### 3. Edit model
 
 Edit page users [[Write Resume model]] to read different versions, store and operate on them.
+
+>[!Important]
+>View will use [[Application connector model]]

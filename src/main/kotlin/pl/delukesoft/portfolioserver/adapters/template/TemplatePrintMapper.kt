@@ -18,6 +18,7 @@ class TemplatePrintMapper {
 
   fun mapToPrint(resume: Resume): PrintDTO {
     return ResumePrintDTO(
+      id = resume.id!!,
       fullname = "Łukasz Gumiński",
       imageSource = resume.image?.src ?: "",
       title = resume.title,
