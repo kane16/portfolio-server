@@ -5,7 +5,7 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 
-data class ResumePrintDTO(
+data class ResumePrint(
   val id: Long,
   val fullname: String,
   val imageSource: String,

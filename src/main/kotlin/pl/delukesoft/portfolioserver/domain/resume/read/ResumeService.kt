@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.CurriculumNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearchDTO
+import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearch
 import pl.delukesoft.portfolioserver.domain.resume.read.model.Resume
 
 @Service
@@ -14,7 +14,7 @@ class ResumeService(
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  fun getCvById(id: Long, portfolioSearch: PortfolioSearchDTO): Resume {
+  fun getCvById(id: Long, portfolioSearch: PortfolioSearch): Resume {
     log.info("Getting CV with id: $id")
     val contextUser = userContext.user!!
     val resume = when {

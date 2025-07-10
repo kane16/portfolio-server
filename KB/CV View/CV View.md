@@ -41,6 +41,22 @@ Search criteria on CV view will affect results within CV itself, not total numbe
 Search functionality will not be used within view itself, it will be extensively used to show results for [[Portfolio View]] and [[Resume Edit]] preview.
 
 Search criteria will affect Skills, Work history and Side projects segments of CV.
+
+```plantuml
+actor user
+participant System as system
+
+group Default resume
+user -> system: POST /pdf/{id} with PortfolioSearch body
+system -> user: 200 Default Resume
+end
+
+group Resume by ID
+user -> system: POST /pdf/{id} with PortfolioSearch body
+system -> user: 200 Resume with id
+end
+
+```
 ### 3. Page usage
 
 View will be used as Iframe in [[Portfolio View]] and [[Resume Edit]]

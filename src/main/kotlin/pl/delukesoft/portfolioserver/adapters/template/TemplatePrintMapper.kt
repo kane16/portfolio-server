@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
-import pl.delukesoft.portfolioserver.application.template.model.ResumePrintDTO
+import pl.delukesoft.portfolioserver.application.template.model.ResumePrint
 import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.TimespanDTO
 import pl.delukesoft.portfolioserver.domain.resume.read.model.Experience
@@ -17,7 +17,7 @@ import pl.delukesoft.portfolioserver.domain.resume.read.model.Timespan
 class TemplatePrintMapper {
 
   fun mapToPrint(resume: Resume): PrintDTO {
-    return ResumePrintDTO(
+    return ResumePrint(
       id = resume.id!!,
       fullname = "Łukasz Gumiński",
       imageSource = resume.image?.src ?: "",

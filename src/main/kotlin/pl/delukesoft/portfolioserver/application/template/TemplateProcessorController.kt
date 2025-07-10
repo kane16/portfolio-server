@@ -14,7 +14,7 @@ import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.adapters.template.TemplateProcessorFacade
-import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearchDTO
+import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearch
 
 @RestController
 @RequestMapping("/pdf")
@@ -39,7 +39,7 @@ class TemplateProcessorController(
   fun generatePDFBySearch(
     request: HttpServletRequest,
     response: HttpServletResponse,
-    @RequestBody @Valid portfolioSearch: PortfolioSearchDTO,
+    @RequestBody @Valid portfolioSearch: PortfolioSearch,
     @RequestHeader("Authorization") token: String? = null,
   ): String {
     val webApplication = JakartaServletWebApplication.buildApplication(request.servletContext)
