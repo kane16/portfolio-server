@@ -51,12 +51,14 @@
             "id": "c0439ed695e488d4",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "UML/Domain/Application connector model.md"
+                "file": "CV View/CV View.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "Application connector model"
+              "icon": "lucide-file",
+              "title": "CV View"
             }
           }
         ],
@@ -210,11 +212,11 @@
   },
   "active": "c0439ed695e488d4",
   "lastOpenFiles": [
+    "UML/Domain/Application connector model.md",
     "CV View/CV View.md",
     "UML/Domain/Write Resume model.md",
     "Edit View/Resume Edit.md",
     "Edit View/mockup/Edit Page.md",
-    "UML/Domain/Application connector model.md",
     "Portfolio main view/Portfolio View.md",
     "Portfolio main view/mockup/Main page view.md",
     "Portfolio main view/mockup/print-solid.svg",
