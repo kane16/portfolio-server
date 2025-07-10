@@ -2,8 +2,7 @@ package pl.delukesoft.portfolioserver.adapters.template
 
 import org.springframework.stereotype.Component
 import org.thymeleaf.context.WebContext
-import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.adapters.auth.exception.AuthorizationException
+import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearchDTO
 import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
 import pl.delukesoft.portfolioserver.domain.generation.DocumentGenerationService
 import pl.delukesoft.portfolioserver.domain.resume.read.ResumeService
@@ -12,12 +11,11 @@ import pl.delukesoft.portfolioserver.domain.resume.read.ResumeService
 class TemplateProcessorFacade(
   private val resumeService: ResumeService,
   private val printMapper: TemplatePrintMapper,
-  private val documentGenerationService: DocumentGenerationService,
-  private val userContext: UserContext
+  private val documentGenerationService: DocumentGenerationService
 ) {
 
-  fun generateDefaultResumePdf(webContext: WebContext): String {
-    val resume = resumeService.getDefaultCV()
+  fun generateDefaultResumePdf(webContext: WebContext, portfolioSearch: PortfolioSearchDTO? = null): String {
+    val resume = resumeService.getDefaultCV(portfolioSearch)
     val resumePrint: PrintDTO = printMapper.mapToPrint(resume)
     return documentGenerationService.generateResumeHtml(resumePrint, webContext)
   }

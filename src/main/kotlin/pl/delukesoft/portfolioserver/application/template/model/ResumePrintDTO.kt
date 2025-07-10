@@ -43,4 +43,9 @@ data class ResumePrintDTO(
     return list.take(half) to list.takeLast(list.size - half)
   }
 
+  override fun toString(): String {
+    return "ResumePrintDTO(id=$id, fullname='$fullname', imageSource='$imageSource', title='$title', summary='$summary', skills=$skills, languages=$languages, sideProjects=$sideProjects, workHistory=$workHistory, hobbies=$hobbies)"
+  }
+
+
 }

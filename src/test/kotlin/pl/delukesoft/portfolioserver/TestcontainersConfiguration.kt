@@ -1,5 +1,6 @@
 package pl.delukesoft.portfolioserver
 
+import com.fasterxml.jackson.databind.json.JsonMapper
 import io.mockk.every
 import io.mockk.mockk
 import org.springframework.boot.test.context.TestConfiguration
@@ -11,11 +12,13 @@ import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.utility.DockerImageName
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
 import pl.delukesoft.portfolioserver.domain.generation.DocumentGenerationService
 
 @TestConfiguration(proxyBeanMethods = false)
 @Profile("test")
 class TestcontainersConfiguration {
+  private var jsonMapper = JsonMapper()
 
   @Bean
   @ServiceConnection
@@ -34,22 +37,10 @@ class TestcontainersConfiguration {
     val service = mockk<DocumentGenerationService>()
     every {
       service.generateResumeHtml(
-        match { print -> print.getResumeId() == 1L },
+        any(),
         any()
       )
-    } returns "html 1"
-    every {
-      service.generateResumeHtml(
-        match { print -> print.getResumeId() == 2L },
-        any()
-      )
-    } returns "html 2"
-    every {
-      service.generateResumeHtml(
-        match { print -> print.getResumeId() == 3L },
-        any()
-      )
-    } returns "html 3"
+    } answers { jsonMapper.writeValueAsString(firstArg<PrintDTO>()) }
     return service
   }
 

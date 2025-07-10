@@ -53,10 +53,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "UML/Domain/Write Resume model.md"
+                "file": "UML/Domain/Application connector model.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Write Resume model"
+              "title": "Application connector model"
             }
           }
         ],
@@ -210,10 +210,11 @@
   },
   "active": "c0439ed695e488d4",
   "lastOpenFiles": [
+    "CV View/CV View.md",
+    "UML/Domain/Write Resume model.md",
     "Edit View/Resume Edit.md",
     "Edit View/mockup/Edit Page.md",
     "UML/Domain/Application connector model.md",
-    "CV View/CV View.md",
     "Portfolio main view/Portfolio View.md",
     "Portfolio main view/mockup/Main page view.md",
     "Portfolio main view/mockup/print-solid.svg",
@@ -223,7 +224,6 @@
     "UML/Domain/Read Resume model.md",
     "Excalidraw/Drawing 2025-07-05 19.55.48.excalidraw.md",
     "Excalidraw",
-    "UML/Domain/Write Resume model.md",
     "UML/Application/Application model.md",
     "Edit View/mockup",
     "Edit View",

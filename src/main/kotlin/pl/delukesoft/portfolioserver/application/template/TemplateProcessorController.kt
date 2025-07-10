@@ -2,8 +2,11 @@ package pl.delukesoft.portfolioserver.application.template
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -11,6 +14,7 @@ import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.adapters.template.TemplateProcessorFacade
+import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearchDTO
 
 @RestController
 @RequestMapping("/pdf")
@@ -28,6 +32,19 @@ class TemplateProcessorController(
     val webApplication = JakartaServletWebApplication.buildApplication(request.servletContext)
     val webContext = WebContext(webApplication.buildExchange(request, response), request.locale)
     return templateProcessorFacade.generateDefaultResumePdf(webContext)
+  }
+
+  @AuthRequired(anonymousAllowed = true)
+  @PostMapping
+  fun generatePDFBySearch(
+    request: HttpServletRequest,
+    response: HttpServletResponse,
+    @RequestBody @Valid portfolioSearch: PortfolioSearchDTO,
+    @RequestHeader("Authorization") token: String? = null,
+  ): String {
+    val webApplication = JakartaServletWebApplication.buildApplication(request.servletContext)
+    val webContext = WebContext(webApplication.buildExchange(request, response), request.locale)
+    return templateProcessorFacade.generateDefaultResumePdf(webContext, portfolioSearch)
   }
 
   @AuthRequired("ROLE_CANDIDATE", "ROLE_ADMIN")

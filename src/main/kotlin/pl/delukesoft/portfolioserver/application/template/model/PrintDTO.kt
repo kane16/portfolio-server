@@ -6,5 +6,6 @@ interface PrintDTO {
 
   fun attachDataToContext(context: WebContext)
   fun getResumeId(): Long
+  override fun toString(): String
 
 }
