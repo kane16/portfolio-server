@@ -60,9 +60,21 @@
               "icon": "lucide-file",
               "title": "CV View"
             }
+          },
+          {
+            "id": "f831a7926e090adf",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "UML/Domain/Write Resume model.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Write Resume model"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -210,8 +222,9 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "c0439ed695e488d4",
+  "active": "f831a7926e090adf",
   "lastOpenFiles": [
+    "UML/Domain/Read Resume model.md",
     "UML/Domain/Application connector model.md",
     "CV View/CV View.md",
     "UML/Domain/Write Resume model.md",
@@ -223,7 +236,6 @@
     "CV View/mockup/CV print.md",
     "Portfolio main view/mockup/Delukesoft.jpg",
     "Portfolio App overview.md",
-    "UML/Domain/Read Resume model.md",
     "Excalidraw/Drawing 2025-07-05 19.55.48.excalidraw.md",
     "Excalidraw",
     "UML/Application/Application model.md",
