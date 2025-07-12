@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.resume.read.model
+package pl.delukesoft.portfolioserver.domain.resume.model
 
 import org.springframework.data.annotation.Id
 
@@ -10,4 +10,5 @@ data class Experience(
   val description: String? = null,
   val timespan: Timespan,
   val skills: List<Skill> = emptyList(),
+  val isSideProject: Boolean = false,
 )

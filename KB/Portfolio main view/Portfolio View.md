@@ -1,69 +1,8 @@
 Portfolio View is a view where guest or user can read and identify skills and information about provided portfolio. There is dynamic side that allows user to choose which skills or other information he finds interesting, as well as specify concrete expectations and check if given portfolio contains information about it.
 ### 1. Anonymous user enters portfolio view
 
-When anonymous user enters [[Main page view]], default portfolio should be shown. Customization of shown skills, business and search phrase is possible. 
 
-```plantuml
-actor ANONYMOUS
-group Default resume
-ANONYMOUS -> SYSTEM: getDefaultCV(searchText, business, skill) 
-SYSTEM -> ANONYMOUS: <font color=green> 200 ResumeDTO
-end
-group Specific resume by id
-ANONYMOUS -> SYSTEM: getResumeById(id: Long)
-SYSTEM -> ANONYMOUS: <font color=red> 401 Anonymous access is restricted to this endpoint 
-end
-group Default resume doesn't exist
-ANONYMOUS -> SYSTEM: getDefaultCV() 
-SYSTEM -> ANONYMOUS: <font color=red> 404 No default resume found
-end
-```
-
-### 2. Candidate enters portfolio view
-
-When Candidate enters [[Main page view]] his default portfolio should be shown, or default in application if his own is not existing.
-
-```plantuml
-actor ROLE_CANDIDATE as candidate
-group Default resume
-candidate -> SYSTEM: getDefaultCV(searchText, business, skill)  
-SYSTEM -> candidate: <font color=green> 200 ResumeDTO
-end
-group Specific resume by id being candidate resume
-candidate -> SYSTEM: getResumeById(id: Long, searchText, business, skill)
-SYSTEM -> candidate: <font color=green> 200 ResumeDTO 
-end
-group Specific resume by id not being candidate resume
-candidate -> SYSTEM: getResumeById(id: Long, searchText, business, skill)
-SYSTEM -> candidate: <font color=red> User is not authorized to access the resource 
-end
-group Default resume doesn't exist
-candidate -> SYSTEM: getDefaultCV(searchText, business, skill) 
-SYSTEM -> candidate: <font color=red> 404 No default resume found
-end
-```
-
-### 3. Admin enters portfolio view
-
-When Admin enters [[Main page view]] his default portfolio should be shown, or default in application if his own is not existing.
-
-```plantuml
-actor ROLE_ADMIN
-group Default resume
-ROLE_ADMIN -> SYSTEM: getDefaultCV(searchText, business, skill)
-SYSTEM -> ROLE_ADMIN: <font color=green> 200 ResumeDTO
-end
-group Specific resume by id
-ROLE_ADMIN -> SYSTEM: getResumeById(id: Long, searchText, business, skill)
-SYSTEM -> ROLE_ADMIN: <font color=green> 200 ResumeDTO
-end
-group Default resume doesn't exist
-ROLE_ADMIN -> SYSTEM: getDefaultCV(searchText, business, skill) 
-SYSTEM -> ROLE_ADMIN: <font color=red> 404 No default resume found
-end
-```
-
-### 4. Navigation to different pages
+### 2. Navigation to different pages
 
 There is Top Bar in [[Main page view]], so user can view [[CV View]] and Blog posts (which will point him to _blank_ page). After login, he will be able to see also Edit portfolio button that will navigate him to page which will show all portfolios that modification can be based on. 
 
@@ -73,7 +12,7 @@ There is Top Bar in [[Main page view]], so user can view [[CV View]] and Blog po
 > [!IMPORTANT]
 > Two lists will also change depending on selected skills and businesses.
 
-### 5. Portfolio search
+### 3. Portfolio search
 
 Search functionality uses [[Read Resume model]] from server to retrieve specific. Whole backend part follows CQRS architectural pattern to divide read part from write part. Read part will be far simpler, there will be at most one resume per user. Write part will store different resume versions and user will be able to base new default resume on chosen version, not just default one.
 

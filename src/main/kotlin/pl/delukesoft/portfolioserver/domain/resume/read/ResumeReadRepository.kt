@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resume.read
 
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
-import pl.delukesoft.portfolioserver.domain.resume.read.model.Resume
+import pl.delukesoft.portfolioserver.domain.resume.model.Resume
 
 interface ResumeReadRepository: MongoRepository<Resume, Long> {
 

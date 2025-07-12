@@ -1,0 +1,4 @@
+_id,username,email,roles
+1,john.doe,john.doe@example.com,"ROLE_USER,ROLE_CANDIDATE,ROLE_ADMIN"
+2,jane.smith,jane.smith@example.com,"ROLE_USER"
+3,alex.tech,alex.tech@example.com,"ROLE_USER,ROLE_CANDIDATE"

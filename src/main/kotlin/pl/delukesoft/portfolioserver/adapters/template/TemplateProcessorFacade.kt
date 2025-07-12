@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 import org.thymeleaf.context.WebContext
 import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
-import pl.delukesoft.portfolioserver.domain.generation.DocumentGenerationService
+import pl.delukesoft.portfolioserver.domain.resume.print.DocumentGenerationService
 import pl.delukesoft.portfolioserver.domain.resume.read.ResumeService
 
 @Component
@@ -15,7 +15,7 @@ class TemplateProcessorFacade(
 ) {
 
   fun generateDefaultResumePdf(webContext: WebContext, portfolioSearch: PortfolioSearch? = null): String {
-    val resume = resumeService.getDefaultCV(portfolioSearch)
+    val resume = resumeService.getDefaultCV()
     val resumePrint: PrintDTO = printMapper.mapToPrint(resume)
     return documentGenerationService.generateResumeHtml(resumePrint, webContext)
   }

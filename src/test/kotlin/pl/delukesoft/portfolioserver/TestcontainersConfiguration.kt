@@ -13,7 +13,7 @@ import org.testcontainers.utility.DockerImageName
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
-import pl.delukesoft.portfolioserver.domain.generation.DocumentGenerationService
+import pl.delukesoft.portfolioserver.domain.resume.print.DocumentGenerationService
 
 @TestConfiguration(proxyBeanMethods = false)
 @Profile("test")

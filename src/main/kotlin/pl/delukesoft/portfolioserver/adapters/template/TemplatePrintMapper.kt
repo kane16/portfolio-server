@@ -3,14 +3,14 @@ package pl.delukesoft.portfolioserver.adapters.template
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
-import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
-import pl.delukesoft.portfolioserver.application.template.model.ResumePrint
 import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.TimespanDTO
-import pl.delukesoft.portfolioserver.domain.resume.read.model.Experience
-import pl.delukesoft.portfolioserver.domain.resume.read.model.Resume
-import pl.delukesoft.portfolioserver.domain.resume.read.model.Timespan
+import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
+import pl.delukesoft.portfolioserver.application.template.model.ResumePrint
+import pl.delukesoft.portfolioserver.domain.resume.model.Experience
+import pl.delukesoft.portfolioserver.domain.resume.model.Resume
+import pl.delukesoft.portfolioserver.domain.resume.model.Timespan
 
 @Component
 @RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)

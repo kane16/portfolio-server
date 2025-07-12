@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.CurriculumNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearch
-import pl.delukesoft.portfolioserver.domain.resume.read.model.Resume
+import pl.delukesoft.portfolioserver.domain.resume.model.Resume
 
 @Service
 class ResumeService(
@@ -14,19 +14,14 @@ class ResumeService(
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  fun getCvById(id: Long, portfolioSearch: PortfolioSearch): Resume {
+  fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
     log.info("Getting CV with id: $id")
     val contextUser = userContext.user!!
-    val resume = when {
+    return when {
       contextUser.roles.contains("ROLE_ADMIN") ->  resumeReadRepository.findResumeById(id) ?: throw CurriculumNotFound()
       contextUser.roles.contains("ROLE_CANDIDATE") -> resumeReadRepository.findResumeByIdAndUserId(id, contextUser.id) ?: throw CurriculumNotFound()
       else -> throw CurriculumNotFound()
     }
-    if (portfolioSearch != null) {
-      val (text, business, skills) = portfolioSearch
-      return resume.copy(skills = resume.skills.filter { !it.name.contains(text!!) })
-    }
-    return resume
   }
 
   fun getDefaultCV(): Resume {

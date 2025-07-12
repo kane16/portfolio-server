@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.resume.read.model
+package pl.delukesoft.portfolioserver.domain.resume.model
 
 import java.time.LocalDate
 
