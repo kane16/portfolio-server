@@ -17,7 +17,7 @@ class ResumeMapper {
       skills = PortfolioInfoDTO(
         name = "Skills",
         values = resume.skills.map {
-          PortfolioInfoEntryDTO(it.name, it.description ?: "")
+          PortfolioInfoEntryDTO(it.skill.name, it.skill.description ?: "")
         }
       ),
       experience = PortfolioInfoDTO(
@@ -35,7 +35,7 @@ class ResumeMapper {
       languages = PortfolioInfoDTO(
         name = "Languages",
         values = resume.languages.map {
-          PortfolioInfoEntryDTO(it.name, it.level.name)
+          PortfolioInfoEntryDTO(it.language.name, it.level.name)
         }
       ),
     )
