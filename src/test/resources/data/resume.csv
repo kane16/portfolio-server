@@ -1,4 +1,0 @@
-_id,user_id,image_id,title,summary,hobbies,visible,created_on,last_modified
-1,1,1,Lead Java Developer,"Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.","Music Production,Open Source Contributing,Yoga",true,2025-05-08T17:04:57.824Z,2025-05-08T17:04:57.824Z
-2,2,1,Lead Java Developer,"Full Stack Developer with strong focus on modern web technologies and startup environment experience. Passionate about creating efficient and user-friendly applications.","Music Production,Open Source Contributing,Yoga",true,2025-06-10T14:30:00.000Z,2025-06-10T14:30:00.000Z
-3,3,,Lead Java Developer,"Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.","Music Production,Open Source Contributing,Yoga",true,2025-07-15T09:45:00.000Z,2025-07-15T09:45:00.000Z

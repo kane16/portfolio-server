@@ -1,5 +1,0 @@
-_id,position,summary,description,start_date,end_date,is_side_project
-1,Senior Developer,Lead developer for core banking systems,"Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",2023-01-01,2025-05-08,false
-2,Full Stack Developer,Full-stack development of modern web applications,"Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components",2024-01-01,2025-06-10,false
-3,Backend Developer,Backend development for high-load e-commerce platform,"Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance",2022-06-01,2024-01-15,false
-4,Technical Lead,Technical leadership and architecture design,"Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes",2024-01-15,2025-07-15,false
