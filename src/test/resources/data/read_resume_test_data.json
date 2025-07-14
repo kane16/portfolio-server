@@ -1,7 +1,7 @@
 [
   {
     "user": {
-      "username": "john.doe",
+      "username": "admin",
       "email": "john.doe@example.com",
       "roles": ["ROLE_USER", "ROLE_CANDIDATE", "ROLE_ADMIN"]
     },
@@ -75,7 +75,7 @@
   },
   {
     "user": {
-      "username": "jane.smith",
+      "username": "user",
       "email": "jane.smith@example.com",
       "roles": ["ROLE_USER"]
     },
@@ -149,7 +149,7 @@
   },
   {
     "user": {
-      "username": "alex.tech",
+      "username": "candidate",
       "email": "alex.tech@example.com",
       "roles": ["ROLE_USER", "ROLE_CANDIDATE"]
     },

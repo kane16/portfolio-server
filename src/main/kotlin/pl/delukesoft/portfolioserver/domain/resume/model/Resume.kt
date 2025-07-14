@@ -7,10 +7,9 @@ import pl.delukesoft.blog.image.Image
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import java.time.LocalDateTime
 
-@Document(collection = "CV")
+@Document(collection = "Resume")
 data class Resume(
   @Id val id: Long? = null,
-  @DBRef
   val user: User,
   val title: String,
   val summary: String,
@@ -18,7 +17,6 @@ data class Resume(
   val skills: List<Skill>,
   val experience: List<Experience>,
   val sideProjects: List<Experience>,
-  @DBRef(lazy = false)
   val image: Image? = null,
   @DBRef(lazy = false)
   val hobbies: List<Hobby>,

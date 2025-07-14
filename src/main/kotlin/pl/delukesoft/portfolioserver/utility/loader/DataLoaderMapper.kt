@@ -36,7 +36,7 @@ class DataLoaderMapper {
       sideProjects = uploadResume.sideProjects.map { mapToExperience(it, businesses, skills) },
       hobbies = uploadResume.hobbies.map { mapToHobby(it, hobbies) },
       languages = uploadResume.languages.map { mapToLanguage(it, languages) },
-      skills = uploadResume.skills.map { mapToSkill(it) },
+      skills = uploadResume.skills.map { mapToSkill(it, skills) },
       image = uploadResume.image,
       createdOn = uploadResume.createdOn,
       lastModified = uploadResume.lastModified,
@@ -44,7 +44,11 @@ class DataLoaderMapper {
   }
 
   fun extractSkillsFromResume(resume: UploadResume): List<Skill> {
-    return resume.skills.map { mapToSkill(it) }
+    return resume.skills.map { Skill(
+      name = it.name,
+      description = it.description,
+      level = it.level.toInt()
+    ) }
   }
 
   fun extractBusinessesFromResume(resume: UploadResume): List<Business> {
@@ -52,15 +56,20 @@ class DataLoaderMapper {
   }
 
   fun extractHobbiesFromResume(resume: UploadResume): List<Hobby> {
-    return resume.hobbies.map { Hobby(name = it) }
+    return resume.hobbies.map { Hobby(
+      name = it
+    ) }
   }
 
   fun extractLanguagesFromResume(resume: UploadResume): List<Language> {
-    return resume.languages.map { Language(name = it.name) }
+    return resume.languages.map { Language(
+      name = it.name
+    ) }
   }
 
-  private fun mapToSkill(skill: UploadSkill): Skill {
+  private fun mapToSkill(skill: UploadSkill, skills: List<Skill>): Skill {
     return Skill(
+      id = skills.find { it.name == skill.name }?.id,
       name = skill.name,
       description = skill.description,
       level = skill.level.toInt()

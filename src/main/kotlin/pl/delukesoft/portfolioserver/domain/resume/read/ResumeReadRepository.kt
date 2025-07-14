@@ -10,13 +10,13 @@ interface ResumeReadRepository: MongoRepository<Resume, Long> {
 
   fun findResumeById(id: Long): Resume?
 
-  @Query("{ 'user.id' : ?0, 'user.roles' : { \$in: ?1 } }")
-  fun findResumeByUserIdAndRoles(id: Long, roles: List<String>): List<Resume>
+  @Query("{ 'user.username' : ?0, 'user.roles' : { \$in: ?1 } }")
+  fun findResumeByUsernameAndRoles(username: String, roles: List<String>): List<Resume>
 
   @Query("{ 'user.roles' : { \$in: ?0 } }")
   fun findResumesByRoles(roles: List<String>): List<Resume>
 
-  @Query("{ 'id' : ?0, 'user.id' : ?1 }")
-  fun findResumeByIdAndUserId(id: Long, userId: Long): Resume?
+  @Query("{ 'id' : ?0, 'user.username' : ?1 }")
+  fun findResumeByIdAndUsername(id: Long, username: String): Resume?
 
 }

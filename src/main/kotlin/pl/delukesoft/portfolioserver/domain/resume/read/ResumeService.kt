@@ -19,7 +19,7 @@ class ResumeService(
     val contextUser = userContext.user!!
     return when {
       contextUser.roles.contains("ROLE_ADMIN") ->  resumeReadRepository.findResumeById(id) ?: throw CurriculumNotFound()
-      contextUser.roles.contains("ROLE_CANDIDATE") -> resumeReadRepository.findResumeByIdAndUserId(id, contextUser.id!!) ?: throw CurriculumNotFound()
+      contextUser.roles.contains("ROLE_CANDIDATE") -> resumeReadRepository.findResumeByIdAndUsername(id, contextUser.username) ?: throw CurriculumNotFound()
       else -> throw CurriculumNotFound()
     }
   }
@@ -27,7 +27,7 @@ class ResumeService(
   fun getDefaultCV(): Resume {
     log.info("Getting default CV")
     if (userContext.user != null && userContext.user?.roles?.contains("ROLE_CANDIDATE") == true) {
-      return getUserResume(resumeReadRepository.findResumeByUserIdAndRoles(userContext.user?.id!!, listOf("ROLE_CANDIDATE")))
+      return getUserResume(resumeReadRepository.findResumeByUsernameAndRoles(userContext.user?.username!!, listOf("ROLE_CANDIDATE")))
     }
     return getUserResume(resumeReadRepository.findResumesByRoles(listOf("ROLE_ADMIN")))
   }

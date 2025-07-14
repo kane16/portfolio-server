@@ -18,7 +18,7 @@ Feature: CV View functionality
           {
              "name" : "Kotlin",
              "description" : "JVM",
-             "level" : 5
+             "level" : 4
           },
           {
              "name" : "Spring Boot",
