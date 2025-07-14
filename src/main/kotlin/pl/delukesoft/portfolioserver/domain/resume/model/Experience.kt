@@ -10,5 +10,5 @@ data class Experience(
   val summary: String,
   val description: String? = null,
   val timespan: Timespan,
-  @DBRef(lazy = false) val skills: List<SkillExperience> = emptyList()
+  val skills: List<SkillExperience> = emptyList()
 )

@@ -19,7 +19,7 @@ class ResumeService(
     val contextUser = userContext.user!!
     return when {
       contextUser.roles.contains("ROLE_ADMIN") ->  resumeReadRepository.findResumeById(id) ?: throw CurriculumNotFound()
-      contextUser.roles.contains("ROLE_CANDIDATE") -> resumeReadRepository.findResumeByIdAndUserId(id, contextUser.id) ?: throw CurriculumNotFound()
+      contextUser.roles.contains("ROLE_CANDIDATE") -> resumeReadRepository.findResumeByIdAndUserId(id, contextUser.id!!) ?: throw CurriculumNotFound()
       else -> throw CurriculumNotFound()
     }
   }

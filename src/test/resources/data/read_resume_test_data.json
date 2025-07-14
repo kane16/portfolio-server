@@ -1,0 +1,248 @@
+[
+  {
+    "user": {
+      "username": "john.doe",
+      "email": "john.doe@example.com",
+      "roles": ["ROLE_USER", "ROLE_CANDIDATE", "ROLE_ADMIN"]
+    },
+    "image": {
+      "name": "lg.jpg",
+      "src": "/images/lg.jpg"
+    },
+    "title": "Lead Java Developer",
+    "summary": "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
+    "skills": [
+      {
+        "name": "Java",
+        "description": "JVM",
+        "level": 5
+      },
+      {
+        "name": "Kotlin",
+        "description": "JVM",
+        "level": 4
+      },
+      {
+        "name": "Scala",
+        "description": "JVM",
+        "level": 3
+      }
+    ],
+    "hobbies": ["Music Production", "Open Source Contributing", "Yoga"],
+    "languages": [
+      {
+        "name": "English",
+        "level": 5
+      },
+      {
+        "name": "Spanish",
+        "level": 4
+      },
+      {
+        "name": "French",
+        "level": 2
+      }
+    ],
+    "experience": [
+      {
+        "business": {
+          "name": "Bank"
+        },
+        "position": "Senior Developer",
+        "summary": "Lead developer for core banking systems",
+        "description": "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
+        "timespan": {
+          "start": "2023-01-01",
+          "end": "2025-05-08"
+        },
+        "skills": [
+          {
+            "name": "Java",
+            "description": "JVM",
+            "level": 5
+          },
+          {
+            "name": "Kotlin",
+            "description": "JVM",
+            "level": 4
+          }
+        ]
+      }
+    ],
+    "sideProjects": [],
+    "createdOn": "2025-05-08T17:04:57.824Z",
+    "lastModified": "2025-05-08T17:04:57.824Z"
+  },
+  {
+    "user": {
+      "username": "jane.smith",
+      "email": "jane.smith@example.com",
+      "roles": ["ROLE_USER"]
+    },
+    "image": {
+      "name": "lg.jpg",
+      "src": "/images/lg.jpg"
+    },
+    "title": "Lead Java Developer",
+    "summary": "Full Stack Developer with strong focus on modern web technologies and startup environment experience. Passionate about creating efficient and user-friendly applications.",
+    "skills": [
+      {
+        "name": "Java",
+        "description": "JVM",
+        "level": 4
+      },
+      {
+        "name": "JavaScript",
+        "description": "Web Development",
+        "level": 5
+      },
+      {
+        "name": "React",
+        "description": "Frontend Framework",
+        "level": 5
+      }
+    ],
+    "hobbies": ["Music Production", "Open Source Contributing", "Yoga"],
+    "languages": [
+      {
+        "name": "English",
+        "level": 5
+      },
+      {
+        "name": "Spanish",
+        "level": 4
+      },
+      {
+        "name": "French",
+        "level": 2
+      }
+    ],
+    "experience": [
+      {
+        "business": {
+          "name": "Tech Startup"
+        },
+        "position": "Full Stack Developer",
+        "summary": "Full-stack development of modern web applications",
+        "description": "Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components",
+        "timespan": {
+          "start": "2024-01-01",
+          "end": "2025-06-10"
+        },
+        "skills": [
+          {
+            "name": "JavaScript",
+            "description": "Web Development",
+            "level": 5
+          },
+          {
+            "name": "React",
+            "description": "Frontend Framework",
+            "level": 5
+          }
+        ]
+      }
+    ],
+    "sideProjects": [],
+    "createdOn": "2025-06-10T14:30:00.000Z",
+    "lastModified": "2025-06-10T14:30:00.000Z"
+  },
+  {
+    "user": {
+      "username": "alex.tech",
+      "email": "alex.tech@example.com",
+      "roles": ["ROLE_USER", "ROLE_CANDIDATE"]
+    },
+    "title": "Lead Java Developer",
+    "summary": "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+    "skills": [
+      {
+        "name": "Kotlin",
+        "description": "JVM",
+        "level": 5
+      },
+      {
+        "name": "Spring Boot",
+        "description": "Backend Framework",
+        "level": 5
+      },
+      {
+        "name": "MongoDB",
+        "description": "Database",
+        "level": 4
+      }
+    ],
+    "hobbies": ["Music Production", "Open Source Contributing", "Yoga"],
+    "languages": [
+      {
+        "name": "English",
+        "level": 5
+      },
+      {
+        "name": "Spanish",
+        "level": 4
+      },
+      {
+        "name": "French",
+        "level": 2
+      }
+    ],
+    "experience": [
+      {
+        "business": {
+          "name": "E-commerce Platform"
+        },
+        "position": "Backend Developer",
+        "summary": "Backend development for high-load e-commerce platform",
+        "description": "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance",
+        "timespan": {
+          "start": "2022-06-01",
+          "end": "2024-01-15"
+        },
+        "image": {
+          "name": "profile_photo.jpg",
+          "src": "/images/lg.jpg"
+        },
+        "skills": [
+          {
+            "name": "Kotlin",
+            "description": "JVM",
+            "level": 5
+          },
+          {
+            "name": "MongoDB",
+            "description": "Database",
+            "level": 4
+          }
+        ]
+      },
+      {
+        "business": {
+          "name": "IT Consulting"
+        },
+        "position": "Technical Lead",
+        "summary": "Technical leadership and architecture design",
+        "description": "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes",
+        "timespan": {
+          "start": "2024-01-15",
+          "end": "2025-07-15"
+        },
+        "skills": [
+          {
+            "name": "Kotlin",
+            "description": "JVM",
+            "level": 5
+          },
+          {
+            "name": "Spring Boot",
+            "description": "Backend Framework",
+            "level": 5
+          }
+        ]
+      }
+    ],
+    "sideProjects": [],
+    "createdOn": "2025-07-15T09:45:00.000Z",
+    "lastModified": "2025-07-15T09:45:00.000Z"
+  }
+]

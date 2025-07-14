@@ -7,5 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Skill(
   @Id val id: Long? = null,
   val name: String,
-  val description: String? = null
+  val level: Int,
+  val description: String? = null,
 )

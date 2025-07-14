@@ -15,13 +15,13 @@ data class Resume(
   val title: String,
   val summary: String,
   @DBRef(lazy = false)
-  val skills: List<SkillExperience>,
+  val skills: List<Skill>,
   val experience: List<Experience>,
   val sideProjects: List<Experience>,
   @DBRef(lazy = false)
   val image: Image? = null,
   @DBRef(lazy = false)
-  val hobbies: List<String>,
+  val hobbies: List<Hobby>,
   val languages: List<WorkLanguage>,
   val createdOn: LocalDateTime,
   val lastModified: LocalDateTime

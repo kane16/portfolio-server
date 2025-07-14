@@ -23,11 +23,11 @@ class TemplatePrintMapper {
       imageSource = resume.image?.src ?: "",
       title = resume.title,
       summary = resume.summary,
-      skills = resume.skills.map { SkillDTO(it.skill.name, it.skill.description, it.level) },
+      skills = resume.skills.map { SkillDTO(it.name, it.description, it.level) },
       languages = resume.languages.map { LanguageDTO(it.language.name, it.level.name) },
       sideProjects = mapToProjects(resume.sideProjects),
       workHistory = mapToProjects(resume.experience),
-      hobbies = resume.hobbies
+      hobbies = resume.hobbies.map { it.name },
     )
   }
 
