@@ -6,7 +6,8 @@ import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.ReadingConverter
 import org.springframework.data.convert.WritingConverter
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions
-import pl.delukesoft.portfolioserver.domain.resume.model.LanguageLevel
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.LanguageLevel
 
 @Configuration
 class MongoExtendedConfig {
@@ -17,7 +18,9 @@ class MongoExtendedConfig {
     return MongoCustomConversions(
       listOf(
         LanguageLevelReadingConverter(),
-        LanguageLevelWritingConverter()
+        LanguageLevelWritingConverter(),
+        ResumeVersionStateReadingConverter(),
+        ResumeVersionStateWritingConverter(),
       )
     )
   }
@@ -33,6 +36,20 @@ class MongoExtendedConfig {
   class LanguageLevelWritingConverter : Converter<LanguageLevel, Int> {
     override fun convert(source: LanguageLevel): Int {
       return source.level
+    }
+  }
+
+  @ReadingConverter
+  class ResumeVersionStateReadingConverter : Converter<String, ResumeVersionState> {
+    override fun convert(source: String): ResumeVersionState? {
+      return ResumeVersionState.values().find { it.name == source }
+    }
+  }
+
+  @WritingConverter
+  class ResumeVersionStateWritingConverter : Converter<ResumeVersionState, String> {
+    override fun convert(source: ResumeVersionState): String {
+      return source.name
     }
   }
 

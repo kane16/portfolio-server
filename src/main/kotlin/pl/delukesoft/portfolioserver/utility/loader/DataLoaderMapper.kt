@@ -2,15 +2,16 @@ package pl.delukesoft.portfolioserver.utility.loader
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.domain.resume.model.Business
-import pl.delukesoft.portfolioserver.domain.resume.model.Experience
-import pl.delukesoft.portfolioserver.domain.resume.model.Hobby
-import pl.delukesoft.portfolioserver.domain.resume.model.Language
-import pl.delukesoft.portfolioserver.domain.resume.model.LanguageLevel
-import pl.delukesoft.portfolioserver.domain.resume.model.Resume
-import pl.delukesoft.portfolioserver.domain.resume.model.Skill
-import pl.delukesoft.portfolioserver.domain.resume.model.SkillExperience
-import pl.delukesoft.portfolioserver.domain.resume.model.WorkLanguage
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.business.Business
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.skill.SkillExperience
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.hobby.Hobby
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.Language
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.LanguageLevel
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.WorkLanguage
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.Skill
 import pl.delukesoft.portfolioserver.utility.exception.InvalidMappingException
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadExperience
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
@@ -21,6 +22,14 @@ import pl.delukesoft.portfolioserver.utility.loader.model.UploadWorkLanguage
 @Component
 class DataLoaderMapper {
 
+  fun mapToResumeHistory(resume: Resume, user: User): ResumeHistory {
+    return ResumeHistory(
+      defaultResume = resume,
+      versions = emptyList(),
+      user = user,
+    )
+  }
+
   fun mapToResume(
     uploadResume: UploadResume,
     skills: List<Skill>,
@@ -29,7 +38,6 @@ class DataLoaderMapper {
     languages: List<Language>
   ): Resume {
     return Resume(
-      user = mapToUploadUser(uploadResume.user),
       title = uploadResume.title,
       summary = uploadResume.summary,
       experience = uploadResume.experience.map { mapToExperience(it, businesses, skills) },
@@ -114,7 +122,7 @@ class DataLoaderMapper {
     )
   }
 
-  private fun mapToUploadUser(user: UploadUser): User {
+  fun mapToUser(user: UploadUser): User {
     return User(
       username = user.username,
       email = user.email,

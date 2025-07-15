@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioInfoDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioInfoEntryDTO
-import pl.delukesoft.portfolioserver.domain.resume.model.Resume
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
 
 @Component
 class ResumeMapper {

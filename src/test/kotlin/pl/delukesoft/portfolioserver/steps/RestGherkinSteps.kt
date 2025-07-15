@@ -9,19 +9,20 @@ import org.skyscreamer.jsonassert.JSONCompare
 import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
-import pl.delukesoft.portfolioserver.domain.resume.read.ResumeReadRepository
-import pl.delukesoft.portfolioserver.domain.resume.write.ResumeWriteRepository
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.ResumeRepository
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 
 
 class RestGherkinSteps(
   private val baseRestClient: BaseRestClient,
-  private val resumeReadRepository: ResumeReadRepository,
-  private val resumeWriteRepository: ResumeWriteRepository
+  private val resumeRepository: ResumeRepository,
+  private val resumeHistoryRepository: ResumeHistoryRepository
 ) : En {
 
   var result = ResponseEntity.ok("OK")
   private var logger = org.slf4j.LoggerFactory.getLogger(this::class.java)
-  private var dbResumes = resumeReadRepository.findAll()
+  private var dbResumes = resumeRepository.findAll()
+  private val dbHistoryResumes = resumeHistoryRepository.findAll()
 
   init {
     defineSteps()
@@ -35,7 +36,8 @@ class RestGherkinSteps(
   fun defineSteps() {
     Given("User is authorized with token: {string}", baseRestClient::attachTokenToRequest)
     Given("All resumes are deleted from database") {
-      resumeWriteRepository.deleteAll()
+      resumeHistoryRepository.deleteAll()
+      resumeRepository.deleteAll()
     }
     When("{string} request is sent to endpoint {string} with no body") { method: String, endpoint: String ->
       try {
@@ -71,7 +73,8 @@ class RestGherkinSteps(
       }
     }
     Then("Restore DB resumes") {
-      resumeWriteRepository.saveAll(dbResumes)
+      resumeRepository.saveAll(dbResumes)
+      resumeHistoryRepository.saveAll(dbHistoryResumes)
     }
   }
 

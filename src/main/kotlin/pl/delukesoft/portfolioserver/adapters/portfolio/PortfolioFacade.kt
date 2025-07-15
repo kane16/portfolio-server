@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.adapters.portfolio
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
-import pl.delukesoft.portfolioserver.domain.resume.read.ResumeService
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.ResumeService
 
 @Component
 class PortfolioFacade(

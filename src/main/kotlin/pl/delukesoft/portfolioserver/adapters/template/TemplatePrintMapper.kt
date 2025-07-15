@@ -8,9 +8,9 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.TimespanDTO
 import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.template.model.ResumePrint
-import pl.delukesoft.portfolioserver.domain.resume.model.Experience
-import pl.delukesoft.portfolioserver.domain.resume.model.Resume
-import pl.delukesoft.portfolioserver.domain.resume.model.Timespan
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Timespan
 
 @Component
 @RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)

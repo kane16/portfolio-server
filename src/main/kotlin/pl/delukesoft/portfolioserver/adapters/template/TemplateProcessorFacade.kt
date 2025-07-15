@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component
 import org.thymeleaf.context.WebContext
 import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
-import pl.delukesoft.portfolioserver.domain.resume.print.DocumentGenerationService
-import pl.delukesoft.portfolioserver.domain.resume.read.ResumeService
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.print.DocumentGenerationService
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.ResumeService
 
 @Component
 class TemplateProcessorFacade(
