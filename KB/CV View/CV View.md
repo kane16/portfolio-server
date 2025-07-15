@@ -29,36 +29,7 @@ end
 
 ```
 
-
-### 2. Search criteria in CV view
-
-Search criteria on CV view will affect results within CV itself, not total number of results. Following search criteria will be taken into account:
-- business domain (multiple choice) - i.e. banking, logistics etc. - No strict validation, only mapping errors may occur
-- skill (multiple choice) - i.e. Java, Scala, Kotlin - No strict validation, only mapping errors may occur
-- Technical domain (multiple choice) - i.e. Backend, Fronend, Database, UX - No stricts validation, only mapping errors may occur
-
->[!important]
-Search functionality will not be used within view itself, it will be extensively used to show results for [[Portfolio View]] and [[Resume Edit]] preview.
-
-Search criteria will affect Skills, Work history and Side projects segments of CV.
-
-```plantuml
-actor user
-participant System as system
-
-group Default resume
-user -> system: POST /pdf/{id} with PortfolioSearch body
-system -> user: 200 Default Resume
-end
-
-group Resume by ID
-user -> system: POST /pdf/{id} with PortfolioSearch body
-system -> user: 200 Resume with id
-end
-
-```
-
-### 3. Page usage
+### 2. Page usage
 
 View will be used as Iframe in [[Portfolio View]] and [[Resume Edit]]
 

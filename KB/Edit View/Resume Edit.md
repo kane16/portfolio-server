@@ -3,7 +3,7 @@
 
 ### 3. Edit model
 
-Edit page users [[Write Resume model]] to read different versions, store and operate on them.
+Edit page users [[Resume model]] to read different versions, store and operate on them.
 
 >[!Important]
 >View will use [[Application connector model]]
