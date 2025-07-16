@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.domain.resumehistory
 
 import org.springframework.stereotype.Service
+import pl.delukesoft.portfolioserver.domain.resumehistory.exception.ResumeHistoryNotFound
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.print.GeneratorService
 
 @Service
@@ -9,12 +10,12 @@ class ResumeHistoryService(
   private val generatorService: GeneratorService
 ) {
 
-  fun findHistoryListByUsernameAndRole(username: String, role: String): List<ResumeHistory> {
-    return resumeHistoryRepository.findResumeHistoryByUsernameAndRoles(username, listOf(role))
+  fun findByUsernameAndRole(username: String, role: String): ResumeHistory {
+    return resumeHistoryRepository.findResumeHistoryByUsernameAndRoles(username, listOf(role)).firstOrNull() ?: throw ResumeHistoryNotFound()
   }
 
-  fun findHistoryListByRole(role: String): List<ResumeHistory> {
-    return resumeHistoryRepository.findResumesHistoryByRoles(listOf(role))
+  fun findByRole(role: String): ResumeHistory {
+    return resumeHistoryRepository.findResumesHistoryByRoles(listOf(role)).firstOrNull() ?: throw ResumeHistoryNotFound()
   }
 
   fun saveAll(resumeHistories: List<ResumeHistory>): List<ResumeHistory> {

@@ -1,9 +1,6 @@
-package pl.delukesoft.portfolioserver.application.template.model
+package pl.delukesoft.portfolioserver.adapters.template.model
 
 import org.thymeleaf.context.WebContext
-import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
-import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
-import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 
 data class ResumePrint(
   val id: Long,

@@ -15,17 +15,20 @@
       {
         "name": "Java",
         "description": "JVM",
-        "level": 5
+        "level": 5,
+        "techDomains": ["JVM", "Backend"]
       },
       {
         "name": "Kotlin",
         "description": "JVM",
-        "level": 4
+        "level": 4,
+        "techDomains": ["JVM", "Backend"]
       },
       {
         "name": "Scala",
         "description": "JVM",
-        "level": 3
+        "level": 3,
+        "techDomains": ["JVM", "Backend"]
       }
     ],
     "hobbies": ["Music Production", "Open Source Contributing", "Yoga"],
@@ -89,17 +92,20 @@
       {
         "name": "Java",
         "description": "JVM",
-        "level": 4
+        "level": 4,
+        "techDomains": ["JVM", "Backend"]
       },
       {
         "name": "JavaScript",
         "description": "Web Development",
-        "level": 5
+        "level": 5,
+        "techDomains": ["Frontend"]
       },
       {
         "name": "React",
         "description": "Frontend Framework",
-        "level": 5
+        "level": 5,
+        "techDomains": ["Frontend", "Framework"]
       }
     ],
     "hobbies": ["Music Production", "Open Source Contributing", "Yoga"],
@@ -159,17 +165,20 @@
       {
         "name": "Kotlin",
         "description": "JVM",
-        "level": 5
+        "level": 5,
+        "techDomains": ["JVM", "Backend"]
       },
       {
         "name": "Spring Boot",
         "description": "Backend Framework",
-        "level": 5
+        "level": 5,
+        "techDomains": ["JVM", "Backend", "Framework"]
       },
       {
         "name": "MongoDB",
         "description": "Database",
-        "level": 4
+        "level": 4,
+        "techDomains": ["Database"]
       }
     ],
     "hobbies": ["Music Production", "Open Source Contributing", "Yoga"],

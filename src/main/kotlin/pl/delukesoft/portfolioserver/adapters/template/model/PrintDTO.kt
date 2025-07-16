@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.template.model
+package pl.delukesoft.portfolioserver.adapters.template.model
 
 import org.thymeleaf.context.WebContext
 

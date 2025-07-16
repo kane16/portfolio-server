@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.portfolio.model
+package pl.delukesoft.portfolioserver.adapters.template.model
 
 data class ProjectDTO(
   val position: String,

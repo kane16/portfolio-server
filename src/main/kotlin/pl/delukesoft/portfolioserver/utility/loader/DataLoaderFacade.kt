@@ -7,6 +7,7 @@ import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.Langua
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.ResumeService
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.SkillService
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.domain.SkillDomainService
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
 
 @Component
@@ -17,12 +18,16 @@ class DataLoaderFacade(
   private val businessService: BusinessService,
   private val dataLoaderMapper: DataLoaderMapper,
   private val skillService: SkillService,
-  private val resumeHistoryService: ResumeHistoryService
+  private val resumeHistoryService: ResumeHistoryService,
+  private val skillDomainService: SkillDomainService,
 ) {
 
   fun loadDataFromReadResumes(data: List<UploadResume>): Boolean {
+    val allSkillDomains = skillDomainService.saveAll(
+      data.flatMap { dataLoaderMapper.extractSkillDomainsFromResume(it) }.distinctBy { it.name }
+    )
     val allSkills =
-      skillService.saveAll(data.flatMap { dataLoaderMapper.extractSkillsFromResume(it) }.distinctBy { it.name })
+      skillService.saveAll(data.flatMap { dataLoaderMapper.extractSkillsFromResume(it, allSkillDomains) }.distinctBy { it.name })
     val allBusiness =
       businessService.saveAll(data.flatMap { dataLoaderMapper.extractBusinessesFromResume(it) }.distinctBy { it.name })
     val allLanguages =

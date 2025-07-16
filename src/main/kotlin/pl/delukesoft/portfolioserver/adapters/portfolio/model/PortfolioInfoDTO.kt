@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.portfolio.model
+package pl.delukesoft.portfolioserver.adapters.portfolio.model
 
 data class PortfolioInfoDTO(
   val name: String,

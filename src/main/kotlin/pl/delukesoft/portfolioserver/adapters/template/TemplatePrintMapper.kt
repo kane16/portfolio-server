@@ -2,12 +2,12 @@ package pl.delukesoft.portfolioserver.adapters.template
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
-import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
-import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
-import pl.delukesoft.portfolioserver.application.portfolio.model.TimespanDTO
-import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
-import pl.delukesoft.portfolioserver.application.template.model.ResumePrint
+import pl.delukesoft.portfolioserver.adapters.template.model.LanguageDTO
+import pl.delukesoft.portfolioserver.adapters.template.model.PrintDTO
+import pl.delukesoft.portfolioserver.adapters.template.model.ProjectDTO
+import pl.delukesoft.portfolioserver.adapters.template.model.ResumePrint
+import pl.delukesoft.portfolioserver.adapters.template.model.SkillDTO
+import pl.delukesoft.portfolioserver.adapters.template.model.TimespanDTO
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Timespan

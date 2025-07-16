@@ -1,9 +1,9 @@
 package pl.delukesoft.portfolioserver.adapters.portfolio
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioInfoDTO
-import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
-import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioInfoEntryDTO
+import pl.delukesoft.portfolioserver.adapters.portfolio.model.PortfolioDTO
+import pl.delukesoft.portfolioserver.adapters.portfolio.model.PortfolioInfoDTO
+import pl.delukesoft.portfolioserver.adapters.portfolio.model.PortfolioInfoEntryDTO
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
 
 @Component

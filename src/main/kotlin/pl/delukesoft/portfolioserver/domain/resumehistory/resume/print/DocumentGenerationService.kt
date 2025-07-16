@@ -3,7 +3,7 @@ package pl.delukesoft.portfolioserver.domain.resumehistory.resume.print
 import org.springframework.stereotype.Service
 import org.thymeleaf.context.WebContext
 import org.thymeleaf.spring6.SpringTemplateEngine
-import pl.delukesoft.portfolioserver.application.template.model.PrintDTO
+import pl.delukesoft.portfolioserver.adapters.template.model.PrintDTO
 
 @Service
 class DocumentGenerationService(

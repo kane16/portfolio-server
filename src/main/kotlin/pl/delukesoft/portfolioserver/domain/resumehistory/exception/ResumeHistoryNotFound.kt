@@ -1,4 +1,4 @@
-package pl.delukesoft.blog.image.exception
+package pl.delukesoft.portfolioserver.domain.resumehistory.exception
 
 import org.springframework.http.HttpStatus
 import pl.delukesoft.portfolioserver.utility.exception.LoggableResponseStatusException

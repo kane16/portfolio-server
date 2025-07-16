@@ -12,6 +12,7 @@ import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.Langua
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.WorkLanguage
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.Skill
+import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.utility.exception.InvalidMappingException
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadExperience
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
@@ -51,11 +52,18 @@ class DataLoaderMapper {
     )
   }
 
-  fun extractSkillsFromResume(resume: UploadResume): List<Skill> {
+  fun extractSkillDomainsFromResume(resume: UploadResume): List<SkillDomain> {
+    return resume.skills.flatMap {
+      it.techDomains.map { SkillDomain(name = it) }
+    }.distinctBy { it.name }
+  }
+
+  fun extractSkillsFromResume(resume: UploadResume, domains: List<SkillDomain>): List<Skill> {
     return resume.skills.map { Skill(
       name = it.name,
       description = it.description,
-      level = it.level.toInt()
+      level = it.level.toInt(),
+      domains = it.techDomains.map { domains.find { d -> d.name == it } ?: throw InvalidMappingException("Skill domain not found: $it") }
     ) }
   }
 

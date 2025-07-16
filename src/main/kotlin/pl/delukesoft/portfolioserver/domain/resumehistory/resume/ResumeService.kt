@@ -4,7 +4,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.CurriculumNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.application.template.model.PortfolioSearch
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.resumehistory.resume.print.GeneratorService
 
@@ -17,7 +16,7 @@ class ResumeService(
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
+  fun getCvById(id: Long): Resume {
     log.info("Getting CV with id: $id")
     return when {
       userContext.user != null && userContext.user!!.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw CurriculumNotFound()
@@ -34,18 +33,11 @@ class ResumeService(
   }
 
   private fun getCandidateResume(username: String): Resume {
-    return getUserResume(resumeHistoryService.findHistoryListByUsernameAndRole(username, "ROLE_CANDIDATE").map { it.defaultResume })
+    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume
   }
 
   private fun getDefaultApplicationResume(): Resume {
-    return getUserResume(resumeHistoryService.findHistoryListByRole("ROLE_ADMIN").map { it.defaultResume })
-  }
-
-  fun getUserResume(resumes: List<Resume>): Resume {
-    return when(resumes.size) {
-      1 -> resumes[0]
-      else -> throw CurriculumNotFound()
-    }
+    return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume
   }
 
   fun saveAll(resumes: List<Resume>): List<Resume> =
