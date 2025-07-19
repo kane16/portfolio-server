@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application
+package pl.delukesoft.portfolioserver.application.pdf
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController
 import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
-import pl.delukesoft.portfolioserver.application.pdf.TemplateProcessorFacade
 import pl.delukesoft.portfolioserver.application.portfolio.PortfolioSearch
 
 @RestController

@@ -22,35 +22,19 @@ class PortfolioController(
   private val log = LoggerFactory.getLogger(PortfolioController::class.java)
 
   @AuthRequired("ROLE_ADMIN")
-  @GetMapping("/{id}")
-  fun getCVById(
-    @PathVariable("id") id: Long,
-    @RequestHeader("Authorization") token: String?,
-  ): PortfolioDTO {
-    log.info("Received request to fetch CV by id: {}", id)
-    return portfolioFacade.getCvById(id)
-  }
-
-  @AuthRequired("ROLE_ADMIN")
   @PostMapping("/{id}")
   fun getCVByIdWithSearch(
     @PathVariable("id") id: Long,
-    @Validated @RequestBody search: PortfolioSearch?,
+    @Validated @RequestBody(required = false) search: PortfolioSearch?,
     @RequestHeader("Authorization") token: String?,
   ): PortfolioDTO {
     log.info("Received request to fetch CV by id: {} with search", id)
     return portfolioFacade.getCvById(id, search)
   }
 
-  @GetMapping
-  fun getDefaultCv(): PortfolioDTO {
-    log.info("Received request to fetch default CV")
-    return portfolioFacade.getDefaultCV()
-  }
-
   @PostMapping
   fun getDefaultCv(
-    @Validated @RequestBody search: PortfolioSearch?
+    @Validated @RequestBody(required = false) search: PortfolioSearch?
   ): PortfolioDTO {
     log.info("Received request to fetch default CV with search")
     return portfolioFacade.getDefaultCV(search)

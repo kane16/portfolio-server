@@ -1,23 +1,23 @@
-package pl.delukesoft.portfolioserver.application.pdf
+package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.application.pdf.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
-import pl.delukesoft.portfolioserver.application.pdf.model.ProjectDTO
-import pl.delukesoft.portfolioserver.application.pdf.model.ResumePrint
-import pl.delukesoft.portfolioserver.application.pdf.model.SkillDTO
-import pl.delukesoft.portfolioserver.application.pdf.model.TimespanDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.TimespanDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.Timespan
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 
 @Component
 @RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)
-class TemplatePrintMapper {
+class PortfolioMapper {
 
-  fun mapToPrint(resume: Resume): PrintDTO {
-    return ResumePrint(
+  fun mapToDTO(resume: Resume): PortfolioDTO {
+    return PortfolioDTO(
       id = resume.id!!,
       fullname = "Łukasz Gumiński",
       imageSource = resume.image?.src ?: "",

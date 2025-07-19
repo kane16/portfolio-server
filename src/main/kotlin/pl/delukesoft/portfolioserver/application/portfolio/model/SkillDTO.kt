@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.application.portfolio.model
 
-data class PortfolioInfoEntryDTO(
+data class SkillDTO(
   val name: String,
-  val description: String
+  val description: String? = null,
+  val level: Int? = null,
 )

@@ -7,7 +7,7 @@ import pl.delukesoft.portfolioserver.domain.resume.ResumeFacade
 @Component
 class PortfolioFacade(
   private val resumeFacade: ResumeFacade,
-  private val resumeMapper: ResumeMapper
+  private val resumeMapper: PortfolioMapper
 ) {
 
   fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): PortfolioDTO {
