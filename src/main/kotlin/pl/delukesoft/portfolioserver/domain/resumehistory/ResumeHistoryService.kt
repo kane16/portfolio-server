@@ -30,4 +30,8 @@ class ResumeHistoryService(
     TODO("Not yet implemented")
   }
 
+  fun isInitialized(): Boolean {
+    return !resumeHistoryRepository.findResumeHistoryByRoles(listOf("ROLE_ADMIN")).isEmpty()
+  }
+
 }

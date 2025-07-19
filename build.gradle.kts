@@ -72,8 +72,10 @@ dependencies {
   testImplementation("org.springframework.boot:spring-boot-testcontainers")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
   testImplementation("org.testcontainers:junit-jupiter")
-  testImplementation("org.testcontainers:mongodb")
+  testImplementation("org.testcontainers:mongodb:1.21.3")
   testImplementation("io.mockk:mockk:1.13.2")
+  testImplementation("net.java.dev.jna:jna:5.13.0")
+  testImplementation("net.java.dev.jna:jna-platform:5.13.0")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

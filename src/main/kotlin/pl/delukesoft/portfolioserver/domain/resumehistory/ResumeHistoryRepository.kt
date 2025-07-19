@@ -13,4 +13,7 @@ interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
 
   @Query("{ 'id' : ?0, 'user.username' : ?1 }")
   fun findResumeHistoryByIdAndUsername(id: Long, username: String): ResumeHistory?
+
+  @Query("{ 'user.roles' : { \$in: ?0 } }")
+  fun findResumeHistoryByRoles(listOf: List<String>): List<ResumeHistory>
 }

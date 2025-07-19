@@ -23,7 +23,7 @@ class SkillService(
       val generatedId = generatorService.getAndIncrement("skill")
       return skillRepository.save(skill.copy(id = generatedId))
     }
-    TODO("Not yet implemented")
+    return skillRepository.findByName(skill.name) ?: throw SkillNotFound(skill.name)
   }
 
   fun getAll(): List<Skill> {

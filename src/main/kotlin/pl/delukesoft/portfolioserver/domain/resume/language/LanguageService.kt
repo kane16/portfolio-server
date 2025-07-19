@@ -1,11 +1,12 @@
 package pl.delukesoft.portfolioserver.domain.resume.language
 
 import org.springframework.stereotype.Service
+import pl.delukesoft.blog.image.exception.LanguageNotFound
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
 @Service
 class LanguageService(
-  private val languageWriteRepository: LanguageWriteRepository,
+  private val languageRepository: LanguageRepository,
   private val generatorService: GeneratorService
 ) {
 
@@ -16,9 +17,9 @@ class LanguageService(
   fun save(language: Language): Language {
     if (language.id == null) {
       val generatedId = generatorService.getAndIncrement("language")
-      return languageWriteRepository.save(language.copy(id = generatedId))
+      return languageRepository.save(language.copy(id = generatedId))
     }
-    TODO("Not yet implemented")
+    return languageRepository.findByName(language.name) ?: throw LanguageNotFound(language.name)
   }
 
 }

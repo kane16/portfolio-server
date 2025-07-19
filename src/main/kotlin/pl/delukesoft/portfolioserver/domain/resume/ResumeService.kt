@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resume
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import pl.delukesoft.blog.image.exception.CurriculumNotFound
+import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
@@ -19,8 +19,8 @@ class ResumeService(
   fun getCvById(id: Long): Resume {
     log.info("Getting CV with id: $id")
     return when {
-      userContext.user != null && userContext.user!!.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw CurriculumNotFound()
-      else -> throw CurriculumNotFound()
+      userContext.user != null && userContext.user!!.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw ResumeNotFound()
+      else -> throw ResumeNotFound()
     }
   }
 
@@ -48,7 +48,7 @@ class ResumeService(
         val generatedId = generatorService.getAndIncrement("resume")
         return resumeRepository.save(resume.copy(id = generatedId))
       }
-      TODO("Not yet implemented")
+      return resumeRepository.findResumeById(resume.id) ?: throw ResumeNotFound()
     }
 
 }
