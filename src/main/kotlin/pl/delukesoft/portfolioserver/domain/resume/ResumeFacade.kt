@@ -1,8 +1,8 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.application.portfolio.PortfolioSearch
-import pl.delukesoft.portfolioserver.application.portfolio.PortfolioSearchMapper
+import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
+import pl.delukesoft.portfolioserver.application.filter.PortfolioSearchMapper
 
 @Component
 class ResumeFacade(

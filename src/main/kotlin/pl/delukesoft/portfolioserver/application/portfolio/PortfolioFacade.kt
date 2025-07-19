@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.domain.resume.ResumeFacade
 

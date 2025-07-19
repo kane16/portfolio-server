@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
-import pl.delukesoft.portfolioserver.application.portfolio.PortfolioSearch
+import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 
 @RestController
 @RequestMapping("/pdf")

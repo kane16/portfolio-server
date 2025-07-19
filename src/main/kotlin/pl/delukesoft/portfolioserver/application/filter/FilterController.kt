@@ -10,7 +10,6 @@ class FilterController(
   private val filterFacade: FilterFacade
 ) {
 
-
   @GetMapping("/skills")
   fun getSkills(): List<String> {
     return filterFacade.getAllSkills()
@@ -25,6 +24,5 @@ class FilterController(
   fun getDomains(): List<String> {
     return filterFacade.getAllDomains()
   }
-
 
 }

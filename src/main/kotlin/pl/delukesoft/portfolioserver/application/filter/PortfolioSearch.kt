@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.portfolio
+package pl.delukesoft.portfolioserver.application.filter
 
 data class PortfolioSearch(
   val business: List<String> = listOf(),

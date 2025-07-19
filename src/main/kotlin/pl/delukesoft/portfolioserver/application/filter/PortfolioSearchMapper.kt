@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.portfolio
+package pl.delukesoft.portfolioserver.application.filter
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.resume.ResumeSearch
