@@ -1,9 +1,12 @@
 package pl.delukesoft.portfolioserver.application.filter
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessService
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainService
+import java.util.concurrent.Executors
 
 @Component
 class FilterFacade(
@@ -22,6 +25,19 @@ class FilterFacade(
 
   fun getAllDomains(): List<String> {
     return domainService.getAll().map { it.name }
+  }
+
+  fun getAllFilters(): PortfolioSearch {
+    Executors.newVirtualThreadPerTaskExecutor().use { pool ->
+      val skills = pool.submit<List<String>> { getAllSkills() }
+      val business = pool.submit<List<String>> { getAllBusiness() }
+      val domains = pool.submit<List<String>> { getAllDomains() }
+      return PortfolioSearch(
+        business.get(),
+        skills.get(),
+        domains.get()
+      )
+    }
   }
 
 }

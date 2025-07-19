@@ -10,6 +10,11 @@ class FilterController(
   private val filterFacade: FilterFacade
 ) {
 
+  @GetMapping("/all")
+  fun getAllFilters(): PortfolioSearch {
+    return filterFacade.getAllFilters()
+  }
+
   @GetMapping("/skills")
   fun getSkills(): List<String> {
     return filterFacade.getAllSkills()
