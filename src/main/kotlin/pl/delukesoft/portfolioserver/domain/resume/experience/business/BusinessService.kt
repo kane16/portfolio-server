@@ -10,7 +10,7 @@ class BusinessService(
   private val businessWriteRepository: BusinessWriteRepository,
 ) {
 
-  fun findByName(name: String): Business {
+  fun getByName(name: String): Business {
     return businessWriteRepository.findByName(name) ?: throw BusinessNotFound(name)
   }
 
@@ -24,6 +24,10 @@ class BusinessService(
       return businessWriteRepository.save(business.copy(id = generatedId))
     }
     TODO("Not yet implemented")
+  }
+
+  fun getAll(): List<Business> {
+    return businessWriteRepository.findAll()
   }
 
 }

@@ -10,7 +10,7 @@ class SkillDomainService(
   private val generatorService: GeneratorService
 ) {
 
-  fun findByName(name: String): SkillDomain {
+  fun getByName(name: String): SkillDomain {
     return skillDomainRepository.findSkillDomainByName(name) ?: throw SkillDomainNotFound(name)
   }
 
@@ -23,7 +23,11 @@ class SkillDomainService(
       val generatedId = generatorService.getAndIncrement("skill_domain")
       return skillDomainRepository.save(skillDomain.copy(id = generatedId))
     }
-    TODO("Not yet implemented")
+    return skillDomainRepository.findSkillDomainByName(skillDomain.name) ?: throw SkillDomainNotFound(skillDomain.name)
+  }
+
+  fun getAll(): List<SkillDomain> {
+    return skillDomainRepository.findAll()
   }
 
 }

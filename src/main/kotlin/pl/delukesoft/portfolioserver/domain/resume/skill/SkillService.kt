@@ -10,7 +10,7 @@ class SkillService(
   private val generatorService: GeneratorService
 ) {
 
-  fun findByName(name: String): Skill {
+  fun getByName(name: String): Skill {
     return skillRepository.findByName(name) ?: throw SkillNotFound(name)
   }
 
@@ -24,6 +24,10 @@ class SkillService(
       return skillRepository.save(skill.copy(id = generatedId))
     }
     TODO("Not yet implemented")
+  }
+
+  fun getAll(): List<Skill> {
+    return skillRepository.findAll()
   }
 
 }

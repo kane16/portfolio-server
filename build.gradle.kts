@@ -48,6 +48,7 @@ extra["springCloudVersion"] = "2024.0.1"
 
 object Versions {
   const val cucumber = "7.22.1"
+  const val vintage = "5.7.2"
 }
 
 dependencies {
@@ -61,7 +62,8 @@ dependencies {
   implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
   testImplementation("io.cucumber:cucumber-spring:${Versions.cucumber}")
   testImplementation("io.cucumber:cucumber-java:${Versions.cucumber}")
-  testImplementation("io.cucumber:cucumber-junit:${Versions.cucumber}")
+  testImplementation("io.cucumber:cucumber-junit-platform-engine:${Versions.cucumber}")
+  testImplementation("org.junit.platform:junit-platform-suite")
   testImplementation("io.cucumber:cucumber-java8:${Versions.cucumber}")
   developmentOnly("org.springframework.boot:spring-boot-devtools")
   developmentOnly("org.springframework.boot:spring-boot-docker-compose")

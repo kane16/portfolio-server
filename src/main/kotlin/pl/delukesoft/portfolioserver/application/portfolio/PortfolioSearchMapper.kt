@@ -15,9 +15,9 @@ class PortfolioSearchMapper(
 
   fun mapToSearch(portfolioSearch: PortfolioSearch): ResumeSearch {
     return ResumeSearch(
-      portfolioSearch.skills.map { skillService.findByName(it) },
-      portfolioSearch.technologyDomain.map { skillDomainService.findByName(it) },
-      portfolioSearch.business.map { businessService.findByName(it) }
+      portfolioSearch.skills.map { skillService.getByName(it) },
+      portfolioSearch.technologyDomain.map { skillDomainService.getByName(it) },
+      portfolioSearch.business.map { businessService.getByName(it) }
     )
   }
 
