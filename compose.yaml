@@ -1,6 +1,6 @@
 services:
   mongodb:
-    image: 'kane16/delukesoft_dev_mongo_db:1.0.0'
+    image: 'kane16/delukesoft_test_mongo_db:1.0.0'
     environment:
       - MONGO_USERNAME=${MONGO_USERNAME}
       - MONGO_PASSWORD=${MONGO_PASSWORD}

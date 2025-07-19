@@ -12,8 +12,8 @@ import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.utility.DockerImageName
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.adapters.template.model.PrintDTO
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.print.DocumentGenerationService
+import pl.delukesoft.portfolioserver.adapters.print.DocumentGenerationService
+import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
 
 @TestConfiguration(proxyBeanMethods = false)
 @Profile("test")

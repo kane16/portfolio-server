@@ -6,8 +6,8 @@ import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.ReadingConverter
 import org.springframework.data.convert.WritingConverter
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions
+import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.LanguageLevel
 
 @Configuration
 class MongoExtendedConfig {

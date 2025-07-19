@@ -1,13 +1,13 @@
 package pl.delukesoft.portfolioserver.utility.loader
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.business.BusinessService
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.hobby.HobbyService
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.LanguageService
+import pl.delukesoft.portfolioserver.domain.resume.ResumeService
+import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessService
+import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyService
+import pl.delukesoft.portfolioserver.domain.resume.language.LanguageService
+import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.ResumeService
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.SkillService
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.domain.SkillDomainService
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
 
 @Component

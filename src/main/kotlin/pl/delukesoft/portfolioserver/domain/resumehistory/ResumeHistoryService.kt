@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resumehistory
 
 import org.springframework.stereotype.Service
 import pl.delukesoft.portfolioserver.domain.resumehistory.exception.ResumeHistoryNotFound
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.print.GeneratorService
+import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
 @Service
 class ResumeHistoryService(

@@ -1,6 +1,6 @@
 package pl.delukesoft.portfolioserver.utility.loader.model
 
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Timespan
+import pl.delukesoft.portfolioserver.domain.resume.Timespan
 
 data class UploadExperience(
   val business: UploadBusiness,

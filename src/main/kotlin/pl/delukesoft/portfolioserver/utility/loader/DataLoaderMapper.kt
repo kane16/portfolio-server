@@ -2,17 +2,17 @@ package pl.delukesoft.portfolioserver.utility.loader
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
+import pl.delukesoft.portfolioserver.domain.resume.experience.skill.SkillExperience
+import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
+import pl.delukesoft.portfolioserver.domain.resume.language.Language
+import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
+import pl.delukesoft.portfolioserver.domain.resume.language.WorkLanguage
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.Experience
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.business.Business
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.experience.skill.SkillExperience
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.hobby.Hobby
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.Language
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.LanguageLevel
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.language.WorkLanguage
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.Skill
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.utility.exception.InvalidMappingException
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadExperience
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume

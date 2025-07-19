@@ -2,11 +2,8 @@ package pl.delukesoft.portfolioserver.application
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -14,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController
 import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
-import pl.delukesoft.portfolioserver.adapters.template.TemplateProcessorFacade
-import pl.delukesoft.portfolioserver.adapters.resume.PortfolioSearch
+import pl.delukesoft.portfolioserver.application.pdf.TemplateProcessorFacade
+import pl.delukesoft.portfolioserver.application.portfolio.PortfolioSearch
 
 @RestController
 @RequestMapping("/pdf")

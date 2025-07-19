@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resumehistory
 
 import org.springframework.data.mongodb.core.mapping.DBRef
 import org.springframework.data.mongodb.core.mapping.Document
-import pl.delukesoft.portfolioserver.domain.resumehistory.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.Resume
 
 @Document(collection = "ResumeVersion")
 data class ResumeVersion(
