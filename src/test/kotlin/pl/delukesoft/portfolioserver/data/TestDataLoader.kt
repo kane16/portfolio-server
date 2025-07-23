@@ -14,7 +14,7 @@ import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
 import java.nio.file.Files
 
 @Component
-@Profile("test", "bdd")
+@Profile("bdd")
 class TestDataLoader(
   private val resourceLoader: ResourceLoader,
   private val objectMapper: ObjectMapper,

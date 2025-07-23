@@ -34,7 +34,7 @@ class TestcontainersConfiguration {
           .withStartupTimeout(Duration.ofMinutes(2))
       )
       .apply {
-        withReuse(true)
+        withReuse(false)
       }
 
   }

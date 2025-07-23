@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query
 interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
 
   @Query("{ 'user.username' : ?0, 'user.roles' : { \$in: ?1 } }")
-  fun findResumeHistoryByUsernameAndRoles(username: String, roles: List<String>): List<ResumeHistory>
+  fun findResumeHistoryByUsernameAndRoles(username: String, roles: List<String>): ResumeHistory?
 
   @Query("{ 'user.roles' : { \$in: ?0 } }")
   fun findResumesHistoryByRoles(roles: List<String>): List<ResumeHistory>
@@ -16,4 +16,7 @@ interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
 
   @Query("{ 'user.roles' : { \$in: ?0 } }")
   fun findResumeHistoryByRoles(listOf: List<String>): List<ResumeHistory>
+
+  @Query("{ 'user.username' : ?0 }")
+  fun findResumeHistoryByUsername(username: String): ResumeHistory?
 }

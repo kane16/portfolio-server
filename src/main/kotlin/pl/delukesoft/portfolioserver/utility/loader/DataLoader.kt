@@ -8,8 +8,14 @@ import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Profile
 import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
+import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessRepository
+import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyRepository
+import pl.delukesoft.portfolioserver.domain.resume.language.LanguageRepository
+import pl.delukesoft.portfolioserver.domain.resume.skill.SkillRepository
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
-import pl.delukesoft.portfolioserver.utility.loader.DataLoaderController
+import pl.delukesoft.portfolioserver.domain.sequence.GeneratorRepository
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
 import java.nio.file.Files
 
@@ -19,7 +25,7 @@ class DataLoader(
   private val resourceLoader: ResourceLoader,
   private val objectMapper: ObjectMapper,
   private val dataLoaderController: DataLoaderController,
-  private val resumeHistoryService: ResumeHistoryService
+  private val resumeHistoryService: ResumeHistoryService,
 ) : ApplicationRunner {
 
   private val log = LoggerFactory.getLogger(DataLoader::class.java)

@@ -11,7 +11,7 @@
 
   <logger name="pl.delukesoft.portfolioserver" level="INFO"/>
 
-  <root level="INFO">
+  <root level="ERROR">
     <appender-ref ref="CONSOLE"/>
   </root>
 

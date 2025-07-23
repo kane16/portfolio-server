@@ -1,5 +1,6 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
@@ -19,6 +21,8 @@ import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
 import pl.delukesoft.portfolioserver.domain.resume.language.WorkLanguage
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.utility.DateTimeUtils.assertEqualsDateTimes
 import pl.delukesoft.portfolioserver.utility.DateTimeUtils.assertNotEqualsDateTimes
 import java.time.LocalDate
@@ -34,13 +38,25 @@ class ResumeIntegrationTest {
   private lateinit var resumeService: ResumeService
 
   @Autowired
+  private lateinit var resumeHistoryService: ResumeHistoryService
+
+  @Autowired
   private lateinit var resumeRepository: ResumeRepository
 
+  @Autowired
+  private lateinit var resumeHistoryRepository: ResumeHistoryRepository
+
   val adminUser = User(
-    email = "admin@sa.mm",
+    email = "john.doe@example.com",
     username = "admin",
-    roles = listOf("ROLE_ADMIN")
+    roles = listOf("ROLE_USER", "ROLE_CANDIDATE", "ROLE_ADMIN")
   )
+
+  @AfterEach
+  fun tearDown() {
+    resumeHistoryRepository.deleteAll()
+    resumeRepository.deleteAll()
+  }
 
   @Test
   fun `Add resume when not exists and retrieve it by ID`() {
@@ -111,15 +127,20 @@ class ResumeIntegrationTest {
     assertEquals(dbResume.languages, emptyList())
     assertEqualsDateTimes(dbResume.createdOn, providedResume.createdOn)
     assertEqualsDateTimes(dbResume.lastModified, providedResume.lastModified)
-    resumeRepository.deleteById(dbResume.id!!)
   }
 
   @Test
   fun `Prevent add resume when exists and throw Exception`() {
+    val providedResume = resumeService.addResume(
+      Resume(
+        title = "Test resume",
+        summary = "Test summary",
+      )
+    )
     assertThrows<ResumeExistsException> {
       resumeService.addResume(
         Resume(
-          id = 1L,
+          id = providedResume.id,
           title = "Test resume",
           summary = "Test summary",
           skills = emptyList(),
@@ -213,7 +234,6 @@ class ResumeIntegrationTest {
     assertEquals(dbResume.languages, emptyList())
     assertEqualsDateTimes(dbResume.createdOn, providedResume.createdOn)
     assertNotEqualsDateTimes(dbResume.lastModified, providedResume.lastModified)
-    resumeRepository.deleteById(dbResume.id!!)
   }
 
   @Test

@@ -7,11 +7,11 @@ import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 @Service
 class BusinessService(
   private val generatorService: GeneratorService,
-  private val businessWriteRepository: BusinessWriteRepository,
+  private val businessRepository: BusinessRepository,
 ) {
 
   fun getByName(name: String): Business {
-    return businessWriteRepository.findByName(name) ?: throw BusinessNotFound(name)
+    return businessRepository.findByName(name) ?: throw BusinessNotFound(name)
   }
 
   fun saveAll(businesses: List<Business>): List<Business> {
@@ -21,13 +21,13 @@ class BusinessService(
   fun save(business: Business): Business {
     if (business.id == null) {
       val generatedId = generatorService.getAndIncrement("business")
-      return businessWriteRepository.save(business.copy(id = generatedId))
+      return businessRepository.save(business.copy(id = generatedId))
     }
     TODO("Not yet implemented")
   }
 
   fun getAll(): List<Business> {
-    return businessWriteRepository.findAll()
+    return businessRepository.findAll()
   }
 
 }

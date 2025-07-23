@@ -11,11 +11,15 @@ class ResumeHistoryService(
 ) {
 
   fun findByUsernameAndRole(username: String, role: String): ResumeHistory {
-    return resumeHistoryRepository.findResumeHistoryByUsernameAndRoles(username, listOf(role)).firstOrNull() ?: throw ResumeHistoryNotFound()
+    return resumeHistoryRepository.findResumeHistoryByUsernameAndRoles(username, listOf(role)) ?: throw ResumeHistoryNotFound()
   }
 
   fun findByRole(role: String): ResumeHistory {
     return resumeHistoryRepository.findResumesHistoryByRoles(listOf(role)).firstOrNull() ?: throw ResumeHistoryNotFound()
+  }
+
+  fun findByUsername(username: String): ResumeHistory {
+    return resumeHistoryRepository.findResumeHistoryByUsername(username) ?: throw ResumeHistoryNotFound()
   }
 
   fun saveAll(resumeHistories: List<ResumeHistory>): List<ResumeHistory> {
