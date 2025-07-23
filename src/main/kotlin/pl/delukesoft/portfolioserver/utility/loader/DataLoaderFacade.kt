@@ -45,7 +45,7 @@ class DataLoaderFacade(
         ),
         dataLoaderMapper.mapToUser(it.user)
       )
-    }.map { Pair(resumeService.save(it.first), it.second) }
+    }.map { Pair(resumeService.addResume(it.first, true), it.second) }
       .forEach {
         resumeHistoryService.save(
           dataLoaderMapper.mapToResumeHistory(

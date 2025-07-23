@@ -23,6 +23,6 @@ data class Resume(
   @DBRef(lazy = false)
   val hobbies: List<Hobby>,
   val languages: List<WorkLanguage>,
-  val createdOn: LocalDateTime,
-  val lastModified: LocalDateTime
+  val createdOn: LocalDateTime = LocalDateTime.now(),
+  val lastModified: LocalDateTime = LocalDateTime.now()
 )
