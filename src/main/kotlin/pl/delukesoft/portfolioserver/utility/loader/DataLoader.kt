@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.data
+package pl.delukesoft.portfolioserver.utility.loader
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -14,15 +14,15 @@ import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
 import java.nio.file.Files
 
 @Component
-@Profile("test", "bdd")
-class TestDataLoader(
+@Profile("dev")
+class DataLoader(
   private val resourceLoader: ResourceLoader,
   private val objectMapper: ObjectMapper,
   private val dataLoaderController: DataLoaderController,
   private val resumeHistoryService: ResumeHistoryService
 ) : ApplicationRunner {
 
-  private val log = LoggerFactory.getLogger(TestDataLoader::class.java)
+  private val log = LoggerFactory.getLogger(DataLoader::class.java)
 
   override fun run(args: ApplicationArguments?) {
     if (!resumeHistoryService.isInitialized()) {

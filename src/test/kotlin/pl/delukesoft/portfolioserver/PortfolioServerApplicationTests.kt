@@ -12,15 +12,18 @@ import org.springframework.test.context.ActiveProfiles
 
 @Import(TestcontainersConfiguration::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@ActiveProfiles("test")
+@ActiveProfiles("bdd")
 @SelectClasspathResource("features/pdf/admin-template-generation.feature")
 @ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "pretty")
 @ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "pl.delukesoft.portfolioserver.steps")
 @CucumberContextConfiguration
 class PortfolioServerApplicationTests {
 
+  private val log = org.slf4j.LoggerFactory.getLogger(this::class.java)
+
   @Test
   fun contextLoads() {
+    log.info("Context loaded")
   }
 
 }

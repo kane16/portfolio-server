@@ -9,7 +9,7 @@ import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
 
 @RestController
 @RequestMapping("/data/upload")
-@Profile("dev","test")
+@Profile("dev", "test", "docker", "bdd")
 class DataLoaderController(
   private val dataLoaderFacade: DataLoaderFacade
 ) {

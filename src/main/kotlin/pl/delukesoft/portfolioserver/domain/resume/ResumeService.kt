@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.domain.resume
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeNotFound
+import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
@@ -11,23 +12,22 @@ import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 class ResumeService(
   private val resumeRepository: ResumeRepository,
   private val resumeHistoryService: ResumeHistoryService,
-  private val userContext: UserContext,
   private val generatorService: GeneratorService
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  fun getCvById(id: Long): Resume {
+  fun getCvById(id: Long, user: User?): Resume {
     log.info("Getting CV with id: $id")
     return when {
-      userContext.user != null && userContext.user!!.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw ResumeNotFound()
+      user != null && user.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw ResumeNotFound()
       else -> throw ResumeNotFound()
     }
   }
 
-  fun getDefaultCV(): Resume {
+  fun getDefaultCV(user: User?): Resume {
     log.info("Getting default Resume")
     return when {
-      userContext.user != null && userContext.user!!.roles.contains("ROLE_CANDIDATE") -> getCandidateResume(userContext.user!!.username)
+      user != null && user.roles.contains("ROLE_CANDIDATE") -> getCandidateResume(user.username)
       else -> getDefaultApplicationResume()
     }
   }

@@ -1,27 +1,31 @@
 package pl.delukesoft.portfolioserver
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.mongodb.ConnectionString
-import com.mongodb.MongoClientSettings
 import io.mockk.every
 import io.mockk.mockk
+import org.mockito.Mockito.mock
 import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
+import org.springframework.context.annotation.Scope
+import org.springframework.test.context.bean.override.mockito.MockitoBean
+import org.springframework.web.context.annotation.RequestScope
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.adapters.print.DocumentGenerationService
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
 import java.time.Duration
-import java.util.concurrent.TimeUnit
+
 
 @TestConfiguration(proxyBeanMethods = false)
-@Profile("test")
+@Profile("test", "bdd")
 class TestcontainersConfiguration {
   private var jsonMapper = JsonMapper()
 

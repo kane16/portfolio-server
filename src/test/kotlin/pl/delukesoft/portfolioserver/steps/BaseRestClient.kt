@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 
 @Component
-@Profile("test")
+@Profile("bdd")
 class BaseRestClient(
     @Value("\${web.url}") baseUrl: String,
     @Value("\${web.login.url}") loginUrl: String,
