@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.utility.loader
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skill.SkillExperience
@@ -36,17 +37,21 @@ class DataLoaderMapper {
     skills: List<Skill>,
     businesses: List<Business>,
     hobbies: List<Hobby>,
-    languages: List<Language>
+    languages: List<Language>,
+    user: User,
   ): Resume {
     return Resume(
-      title = uploadResume.title,
-      summary = uploadResume.summary,
+      shortcut = ResumeShortcut(
+        title = uploadResume.title,
+        summary = uploadResume.summary,
+        image = uploadResume.image,
+        user = user
+      ),
       experience = uploadResume.experience.map { mapToExperience(it, businesses, skills) },
       sideProjects = uploadResume.sideProjects.map { mapToExperience(it, businesses, skills) },
       hobbies = uploadResume.hobbies.map { mapToHobby(it, hobbies) },
       languages = uploadResume.languages.map { mapToLanguage(it, languages) },
       skills = uploadResume.skills.map { mapToSkill(it, skills) },
-      image = uploadResume.image,
       createdOn = uploadResume.createdOn,
       lastModified = uploadResume.lastModified,
     )

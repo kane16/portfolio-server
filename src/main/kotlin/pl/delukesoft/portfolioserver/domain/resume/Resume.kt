@@ -13,13 +13,11 @@ import java.time.LocalDateTime
 @Document(collection = "Resume")
 data class Resume(
   @Id val id: Long? = null,
-  val title: String,
-  val summary: String,
+  val shortcut: ResumeShortcut,
   @DBRef(lazy = false)
   val skills: List<Skill> = emptyList(),
   val experience: List<Experience> = emptyList(),
   val sideProjects: List<Experience> = emptyList(),
-  val image: Image? = null,
   @DBRef(lazy = false)
   val hobbies: List<Hobby> = emptyList(),
   val languages: List<WorkLanguage> = emptyList(),

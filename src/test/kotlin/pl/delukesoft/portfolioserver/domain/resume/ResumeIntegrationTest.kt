@@ -62,8 +62,12 @@ class ResumeIntegrationTest {
   fun `Add resume when not exists and retrieve it by ID`() {
     val providedResume = resumeService.addResume(
       Resume(
-        title = "Test resume",
-        summary = "Test summary",
+        shortcut = ResumeShortcut(
+          title = "Test resume",
+          summary = "Test summary",
+          image = null,
+          user = adminUser
+        ),
         skills = listOf(
           Skill(
             id = 1L,
@@ -119,8 +123,8 @@ class ResumeIntegrationTest {
     assertNotNull(providedResume.id)
     val dbResume = resumeService.getCvById(providedResume.id!!, adminUser)
     assertEquals(dbResume.skills, emptyList())
-    assertEquals(providedResume.title, dbResume.title)
-    assertEquals(providedResume.summary, dbResume.summary)
+    assertEquals(providedResume.shortcut.title, dbResume.shortcut.title)
+    assertEquals(providedResume.shortcut.summary, dbResume.shortcut.summary)
     assertEquals(dbResume.experience, emptyList())
     assertEquals(dbResume.sideProjects, emptyList())
     assertEquals(dbResume.hobbies, emptyList())
@@ -133,16 +137,22 @@ class ResumeIntegrationTest {
   fun `Prevent add resume when exists and throw Exception`() {
     val providedResume = resumeService.addResume(
       Resume(
-        title = "Test resume",
-        summary = "Test summary",
+        shortcut = ResumeShortcut(
+          title = "Test resume",
+          summary = "Test summary",
+          user = adminUser
+        ),
       )
     )
     assertThrows<ResumeExistsException> {
       resumeService.addResume(
         Resume(
           id = providedResume.id,
-          title = "Test resume",
-          summary = "Test summary",
+          shortcut = ResumeShortcut(
+            title = "Test resume",
+            summary = "Test summary",
+            user = adminUser
+          ),
           skills = emptyList(),
           experience = emptyList(),
           sideProjects = emptyList(),
@@ -157,8 +167,11 @@ class ResumeIntegrationTest {
   fun `Update of saved resume should be successful`() {
     val providedResume = resumeService.addResume(
       Resume(
-        title = "Test resume",
-        summary = "Test summary",
+        shortcut = ResumeShortcut(
+          title = "Test resume",
+          summary = "Test summary",
+          user = adminUser
+        ),
         skills = emptyList(),
         experience = emptyList(),
         sideProjects = emptyList(),
@@ -168,8 +181,11 @@ class ResumeIntegrationTest {
     )
     val updatedResume = resumeService.updateResume(
       providedResume.copy(
-        title = "Updated title",
-        summary = "Updated summary",
+        shortcut = ResumeShortcut(
+          title = "Updated title",
+          summary = "Updated summary",
+          user = adminUser
+        ),
         skills = listOf(
           Skill(
             id = 1L,
@@ -224,10 +240,10 @@ class ResumeIntegrationTest {
     )
     val dbResume = resumeService.getCvById(updatedResume.id!!, adminUser)
     assertEquals(dbResume.skills, emptyList())
-    Assertions.assertNotEquals(providedResume.title, dbResume.title)
-    Assertions.assertNotEquals(providedResume.summary, dbResume.summary)
-    Assertions.assertEquals(updatedResume.title, "Updated title")
-    Assertions.assertEquals(updatedResume.summary, "Updated summary")
+    Assertions.assertNotEquals(providedResume.shortcut.title, dbResume.shortcut.title)
+    Assertions.assertNotEquals(providedResume.shortcut.summary, dbResume.shortcut.summary)
+    Assertions.assertEquals(updatedResume.shortcut.title, "Updated title")
+    Assertions.assertEquals(updatedResume.shortcut.summary, "Updated summary")
     assertEquals(dbResume.experience, emptyList())
     assertEquals(dbResume.sideProjects, emptyList())
     assertEquals(dbResume.hobbies, emptyList())
@@ -242,8 +258,11 @@ class ResumeIntegrationTest {
       resumeService.updateResume(
         Resume(
           id = 20L,
-          title = "Test resume",
-          summary = "Test summary",
+          shortcut = ResumeShortcut(
+            title = "Test resume",
+            summary = "Test summary",
+            user = adminUser
+          ),
           skills = emptyList(),
           experience = emptyList(),
           sideProjects = emptyList(),

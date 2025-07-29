@@ -20,9 +20,9 @@ class PortfolioMapper {
     return PortfolioDTO(
       id = resume.id!!,
       fullname = "Łukasz Gumiński",
-      imageSource = resume.image?.src ?: "",
-      title = resume.title,
-      summary = resume.summary,
+      imageSource = resume.shortcut.image?.src ?: "",
+      title = resume.shortcut.title,
+      summary = resume.shortcut.summary,
       skills = resume.skills.map { SkillDTO(it.name, it.description, it.level) },
       languages = resume.languages.map { LanguageDTO(it.language.name, it.level.name) },
       sideProjects = mapToProjects(resume.sideProjects),

@@ -6,4 +6,5 @@ interface SkillRepository: MongoRepository<Skill, Long> {
 
   fun findByName(name: String): Skill?
   fun existsByName(name: String): Boolean
+
 }

@@ -43,7 +43,7 @@ class ResumeService(
       hobbies = emptyList()
     )
     if (newResume.id == null) {
-      return if(!unsafe) save(resumeToSave) else save(newResume)
+      return if (!unsafe) save(resumeToSave) else save(newResume)
     }
     val existingResume = resumeRepository.findResumeById(newResume.id) ?: throw ResumeNotFound()
     throw ResumeExistsException(existingResume.id!!)
@@ -54,9 +54,11 @@ class ResumeService(
       throw ResumeNotFound()
     }
     val resumeToUpdate = resumeRepository.findResumeById(resume.id)?.copy(
-      title = resume.title,
-      summary = resume.summary,
-      image = resume.image,
+      shortcut = resume.shortcut.copy(
+        title = resume.shortcut.title,
+        summary = resume.shortcut.summary,
+        image = resume.shortcut.image,
+      ),
       lastModified = LocalDateTime.now()
     ) ?: throw ResumeNotFound()
     return save(resumeToUpdate)

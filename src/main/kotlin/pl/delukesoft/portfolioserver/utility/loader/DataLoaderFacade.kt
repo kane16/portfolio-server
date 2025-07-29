@@ -41,7 +41,8 @@ class DataLoaderFacade(
           allSkills,
           allBusiness,
           allHobbies,
-          allLanguages
+          allLanguages,
+          dataLoaderMapper.mapToUser(it.user)
         ),
         dataLoaderMapper.mapToUser(it.user)
       )
