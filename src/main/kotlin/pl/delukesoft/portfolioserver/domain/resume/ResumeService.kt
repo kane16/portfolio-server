@@ -73,11 +73,11 @@ class ResumeService(
   }
 
   private fun getCandidateResume(username: String): Resume {
-    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume
+    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume.resume
   }
 
   private fun getDefaultApplicationResume(): Resume {
-    return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume
+    return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume.resume
   }
 
 }

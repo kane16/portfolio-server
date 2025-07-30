@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
 
 @RestController
 @RequestMapping("portfolio")
@@ -39,6 +40,15 @@ class PortfolioController(
   ): PortfolioDTO {
     log.info("Received request to fetch default CV with search")
     return portfolioFacade.getDefaultCV(search)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @GetMapping("/history")
+  fun getHistoryByUser(
+    @RequestHeader("Authorization", required = true) token: String
+  ): PortfolioHistoryDTO {
+    log.info("Received request to fetch CV history")
+    return portfolioFacade.getUserHistory()
   }
 
 }

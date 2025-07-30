@@ -8,7 +8,7 @@ import pl.delukesoft.portfolioserver.domain.resume.Resume
 @Document(collection = "ResumeHistory")
 data class ResumeHistory(
   val id: Long? = null,
-  @DBRef(lazy = false) val defaultResume: Resume,
+  @DBRef(lazy = false) val defaultResume: ResumeVersion,
   @DBRef(lazy = true) val versions: List<ResumeVersion> = emptyList(),
   val user: User
 )

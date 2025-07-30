@@ -14,6 +14,8 @@ import pl.delukesoft.portfolioserver.domain.resume.language.WorkLanguage
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState
 import pl.delukesoft.portfolioserver.utility.exception.InvalidMappingException
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadExperience
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
@@ -24,7 +26,7 @@ import pl.delukesoft.portfolioserver.utility.loader.model.UploadWorkLanguage
 @Component
 class DataLoaderMapper {
 
-  fun mapToResumeHistory(resume: Resume, user: User): ResumeHistory {
+  fun mapToResumeHistory(resume: ResumeVersion, user: User): ResumeHistory {
     return ResumeHistory(
       defaultResume = resume,
       versions = emptyList(),

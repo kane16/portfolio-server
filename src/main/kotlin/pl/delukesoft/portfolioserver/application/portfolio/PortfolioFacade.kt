@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.application.portfolio
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
 import pl.delukesoft.portfolioserver.domain.resume.ResumeFacade
 
 @Component
@@ -17,6 +18,10 @@ class PortfolioFacade(
 
   fun getDefaultCV(portfolioSearch: PortfolioSearch? = null): PortfolioDTO {
     return resumeMapper.mapToDTO(resumeFacade.getDefaultCV(portfolioSearch))
+  }
+
+  fun getUserHistory(): PortfolioHistoryDTO {
+    TODO("Not yet implemented")
   }
 
 }

@@ -5,16 +5,37 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioVersionDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.TimespanDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.Timespan
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
 @Component
 @RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)
 class PortfolioMapper {
+
+  fun mapHistoryToDTO(history: ResumeHistory): PortfolioHistoryDTO {
+    return PortfolioHistoryDTO(
+      mapVersionToDTO(history.defaultResume),
+      history.versions.map { mapVersionToDTO(it) }
+    )
+  }
+
+  fun mapVersionToDTO(version: ResumeVersion): PortfolioVersionDTO {
+    return PortfolioVersionDTO(
+      version.id!!,
+      version.resume.shortcut.title,
+      version.resume.shortcut.summary,
+      version.version,
+      version.state.name
+    )
+  }
 
   fun mapToDTO(resume: Resume): PortfolioDTO {
     return PortfolioDTO(
