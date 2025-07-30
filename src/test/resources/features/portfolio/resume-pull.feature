@@ -192,7 +192,7 @@ Feature: Resume data read from server
           "title": "Lead Java Developer",
           "summary": "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
           "version": 1,
-          "state": "ACTIVE"
+          "state": "PUBLISHED"
         },
         "history": [
           {
@@ -200,7 +200,7 @@ Feature: Resume data read from server
             "title": "Lead Java Developer",
             "summary": "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
             "version": 1,
-            "state": "ACTIVE"
+            "state": "PUBLISHED"
           },
           {
             "id": 2,
@@ -224,8 +224,8 @@ Feature: Resume data read from server
       }
       """
 
-  Scenario: Admin tries to access portfolio history
-    Given User is authorized with token: "admin"
+  Scenario: User tries to access portfolio history
+    Given User is authorized with token: "user"
     When "GET" request is sent to endpoint "/portfolio/history" with no body
     Then Response status code should be 403
     And Response body should be:

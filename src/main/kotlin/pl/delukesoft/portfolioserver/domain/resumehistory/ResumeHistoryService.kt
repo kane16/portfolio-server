@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.domain.resumehistory
 
 import org.springframework.stereotype.Service
+import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resumehistory.exception.ResumeHistoryNotFound
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
@@ -22,11 +23,15 @@ class ResumeHistoryService(
     return resumeHistoryRepository.findResumeHistoryByUsername(username) ?: throw ResumeHistoryNotFound()
   }
 
-  fun saveAll(resumeHistories: List<ResumeHistory>): List<ResumeHistory> {
+  private fun saveAll(resumeHistories: List<ResumeHistory>): List<ResumeHistory> {
     return resumeHistories.map { save(it) }
   }
 
-  fun save(resumeHistory: ResumeHistory): ResumeHistory {
+  fun addResumeToHistory(resume: Resume) {
+
+  }
+
+  private fun save(resumeHistory: ResumeHistory): ResumeHistory {
     if (resumeHistory.id == null) {
       val id = generatorService.getAndIncrement("resumeHistory")
       return resumeHistoryRepository.save(resumeHistory.copy(id = id))
