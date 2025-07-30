@@ -4,7 +4,7 @@ data class PortfolioVersionDTO(
   val id: Long,
   val title: String,
   val summary: String,
-  val version: Int,
+  val version: Long,
   val state: String,
 ) {
 }

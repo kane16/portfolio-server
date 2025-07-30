@@ -41,6 +41,7 @@ class DataLoaderMapper {
     hobbies: List<Hobby>,
     languages: List<Language>,
     user: User,
+    skillDomains: List<SkillDomain>
   ): Resume {
     return Resume(
       shortcut = ResumeShortcut(
@@ -53,7 +54,7 @@ class DataLoaderMapper {
       sideProjects = uploadResume.sideProjects.map { mapToExperience(it, businesses, skills) },
       hobbies = uploadResume.hobbies.map { mapToHobby(it, hobbies) },
       languages = uploadResume.languages.map { mapToLanguage(it, languages) },
-      skills = uploadResume.skills.map { mapToSkill(it, skills) },
+      skills = uploadResume.skills.map { mapToSkill(it, skills, skillDomains) },
       createdOn = uploadResume.createdOn,
       lastModified = uploadResume.lastModified,
     )
@@ -90,12 +91,13 @@ class DataLoaderMapper {
     ) }
   }
 
-  private fun mapToSkill(skill: UploadSkill, skills: List<Skill>): Skill {
+  private fun mapToSkill(skill: UploadSkill, skills: List<Skill>, skillDomains: List<SkillDomain>): Skill {
     return Skill(
       id = skills.find { it.name == skill.name }?.id,
       name = skill.name,
       description = skill.description,
-      level = skill.level.toInt()
+      level = skill.level.toInt(),
+      domains = skill.techDomains.map { skillDomains.find { d -> d.name == it } ?: throw InvalidMappingException("Skill domain not found: $it") }
     )
   }
 

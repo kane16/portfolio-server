@@ -45,7 +45,7 @@ class PortfolioController(
   @AuthRequired("ROLE_CANDIDATE")
   @GetMapping("/history")
   fun getHistoryByUser(
-    @RequestHeader("Authorization", required = true) token: String
+    @RequestHeader("Authorization") token: String?
   ): PortfolioHistoryDTO {
     log.info("Received request to fetch CV history")
     return portfolioFacade.getUserHistory()

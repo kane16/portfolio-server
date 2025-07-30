@@ -27,7 +27,8 @@ class DataLoaderFacade(
       data.flatMap { dataLoaderMapper.extractSkillDomainsFromResume(it) }.distinctBy { it.name }
     )
     val allSkills =
-      skillService.saveAll(data.flatMap { dataLoaderMapper.extractSkillsFromResume(it, allSkillDomains) }.distinctBy { it.name })
+      skillService.saveAll(data.flatMap { dataLoaderMapper.extractSkillsFromResume(it, allSkillDomains) }
+        .distinctBy { it.name })
     val allBusiness =
       businessService.saveAll(data.flatMap { dataLoaderMapper.extractBusinessesFromResume(it) }.distinctBy { it.name })
     val allLanguages =
@@ -35,26 +36,21 @@ class DataLoaderFacade(
     val allHobbies =
       hobbyService.saveAll(data.flatMap { dataLoaderMapper.extractHobbiesFromResume(it) }.distinctBy { it.name })
     data.map {
-      Pair(
-        dataLoaderMapper.mapToResume(
-          it,
-          allSkills,
-          allBusiness,
-          allHobbies,
-          allLanguages,
-          dataLoaderMapper.mapToUser(it.user)
-        ),
-        dataLoaderMapper.mapToUser(it.user)
+      dataLoaderMapper.mapToResume(
+        it,
+        allSkills,
+        allBusiness,
+        allHobbies,
+        allLanguages,
+        dataLoaderMapper.mapToUser(it.user),
+        allSkillDomains
       )
-    }.map { Pair(resumeService.addResume(it.first, true), it.second) }
-      .forEach {
-        resumeHistoryService.save(
-          dataLoaderMapper.mapToResumeHistory(
-            it.first,
-            it.second
-          )
-        )
-      }
+    }.map {
+      resumeService.addResume(
+        it,
+        true
+      )
+    }
     return true
   }
 

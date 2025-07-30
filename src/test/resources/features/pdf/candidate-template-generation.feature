@@ -18,7 +18,7 @@ Feature: CV View functionality
           {
              "name" : "Kotlin",
              "description" : "JVM",
-             "level" : 4
+             "level" : 5
           },
           {
              "name" : "Spring Boot",
@@ -105,11 +105,11 @@ Feature: CV View functionality
 
   Scenario: Candidate cannot view others prints
     When "GET" request is sent to endpoint "/pdf/1" with no body
-    Then Response status code should be 401
+    Then Response status code should be 403
     And Response body should be:
     """
     {
-    "error": "User does not have required role: ROLE_ADMIN",
-    "status": 401
+    "error": "Access denied. Required role: ROLE_ADMIN",
+    "status": 403
     }
     """

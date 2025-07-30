@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearchMapper
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
 
 @Component
 class ResumeFacade(

@@ -21,8 +21,6 @@ class RestGherkinSteps(
 
   var result = ResponseEntity.ok("OK")
   private var logger = org.slf4j.LoggerFactory.getLogger(this::class.java)
-  private var dbResumes = resumeRepository.findAll()
-  private val dbHistoryResumes = resumeHistoryRepository.findAll()
 
   init {
     defineSteps()
@@ -34,6 +32,8 @@ class RestGherkinSteps(
   }
 
   fun defineSteps() {
+    val dbResumes = resumeRepository.findAll()
+    val dbHistoryResumes = resumeHistoryRepository.findAll()
     Given("User is authorized with token: {string}", baseRestClient::attachTokenToRequest)
     Given("All resumes are deleted from database") {
       resumeHistoryRepository.deleteAll()
@@ -68,6 +68,10 @@ class RestGherkinSteps(
         if (JSONCompare.compareJSON(result.body.toString(), responseBody, JSONCompareMode.LENIENT).failed() ) {
           logger.error("Invalid response body:\n{}", prettyPrint(result.body))
           logger.error("Response should be JSON:\n{}", prettyPrint(responseBody))
+          logger.error(
+            "Differences:\n{}",
+            JSONCompare.compareJSON(result.body.toString(), responseBody, JSONCompareMode.LENIENT).message
+          )
         }
         JSONAssert.assertEquals(responseBody, result.body, true)
       }

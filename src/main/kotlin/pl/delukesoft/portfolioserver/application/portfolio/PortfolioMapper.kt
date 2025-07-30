@@ -22,7 +22,7 @@ class PortfolioMapper {
 
   fun mapHistoryToDTO(history: ResumeHistory): PortfolioHistoryDTO {
     return PortfolioHistoryDTO(
-      mapVersionToDTO(history.defaultResume),
+      mapVersionToDTO(history.defaultResume!!),
       history.versions.map { mapVersionToDTO(it) }
     )
   }
@@ -30,8 +30,8 @@ class PortfolioMapper {
   fun mapVersionToDTO(version: ResumeVersion): PortfolioVersionDTO {
     return PortfolioVersionDTO(
       version.id!!,
-      version.resume.shortcut.title,
-      version.resume.shortcut.summary,
+      version.resume.shortcut.title!!,
+      version.resume.shortcut?.summary!!,
       version.version,
       version.state.name
     )

@@ -59,6 +59,7 @@ class TestcontainersConfiguration {
     every { service.getUser("Bearer admin") } returns User("admin", "", listOf("ROLE_USER", "ROLE_ADMIN"))
     every { service.getUser("Bearer user") } returns User("user", "", listOf("ROLE_USER"))
     every { service.getUser("Bearer candidate") } returns User("candidate", "", listOf("ROLE_USER", "ROLE_CANDIDATE"))
+    every { service.getUser("Bearer candidate_empty") } returns User("candidate_empty", "", listOf("ROLE_CANDIDATE"))
     return service
   }
 

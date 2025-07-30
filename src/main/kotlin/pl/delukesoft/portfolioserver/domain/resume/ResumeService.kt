@@ -43,7 +43,9 @@ class ResumeService(
       hobbies = emptyList()
     )
     if (newResume.id == null) {
-      return if (!unsafe) save(resumeToSave) else save(newResume)
+      val dbResume = if (!unsafe) save(resumeToSave) else save(newResume)
+      resumeHistoryService.addResumeToHistory(dbResume)
+      return dbResume
     }
     val existingResume = resumeRepository.findResumeById(newResume.id) ?: throw ResumeNotFound()
     throw ResumeExistsException(existingResume.id!!)
@@ -73,11 +75,11 @@ class ResumeService(
   }
 
   private fun getCandidateResume(username: String): Resume {
-    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume.resume
+    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume?.resume!!
   }
 
   private fun getDefaultApplicationResume(): Resume {
-    return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume.resume
+    return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume?.resume!!
   }
 
 }

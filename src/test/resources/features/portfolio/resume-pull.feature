@@ -94,7 +94,7 @@ Feature: Resume data read from server
           {
              "name" : "Java",
              "description" : "JVM",
-             "level" : 5
+             "level" : 4
           },
           {
              "name" : "JavaScript",
@@ -187,29 +187,22 @@ Feature: Resume data read from server
     And Response body should be:
       """
       {
-        "defaultPortfolio": {
-          "id": 1,
-          "title": "Lead Java Developer",
-          "summary": "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
-          "version": 1,
-          "state": "PUBLISHED"
-        },
-        "history": [
-          {
-            "id": 1,
-            "title": "Lead Java Developer",
-            "summary": "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
-            "version": 1,
-            "state": "PUBLISHED"
-          },
-          {
-            "id": 2,
-            "title": "Full Stack Developer",
-            "summary": "Full Stack Developer with strong focus on modern web technologies and startup environment experience. Passionate about creating efficient and user-friendly applications.",
-            "version": 2,
-            "state": "DRAFT"
-          }
-        ]
+         "defaultPortfolio" : {
+            "id" : 3,
+            "title" : "Lead Java Developer",
+            "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+            "version" : 1,
+            "state" : "PUBLISHED"
+         },
+         "history" : [
+            {
+               "id" : 3,
+               "title" : "Lead Java Developer",
+               "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+               "version" : 1,
+               "state" : "PUBLISHED"
+            }
+         ]
       }
       """
 
@@ -243,7 +236,7 @@ Feature: Resume data read from server
     And Response body should be:
       """
       {
-        "error": "Resume history not found",
+        "error": "Resume History not found",
         "status": 404
       }
       """

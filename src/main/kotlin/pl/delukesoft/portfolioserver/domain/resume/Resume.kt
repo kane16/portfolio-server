@@ -14,13 +14,13 @@ import java.time.LocalDateTime
 data class Resume(
   @Id val id: Long? = null,
   val shortcut: ResumeShortcut,
-  @DBRef(lazy = false)
   val skills: List<Skill> = emptyList(),
   val experience: List<Experience> = emptyList(),
   val sideProjects: List<Experience> = emptyList(),
-  @DBRef(lazy = false)
   val hobbies: List<Hobby> = emptyList(),
   val languages: List<WorkLanguage> = emptyList(),
   val createdOn: LocalDateTime = LocalDateTime.now(),
   val lastModified: LocalDateTime = LocalDateTime.now()
-)
+) {
+
+}

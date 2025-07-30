@@ -4,6 +4,7 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.adapters.auth.exception.AuthenticationException
 import pl.delukesoft.portfolioserver.adapters.auth.exception.AuthorizationException
 
 @Aspect
@@ -24,7 +25,7 @@ class AuthInterceptor(
     val user = if (token != null) authRequestService.getUser(token)
       else throw AuthorizationException("Anonymous access is restricted to this endpoint")
     when (user.roles.any { role -> authRequired.roles.contains(role) }) {
-      false -> throw AuthorizationException("User does not have required role: ${authRequired.roles.joinToString(", ")}")
+      false -> throw AuthenticationException(authRequired.roles.joinToString(", "))
       true -> {
         userContext.user = user
         log.info("User successfully authenticated with roles: ${user.roles.joinToString(", ")}")
