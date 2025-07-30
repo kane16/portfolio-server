@@ -1,10 +1,12 @@
 package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.filter.FilterFacade
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioShortcutDTO
 import pl.delukesoft.portfolioserver.domain.resume.ResumeFacade
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryFacade
 
@@ -12,7 +14,8 @@ import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryFacade
 class PortfolioFacade(
   private val resumeFacade: ResumeFacade,
   private val resumeHistoryFacade: ResumeHistoryFacade,
-  private val portfolioMapper: PortfolioMapper
+  private val portfolioMapper: PortfolioMapper,
+  private val userContext: UserContext
 ) {
 
   fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): PortfolioDTO {
@@ -25,6 +28,11 @@ class PortfolioFacade(
 
   fun getUserHistory(): PortfolioHistoryDTO {
     return portfolioMapper.mapHistoryToDTO(resumeHistoryFacade.getUserHistory())
+  }
+
+  fun initiatePortfolio(shortcut: PortfolioShortcutDTO): Boolean {
+    val resumeWithShortcutOnly = portfolioMapper.mapShortcutDTOToResume(shortcut, userContext.user!!)
+    return resumeFacade.initiateResume(resumeWithShortcutOnly)
   }
 
 }

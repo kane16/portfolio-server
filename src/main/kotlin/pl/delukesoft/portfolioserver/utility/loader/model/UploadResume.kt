@@ -1,6 +1,6 @@
 package pl.delukesoft.portfolioserver.utility.loader.model
 
-import pl.delukesoft.blog.image.Image
+import pl.delukesoft.portfolioserver.adapters.image.Image
 import java.time.LocalDateTime
 
 data class UploadResume(

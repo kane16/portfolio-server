@@ -11,12 +11,14 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
 import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository
 
 
 class RestGherkinSteps(
   private val baseRestClient: BaseRestClient,
   private val resumeRepository: ResumeRepository,
-  private val resumeHistoryRepository: ResumeHistoryRepository
+  private val resumeHistoryRepository: ResumeHistoryRepository,
+  private val resumeVersionRepository: ResumeVersionRepository,
 ) : En {
 
   var result = ResponseEntity.ok("OK")
@@ -33,10 +35,12 @@ class RestGherkinSteps(
 
   fun defineSteps() {
     val dbResumes = resumeRepository.findAll()
+    val dbResumeVersions = resumeVersionRepository.findAll()
     val dbHistoryResumes = resumeHistoryRepository.findAll()
     Given("User is authorized with token: {string}", baseRestClient::attachTokenToRequest)
     Given("All resumes are deleted from database") {
       resumeHistoryRepository.deleteAll()
+      resumeVersionRepository.deleteAll()
       resumeRepository.deleteAll()
     }
     When("{string} request is sent to endpoint {string} with no body") { method: String, endpoint: String ->
@@ -78,6 +82,7 @@ class RestGherkinSteps(
     }
     Then("Restore DB resumes") {
       resumeRepository.saveAll(dbResumes)
+      resumeVersionRepository.saveAll(dbResumeVersions)
       resumeHistoryRepository.saveAll(dbHistoryResumes)
     }
   }

@@ -4,15 +4,16 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearchMapper
-import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
+import pl.delukesoft.portfolioserver.domain.resumehistory.exception.ResumeHistoryExistsException
 
 @Component
 class ResumeFacade(
   private val resumeService: ResumeService,
   private val resumeSearchService: ResumeSearchService,
   private val portfolioSearchMapper: PortfolioSearchMapper,
-  private val userContext: UserContext
+  private val userContext: UserContext,
+  private val resumeHistoryService: ResumeHistoryService
 ) {
 
   fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
@@ -34,6 +35,14 @@ class ResumeFacade(
       null -> defaultResume
       else -> resumeSearchService.filterResumeWithCriteria(defaultResume, resumeSearch)
     }
+  }
+
+  fun initiateResume(resumeWithShortcutOnly: Resume): Boolean {
+    if (resumeHistoryService.existsByUser(userContext.user!!)) {
+      throw ResumeHistoryExistsException(userContext.user!!.username)
+    }
+    resumeService.addResume(resumeWithShortcutOnly)
+    return true
   }
 
 }

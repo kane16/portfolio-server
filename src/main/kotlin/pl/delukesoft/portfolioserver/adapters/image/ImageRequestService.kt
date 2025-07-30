@@ -3,6 +3,7 @@ package pl.delukesoft.blog.image
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import pl.delukesoft.portfolioserver.adapters.image.Image
 
 @FeignClient(name = "image", url = "\${auth-service.url}/images")
 interface ImageRequestService {

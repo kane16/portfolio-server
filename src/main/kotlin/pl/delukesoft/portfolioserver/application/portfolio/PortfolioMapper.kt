@@ -2,15 +2,18 @@ package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioShortcutDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioVersionDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.SkillDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.TimespanDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.Timespan
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
@@ -34,6 +37,17 @@ class PortfolioMapper {
       version.resume.shortcut?.summary!!,
       version.version,
       version.state.name
+    )
+  }
+
+  fun mapShortcutDTOToResume(shortcut: PortfolioShortcutDTO, user: User): Resume {
+    return Resume(
+      shortcut = ResumeShortcut(
+        title = shortcut.title,
+        summary = shortcut.summary,
+        image = shortcut.image,
+        user = user
+      )
     )
   }
 

@@ -47,8 +47,7 @@ class DataLoaderFacade(
       )
     }.map {
       resumeService.addResume(
-        it,
-        true
+        it
       )
     }
     return true

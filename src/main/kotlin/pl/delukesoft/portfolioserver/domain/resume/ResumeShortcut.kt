@@ -1,6 +1,6 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
-import pl.delukesoft.blog.image.Image
+import pl.delukesoft.portfolioserver.adapters.image.Image
 import pl.delukesoft.portfolioserver.adapters.auth.User
 
 data class ResumeShortcut(

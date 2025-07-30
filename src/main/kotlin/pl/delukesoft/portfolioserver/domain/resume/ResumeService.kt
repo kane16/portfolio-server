@@ -34,16 +34,9 @@ class ResumeService(
     }
   }
 
-  fun addResume(newResume: Resume, unsafe: Boolean = false): Resume {
-    var resumeToSave = newResume.copy(
-      skills = emptyList(),
-      experience = emptyList(),
-      sideProjects = emptyList(),
-      languages = emptyList(),
-      hobbies = emptyList()
-    )
+  fun addResume(newResume: Resume): Resume {
     if (newResume.id == null) {
-      val dbResume = if (!unsafe) save(resumeToSave) else save(newResume)
+      val dbResume = save(newResume)
       resumeHistoryService.addResumeToHistory(dbResume)
       return dbResume
     }

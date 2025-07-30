@@ -67,56 +67,6 @@ class ResumeIntegrationTest {
           summary = "Test summary",
           image = null,
           user = adminUser
-        ),
-        skills = listOf(
-          Skill(
-            id = 1L,
-            name = "Skill 1",
-            level = 5
-          )
-        ),
-        experience = listOf(
-          Experience(
-            id = 1,
-            business = Business(
-              name = "12"
-            ),
-            position = "dsf",
-            summary = "sdf",
-            timespan = Timespan(
-              LocalDate.now(),
-              LocalDate.now()
-            ),
-            skills = emptyList()
-          )
-        ),
-        sideProjects = listOf(
-          Experience(
-            id = 1,
-            business = Business(
-              name = "12"
-            ),
-            position = "dsf",
-            summary = "sdf",
-            timespan = Timespan(
-              LocalDate.now(),
-              LocalDate.now()
-            ),
-            skills = emptyList()
-          )
-        ),
-        hobbies = listOf(
-          Hobby(
-            name = "Test hobby",
-          )
-        ),
-        languages = listOf(
-          WorkLanguage(
-            language = Language(
-              name = "Test language"
-            ),
-            level = LanguageLevel.A1
-          )
         )
       )
     )
@@ -171,12 +121,7 @@ class ResumeIntegrationTest {
           title = "Test resume",
           summary = "Test summary",
           user = adminUser
-        ),
-        skills = emptyList(),
-        experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = emptyList(),
-        languages = emptyList()
+        )
       )
     )
     val updatedResume = resumeService.updateResume(
@@ -185,56 +130,6 @@ class ResumeIntegrationTest {
           title = "Updated title",
           summary = "Updated summary",
           user = adminUser
-        ),
-        skills = listOf(
-          Skill(
-            id = 1L,
-            name = "Skill 1",
-            level = 5
-          )
-        ),
-        experience = listOf(
-          Experience(
-            id = 1,
-            business = Business(
-              name = "12"
-            ),
-            position = "dsf",
-            summary = "sdf",
-            timespan = Timespan(
-              LocalDate.now(),
-              LocalDate.now()
-            ),
-            skills = emptyList()
-          )
-        ),
-        sideProjects = listOf(
-          Experience(
-            id = 1,
-            business = Business(
-              name = "12"
-            ),
-            position = "dsf",
-            summary = "sdf",
-            timespan = Timespan(
-              LocalDate.now(),
-              LocalDate.now()
-            ),
-            skills = emptyList()
-          )
-        ),
-        hobbies = listOf(
-          Hobby(
-            name = "Test hobby",
-          )
-        ),
-        languages = listOf(
-          WorkLanguage(
-            language = Language(
-              name = "Test language"
-            ),
-            level = LanguageLevel.A1
-          )
         )
       )
     )
@@ -262,12 +157,7 @@ class ResumeIntegrationTest {
             title = "Test resume",
             summary = "Test summary",
             user = adminUser
-          ),
-          skills = emptyList(),
-          experience = emptyList(),
-          sideProjects = emptyList(),
-          hobbies = emptyList(),
-          languages = emptyList()
+          )
         )
       )
     }
