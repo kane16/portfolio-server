@@ -1,4 +1,10 @@
 services:
+  http_server:
+    image: jdkelley/simple-http-server:latest
+    ports:
+      - "80:8000"
+    volumes:
+      - "/home/kane16/Documents/it-projects/resources:/serve"
   mongodb:
     image: 'kane16/delukesoft_dev_mongo_db:1.0.0'
     environment:
@@ -23,6 +29,8 @@ services:
       - AUTH_DB_URL=${AUTH_DB_URL}
     ports:
       - 8080:8080
+    volumes:
+      - ${IMAGE_DIRECTORY}:${IMAGE_DIRECTORY}
     depends_on:
       auth_db:
         condition: service_healthy
