@@ -1,9 +1,7 @@
-package pl.delukesoft.portfolioserver.application.filter
+package pl.delukesoft.portfolioserver.application.portfolio.filter
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessService
-import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainService
 import java.util.concurrent.Executors

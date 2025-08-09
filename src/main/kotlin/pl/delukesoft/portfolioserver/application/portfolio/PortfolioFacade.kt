@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
+import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioShortcutDTO

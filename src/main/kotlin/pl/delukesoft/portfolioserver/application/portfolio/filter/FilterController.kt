@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.filter
+package pl.delukesoft.portfolioserver.application.portfolio.filter
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
