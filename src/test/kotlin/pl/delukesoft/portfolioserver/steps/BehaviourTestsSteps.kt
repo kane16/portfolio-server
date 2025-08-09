@@ -12,13 +12,15 @@ import org.springframework.web.client.HttpClientErrorException
 import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository
+import pl.delukesoft.portfolioserver.domain.sequence.GeneratorRepository
 
 
-class RestGherkinSteps(
+class BehaviourTestsSteps(
   private val baseRestClient: BaseRestClient,
   private val resumeRepository: ResumeRepository,
   private val resumeHistoryRepository: ResumeHistoryRepository,
   private val resumeVersionRepository: ResumeVersionRepository,
+  private val generatorRepository: GeneratorRepository
 ) : En {
 
   var result = ResponseEntity.ok("OK")
@@ -37,11 +39,13 @@ class RestGherkinSteps(
     val dbResumes = resumeRepository.findAll()
     val dbResumeVersions = resumeVersionRepository.findAll()
     val dbHistoryResumes = resumeHistoryRepository.findAll()
+    val sequences = generatorRepository.findAll()
     Given("User is authorized with token: {string}", baseRestClient::attachTokenToRequest)
     Given("All resumes are deleted from database") {
       resumeHistoryRepository.deleteAll()
       resumeVersionRepository.deleteAll()
       resumeRepository.deleteAll()
+      generatorRepository.deleteAll()
     }
     When("{string} request is sent to endpoint {string} with no body") { method: String, endpoint: String ->
       try {
@@ -84,6 +88,7 @@ class RestGherkinSteps(
       resumeRepository.saveAll(dbResumes)
       resumeVersionRepository.saveAll(dbResumeVersions)
       resumeHistoryRepository.saveAll(dbHistoryResumes)
+      generatorRepository.saveAll(sequences)
     }
   }
 

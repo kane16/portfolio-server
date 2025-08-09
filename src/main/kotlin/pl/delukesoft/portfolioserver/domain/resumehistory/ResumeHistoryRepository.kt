@@ -13,9 +13,6 @@ interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
   @Query("{ 'user.roles' : { \$in: ?0 } }")
   fun findResumesHistoryByRoles(roles: List<String>): List<ResumeHistory>
 
-  @Query("{ 'id' : ?0, 'user.username' : ?1 }")
-  fun findResumeHistoryByIdAndUsername(id: Long, username: String): ResumeHistory?
-
   @Query("{ 'user.roles' : { \$in: ?0 } }")
   fun findResumeHistoryByRoles(listOf: List<String>): List<ResumeHistory>
 
@@ -24,8 +21,15 @@ interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
 
   fun existsByUser_Username(username: String): Boolean
 
-  @Query("{ 'user.username' : ?0 }")
-  @Aggregation("{ \$max: 'versions.version' }")
+  @Aggregation(
+    pipeline = [
+      "{ \$match: { 'user.username' : ?0} }",
+      "{ \$lookup: {from:  'ResumeVersion', localField: 'versions.\$id', foreignField: '_id', as: 'lookup_versions'} }",
+      "{ \$unwind: {path: '\$lookup_versions'} }",
+      "{ \$group:  { _id: '\$lookup_versions.version', maxVersion: { \$max: '\$lookup_versions.version' } } }",
+      "{ \$project:  { _id : '\$maxVersion' }}"
+    ]
+  )
   fun findMaxVersionInResumeHistoryByUsername(username: String): Long
 
   @Query("{ 'user.username' : ?0 }")

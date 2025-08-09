@@ -55,6 +55,7 @@ class PortfolioController(
     @Valid @RequestBody shortcut: PortfolioShortcutDTO,
     @RequestHeader("Authorization") token: String?
   ): Boolean {
+    log.info("Received request to initiate portfolio edit")
     return portfolioFacade.initiatePortfolio(shortcut)
   }
 
