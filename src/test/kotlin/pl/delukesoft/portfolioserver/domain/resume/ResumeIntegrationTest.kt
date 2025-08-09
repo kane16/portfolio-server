@@ -1,31 +1,20 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.TestcontainersConfiguration
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
-import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
-import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
-import pl.delukesoft.portfolioserver.domain.resume.language.Language
-import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
-import pl.delukesoft.portfolioserver.domain.resume.language.WorkLanguage
-import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.utility.DateTimeUtils.assertEqualsDateTimes
 import pl.delukesoft.portfolioserver.utility.DateTimeUtils.assertNotEqualsDateTimes
-import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -36,9 +25,6 @@ class ResumeIntegrationTest {
 
   @Autowired
   private lateinit var resumeService: ResumeService
-
-  @Autowired
-  private lateinit var resumeHistoryService: ResumeHistoryService
 
   @Autowired
   private lateinit var resumeRepository: ResumeRepository
@@ -70,8 +56,9 @@ class ResumeIntegrationTest {
         )
       )
     )
-    assertNotNull(providedResume.id)
-    val dbResume = resumeService.getCvById(providedResume.id!!, adminUser)
+    val providedResumeId = providedResume.id
+    assertNotNull(providedResumeId)
+    val dbResume = resumeService.getCvById(providedResumeId, adminUser)
     assertEquals(dbResume.skills, emptyList())
     assertEquals(providedResume.shortcut.title, dbResume.shortcut.title)
     assertEquals(providedResume.shortcut.summary, dbResume.shortcut.summary)

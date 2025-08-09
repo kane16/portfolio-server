@@ -10,7 +10,6 @@ import pl.delukesoft.portfolioserver.domain.resume.experience.skill.SkillExperie
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
-import pl.delukesoft.portfolioserver.domain.resume.language.WorkLanguage
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.utility.exception.InvalidMappingException
@@ -37,9 +36,9 @@ class DataLoaderMapper {
       ),
       experience = uploadResume.experience.map { mapToExperience(it, businesses, skills) },
       sideProjects = uploadResume.sideProjects.map { mapToExperience(it, businesses, skills) },
-      hobbies = uploadResume.hobbies.map { mapToHobby(it, hobbies) },
-      languages = uploadResume.languages.map { mapToLanguage(it, languages) },
-      skills = uploadResume.skills.map { mapToSkill(it, skills, skillDomains) },
+      hobbies = uploadResume.hobbies.map { mapToHobby(it, hobbies, user) },
+      languages = uploadResume.languages.map { mapToLanguage(it, languages, user) },
+      skills = uploadResume.skills.map { mapToSkill(it, skills, skillDomains, user) },
       createdOn = uploadResume.createdOn,
       lastModified = uploadResume.lastModified,
     )
@@ -47,42 +46,67 @@ class DataLoaderMapper {
 
   fun extractSkillDomainsFromResume(resume: UploadResume): List<SkillDomain> {
     return resume.skills.flatMap {
-      it.techDomains.map { SkillDomain(name = it) }
+      it.techDomains.map {
+        SkillDomain(
+          name = it,
+          username = resume.user.username
+        )
+      }
     }.distinctBy { it.name }
   }
 
-  fun extractSkillsFromResume(resume: UploadResume, domains: List<SkillDomain>): List<Skill> {
+  fun extractSkillsFromResume(resume: UploadResume, domains: List<SkillDomain>, user: User): List<Skill> {
     return resume.skills.map { Skill(
       name = it.name,
       description = it.description,
       level = it.level.toInt(),
-      domains = it.techDomains.map { domains.find { d -> d.name == it } ?: throw InvalidMappingException("Skill domain not found: $it") }
+      domains = it.techDomains.map {
+        domains.find { d -> d.name == it } ?: throw InvalidMappingException("Skill domain not found: $it")
+      },
+      username = user.username
     ) }
   }
 
-  fun extractBusinessesFromResume(resume: UploadResume): List<Business> {
-    return resume.experience.map { Business(name = it.business.name) } + resume.sideProjects.map { Business(name = it.business.name) }
+  fun extractBusinessesFromResume(resume: UploadResume, user: User): List<Business> {
+    return resume.experience.map {
+      Business(
+        name = it.business.name,
+        username = user.username
+      )
+    } + resume.sideProjects.map {
+      Business(
+        name = it.business.name,
+        username = user.username
+      )
+    }
   }
 
-  fun extractHobbiesFromResume(resume: UploadResume): List<Hobby> {
+  fun extractHobbiesFromResume(resume: UploadResume, user: User): List<Hobby> {
     return resume.hobbies.map { Hobby(
-      name = it
+      name = it,
+      username = user.username
     ) }
   }
 
-  fun extractLanguagesFromResume(resume: UploadResume): List<Language> {
+  fun extractLanguagesFromResume(resume: UploadResume, user: User): List<Language> {
     return resume.languages.map { Language(
-      name = it.name
+      name = it.name,
+      username = user.username,
+      level = LanguageLevel.entries.find { l -> l.level == it.level }
+        ?: throw InvalidMappingException("Language level not found: ${it.level}")
     ) }
   }
 
-  private fun mapToSkill(skill: UploadSkill, skills: List<Skill>, skillDomains: List<SkillDomain>): Skill {
+  private fun mapToSkill(skill: UploadSkill, skills: List<Skill>, skillDomains: List<SkillDomain>, user: User): Skill {
     return Skill(
-      id = skills.find { it.name == skill.name }?.id,
+      id = skills.find { it.name == skill.name && it.username == user.username }?.id,
       name = skill.name,
       description = skill.description,
       level = skill.level.toInt(),
-      domains = skill.techDomains.map { skillDomains.find { d -> d.name == it } ?: throw InvalidMappingException("Skill domain not found: $it") }
+      domains = skill.techDomains.map {
+        skillDomains.find { d -> d.name == it } ?: throw InvalidMappingException("Skill domain not found: $it")
+      },
+      username = user.username
     )
   }
 
@@ -95,17 +119,14 @@ class DataLoaderMapper {
     )
   }
 
-  private fun mapToLanguage(workLanguage: UploadWorkLanguage, languages: List<Language>): WorkLanguage {
-    return WorkLanguage(
-      languages.find { it.name == workLanguage.name }
-        ?: throw InvalidMappingException("Language not found: ${workLanguage.name}"),
-      LanguageLevel.entries.find { it.level == workLanguage.level }
-        ?: throw InvalidMappingException("Language level not found: ${workLanguage.level}"),
-    )
+  private fun mapToLanguage(workLanguage: UploadWorkLanguage, languages: List<Language>, user: User): Language {
+    return languages.find { it.name == workLanguage.name && it.username == user.username }
+      ?: throw InvalidMappingException("Language not found: ${workLanguage.name}")
   }
 
-  private fun mapToHobby(hobby: String, hobbies: List<Hobby>): Hobby {
-    return hobbies.find { it.name == hobby } ?: throw InvalidMappingException("Hobby not found: $hobby")
+  private fun mapToHobby(hobby: String, hobbies: List<Hobby>, user: User): Hobby {
+    return hobbies.find { it.name == hobby && it.username == user.username }
+      ?: throw InvalidMappingException("Hobby not found: $hobby")
   }
 
   private fun mapToExperience(

@@ -7,7 +7,6 @@ import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyService
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageService
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainService
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.utility.loader.model.UploadResume
 
 @Component
@@ -18,23 +17,43 @@ class DataLoaderFacade(
   private val businessService: BusinessService,
   private val dataLoaderMapper: DataLoaderMapper,
   private val skillService: SkillService,
-  private val resumeHistoryService: ResumeHistoryService,
   private val skillDomainService: SkillDomainService,
 ) {
 
   fun loadDataFromReadResumes(data: List<UploadResume>): Boolean {
     val allSkillDomains = skillDomainService.saveAll(
-      data.flatMap { dataLoaderMapper.extractSkillDomainsFromResume(it) }.distinctBy { it.name }
+      data.flatMap { dataLoaderMapper.extractSkillDomainsFromResume(it) }.distinctBy { "${it.name}-${it.username}" }
     )
     val allSkills =
-      skillService.saveAll(data.flatMap { dataLoaderMapper.extractSkillsFromResume(it, allSkillDomains) }
-        .distinctBy { it.name })
+      skillService.saveAll(data.flatMap {
+        dataLoaderMapper.extractSkillsFromResume(
+          it,
+          allSkillDomains,
+          dataLoaderMapper.mapToUser(it.user)
+        )
+      }
+        .distinctBy { "${it.name}-${it.username}" })
     val allBusiness =
-      businessService.saveAll(data.flatMap { dataLoaderMapper.extractBusinessesFromResume(it) }.distinctBy { it.name })
+      businessService.saveAll(data.flatMap {
+        dataLoaderMapper.extractBusinessesFromResume(
+          it,
+          dataLoaderMapper.mapToUser(it.user)
+        )
+      }.distinctBy { "${it.name}-${it.username}" })
     val allLanguages =
-      languageService.saveAll(data.flatMap { dataLoaderMapper.extractLanguagesFromResume(it) }.distinctBy { it.name })
+      languageService.saveAll(data.flatMap {
+        dataLoaderMapper.extractLanguagesFromResume(
+          it,
+          dataLoaderMapper.mapToUser(it.user)
+        )
+      }.distinctBy { "${it.name}-${it.username}" })
     val allHobbies =
-      hobbyService.saveAll(data.flatMap { dataLoaderMapper.extractHobbiesFromResume(it) }.distinctBy { it.name })
+      hobbyService.saveAll(data.flatMap {
+        dataLoaderMapper.extractHobbiesFromResume(
+          it,
+          dataLoaderMapper.mapToUser(it.user)
+        )
+      }.distinctBy { "${it.name}-${it.username}" })
     data.map {
       dataLoaderMapper.mapToResume(
         it,

@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Hobby(
   @Id
   val id: Long? = null,
-  val name: String
-) {
-}
+  val name: String,
+  val username: String
+)

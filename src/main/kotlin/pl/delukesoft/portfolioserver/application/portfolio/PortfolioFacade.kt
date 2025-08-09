@@ -2,7 +2,6 @@ package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.application.filter.FilterFacade
 import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
@@ -18,21 +17,20 @@ class PortfolioFacade(
   private val userContext: UserContext
 ) {
 
-  fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): PortfolioDTO {
-    return portfolioMapper.mapToDTO(resumeFacade.getCvById(id, portfolioSearch))
-  }
+  private val currentUser
+    get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
-  fun getDefaultCV(portfolioSearch: PortfolioSearch? = null): PortfolioDTO {
-    return portfolioMapper.mapToDTO(resumeFacade.getDefaultCV(portfolioSearch))
-  }
+  fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): PortfolioDTO =
+    portfolioMapper.mapToDTO(resumeFacade.getCvById(id, portfolioSearch))
 
-  fun getUserHistory(): PortfolioHistoryDTO {
-    return portfolioMapper.mapHistoryToDTO(resumeHistoryFacade.getUserHistory())
-  }
+  fun getDefaultCV(portfolioSearch: PortfolioSearch? = null): PortfolioDTO =
+    portfolioMapper.mapToDTO(resumeFacade.getDefaultCV(portfolioSearch))
+
+  fun getUserHistory(): PortfolioHistoryDTO =
+    portfolioMapper.mapHistoryToDTO(resumeHistoryFacade.getUserHistory())
 
   fun initiatePortfolio(shortcut: PortfolioShortcutDTO): Boolean {
-    val resumeWithShortcutOnly = portfolioMapper.mapShortcutDTOToResume(shortcut, userContext.user!!)
+    val resumeWithShortcutOnly = portfolioMapper.mapShortcutDTOToResume(shortcut, currentUser)
     return resumeFacade.initiateResume(resumeWithShortcutOnly)
   }
-
 }
