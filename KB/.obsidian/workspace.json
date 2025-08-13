@@ -72,9 +72,21 @@
               "icon": "excalidraw-icon",
               "title": "Main page view"
             }
+          },
+          {
+            "id": "60147489331e786c",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Edit View/mockup/Edit Main Page.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Edit Main Page"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -223,13 +235,15 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "e95805b94020c04f",
+  "active": "60147489331e786c",
   "lastOpenFiles": [
+    "Edit View/mockup/Edit Overview Page.md",
+    "Portfolio main view/mockup/Main page view.md",
+    "Edit View/mockup/Edit Main Page.md",
     "Portfolio main view/mockup/Delukesoft.jpg",
+    "Edit View/Resume Edit.md",
     "Portfolio main view/Portfolio View.md",
     "UML/Domain/Resume model.md",
-    "Edit View/Resume Edit.md",
-    "Edit View/mockup/Edit Main Page.md",
     "CV View/CV View.md",
     "Portfolio App overview.md",
     "UML/Domain/Application connector model.md",
@@ -251,9 +265,7 @@
     "copilot-custom-prompts",
     "UML/Domain/Read Resume model.md",
     "Portfolio main view/Portfolio View.md~",
-    "Portfolio main view/mockup/Main page view.md",
     "Portfolio main view/mockup/print-solid.svg",
-    "Excalidraw/Drawing 2025-07-05 19.55.48.excalidraw.md",
     "Excalidraw",
     "Edit View/mockup",
     "Edit View",
