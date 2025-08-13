@@ -31,6 +31,24 @@ mapped into a `PortfolioHistoryDTO` and returned to the client, enabling the fro
 overview of the candidate’s resume activity. This process ensures that only the authenticated candidate sees their own
 resume history while providing the necessary information for subsequent resume management actions.
 
+
+```plantuml
+
+actor admin
+participant PortfolioServer as system
+database PortfolioDB as db
+boundary auth_server as auth
+
+group Resume history for ROLE_ADMIN user
+admin -> system: GET /api/portfolio/history
+system -> auth: getContextUser
+auth -> system: User with ROLE_ADMIN priviliges
+system -> db: findAllUsersHistory
+db -> system: ResumeHistory
+system -> admin: PortfolioHistoryDTO
+end
+
+```
 ### 3. Edit model
 
 Edit page users [[Resume model]] to read different versions, store and operate on them.
