@@ -13,4 +13,12 @@ class ResumeHistoryFacade(
     return resumeHistoryService.findByUsername(userContext.user?.username!!)
   }
 
+  fun getUserPublishedVersion(): ResumeVersion? {
+    return resumeHistoryService.findPublishedResumeVersion(userContext.user?.username!!)
+  }
+
+  fun getUserVersion(portfolioVersion: Long): ResumeVersion? {
+    return resumeHistoryService.findVersionByIdAndUsername(portfolioVersion, userContext.user?.username!!)
+  }
+
 }

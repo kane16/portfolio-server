@@ -13,9 +13,6 @@ interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
   @Query("{ 'user.roles' : { \$in: ?0 } }")
   fun findResumesHistoryByRoles(roles: List<String>): List<ResumeHistory>
 
-  @Query("{ 'user.roles' : { \$in: ?0 } }")
-  fun findResumeHistoryByRoles(listOf: List<String>): List<ResumeHistory>
-
   @Query("{ 'user.username' : ?0 }")
   fun findResumeHistoryByUsername(username: String): ResumeHistory?
 
@@ -35,5 +32,9 @@ interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
   @Query("{ 'user.username' : ?0 }")
   @Update("{ \$addToSet: { 'versions': ?1 } }")
   fun addResumeHistoryVersionByUsername(username: String, resumeVersion: ResumeVersion): Long
+
+  @Query("{ 'user.username' : ?0 }")
+  @Update("{ '\$set': { 'defaultResume': ?1 } }")
+  fun setDefaultResumeForUser(username: String, resumeVersion: ResumeVersion? = null): Long
 
 }

@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState
+import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import java.time.LocalDateTime
 
 @Service
@@ -57,6 +58,13 @@ class ResumeService(
       lastModified = LocalDateTime.now()
     ) ?: throw ResumeNotFound()
     return save(resumeToUpdate)
+  }
+
+  fun unpublishResume(resumeVersion: ResumeVersion, username: String): Boolean {
+    return resumeHistoryService.changeResumeStatus(
+      resumeVersion,
+      ResumeVersionState.DRAFT
+    ) && resumeHistoryService.unpublishDefaultResume(username)
   }
 
   private fun save(resume: Resume): Resume {

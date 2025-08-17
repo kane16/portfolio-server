@@ -1,9 +1,7 @@
 package pl.delukesoft.portfolioserver.domain.resumehistory
 
 import org.springframework.stereotype.Service
-import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.resumehistory.exception.ResumeHistoryExistsException
 import pl.delukesoft.portfolioserver.domain.resumehistory.exception.ResumeHistoryNotFound
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
@@ -13,10 +11,6 @@ class ResumeHistoryService(
   private val generatorService: GeneratorService,
   private val resumeVersionRepository: ResumeVersionRepository,
 ) {
-
-  fun existsByUser(user: User): Boolean {
-    return resumeHistoryRepository.existsByUser_Username(user.username)
-  }
 
   fun findByUsernameAndRole(username: String, role: String): ResumeHistory {
     return resumeHistoryRepository.findResumeHistoryByUsernameAndRoles(username, listOf(role))
@@ -37,6 +31,19 @@ class ResumeHistoryService(
       true -> addResumeToExistingHistory(resume)
       false -> createResumeHistoryAndAddResume(resume)
     }
+  }
+
+  fun findPublishedResumeVersion(username: String): ResumeVersion? {
+    val resumeHistory = findByUsername(username)
+    return resumeHistory.defaultResume
+  }
+
+  fun unpublishDefaultResume(username: String): Boolean {
+    return resumeHistoryRepository.setDefaultResumeForUser(username) > 0
+  }
+
+  fun changeResumeStatus(resumeVersion: ResumeVersion, status: ResumeVersionState): Boolean {
+    return resumeVersionRepository.changeResumeStatus(resumeVersion.id!!, status) > 0
   }
 
   private fun createResumeHistoryAndAddResume(resume: Resume): Boolean {
@@ -79,8 +86,9 @@ class ResumeHistoryService(
     return resumeVersionRepository.save(version)
   }
 
-  fun isInitialized(): Boolean {
-    return !resumeHistoryRepository.findResumeHistoryByRoles(listOf("ROLE_ADMIN")).isEmpty()
+  fun findVersionByIdAndUsername(portfolioVersion: Long, username: String): ResumeVersion? {
+    val resumeHistory = findByUsername(username)
+    return resumeHistory.versions.find { it.version == portfolioVersion }
   }
 
 }

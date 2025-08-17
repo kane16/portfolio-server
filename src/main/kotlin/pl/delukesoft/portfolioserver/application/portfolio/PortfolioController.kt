@@ -59,4 +59,14 @@ class PortfolioController(
     return portfolioFacade.initiatePortfolio(shortcut)
   }
 
+  @AuthRequired("ROLE_CANDIDATE")
+  @PutMapping("/edit/{version}/unpublish")
+  fun unpublishPortfolio(
+    @PathVariable("version") version: Long,
+    @RequestHeader("Authorization") token: String?,
+  ): Boolean {
+    log.info("Received request to unpublish portfolio")
+    return portfolioFacade.unpublishPortfolio(version)
+  }
+
 }

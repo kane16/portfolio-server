@@ -371,3 +371,100 @@ Feature: Resume creation
     """
     Given All resumes are deleted from database
     Then Restore DB resumes
+
+  Scenario: Unpublish after init and verify success
+    Given User is authorized with token: "candidate_empty"
+    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    """
+    {
+      "title": "My Professional Resume",
+      "summary": "Experienced software developer with strong background in web technologies",
+      "image": {
+        "name": "My image",
+        "src": "123.jpg"
+      }
+    }
+    """
+    Then Response status code should be 201
+    And Response body should be:
+    """
+    true
+    """
+    When "PUT" request is sent to endpoint "/portfolio/edit/1/unpublish" with no body
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    true
+    """
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    {
+       "defaultPortfolio" : null,
+       "history" : [
+          {
+             "id" : 4,
+             "title" : "My Professional Resume",
+             "summary" : "Experienced software developer with strong background in web technologies",
+             "version" : 1,
+             "state" : "DRAFT"
+          }
+       ]
+    }
+    """
+    Given All resumes are deleted from database
+    Then Restore DB resumes
+
+  Scenario: Unpublish fails when resume with given version does not exist
+    Given User is authorized with token: "candidate"
+    When "PUT" request is sent to endpoint "/portfolio/edit/999/unpublish" with no body
+    Then Response status code should be 404
+    And Response body should be:
+    """
+    {
+      "error": "CV not found",
+      "status": 404
+    }
+    """
+    Given All resumes are deleted from database
+    Then Restore DB resumes
+
+  Scenario: Unpublish fails when version exists but is not in PUBLISHED state
+    Given User is authorized with token: "candidate"
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    {
+       "defaultPortfolio" : {
+          "id" : 3,
+          "title" : "Lead Java Developer",
+          "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+          "version" : 1,
+          "state" : "PUBLISHED"
+       },
+       "history" : [
+          {
+             "id" : 3,
+             "title" : "Lead Java Developer",
+             "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+             "version" : 1,
+             "state" : "PUBLISHED"
+          }
+       ]
+    }
+    """
+    When "PUT" request is sent to endpoint "/portfolio/edit/1/unpublish" with no body
+    Then Response status code should be 200
+    When "PUT" request is sent to endpoint "/portfolio/edit/1/unpublish" with no body
+    Then Response status code should be 400
+    And Response body should be:
+    """
+    {
+      "error": "Provided version 1 does not match PUBLISHED version",
+      "status": 400
+    }
+    """
+    Given All resumes are deleted from database
+    Then Restore DB resumes

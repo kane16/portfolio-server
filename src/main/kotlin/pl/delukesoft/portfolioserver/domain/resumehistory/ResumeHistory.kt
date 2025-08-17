@@ -7,7 +7,7 @@ import pl.delukesoft.portfolioserver.adapters.auth.User
 @Document(collection = "ResumeHistory")
 data class ResumeHistory(
   val id: Long? = null,
-  val defaultResume: ResumeVersion,
+  val defaultResume: ResumeVersion? = null,
   @DBRef(lazy = true) val versions: List<ResumeVersion> = emptyList(),
   val user: User
 )

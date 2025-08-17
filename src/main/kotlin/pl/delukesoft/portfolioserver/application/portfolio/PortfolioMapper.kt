@@ -17,7 +17,7 @@ class PortfolioMapper {
 
   fun mapHistoryToDTO(history: ResumeHistory): PortfolioHistoryDTO {
     return PortfolioHistoryDTO(
-      mapVersionToDTO(history.defaultResume),
+      if (history.defaultResume != null) mapVersionToDTO(history.defaultResume) else null,
       history.versions.map { mapVersionToDTO(it) }
     )
   }
