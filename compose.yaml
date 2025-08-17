@@ -4,7 +4,7 @@ services:
     ports:
       - "80:8000"
     volumes:
-      - "/home/kane16/Documents/it-projects/resources:/serve"
+      - ${HTTP_SERVER_VOLUME}:/serve
   mongodb:
     image: 'kane16/delukesoft_dev_mongo_db:1.0.0'
     environment:
