@@ -27,8 +27,7 @@ args = parser.parse_args()
 print(args)
 
 json_files = os.listdir(f'{args.env}/data')
-collection_names = [os.path.splitext(f)[0] for f in json_files if f.endswith(
-    '.json') and f != 'export_manifest.json']
+collection_names = [os.path.splitext(f)[0] for f in json_files if f.endswith('.json') and f != 'export_manifest.json']
 
 
 full_script_content = """
