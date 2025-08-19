@@ -1,67 +1,15 @@
-package pl.delukesoft.portfolioserver.domain.resume.skill
+package pl.delukesoft.portfolioserver.domain.unit.skill
 
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.resume.ResumeShortcut
-import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
-import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
+import pl.delukesoft.portfolioserver.domain.resume.skill.SkillsValidator
+import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
-class SkillsValidatorTest {
+class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   private val validator: SkillsValidator = SkillsValidator()
-
-  private fun anyShortcut(): ResumeShortcut = ResumeShortcut(User("", "", emptyList()), "", "")
-
-  private fun skill(
-    name: String = "Kotlin",
-    level: Int = 3,
-    username: String = "alice",
-    description: String? = "some",
-    domains: List<SkillDomain> = emptyList()
-  ) = Skill(
-    id = null,
-    name = name,
-    level = level,
-    description = description,
-    username = username,
-    domains = domains
-  )
-
-  private fun domain(
-    name: String = "Backend",
-    username: String = "alice"
-  ) = SkillDomain(
-    id = null,
-    name = name,
-    username = username
-  )
-
-  private fun resumeWithSkills(vararg s: Skill) = Resume(
-    id = null,
-    shortcut = anyShortcut(),
-    skills = s.toList(),
-    experience = emptyList(),
-    sideProjects = emptyList(),
-    hobbies = emptyList(),
-    languages = emptyList()
-  )
-
-  private fun messages(result: ValidationResult): List<String> =
-    result.errors.map { it }
-
-  private fun assertHasMessage(result: ValidationResult, expected: String) {
-    assertTrue(
-      messages(result).any { it == expected || expected in it },
-      "Expected error message \"$expected\". Got: ${messages(result)}"
-    )
-  }
-
-  // ==== Tests ====
 
   @Test
   fun `valid resume with 2 distinct skills and unique domains passes`() {
@@ -80,7 +28,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertTrue(result.isValid, "Expected valid result, got errors: ${messages(result)}")
+    Assertions.assertTrue(result.isValid, "Expected valid result, got errors: ${messages(result)}")
   }
 
   @Test
@@ -89,7 +37,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertFalse(result.isValid)
+    Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "At least one skill is required")
   }
 
@@ -99,7 +47,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertTrue(result.isValid)
+    Assertions.assertTrue(result.isValid)
   }
 
   @ParameterizedTest
@@ -112,7 +60,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertFalse(result.isValid)
+    Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill name must be at least 1 character")
   }
 
@@ -125,7 +73,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertFalse(result.isValid)
+    Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill level must be between 1 and 5")
   }
 
@@ -138,7 +86,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertFalse(result.isValid)
+    Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill level must be between 1 and 5")
   }
 
@@ -151,7 +99,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertFalse(result.isValid)
+    Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill cannot be duplicated")
   }
 
@@ -168,7 +116,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertFalse(result.isValid)
+    Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill domain cannot be duplicated")
   }
 
@@ -185,11 +133,11 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertFalse(result.isValid)
+    Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill name must be at least 1 character")
     assertHasMessage(result, "Skill level must be between 1 and 5")
     assertHasMessage(result, "Skill domain cannot be duplicated")
-    assertFalse(messages(result).any { it.contains("At least two skills are required") })
+    Assertions.assertFalse(messages(result).any { it.contains("At least two skills are required") })
   }
 
   @Test
@@ -201,7 +149,7 @@ class SkillsValidatorTest {
 
     val result = validator.validate(r)
 
-    assertTrue(result.isValid, "Expected valid; got: ${messages(result)}")
+    Assertions.assertTrue(result.isValid, "Expected valid; got: ${messages(result)}")
   }
 
 }

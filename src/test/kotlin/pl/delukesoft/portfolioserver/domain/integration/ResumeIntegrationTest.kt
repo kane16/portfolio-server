@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.resume
+package pl.delukesoft.portfolioserver.domain.integration
 
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
@@ -12,9 +12,12 @@ import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.TestcontainersConfiguration
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
+import pl.delukesoft.portfolioserver.domain.resume.ResumeService
+import pl.delukesoft.portfolioserver.domain.resume.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
-import pl.delukesoft.portfolioserver.utility.DateTimeUtils.assertEqualsDateTimes
-import pl.delukesoft.portfolioserver.utility.DateTimeUtils.assertNotEqualsDateTimes
+import pl.delukesoft.portfolioserver.utility.DateTimeUtils
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -66,8 +69,8 @@ class ResumeIntegrationTest {
     assertEquals(dbResume.sideProjects, emptyList())
     assertEquals(dbResume.hobbies, emptyList())
     assertEquals(dbResume.languages, emptyList())
-    assertEqualsDateTimes(dbResume.createdOn, providedResume.createdOn)
-    assertEqualsDateTimes(dbResume.lastModified, providedResume.lastModified)
+    DateTimeUtils.assertEqualsDateTimes(dbResume.createdOn, providedResume.createdOn)
+    DateTimeUtils.assertEqualsDateTimes(dbResume.lastModified, providedResume.lastModified)
   }
 
   @Test
@@ -130,8 +133,8 @@ class ResumeIntegrationTest {
     assertEquals(dbResume.sideProjects, emptyList())
     assertEquals(dbResume.hobbies, emptyList())
     assertEquals(dbResume.languages, emptyList())
-    assertEqualsDateTimes(dbResume.createdOn, providedResume.createdOn)
-    assertNotEqualsDateTimes(dbResume.lastModified, providedResume.lastModified)
+    DateTimeUtils.assertEqualsDateTimes(dbResume.createdOn, providedResume.createdOn)
+    DateTimeUtils.assertNotEqualsDateTimes(dbResume.lastModified, providedResume.lastModified)
   }
 
   @Test

@@ -12,10 +12,10 @@ class SkillsValidator : SimpleValidator<Resume>() {
     val skillsValidations =
       listOf(
         emptySkillsValidation(skills),
-        skillLevelValidation(skills),
-        emptyNameSkillsValidation(skills),
+        skillsValidation(skills, ::skillLevelValid, "Skill level must be between 1 and 5"),
+        skillsValidation(skills, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
         duplicateSkillValidation(skills),
-        duplicateSkillDomainValidation(skills)
+        duplicateSkillDomainValidation(skills),
       )
 
     return ValidationResult(
@@ -24,6 +24,26 @@ class SkillsValidator : SimpleValidator<Resume>() {
         ?: ValidationStatus.VALID,
       skillsValidations.flatMap { it.errors }
     )
+  }
+
+  private fun skillsValidation(
+    skills: List<Skill>,
+    validationFunc: (skill: Skill) -> Boolean,
+    message: String
+  ): ValidationResult {
+    return if (skills.any { !validationFunc(it) }) {
+      ValidationResult(
+        false,
+        ValidationStatus.INVALID,
+        listOf(message)
+      )
+    } else {
+      ValidationResult(
+        true,
+        ValidationStatus.VALID,
+        emptyList()
+      )
+    }
   }
 
   private fun emptySkillsValidation(skills: List<Skill>): ValidationResult {
@@ -35,26 +55,6 @@ class SkillsValidator : SimpleValidator<Resume>() {
       )
     }
     return ValidationResult(true, ValidationStatus.VALID, emptyList())
-  }
-
-  private fun skillLevelValidation(skills: List<Skill>): ValidationResult {
-    return skills.filter { it.level !in 1..5 }.map {
-      ValidationResult(
-        false,
-        ValidationStatus.INVALID,
-        listOf("Skill level must be between 1 and 5")
-      )
-    }.firstOrNull() ?: ValidationResult(true, ValidationStatus.VALID, emptyList())
-  }
-
-  private fun emptyNameSkillsValidation(skills: List<Skill>): ValidationResult {
-    return skills.filter { it.name.trim().isEmpty() }.map {
-      ValidationResult(
-        false,
-        ValidationStatus.INVALID,
-        listOf("Skill name must be at least 1 character")
-      )
-    }.firstOrNull() ?: ValidationResult(true, ValidationStatus.VALID, emptyList())
   }
 
   private fun duplicateSkillValidation(skills: List<Skill>): ValidationResult {
@@ -81,6 +81,14 @@ class SkillsValidator : SimpleValidator<Resume>() {
 
   private fun skillDomainDuplicatedInSkill(skill: Skill): Boolean {
     return skill.domains.groupBy { it.name.trim().lowercase() }.values.any { it.count() > 1 }
+  }
+
+  private fun skillLevelValid(skill: Skill): Boolean {
+    return skill.level in 1..5
+  }
+
+  private fun skillNameNotEmpty(skill: Skill): Boolean {
+    return skill.name.trim().isNotEmpty()
   }
 
 }
