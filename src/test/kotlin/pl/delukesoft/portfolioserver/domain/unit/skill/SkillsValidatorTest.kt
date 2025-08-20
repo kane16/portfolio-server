@@ -13,29 +13,27 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `valid resume with 2 distinct skills and unique domains passes`() {
-    val r = resumeWithSkills(
-      skill(
-        name = "Kotlin",
-        level = 4,
-        domains = listOf(domain("Backend"), domain("JVM"))
-      ),
-      skill(
-        name = "React",
-        level = 3,
-        domains = listOf(domain("Frontend"))
+    val result = validator.validate(
+      listOf(
+        skill(
+          name = "Kotlin",
+          level = 4,
+          domains = listOf(domain("Backend"), domain("JVM"))
+        ),
+        skill(
+          name = "React",
+          level = 3,
+          domains = listOf(domain("Frontend"))
+        )
       )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertTrue(result.isValid, "Expected valid result, got errors: ${messages(result)}")
   }
 
   @Test
   fun `zero skills is invalid - requires at least two skills`() {
-    val r = resumeWithSkills()
-
-    val result = validator.validate(r)
+    val result = validator.validate(emptyList())
 
     Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "At least one skill is required")
@@ -43,9 +41,11 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `one skill is valid - requires at least one skill`() {
-    val r = resumeWithSkills(skill(name = "Kotlin", level = 3))
-
-    val result = validator.validate(r)
+    val result = validator.validate(
+      listOf(
+        skill(name = "Kotlin", level = 3)
+      )
+    )
 
     Assertions.assertTrue(result.isValid)
   }
@@ -53,12 +53,12 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
   @ParameterizedTest
   @ValueSource(strings = ["", " "])
   fun `skill name must be at least 1 character after trim`(raw: String) {
-    val r = resumeWithSkills(
-      skill(name = raw, level = 3),
-      skill(name = "React", level = 3)
+    val result = validator.validate(
+      listOf(
+        skill(name = raw, level = 3),
+        skill(name = "React", level = 3)
+      )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill name must be at least 1 character")
@@ -66,12 +66,12 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `level below 1 is invalid with specific message`() {
-    val r = resumeWithSkills(
-      skill(name = "Kotlin", level = 0),
-      skill(name = "React", level = 3)
+    val result = validator.validate(
+      listOf(
+        skill(name = "Kotlin", level = 0),
+        skill(name = "React", level = 3)
+      )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill level must be between 1 and 5")
@@ -79,12 +79,12 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `level above 5 is invalid with specific message`() {
-    val r = resumeWithSkills(
-      skill(name = "Kotlin", level = 6),
-      skill(name = "React", level = 3)
+    val result = validator.validate(
+      listOf(
+        skill(name = "Kotlin", level = 6),
+        skill(name = "React", level = 3)
+      )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill level must be between 1 and 5")
@@ -92,12 +92,12 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `duplicate skills by name (trim+case-insensitive) are rejected with specific message`() {
-    val r = resumeWithSkills(
-      skill(name = "Kotlin", level = 3),
-      skill(name = " kotlin ", level = 4)
+    val result = validator.validate(
+      listOf(
+        skill(name = "Kotlin", level = 3),
+        skill(name = " kotlin ", level = 4)
+      )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill cannot be duplicated")
@@ -105,16 +105,16 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `duplicate domains within a single skill (trim+case-insensitive) are rejected`() {
-    val r = resumeWithSkills(
-      skill(
-        name = "Kotlin",
-        level = 3,
-        domains = listOf(domain("Backend"), domain(" backend "), domain("BACKEND"))
-      ),
-      skill(name = "React", level = 3)
+    val result = validator.validate(
+      listOf(
+        skill(
+          name = "Kotlin",
+          level = 3,
+          domains = listOf(domain("Backend"), domain(" backend "), domain("BACKEND"))
+        ),
+        skill(name = "React", level = 3)
+      )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill domain cannot be duplicated")
@@ -122,16 +122,16 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `aggregates multiple errors - name too short, bad level, duplicate domain, too few skills is NOT triggered`() {
-    val r = resumeWithSkills(
-      skill(
-        name = "",
-        level = 0,
-        domains = listOf(domain("Backend"), domain(" backend ")) // duplicate domains
-      ),
-      skill(name = "React", level = 6)
+    val result = validator.validate(
+      listOf(
+        skill(
+          name = "",
+          level = 0,
+          domains = listOf(domain("Backend"), domain(" backend ")) // duplicate domains
+        ),
+        skill(name = "React", level = 6)
+      )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertFalse(result.isValid)
     assertHasMessage(result, "Skill name must be at least 1 character")
@@ -142,12 +142,12 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `two distinct skills with similar names but different after normalization should pass`() {
-    val r = resumeWithSkills(
-      skill(name = "C++", level = 3),
-      skill(name = "C#", level = 3)
+    val result = validator.validate(
+      listOf(
+        skill(name = "C++", level = 3),
+        skill(name = "C#", level = 3)
+      )
     )
-
-    val result = validator.validate(r)
 
     Assertions.assertTrue(result.isValid, "Expected valid; got: ${messages(result)}")
   }

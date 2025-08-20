@@ -1,21 +1,19 @@
 package pl.delukesoft.portfolioserver.domain.resume.skill
 
-import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.validation.SimpleValidator
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
+import pl.delukesoft.portfolioserver.domain.validation.Validator
 
-class SkillsValidator : SimpleValidator<Resume>() {
+class SkillsValidator : Validator<List<Skill>>() {
 
-  override fun validateSelf(value: Resume): ValidationResult {
-    val skills = value.skills
+  override fun validate(value: List<Skill>): ValidationResult {
     val skillsValidations =
       listOf(
-        emptySkillsValidation(skills),
-        skillsValidation(skills, ::skillLevelValid, "Skill level must be between 1 and 5"),
-        skillsValidation(skills, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
-        duplicateSkillValidation(skills),
-        duplicateSkillDomainValidation(skills),
+        emptySkillsValidation(value),
+        skillsValidation(value, ::skillLevelValid, "Skill level must be between 1 and 5"),
+        skillsValidation(value, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
+        duplicateSkillValidation(value),
+        duplicateSkillDomainValidation(value),
       )
 
     return ValidationResult(

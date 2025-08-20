@@ -1,9 +1,9 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience
 
 import org.springframework.data.annotation.Id
-import pl.delukesoft.portfolioserver.domain.resume.Timespan
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skill.SkillExperience
+import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 
 data class Experience(
   @Id val id: Long? = null,
@@ -11,6 +11,6 @@ data class Experience(
   val position: String,
   val summary: String,
   val description: String? = null,
-  val timespan: Timespan,
+  val timeframe: Timeframe,
   val skills: List<SkillExperience> = emptyList()
 )

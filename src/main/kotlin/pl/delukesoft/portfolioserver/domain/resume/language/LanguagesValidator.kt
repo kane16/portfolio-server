@@ -1,28 +1,26 @@
 package pl.delukesoft.portfolioserver.domain.resume.language
 
-import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.validation.SimpleValidator
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
+import pl.delukesoft.portfolioserver.domain.validation.Validator
 
-class LanguagesValidator : SimpleValidator<Resume>() {
+class LanguagesValidator : Validator<List<Language>>() {
 
-  override fun validateSelf(value: Resume): ValidationResult {
-    val languages = value.languages
+  override fun validate(value: List<Language>): ValidationResult {
     val languagesValidations = listOf(
-      atLeastTwoLanguagesValidation(languages),
+      atLeastTwoLanguagesValidation(value),
       languagesValidation(
-        languages,
+        value,
         ::hasAtLeastThreeCharactersForLanguageName,
         "Language name must be at least 3 characters long"
       ),
-      normalizedLanguageNamesValidator(languages),
+      normalizedLanguageNamesValidator(value),
       languagesValidation(
-        languages,
+        value,
         ::trimmedLanguageName,
         "Language name must not contain leading or trailing spaces"
       ),
-      languagesValidation(languages, ::capitalizedLanguageName, "Language name must be capitalized")
+      languagesValidation(value, ::capitalizedLanguageName, "Language name must be capitalized")
     )
 
     return ValidationResult(

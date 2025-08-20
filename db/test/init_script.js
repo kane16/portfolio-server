@@ -1,3 +1,4 @@
+
 let db = db.getSiblingDB("portfolio");
 
 db.createUser({user: "root", pwd: "pass", roles: [{role: "readWrite", db: "portfolio"}]});
@@ -247,7 +248,7 @@ db.Resume.insertMany([
           "position": "Senior Developer",
           "summary": "Lead developer for core banking systems",
           "description": "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
-          "timespan": {
+          "timeframe": {
             "start": new Date("2022-12-31T23:00:00.000+00:00"),
             "end": new Date("2025-05-07T22:00:00.000+00:00")
           },
@@ -389,7 +390,7 @@ db.Resume.insertMany([
           "position": "Full Stack Developer",
           "summary": "Full-stack development of modern web applications",
           "description": "Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components",
-          "timespan": {
+          "timeframe": {
             "start": new Date("2023-12-31T23:00:00.000+00:00"),
             "end": new Date("2025-06-09T22:00:00.000+00:00")
           },
@@ -532,7 +533,7 @@ db.Resume.insertMany([
           "position": "Backend Developer",
           "summary": "Backend development for high-load e-commerce platform",
           "description": "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance",
-          "timespan": {
+          "timeframe": {
             "start": new Date("2022-05-31T22:00:00.000+00:00"),
             "end": new Date("2024-01-14T23:00:00.000+00:00")
           },
@@ -564,7 +565,7 @@ db.Resume.insertMany([
           "position": "Technical Lead",
           "summary": "Technical leadership and architecture design",
           "description": "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes",
-          "timespan": {
+          "timeframe": {
             "start": new Date("2024-01-14T23:00:00.000+00:00"),
             "end": new Date("2025-07-14T22:00:00.000+00:00")
           },
@@ -905,7 +906,7 @@ db.ResumeVersion.insertMany([
             "position": "Senior Developer",
             "summary": "Lead developer for core banking systems",
             "description": "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
-            "timespan": {
+            "timeframe": {
               "start": new Date("2022-12-31T23:00:00.000+00:00"),
               "end": new Date("2025-05-07T22:00:00.000+00:00")
             },
@@ -1052,7 +1053,7 @@ db.ResumeVersion.insertMany([
             "position": "Full Stack Developer",
             "summary": "Full-stack development of modern web applications",
             "description": "Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components",
-            "timespan": {
+            "timeframe": {
               "start": new Date("2023-12-31T23:00:00.000+00:00"),
               "end": new Date("2025-06-09T22:00:00.000+00:00")
             },
@@ -1200,7 +1201,7 @@ db.ResumeVersion.insertMany([
             "position": "Backend Developer",
             "summary": "Backend development for high-load e-commerce platform",
             "description": "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance",
-            "timespan": {
+            "timeframe": {
               "start": new Date("2022-05-31T22:00:00.000+00:00"),
               "end": new Date("2024-01-14T23:00:00.000+00:00")
             },
@@ -1232,7 +1233,7 @@ db.ResumeVersion.insertMany([
             "position": "Technical Lead",
             "summary": "Technical leadership and architecture design",
             "description": "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes",
-            "timespan": {
+            "timeframe": {
               "start": new Date("2024-01-14T23:00:00.000+00:00"),
               "end": new Date("2025-07-14T22:00:00.000+00:00")
             },
@@ -1443,7 +1444,7 @@ db.ResumeHistory.insertMany([
               "position": "Senior Developer",
               "summary": "Lead developer for core banking systems",
               "description": "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
-              "timespan": {
+              "timeframe": {
                 "start": new Date("2022-12-31T23:00:00.000+00:00"),
                 "end": new Date("2025-05-07T22:00:00.000+00:00")
               },
@@ -1608,7 +1609,7 @@ db.ResumeHistory.insertMany([
               "position": "Full Stack Developer",
               "summary": "Full-stack development of modern web applications",
               "description": "Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components",
-              "timespan": {
+              "timeframe": {
                 "start": new Date("2023-12-31T23:00:00.000+00:00"),
                 "end": new Date("2025-06-09T22:00:00.000+00:00")
               },
@@ -1772,7 +1773,7 @@ db.ResumeHistory.insertMany([
               "position": "Backend Developer",
               "summary": "Backend development for high-load e-commerce platform",
               "description": "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance",
-              "timespan": {
+              "timeframe": {
                 "start": new Date("2022-05-31T22:00:00.000+00:00"),
                 "end": new Date("2024-01-14T23:00:00.000+00:00")
               },
@@ -1804,7 +1805,7 @@ db.ResumeHistory.insertMany([
               "position": "Technical Lead",
               "summary": "Technical leadership and architecture design",
               "description": "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes",
-              "timespan": {
+              "timeframe": {
                 "start": new Date("2024-01-14T23:00:00.000+00:00"),
                 "end": new Date("2025-07-14T22:00:00.000+00:00")
               },

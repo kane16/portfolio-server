@@ -6,8 +6,8 @@ import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeShortcut
-import pl.delukesoft.portfolioserver.domain.resume.Timespan
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
@@ -65,16 +65,18 @@ class PortfolioMapper {
         it.business.name,
         it.summary,
         it.description ?: "",
-        mapTimespan(it.timespan),
+        mapTimespan(it.timeframe),
         it.skills.map { SkillDTO(it.skill.name, it.detail, it.level) },
       )
     }
   }
 
-  private fun mapTimespan(timespan: Timespan): TimespanDTO {
+  private fun mapTimespan(timeframe: Timeframe): TimespanDTO {
     return TimespanDTO(
-      "${timespan.start.year}.${timespan.start.monthValue.toString().padStart(2, '0')}",
-      if (timespan.end != null) "${timespan.end.year}.${timespan.end.monthValue.toString().padStart(2, '0')}" else "",
+      "${timeframe.start.year}.${timeframe.start.monthValue.toString().padStart(2, '0')}",
+      if (timeframe.end != null) "${timeframe.end.year}.${
+        timeframe.end.monthValue.toString().padStart(2, '0')
+      }" else "",
     )
   }
 
