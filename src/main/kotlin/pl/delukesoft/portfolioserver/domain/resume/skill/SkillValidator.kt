@@ -4,16 +4,14 @@ import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
-class SkillsValidator : Validator<List<Skill>>() {
+class SkillValidator : Validator<Skill>() {
 
-  override fun validate(value: List<Skill>): ValidationResult {
+  override fun validate(value: Skill): ValidationResult {
     val skillsValidations =
       listOf(
-        emptySkillsValidation(value),
-        skillsValidation(value, ::skillLevelValid, "Skill level must be between 1 and 5"),
-        skillsValidation(value, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
-        duplicateSkillValidation(value),
-        duplicateSkillDomainValidation(value),
+        validationFunc(value, ::skillLevelValid, "Skill level must be between 1 and 5"),
+        validationFunc(value, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
+        validationFunc(value, ::skillDomainNotDuplicatedInSkill, "Skill domain cannot be duplicated"),
       )
 
     return ValidationResult(
@@ -24,24 +22,22 @@ class SkillsValidator : Validator<List<Skill>>() {
     )
   }
 
-  private fun skillsValidation(
-    skills: List<Skill>,
-    validationFunc: (skill: Skill) -> Boolean,
-    message: String
-  ): ValidationResult {
-    return if (skills.any { !validationFunc(it) }) {
-      ValidationResult(
-        false,
-        ValidationStatus.INVALID,
-        listOf(message)
+  override fun validateList(values: List<Skill>): ValidationResult {
+    val skillsValidations =
+      listOf(
+        emptySkillsValidation(values),
+        validationListFunc(values, ::skillLevelValid, "Skill level must be between 1 and 5"),
+        validationListFunc(values, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
+        duplicateSkillValidation(values),
+        validationListFunc(values, ::skillDomainNotDuplicatedInSkill, "Skill domain cannot be duplicated"),
       )
-    } else {
-      ValidationResult(
-        true,
-        ValidationStatus.VALID,
-        emptyList()
-      )
-    }
+
+    return ValidationResult(
+      skillsValidations.all { it.isValid },
+      skillsValidations.firstOrNull { it.validationStatus == ValidationStatus.INVALID }?.validationStatus
+        ?: ValidationStatus.VALID,
+      skillsValidations.flatMap { it.errors }
+    )
   }
 
   private fun emptySkillsValidation(skills: List<Skill>): ValidationResult {
@@ -67,18 +63,8 @@ class SkillsValidator : Validator<List<Skill>>() {
     }.firstOrNull() ?: ValidationResult(true, ValidationStatus.VALID, emptyList())
   }
 
-  private fun duplicateSkillDomainValidation(skills: List<Skill>): ValidationResult {
-    return skills.filter { skillDomainDuplicatedInSkill(it) }.map {
-      ValidationResult(
-        false,
-        ValidationStatus.INVALID,
-        listOf("Skill domain cannot be duplicated")
-      )
-    }.firstOrNull() ?: ValidationResult(true, ValidationStatus.VALID, emptyList())
-  }
-
-  private fun skillDomainDuplicatedInSkill(skill: Skill): Boolean {
-    return skill.domains.groupBy { it.name.trim().lowercase() }.values.any { it.count() > 1 }
+  private fun skillDomainNotDuplicatedInSkill(skill: Skill): Boolean {
+    return skill.domains.groupBy { it.name.trim().lowercase() }.values.all { it.count() <= 1 }
   }
 
   private fun skillLevelValid(skill: Skill): Boolean {

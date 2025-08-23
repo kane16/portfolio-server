@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resume.experience
 
 import org.springframework.data.annotation.Id
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
-import pl.delukesoft.portfolioserver.domain.resume.experience.skill.SkillExperience
+import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 
 data class Experience(

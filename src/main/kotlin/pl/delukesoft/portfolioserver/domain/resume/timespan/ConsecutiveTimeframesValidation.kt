@@ -4,27 +4,30 @@ import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 import java.time.LocalDate
 
-class ConsecutiveTimeframesValidation : Validator<List<Timeframe>>() {
+class ConsecutiveTimeframesValidation : Validator<Timeframe>() {
 
-  override fun validate(value: List<Timeframe>): ValidationResult {
+  override fun validate(value: Timeframe): ValidationResult {
     val validations = listOf(
-      timeframesValidation(value.dropLast(1), ::timeframeIsNotOpenEnded, "Only the newest timeframe can be ongoing"),
-      timeframesValidation(value, ::startBeforeEnd, "Timeframe start must be on or before end"),
-      timeframesConsecutive(value, value.firstOrNull()?.start),
-      timeframesValidation(value, ::startInPresentOrPast, "Timeframe cannot start in the future"),
-      timeframesValidation(value, ::endInPresentOrPast, "Timeframe cannot end in the future"),
-      timeframesNotOverlapping(value)
+      validationFunc(value, ::startBeforeEnd, "Timeframe start must be on or before end"),
+      validationFunc(value, ::startInPresentOrPast, "Timeframe cannot start in the future"),
+      validationFunc(value, ::endInPresentOrPast, "Timeframe cannot end in the future"),
     )
 
     return if (validations.all { it.isValid }) ValidationResult.build() else ValidationResult.build(validations.flatMap { it.errors })
   }
 
-  private fun timeframesValidation(
-    timeframes: List<Timeframe>,
-    validationFunc: (timeframe: Timeframe) -> Boolean,
-    message: String
-  ): ValidationResult =
-    if (timeframes.all { validationFunc(it) }) ValidationResult.build() else ValidationResult.build(message)
+  override fun validateList(values: List<Timeframe>): ValidationResult {
+    val validations = listOf(
+      validationListFunc(values.dropLast(1), ::timeframeIsNotOpenEnded, "Only the newest timeframe can be ongoing"),
+      validationListFunc(values, ::startBeforeEnd, "Timeframe start must be on or before end"),
+      timeframesConsecutive(values, values.firstOrNull()?.start),
+      validationListFunc(values, ::startInPresentOrPast, "Timeframe cannot start in the future"),
+      validationListFunc(values, ::endInPresentOrPast, "Timeframe cannot end in the future"),
+      timeframesNotOverlapping(values)
+    )
+
+    return if (validations.all { it.isValid }) ValidationResult.build() else ValidationResult.build(validations.flatMap { it.errors })
+  }
 
   private fun timeframeIsNotOpenEnded(timeframe: Timeframe): Boolean = timeframe.end != null
   private fun startBeforeEnd(timeframe: Timeframe): Boolean =

@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.resume.experience.skill
+package pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience
 
 import org.springframework.data.mongodb.core.mapping.DBRef
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill

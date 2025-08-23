@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.domain.unit
 
 import org.junit.jupiter.api.Assertions.assertTrue
+import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
@@ -44,6 +45,9 @@ open class ResumeValidatorTestBase {
     username = username,
     domains = domains
   )
+
+  protected fun business(name: String, username: String = "user") =
+    Business(id = null, name = name, username = username)
 
   protected fun domain(
     name: String = "Backend",

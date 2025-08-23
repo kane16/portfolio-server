@@ -4,23 +4,21 @@ import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
-class LanguagesValidator : Validator<List<Language>>() {
+class LanguagesValidator : Validator<Language>() {
 
-  override fun validate(value: List<Language>): ValidationResult {
+  override fun validate(value: Language): ValidationResult {
     val languagesValidations = listOf(
-      atLeastTwoLanguagesValidation(value),
-      languagesValidation(
+      validationFunc(
         value,
         ::hasAtLeastThreeCharactersForLanguageName,
         "Language name must be at least 3 characters long"
       ),
-      normalizedLanguageNamesValidator(value),
-      languagesValidation(
+      validationFunc(
         value,
         ::trimmedLanguageName,
         "Language name must not contain leading or trailing spaces"
       ),
-      languagesValidation(value, ::capitalizedLanguageName, "Language name must be capitalized")
+      validationFunc(value, ::capitalizedLanguageName, "Language name must be capitalized")
     )
 
     return ValidationResult(
@@ -31,20 +29,29 @@ class LanguagesValidator : Validator<List<Language>>() {
     )
   }
 
-  private fun languagesValidation(
-    languages: List<Language>,
-    validationFunc: (language: Language) -> Boolean,
-    message: String
-  ): ValidationResult {
-    return if (languages.any { !validationFunc(it) }) {
-      ValidationResult(
-        false,
-        ValidationStatus.INVALID,
-        listOf(message)
-      )
-    } else {
-      ValidationResult(true, ValidationStatus.VALID, emptyList())
-    }
+  override fun validateList(values: List<Language>): ValidationResult {
+    val languagesValidations = listOf(
+      atLeastTwoLanguagesValidation(values),
+      validationListFunc(
+        values,
+        ::hasAtLeastThreeCharactersForLanguageName,
+        "Language name must be at least 3 characters long"
+      ),
+      normalizedLanguageNamesValidator(values),
+      validationListFunc(
+        values,
+        ::trimmedLanguageName,
+        "Language name must not contain leading or trailing spaces"
+      ),
+      validationListFunc(values, ::capitalizedLanguageName, "Language name must be capitalized")
+    )
+
+    return ValidationResult(
+      languagesValidations.all { it.isValid },
+      languagesValidations.firstOrNull { it.validationStatus == ValidationStatus.INVALID }?.validationStatus
+        ?: ValidationStatus.VALID,
+      languagesValidations.flatMap { it.errors }
+    )
   }
 
   private fun atLeastTwoLanguagesValidation(languages: List<Language>): ValidationResult {
