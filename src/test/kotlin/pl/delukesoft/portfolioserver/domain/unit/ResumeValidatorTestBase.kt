@@ -2,6 +2,7 @@ package pl.delukesoft.portfolioserver.domain.unit
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
+import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
@@ -45,6 +46,14 @@ open class ResumeValidatorTestBase {
     username = username,
     domains = domains
   )
+
+  protected fun se(
+    skill: Skill = skill(),
+    level: Int = 3,
+    detail: String = "Experienced with coroutines"
+  ) = SkillExperience(skill = skill, level = level, detail = detail)
+
+  protected fun ofLen(n: Int, ch: Char = 'a') = buildString { repeat(n) { append(ch) } }
 
   protected fun business(name: String, username: String = "user") =
     Business(id = null, name = name, username = username)
