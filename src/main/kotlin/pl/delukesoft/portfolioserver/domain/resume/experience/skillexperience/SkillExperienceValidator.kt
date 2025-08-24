@@ -1,14 +1,18 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience
 
+import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
-class SkillExperienceValidator : Validator<SkillExperience>() {
+class SkillExperienceValidator(
+  private val skillValidator: SkillValidator
+) : Validator<SkillExperience>() {
 
   override fun validate(value: SkillExperience): ValidationResult {
     val validationResults: List<ValidationResult> = listOf(
       validationFunc(value, ::levelInBounds, "Experience Skill Level must be between 1 and 5"),
       validationFunc(value, ::detailAtLeastTenCharacters, "Detail must be at least 10 characters"),
+      skillValidator.validate(value.skill)
     )
 
     return if (validationResults.any { !it.isValid }) {

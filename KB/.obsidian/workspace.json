@@ -84,9 +84,21 @@
               "icon": "excalidraw-icon",
               "title": "Edit Main Page"
             }
+          },
+          {
+            "id": "055682ef00ad694a",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.10"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.9.10"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -226,6 +238,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -235,7 +248,7 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "60147489331e786c",
+  "active": "a65e3c713acc82cf",
   "lastOpenFiles": [
     "Edit View/mockup/Edit Overview Page.md",
     "Portfolio main view/mockup/Main page view.md",
