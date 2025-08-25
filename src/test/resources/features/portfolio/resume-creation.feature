@@ -468,3 +468,49 @@ Feature: Resume creation
     """
     Given All resumes are deleted from database
     Then Restore DB resumes
+
+  Scenario: After Successful Resume creation candidate can read his resume by id
+    Given User is authorized with token: "candidate_empty"
+    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+        """
+        {
+          "title": "My Professional Resume",
+          "summary": "Experienced software developer with strong background in web technologies",
+          "image": {
+            "name": "My image",
+            "src": "123.jpg"
+          }
+        }
+        """
+    Then Response status code should be 201
+    And Response body should be:
+        """
+        true
+        """
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+        """
+        {
+           "defaultPortfolio" : {
+              "id" : 4,
+              "title" : "My Professional Resume",
+              "summary" : "Experienced software developer with strong background in web technologies",
+              "version" : 1,
+              "state" : "PUBLISHED"
+           },
+           "history" : [
+              {
+                 "id" : 4,
+                 "title" : "My Professional Resume",
+                 "summary" : "Experienced software developer with strong background in web technologies",
+                 "version" : 1,
+                 "state" : "PUBLISHED"
+              }
+           ]
+        }
+        """
+    When "POST" request is sent to endpoint "/portfolio/4" with no body
+    Then Response status code should be 200
+    Given All resumes are deleted from database
+    Then Restore DB resumes

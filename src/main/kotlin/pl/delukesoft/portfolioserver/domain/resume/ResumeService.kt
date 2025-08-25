@@ -23,6 +23,10 @@ class ResumeService(
     log.info("Getting CV with id: $id")
     return when {
       user != null && user.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw ResumeNotFound()
+      user != null && user.roles.contains("ROLE_CANDIDATE") -> resumeRepository.findResumeByIdAndUsername(
+        id,
+        user.username
+      ) ?: throw ResumeNotFound()
       else -> throw ResumeNotFound()
     }
   }

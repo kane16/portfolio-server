@@ -20,7 +20,7 @@ class PortfolioController(
 
   private val log = LoggerFactory.getLogger(PortfolioController::class.java)
 
-  @AuthRequired("ROLE_ADMIN")
+  @AuthRequired("ROLE_ADMIN", "ROLE_CANDIDATE")
   @PostMapping("/{id}")
   fun getCVByIdWithSearch(
     @PathVariable("id") id: Long,
