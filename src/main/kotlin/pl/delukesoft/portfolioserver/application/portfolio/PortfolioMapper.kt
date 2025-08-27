@@ -32,8 +32,9 @@ class PortfolioMapper {
     )
   }
 
-  fun mapShortcutDTOToResume(shortcut: PortfolioShortcutDTO, user: User): Resume {
+  fun mapShortcutDTOToResume(shortcut: PortfolioShortcutDTO, user: User, resumeId: Long? = null): Resume {
     return Resume(
+      id = resumeId,
       shortcut = ResumeShortcut(
         title = shortcut.title,
         summary = shortcut.summary,

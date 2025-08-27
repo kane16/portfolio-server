@@ -49,6 +49,19 @@ class ResumeService(
     throw ResumeExistsException(existingResume.id!!)
   }
 
+  fun editResumeShortcut(id: Long, shortcut: ResumeShortcut): Boolean {
+    if (!resumeRepository.existsById(id)) {
+      throw ResumeNotFound()
+    }
+    updateResume(
+      Resume(
+        id = id,
+        shortcut = shortcut,
+      )
+    )
+    return true
+  }
+
   fun updateResume(resume: Resume): Resume {
     if (resume.id == null) {
       throw ResumeNotFound()

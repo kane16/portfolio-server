@@ -89,4 +89,3 @@ Feature: CV View functionality
     "status": 404
     }
     """
-    Then Restore DB resumes

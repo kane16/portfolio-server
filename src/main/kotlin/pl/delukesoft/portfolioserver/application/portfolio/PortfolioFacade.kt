@@ -39,4 +39,9 @@ class PortfolioFacade(
     val pulledVersion = resumeHistoryFacade.getUserVersion(portfolioVersion)
     return resumeFacade.unpublishResume(resumeVersion, pulledVersion)
   }
+
+  fun editPortfolio(id: Long, shortcut: PortfolioShortcutDTO): Boolean {
+    val resumeShortcutToModify = portfolioMapper.mapShortcutDTOToResume(shortcut, currentUser, id)
+    return resumeFacade.editResume(resumeShortcutToModify)
+  }
 }

@@ -52,4 +52,8 @@ class ResumeFacade(
     return resumeService.unpublishResume(resumeVersion, userContext.user?.username!!)
   }
 
+  fun editResume(resumeWithShortcutToModify: Resume): Boolean {
+    return resumeService.editResumeShortcut(resumeWithShortcutToModify.id!!, resumeWithShortcutToModify.shortcut)
+  }
+
 }

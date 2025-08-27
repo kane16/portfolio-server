@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.steps
 
 import com.jayway.jsonpath.internal.JsonFormatter.prettyPrint
+import io.cucumber.java.After
 import io.cucumber.java.Before
 import io.cucumber.java8.En
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -25,21 +26,33 @@ class BehaviourTestsSteps(
 
   var result = ResponseEntity.ok("OK")
   private var logger = org.slf4j.LoggerFactory.getLogger(this::class.java)
+  val intialDbResumes = resumeRepository.findAll()
+  val initialDbResumeVersions = resumeVersionRepository.findAll()
+  val initialDbHistoryResumes = resumeHistoryRepository.findAll()
+  val initialSequences = generatorRepository.findAll()
 
   init {
     defineSteps()
   }
 
   @Before
-  fun resetToken() {
+  fun beforeScenario() {
     baseRestClient.resetToken()
   }
 
+  @After
+  fun afterScenario() {
+    resumeHistoryRepository.deleteAll()
+    resumeVersionRepository.deleteAll()
+    resumeRepository.deleteAll()
+    generatorRepository.deleteAll()
+    resumeRepository.saveAll(intialDbResumes)
+    resumeVersionRepository.saveAll(initialDbResumeVersions)
+    resumeHistoryRepository.saveAll(initialDbHistoryResumes)
+    generatorRepository.saveAll(initialSequences)
+  }
+
   fun defineSteps() {
-    val dbResumes = resumeRepository.findAll()
-    val dbResumeVersions = resumeVersionRepository.findAll()
-    val dbHistoryResumes = resumeHistoryRepository.findAll()
-    val sequences = generatorRepository.findAll()
     Given("User is authorized with token: {string}", baseRestClient::attachTokenToRequest)
     Given("All resumes are deleted from database") {
       resumeHistoryRepository.deleteAll()
@@ -73,7 +86,7 @@ class BehaviourTestsSteps(
       if (!responseBody.contains("{")) {
         assertEquals(responseBody, result.body)
       } else {
-        if (JSONCompare.compareJSON(result.body.toString(), responseBody, JSONCompareMode.LENIENT).failed() ) {
+        if (JSONCompare.compareJSON(result.body.toString(), responseBody, JSONCompareMode.LENIENT).failed()) {
           logger.error("Invalid response body:\n{}", prettyPrint(result.body))
           logger.error("Response should be JSON:\n{}", prettyPrint(responseBody))
           logger.error(
@@ -84,22 +97,16 @@ class BehaviourTestsSteps(
         JSONAssert.assertEquals(responseBody, result.body, true)
       }
     }
-    Then("Restore DB resumes") {
-      resumeRepository.saveAll(dbResumes)
-      resumeVersionRepository.saveAll(dbResumeVersions)
-      resumeHistoryRepository.saveAll(dbHistoryResumes)
-      generatorRepository.saveAll(sequences)
-    }
   }
 
   private fun sendRequest(method: String, endpoint: String, body: String): ResponseEntity<String> {
-      return when (method) {
-          "GET" -> baseRestClient.get(endpoint, String::class.java)
-          "POST" -> baseRestClient.post(endpoint, body, String::class.java)
-          "PUT" -> baseRestClient.put(endpoint, body, String::class.java)
-          "DELETE" -> baseRestClient.delete(endpoint, String::class.java)
-          else -> throw IllegalArgumentException("Invalid method: $method")
-      }
+    return when (method) {
+      "GET" -> baseRestClient.get(endpoint, String::class.java)
+      "POST" -> baseRestClient.post(endpoint, body, String::class.java)
+      "PUT" -> baseRestClient.put(endpoint, body, String::class.java)
+      "DELETE" -> baseRestClient.delete(endpoint, String::class.java)
+      else -> throw IllegalArgumentException("Invalid method: $method")
+    }
   }
 
 

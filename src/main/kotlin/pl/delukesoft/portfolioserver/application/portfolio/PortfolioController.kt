@@ -60,6 +60,17 @@ class PortfolioController(
   }
 
   @AuthRequired("ROLE_CANDIDATE")
+  @PutMapping("/edit/{id}")
+  fun updatePortfolioShortcut(
+    @PathVariable("id") id: Long,
+    @Valid @RequestBody shortcut: PortfolioShortcutDTO,
+    @RequestHeader("Authorization") token: String?,
+  ): Boolean {
+    log.info("Received request to update portfolio shortcut")
+    return portfolioFacade.editPortfolio(id, shortcut)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
   @PutMapping("/edit/{version}/unpublish")
   fun unpublishPortfolio(
     @PathVariable("version") version: Long,

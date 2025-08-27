@@ -50,8 +50,6 @@ Feature: Resume creation
        ]
     }
     """
-    Given All resumes are deleted from database
-    Then Restore DB resumes
 
   Scenario: Unauthorized user tries to initiate resume creation
     When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
@@ -327,8 +325,6 @@ Feature: Resume creation
        ]
     }
     """
-    Given All resumes are deleted from database
-    Then Restore DB resumes
 
   Scenario: Resume creation with minimum valid values
     Given User is authorized with token: "candidate_empty"
@@ -348,8 +344,6 @@ Feature: Resume creation
     """
     true
     """
-    Given All resumes are deleted from database
-    Then Restore DB resumes
 
   Scenario: Resume creation with maximum valid values
     Given User is authorized with token: "candidate_empty"
@@ -369,8 +363,6 @@ Feature: Resume creation
     """
     true
     """
-    Given All resumes are deleted from database
-    Then Restore DB resumes
 
   Scenario: Unpublish after init and verify success
     Given User is authorized with token: "candidate_empty"
@@ -413,8 +405,6 @@ Feature: Resume creation
        ]
     }
     """
-    Given All resumes are deleted from database
-    Then Restore DB resumes
 
   Scenario: Unpublish fails when resume with given version does not exist
     Given User is authorized with token: "candidate"
@@ -427,8 +417,6 @@ Feature: Resume creation
       "status": 404
     }
     """
-    Given All resumes are deleted from database
-    Then Restore DB resumes
 
   Scenario: Unpublish fails when version exists but is not in PUBLISHED state
     Given User is authorized with token: "candidate"
@@ -466,8 +454,6 @@ Feature: Resume creation
       "status": 400
     }
     """
-    Given All resumes are deleted from database
-    Then Restore DB resumes
 
   Scenario: After Successful Resume creation candidate can read his resume by id
     Given User is authorized with token: "candidate_empty"
@@ -512,5 +498,83 @@ Feature: Resume creation
         """
     When "POST" request is sent to endpoint "/portfolio/4" with no body
     Then Response status code should be 200
-    Given All resumes are deleted from database
-    Then Restore DB resumes
+
+  Scenario: Update resume fails when resume with given id does not exist
+    Given User is authorized with token: "candidate"
+    When "PUT" request is sent to endpoint "/portfolio/edit/999" with body:
+    """
+    {
+      "title": "Updated Resume Title",
+      "summary": "Updated summary text with valid length for testing update",
+      "image": {
+        "name": "Updated",
+        "src": "updated.jpg"
+      }
+    }
+    """
+    Then Response status code should be 404
+    And Response body should be:
+    """
+    {
+      "error": "CV not found",
+      "status": 404
+    }
+    """
+
+  Scenario: Successful resume shortcut update
+    Given User is authorized with token: "candidate_empty"
+    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    """
+    {
+      "title": "My Professional Resume",
+      "summary": "Experienced software developer with strong background in web technologies",
+      "image": {
+        "name": "My image",
+        "src": "123.jpg"
+      }
+    }
+    """
+    Then Response status code should be 201
+    And Response body should be:
+    """
+    true
+    """
+    When "PUT" request is sent to endpoint "/portfolio/edit/4" with body:
+    """
+    {
+      "title": "Updated Resume Title",
+      "summary": "Updated summary text with valid length for testing update",
+      "image": {
+        "name": "Updated",
+        "src": "updated.jpg"
+      }
+    }
+    """
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    true
+    """
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    {
+       "defaultPortfolio" : {
+          "id" : 4,
+          "title" : "Updated Resume Title",
+          "summary" : "Updated summary text with valid length for testing update",
+          "version" : 1,
+          "state" : "PUBLISHED"
+       },
+       "history" : [
+          {
+             "id" : 4,
+             "title" : "Updated Resume Title",
+             "summary" : "Updated summary text with valid length for testing update",
+             "version" : 1,
+             "state" : "PUBLISHED"
+          }
+       ]
+    }
+    """
