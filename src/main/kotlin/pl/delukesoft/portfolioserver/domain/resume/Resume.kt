@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import java.time.LocalDateTime
 

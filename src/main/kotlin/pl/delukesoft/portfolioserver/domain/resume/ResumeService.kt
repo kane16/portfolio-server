@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState

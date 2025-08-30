@@ -1,9 +1,11 @@
 package pl.delukesoft.portfolioserver.domain.resume.skill
 
+import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
+@Component
 class SkillValidator : Validator<Skill>() {
 
   override fun validate(value: Skill): ValidationResult {

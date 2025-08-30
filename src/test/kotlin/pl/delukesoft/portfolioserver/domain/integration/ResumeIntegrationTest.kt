@@ -15,7 +15,7 @@ import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
-import pl.delukesoft.portfolioserver.domain.resume.ResumeShortcut
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.utility.DateTimeUtils
 import kotlin.test.assertEquals

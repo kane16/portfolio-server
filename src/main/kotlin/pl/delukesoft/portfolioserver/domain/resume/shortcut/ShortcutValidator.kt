@@ -1,19 +1,16 @@
-package pl.delukesoft.portfolioserver.domain.resume.experience
+package pl.delukesoft.portfolioserver.domain.resume.shortcut
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
 @Component
-class ExperienceValidator : Validator<Experience>() {
-
-  override fun validate(value: Experience): ValidationResult {
+class ShortcutValidator: Validator<ResumeShortcut>() {
+  override fun validate(value: ResumeShortcut): ValidationResult {
     TODO("Not yet implemented")
   }
 
-  override fun validateList(values: List<Experience>): ValidationResult {
+  override fun validateList(values: List<ResumeShortcut>): ValidationResult {
     TODO("Not yet implemented")
   }
-
-
 }

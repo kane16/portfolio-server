@@ -1,7 +1,7 @@
-package pl.delukesoft.portfolioserver.domain.resume
+package pl.delukesoft.portfolioserver.domain.resume.shortcut
 
-import pl.delukesoft.portfolioserver.adapters.image.Image
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.adapters.image.Image
 
 data class ResumeShortcut(
   val user: User,

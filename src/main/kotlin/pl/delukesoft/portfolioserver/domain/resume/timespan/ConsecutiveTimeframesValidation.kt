@@ -1,9 +1,11 @@
 package pl.delukesoft.portfolioserver.domain.resume.timespan
 
+import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 import java.time.LocalDate
 
+@Component
 class ConsecutiveTimeframesValidation : Validator<Timeframe>() {
 
   override fun validate(value: Timeframe): ValidationResult {

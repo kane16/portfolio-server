@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
 import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.resume.ResumeShortcut
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory

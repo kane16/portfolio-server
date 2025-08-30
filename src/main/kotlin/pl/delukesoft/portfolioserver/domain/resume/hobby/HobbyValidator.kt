@@ -1,8 +1,10 @@
 package pl.delukesoft.portfolioserver.domain.resume.hobby
 
+import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
+@Component
 class HobbyValidator : Validator<Hobby>() {
 
   override fun validate(value: Hobby): ValidationResult {
