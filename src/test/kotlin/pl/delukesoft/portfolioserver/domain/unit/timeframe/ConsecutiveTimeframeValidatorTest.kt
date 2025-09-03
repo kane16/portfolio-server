@@ -12,6 +12,7 @@ import kotlin.test.Test
 class ConsecutiveTimeframeValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = ConsecutiveTimeframesValidation()
+  private val lenientValidator = ConsecutiveTimeframesValidation(lenientMode = true)
   private val today = LocalDate.now()
 
   @Test
@@ -209,6 +210,55 @@ class ConsecutiveTimeframeValidatorTest : ResumeValidatorTestBase() {
     )
     assertFalse(failing.isValid)
     assertHasMessage(failing, "Timeframes must be consecutive")
+  }
+
+  @Test
+  fun `gap between timeframes is valid in lenient mode`() {
+    val result = lenientValidator.validateList(
+      listOf(
+        tf(start = LocalDate.of(2023, 1, 1), end = LocalDate.of(2023, 6, 30)),
+        tf(start = LocalDate.of(2023, 7, 2), end = LocalDate.of(2023, 12, 31))
+      )
+    )
+
+    assertTrue(result.isValid, "Expected valid in lenient mode, got errors: ${messages(result)}")
+  }
+
+  @Test
+  fun `non-consecutive closed followed by ongoing is valid in lenient mode`() {
+    val result = lenientValidator.validateList(
+      listOf(
+        tf(start = LocalDate.of(2023, 1, 1), end = LocalDate.of(2023, 12, 30)),
+        tf(start = LocalDate.of(2024, 1, 2), end = null) // gap, but allowed in lenient mode
+      )
+    )
+
+    assertTrue(result.isValid, "Expected valid in lenient mode, got errors: ${messages(result)}")
+  }
+
+  @Test
+  fun `multiple non-consecutive closed timeframes are valid in lenient mode`() {
+    val t1 = tf(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 3, 31))
+    val t2 = tf(LocalDate.of(2021, 4, 2), LocalDate.of(2021, 6, 30))   // 1-day gap
+    val t3 = tf(LocalDate.of(2021, 7, 2), LocalDate.of(2021, 12, 31))  // 1-day gap
+
+    val result = lenientValidator.validateList(listOf(t1, t2, t3))
+
+    assertTrue(result.isValid, "Expected valid in lenient mode, got errors: ${messages(result)}")
+  }
+
+  @Test
+  fun `strictly consecutive timeframes also valid in lenient mode`() {
+    val t1 = tf(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 6, 30))
+    val t2 = tf(LocalDate.of(2021, 7, 1), LocalDate.of(2021, 12, 31))
+    val t3 = tf(LocalDate.of(2022, 1, 1), LocalDate.of(2022, 12, 31))
+
+    val result = lenientValidator.validateList(listOf(t1, t2, t3))
+
+    assertTrue(
+      result.isValid,
+      "Expected valid in lenient mode for strictly consecutive timeframes, got errors: ${messages(result)}"
+    )
   }
 
 }

@@ -6,7 +6,9 @@ import pl.delukesoft.portfolioserver.domain.validation.Validator
 import java.time.LocalDate
 
 @Component
-class ConsecutiveTimeframesValidation : Validator<Timeframe>() {
+class ConsecutiveTimeframesValidation(
+  val lenientMode: Boolean = false
+) : Validator<Timeframe>() {
 
   override fun validate(value: Timeframe): ValidationResult {
     val validations = listOf(
@@ -43,6 +45,11 @@ class ConsecutiveTimeframesValidation : Validator<Timeframe>() {
     return when {
       timeframes.isEmpty() -> return ValidationResult.build()
       expectedStartDate == null -> return ValidationResult.build("Timeframes must be consecutive")
+      lenientMode && timeframes.first().start >= expectedStartDate -> timeframesConsecutive(
+        timeframes.drop(1),
+        timeframes.first().end?.plusDays(1)
+      )
+
       timeframes.first().start.isEqual(expectedStartDate) -> timeframesConsecutive(
         timeframes.drop(1),
         timeframes.first().end?.plusDays(1)
