@@ -82,18 +82,6 @@
               "icon": "excalidraw-icon",
               "title": "Edit Main Page"
             }
-          },
-          {
-            "id": "055682ef00ad694a",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.9.10"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.9.10"
-            }
           }
         ]
       }
@@ -245,7 +233,7 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "73da9f7a9b0cecf5",
+  "active": "24b0e619044678b1",
   "lastOpenFiles": [
     "Edit View/mockup/Edit Main Page.md",
     "Edit View/mockup/Edit Overview Page.md",

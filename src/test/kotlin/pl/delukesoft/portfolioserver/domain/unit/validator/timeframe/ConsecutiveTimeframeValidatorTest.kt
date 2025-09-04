@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.unit.timeframe
+package pl.delukesoft.portfolioserver.domain.unit.validator.timeframe
 
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue

@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.unit.skill
+package pl.delukesoft.portfolioserver.domain.unit.validator.skill
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

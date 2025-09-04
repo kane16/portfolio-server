@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.unit.skillexperience
+package pl.delukesoft.portfolioserver.domain.unit.validator.skillexperience
 
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue

@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.unit.business
+package pl.delukesoft.portfolioserver.domain.unit.validator.business
 
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue

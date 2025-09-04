@@ -1,11 +1,13 @@
 package pl.delukesoft.portfolioserver.domain.unit
 
 import org.junit.jupiter.api.Assertions.assertTrue
+import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
@@ -80,5 +82,16 @@ open class ResumeValidatorTestBase {
       "Expected error message \"$expected\". Got: ${messages(result)}"
     )
   }
+
+  protected fun shortcut(
+    title: String = ofLen(10),
+    summary: String = ofLen(50),
+    username: String = "alice"
+  ) = ResumeShortcut(
+    user = User(username = username, email = "$username@example.com"),
+    title = title,
+    summary = summary,
+    image = null
+  )
 
 }
