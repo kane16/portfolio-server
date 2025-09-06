@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.resume
+package pl.delukesoft.portfolioserver.domain.validation
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
