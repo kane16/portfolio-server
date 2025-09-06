@@ -1,12 +1,10 @@
 package pl.delukesoft.portfolioserver.domain.resume.timespan
 
-import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 import java.time.LocalDate
 
-@Component
-class ConsecutiveTimeframesValidation(
+class ConsecutiveTimeframeValidator(
   val lenientMode: Boolean = false
 ) : Validator<Timeframe>() {
 

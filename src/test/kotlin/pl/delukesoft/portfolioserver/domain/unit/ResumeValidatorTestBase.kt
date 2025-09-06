@@ -2,6 +2,7 @@ package pl.delukesoft.portfolioserver.domain.unit
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
@@ -92,6 +93,21 @@ open class ResumeValidatorTestBase {
     title = title,
     summary = summary,
     image = null
+  )
+
+  protected fun exp(
+    position: String = "Backend Dev",
+    summary: String = ofLen(60),
+    timeframeStart: LocalDate = LocalDate.of(2022, 1, 1),
+    timeframeEnd: LocalDate? = LocalDate.of(2022, 12, 31),
+    skills: List<SkillExperience> = listOf(se(level = 3, detail = "Solid production experience")),
+  ): Experience = Experience(
+    business = business(name = "Acme"),
+    position = position,
+    summary = summary,
+    description = null,
+    timeframe = tf(start = timeframeStart, end = timeframeEnd),
+    skills = skills
   )
 
 }

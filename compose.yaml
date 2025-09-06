@@ -13,6 +13,7 @@ services:
       - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
     ports:
       - 27017:27017
+    restart: unless-stopped
   authserver:
     image: kane16/auth_server:3.0.0
     restart: always

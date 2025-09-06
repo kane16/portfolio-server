@@ -1,9 +1,11 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience
 
+import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
+@Component
 class SkillExperienceValidator(
   private val skillValidator: SkillValidator
 ) : Validator<SkillExperience>() {
