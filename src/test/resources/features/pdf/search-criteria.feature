@@ -18,7 +18,7 @@ Feature: CV View with search
           {
              "name" : "Kotlin",
              "description" : "JVM",
-             "level" : 4
+             "level" : 5
           },
           {
              "name" : "Spring Boot",
@@ -186,7 +186,7 @@ Feature: CV View with search
           {
              "name" : "Kotlin",
              "description" : "JVM",
-             "level" : 4
+             "level" : 5
           },
           {
              "name" : "Spring Boot",

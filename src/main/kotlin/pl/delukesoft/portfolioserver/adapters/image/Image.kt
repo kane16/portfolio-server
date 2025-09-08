@@ -1,6 +1,8 @@
-package pl.delukesoft.blog.image
+package pl.delukesoft.portfolioserver.adapters.image
+
+import jakarta.validation.constraints.NotNull
 
 data class Image(
-  val name: String,
-  val src: String
+  @field:NotNull(message = "Image name must not be empty") val name: String,
+  @field:NotNull(message = "Src value must not be empty") val src: String
 )

@@ -6,4 +6,5 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class SkillDomain(
   val id: Long? = null,
   val name: String,
+  val username: String
 )

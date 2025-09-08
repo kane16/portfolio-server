@@ -1,0 +1,26 @@
+[
+  {
+    "_id": 1,
+    "name": "Bank",
+    "username": "admin",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.experience.business.Business"
+  },
+  {
+    "_id": 2,
+    "name": "Tech Startup",
+    "username": "user",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.experience.business.Business"
+  },
+  {
+    "_id": 3,
+    "name": "E-commerce Platform",
+    "username": "candidate",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.experience.business.Business"
+  },
+  {
+    "_id": 4,
+    "name": "IT Consulting",
+    "username": "candidate",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.experience.business.Business"
+  }
+]

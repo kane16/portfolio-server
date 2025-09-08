@@ -1,0 +1,65 @@
+[
+  {
+    "_id": 1,
+    "name": "English",
+    "level": 5,
+    "username": "admin",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 2,
+    "name": "Spanish",
+    "level": 4,
+    "username": "admin",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 3,
+    "name": "French",
+    "level": 2,
+    "username": "admin",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 4,
+    "name": "English",
+    "level": 5,
+    "username": "user",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 5,
+    "name": "Spanish",
+    "level": 4,
+    "username": "user",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 6,
+    "name": "French",
+    "level": 2,
+    "username": "user",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 7,
+    "name": "English",
+    "level": 5,
+    "username": "candidate",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 8,
+    "name": "Spanish",
+    "level": 4,
+    "username": "candidate",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  },
+  {
+    "_id": 9,
+    "name": "French",
+    "level": 2,
+    "username": "candidate",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.language.Language"
+  }
+]

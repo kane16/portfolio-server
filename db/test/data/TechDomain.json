@@ -1,0 +1,32 @@
+[
+  {
+    "_id": 1,
+    "name": "JVM",
+    "username": "admin",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain"
+  },
+  {
+    "_id": 2,
+    "name": "Backend",
+    "username": "admin",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain"
+  },
+  {
+    "_id": 3,
+    "name": "Frontend",
+    "username": "user",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain"
+  },
+  {
+    "_id": 4,
+    "name": "Framework",
+    "username": "user",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain"
+  },
+  {
+    "_id": 5,
+    "name": "Database",
+    "username": "candidate",
+    "_class": "pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain"
+  }
+]

@@ -11,5 +11,6 @@ data class Skill(
   val name: String,
   val level: Int,
   val description: String? = null,
+  val username: String,
   @DBRef(lazy = false) val domains: List<SkillDomain> = emptyList()
 )

@@ -94,7 +94,7 @@ Feature: Resume data read from server
           {
              "name" : "Java",
              "description" : "JVM",
-             "level" : 5
+             "level" : 4
           },
           {
              "name" : "JavaScript",
@@ -179,4 +179,66 @@ Feature: Resume data read from server
       "status": 404
     }
     """
+
+  Scenario: Candidate pulls portfolio history
+    Given User is authorized with token: "candidate"
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+      """
+      {
+         "defaultPortfolio" : {
+            "id" : 3,
+            "title" : "Lead Java Developer",
+            "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+            "version" : 1,
+            "state" : "PUBLISHED"
+         },
+         "history" : [
+            {
+               "id" : 3,
+               "title" : "Lead Java Developer",
+               "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+               "version" : 1,
+               "state" : "PUBLISHED"
+            }
+         ]
+      }
+      """
+
+  Scenario: Unauthorized user tries to access portfolio history
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 401
+    And Response body should be:
+      """
+      {
+        "error": "Anonymous access is restricted to this endpoint",
+        "status": 401
+      }
+      """
+
+  Scenario: User tries to access portfolio history
+    Given User is authorized with token: "user"
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 403
+    And Response body should be:
+      """
+      {
+        "error": "Access denied. Required role: ROLE_CANDIDATE",
+        "status": 403
+      }
+      """
+
+  Scenario: Candidate with no portfolio history
+    Given User is authorized with token: "candidate_empty"
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 404
+    And Response body should be:
+      """
+      {
+        "error": "Resume History not found",
+        "status": 404
+      }
+      """
+
     

@@ -1,0 +1,53 @@
+{
+  "database": "portfolio",
+  "timestamp": "2025-08-17T15:08:02.751052",
+  "output": "test/data",
+  "format": "json-array",
+  "collections": [
+    {
+      "name": "Business",
+      "file": "Business.json",
+      "count": 4
+    },
+    {
+      "name": "Hobby",
+      "file": "Hobby.json",
+      "count": 9
+    },
+    {
+      "name": "Language",
+      "file": "Language.json",
+      "count": 9
+    },
+    {
+      "name": "Resume",
+      "file": "Resume.json",
+      "count": 3
+    },
+    {
+      "name": "ResumeHistory",
+      "file": "ResumeHistory.json",
+      "count": 3
+    },
+    {
+      "name": "ResumeVersion",
+      "file": "ResumeVersion.json",
+      "count": 3
+    },
+    {
+      "name": "Sequence",
+      "file": "Sequence.json",
+      "count": 8
+    },
+    {
+      "name": "Skill",
+      "file": "Skill.json",
+      "count": 9
+    },
+    {
+      "name": "TechDomain",
+      "file": "TechDomain.json",
+      "count": 5
+    }
+  ]
+}

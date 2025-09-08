@@ -8,6 +8,6 @@ import pl.delukesoft.portfolioserver.domain.resume.Resume
 data class ResumeVersion(
   val id: Long? = null,
   @DBRef(lazy = false) val resume: Resume,
-  val version: Int,
+  val version: Long,
   val state: ResumeVersionState
 )

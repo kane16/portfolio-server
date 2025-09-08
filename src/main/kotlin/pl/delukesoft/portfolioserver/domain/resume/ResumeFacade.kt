@@ -1,9 +1,12 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.blog.image.exception.ResumeNotFound
+import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.application.filter.PortfolioSearch
-import pl.delukesoft.portfolioserver.application.filter.PortfolioSearchMapper
+import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
+import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
 @Component
 class ResumeFacade(
@@ -32,6 +35,25 @@ class ResumeFacade(
       null -> defaultResume
       else -> resumeSearchService.filterResumeWithCriteria(defaultResume, resumeSearch)
     }
+  }
+
+  fun initiateResume(resumeWithShortcutOnly: Resume): Boolean {
+    resumeService.addResume(resumeWithShortcutOnly)
+    return true
+  }
+
+  fun unpublishResume(resumeVersion: ResumeVersion?, chosenVersion: ResumeVersion?): Boolean {
+    if (chosenVersion == null) {
+      throw ResumeNotFound()
+    }
+    if (resumeVersion?.version != chosenVersion.version) {
+      throw ResumeOperationNotAllowed("Provided version ${chosenVersion.version} does not match PUBLISHED version")
+    }
+    return resumeService.unpublishResume(resumeVersion, userContext.user?.username!!)
+  }
+
+  fun editResume(resumeWithShortcutToModify: Resume): Boolean {
+    return resumeService.editResumeShortcut(resumeWithShortcutToModify.id!!, resumeWithShortcutToModify.shortcut)
   }
 
 }

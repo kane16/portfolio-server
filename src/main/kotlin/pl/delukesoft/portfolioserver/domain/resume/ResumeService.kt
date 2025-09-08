@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState
+import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import java.time.LocalDateTime
 
 @Service
@@ -22,6 +24,10 @@ class ResumeService(
     log.info("Getting CV with id: $id")
     return when {
       user != null && user.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw ResumeNotFound()
+      user != null && user.roles.contains("ROLE_CANDIDATE") -> resumeRepository.findResumeByIdAndUsername(
+        id,
+        user.username
+      ) ?: throw ResumeNotFound()
       else -> throw ResumeNotFound()
     }
   }
@@ -34,19 +40,27 @@ class ResumeService(
     }
   }
 
-  fun addResume(newResume: Resume, unsafe: Boolean = false): Resume {
-    var resumeToSave = newResume.copy(
-      skills = emptyList(),
-      experience = emptyList(),
-      sideProjects = emptyList(),
-      languages = emptyList(),
-      hobbies = emptyList()
-    )
+  fun addResume(newResume: Resume): Resume {
     if (newResume.id == null) {
-      return if (!unsafe) save(resumeToSave) else save(newResume)
+      val dbResume = save(newResume)
+      resumeHistoryService.addResumeToHistory(dbResume)
+      return dbResume
     }
     val existingResume = resumeRepository.findResumeById(newResume.id) ?: throw ResumeNotFound()
     throw ResumeExistsException(existingResume.id!!)
+  }
+
+  fun editResumeShortcut(id: Long, shortcut: ResumeShortcut): Boolean {
+    if (!resumeRepository.existsById(id)) {
+      throw ResumeNotFound()
+    }
+    updateResume(
+      Resume(
+        id = id,
+        shortcut = shortcut,
+      )
+    )
+    return true
   }
 
   fun updateResume(resume: Resume): Resume {
@@ -64,6 +78,13 @@ class ResumeService(
     return save(resumeToUpdate)
   }
 
+  fun unpublishResume(resumeVersion: ResumeVersion, username: String): Boolean {
+    return resumeHistoryService.changeResumeStatus(
+      resumeVersion,
+      ResumeVersionState.DRAFT
+    ) && resumeHistoryService.unpublishDefaultResume(username)
+  }
+
   private fun save(resume: Resume): Resume {
     if (resume.id == null) {
       val generatedId = generatorService.getAndIncrement("resume")
@@ -73,11 +94,11 @@ class ResumeService(
   }
 
   private fun getCandidateResume(username: String): Resume {
-    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume
+    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume?.resume!!
   }
 
   private fun getDefaultApplicationResume(): Resume {
-    return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume
+    return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume?.resume!!
   }
 
 }

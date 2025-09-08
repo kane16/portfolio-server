@@ -11,3 +11,7 @@ server:
   error:
     include-message: always
   port: 9090
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
