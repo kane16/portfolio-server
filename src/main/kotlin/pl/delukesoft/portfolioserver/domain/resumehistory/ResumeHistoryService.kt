@@ -38,12 +38,17 @@ class ResumeHistoryService(
     return resumeHistory.defaultResume
   }
 
-  fun unpublishDefaultResume(username: String): Boolean {
-    return resumeHistoryRepository.setDefaultResumeForUser(username) > 0
+  fun unpublishResumeVersion(resumeVersion: ResumeVersion, username: String): Boolean {
+    return resumeVersionRepository.changeResumeStatus(resumeVersion.id!!, ResumeVersionState.DRAFT) > 0 &&
+      resumeHistoryRepository.setDefaultResumeForUser(username, null) > 0
   }
 
-  fun changeResumeStatus(resumeVersion: ResumeVersion, status: ResumeVersionState): Boolean {
-    return resumeVersionRepository.changeResumeStatus(resumeVersion.id!!, status) > 0
+  fun publishResumeVersion(resumeVersion: ResumeVersion, username: String): Boolean {
+    val updatedResumeVersion = resumeVersion.copy(state = ResumeVersionState.PUBLISHED)
+    return resumeHistoryRepository.setDefaultResumeForUser(
+      username,
+      resumeVersionRepository.save(updatedResumeVersion)
+    ) > 0
   }
 
   private fun createResumeHistoryAndAddResume(resume: Resume): Boolean {
@@ -51,7 +56,7 @@ class ResumeHistoryService(
     val firstVersion = createResumeVersion(resume, true)
     val resumeHistory = ResumeHistory(
       id = generatedId,
-      defaultResume = firstVersion,
+      defaultResume = null,
       versions = listOf(firstVersion),
       user = resume.shortcut.user
     )
@@ -73,7 +78,7 @@ class ResumeHistoryService(
         id = generatedId,
         resume = resume,
         version = 1,
-        state = ResumeVersionState.PUBLISHED
+        state = ResumeVersionState.DRAFT
       )
 
       else -> ResumeVersion(

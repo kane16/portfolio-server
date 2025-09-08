@@ -71,6 +71,16 @@ class PortfolioController(
   }
 
   @AuthRequired("ROLE_CANDIDATE")
+  @PutMapping("/edit/{version}/publish")
+  fun publishPortfolio(
+    @PathVariable("version") version: Long,
+    @RequestHeader("Authorization") token: String?,
+  ): Boolean {
+    log.info("Received request to publish portfolio")
+    return portfolioFacade.publishPortfolio(version)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
   @PutMapping("/edit/{version}/unpublish")
   fun unpublishPortfolio(
     @PathVariable("version") version: Long,

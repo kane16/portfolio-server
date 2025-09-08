@@ -8,7 +8,6 @@ import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import java.time.LocalDateTime
 
@@ -79,10 +78,7 @@ class ResumeService(
   }
 
   fun unpublishResume(resumeVersion: ResumeVersion, username: String): Boolean {
-    return resumeHistoryService.changeResumeStatus(
-      resumeVersion,
-      ResumeVersionState.DRAFT
-    ) && resumeHistoryService.unpublishDefaultResume(username)
+    return resumeHistoryService.unpublishResumeVersion(resumeVersion, username)
   }
 
   private fun save(resume: Resume): Resume {
@@ -99,6 +95,10 @@ class ResumeService(
 
   private fun getDefaultApplicationResume(): Resume {
     return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume?.resume!!
+  }
+
+  fun publishResume(versionToPublish: ResumeVersion, username: String): Boolean {
+    return resumeHistoryService.publishResumeVersion(versionToPublish, username)
   }
 
 }

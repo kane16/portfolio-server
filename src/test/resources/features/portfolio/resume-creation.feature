@@ -32,20 +32,14 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-       "defaultPortfolio" : {
-          "id" : 4,
-          "title" : "My Professional Resume",
-          "summary" : "Experienced software developer with strong background in web technologies",
-          "version" : 1,
-          "state" : "PUBLISHED"
-       },
+       "defaultPortfolio" : null,
        "history" : [
           {
              "id" : 4,
              "title" : "My Professional Resume",
              "summary" : "Experienced software developer with strong background in web technologies",
              "version" : 1,
-             "state" : "PUBLISHED"
+             "state" : "DRAFT"
           }
        ]
     }
@@ -364,7 +358,7 @@ Feature: Resume creation
     true
     """
 
-  Scenario: Unpublish after init and verify success
+  Scenario: Unpublish after init and publish success
     Given User is authorized with token: "candidate_empty"
     When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
     """
@@ -381,6 +375,52 @@ Feature: Resume creation
     And Response body should be:
     """
     true
+    """
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    {
+       "defaultPortfolio" : null,
+       "history" : [
+          {
+             "id" : 4,
+             "title" : "My Professional Resume",
+             "summary" : "Experienced software developer with strong background in web technologies",
+             "version" : 1,
+             "state" : "DRAFT"
+          }
+       ]
+    }
+    """
+    When "PUT" request is sent to endpoint "/portfolio/edit/1/publish" with no body
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    true
+    """
+    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+    """
+    {
+       "defaultPortfolio" : {
+           "id" : 4,
+           "title" : "My Professional Resume",
+           "summary" : "Experienced software developer with strong background in web technologies",
+           "version" : 1,
+           "state" : "PUBLISHED"
+       },
+       "history" : [
+          {
+             "id" : 4,
+             "title" : "My Professional Resume",
+             "summary" : "Experienced software developer with strong background in web technologies",
+             "version" : 1,
+             "state" : "PUBLISHED"
+          }
+       ]
+    }
     """
     When "PUT" request is sent to endpoint "/portfolio/edit/1/unpublish" with no body
     Then Response status code should be 200
@@ -478,20 +518,14 @@ Feature: Resume creation
     And Response body should be:
         """
         {
-           "defaultPortfolio" : {
-              "id" : 4,
-              "title" : "My Professional Resume",
-              "summary" : "Experienced software developer with strong background in web technologies",
-              "version" : 1,
-              "state" : "PUBLISHED"
-           },
+           "defaultPortfolio" : null,
            "history" : [
               {
                  "id" : 4,
                  "title" : "My Professional Resume",
                  "summary" : "Experienced software developer with strong background in web technologies",
                  "version" : 1,
-                 "state" : "PUBLISHED"
+                 "state" : "DRAFT"
               }
            ]
         }
@@ -535,6 +569,12 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
+    And Response body should be:
+    """
+    true
+    """
+    When "PUT" request is sent to endpoint "/portfolio/edit/1/publish" with no body
+    Then Response status code should be 200
     And Response body should be:
     """
     true

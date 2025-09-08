@@ -56,4 +56,14 @@ class ResumeFacade(
     return resumeService.editResumeShortcut(resumeWithShortcutToModify.id!!, resumeWithShortcutToModify.shortcut)
   }
 
+  fun publishResume(publishedVersion: ResumeVersion?, versionToPublish: ResumeVersion?): Boolean {
+    if (publishedVersion != null) {
+      throw ResumeOperationNotAllowed("Published version already exists")
+    }
+    if (versionToPublish == null) {
+      throw ResumeNotFound()
+    }
+    return resumeService.publishResume(versionToPublish, userContext.user?.username!!)
+  }
+
 }
