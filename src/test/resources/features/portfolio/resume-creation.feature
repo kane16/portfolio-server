@@ -422,7 +422,7 @@ Feature: Resume creation
        ]
     }
     """
-    When "PUT" request is sent to endpoint "/portfolio/edit/1/unpublish" with no body
+    When "PUT" request is sent to endpoint "/portfolio/edit/unpublish" with no body
     Then Response status code should be 200
     And Response body should be:
     """
@@ -443,18 +443,6 @@ Feature: Resume creation
              "state" : "DRAFT"
           }
        ]
-    }
-    """
-
-  Scenario: Unpublish fails when resume with given version does not exist
-    Given User is authorized with token: "candidate"
-    When "PUT" request is sent to endpoint "/portfolio/edit/999/unpublish" with no body
-    Then Response status code should be 404
-    And Response body should be:
-    """
-    {
-      "error": "CV not found",
-      "status": 404
     }
     """
 
@@ -483,14 +471,14 @@ Feature: Resume creation
        ]
     }
     """
-    When "PUT" request is sent to endpoint "/portfolio/edit/1/unpublish" with no body
+    When "PUT" request is sent to endpoint "/portfolio/edit/unpublish" with no body
     Then Response status code should be 200
-    When "PUT" request is sent to endpoint "/portfolio/edit/1/unpublish" with no body
+    When "PUT" request is sent to endpoint "/portfolio/edit/unpublish" with no body
     Then Response status code should be 400
     And Response body should be:
     """
     {
-      "error": "Provided version 1 does not match PUBLISHED version",
+      "error": "No version has been published yet",
       "status": 400
     }
     """

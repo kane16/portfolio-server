@@ -42,14 +42,11 @@ class ResumeFacade(
     return true
   }
 
-  fun unpublishResume(resumeVersion: ResumeVersion?, chosenVersion: ResumeVersion?): Boolean {
-    if (chosenVersion == null) {
-      throw ResumeNotFound()
+  fun unpublishResume(publishedVersion: ResumeVersion?): Boolean {
+    if (publishedVersion?.version == null) {
+      throw ResumeOperationNotAllowed("No version has been published yet")
     }
-    if (resumeVersion?.version != chosenVersion.version) {
-      throw ResumeOperationNotAllowed("Provided version ${chosenVersion.version} does not match PUBLISHED version")
-    }
-    return resumeService.unpublishResume(resumeVersion, userContext.user?.username!!)
+    return resumeService.unpublishResume(publishedVersion, userContext.user?.username!!)
   }
 
   fun editResume(resumeWithShortcutToModify: Resume): Boolean {

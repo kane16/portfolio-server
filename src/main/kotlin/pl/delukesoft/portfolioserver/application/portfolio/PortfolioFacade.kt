@@ -34,10 +34,9 @@ class PortfolioFacade(
     return resumeFacade.initiateResume(resumeWithShortcutOnly)
   }
 
-  fun unpublishPortfolio(portfolioVersion: Long): Boolean {
-    val resumeVersion = resumeHistoryFacade.getUserPublishedVersion()
-    val pulledVersion = resumeHistoryFacade.getUserVersion(portfolioVersion)
-    return resumeFacade.unpublishResume(resumeVersion, pulledVersion)
+  fun unpublishPortfolio(): Boolean {
+    val publishedVersion = resumeHistoryFacade.getUserPublishedVersion()
+    return resumeFacade.unpublishResume(publishedVersion)
   }
 
   fun editPortfolio(id: Long, shortcut: PortfolioShortcutDTO): Boolean {
