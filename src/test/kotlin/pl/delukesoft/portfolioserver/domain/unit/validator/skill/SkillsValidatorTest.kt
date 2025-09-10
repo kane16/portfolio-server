@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class SkillsValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator: SkillValidator = SkillValidator()
+  private val validator: SkillValidator = SkillValidator(SkillDomainValidator())
 
   @Test
   fun `valid resume with 2 distinct skills and unique domains passes`() {

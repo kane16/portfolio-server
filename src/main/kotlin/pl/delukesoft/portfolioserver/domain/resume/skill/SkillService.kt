@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.domain.resume.skill
 import org.springframework.stereotype.Service
 import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
+import pl.delukesoft.portfolioserver.domain.validation.ValidateSkill
 
 @Service
 class SkillService(
@@ -14,10 +15,7 @@ class SkillService(
     return skillRepository.findByName(name) ?: throw SkillNotFound(name)
   }
 
-  fun saveAll(skills: List<Skill>): List<Skill> {
-    return skills.map { save(it) }
-  }
-
+  @ValidateSkill
   fun save(skill: Skill): Skill {
     if (skill.id == null) {
       val generatedId = generatorService.getAndIncrement("skill")

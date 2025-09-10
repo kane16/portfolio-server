@@ -8,6 +8,7 @@ import pl.delukesoft.portfolioserver.domain.resume.experience.ExperienceValidato
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperienceValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
 import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 import java.time.LocalDate
@@ -18,7 +19,7 @@ class ExperienceValidatorTest : ResumeValidatorTestBase() {
   private val validator = ExperienceValidator(
     ConsecutiveTimeframeValidator(),
     BusinessValidator(),
-    SkillExperienceValidator(SkillValidator())
+    SkillExperienceValidator(SkillValidator(SkillDomainValidator()))
   )
   private val today = LocalDate.now()
 
