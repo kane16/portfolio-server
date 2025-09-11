@@ -6,5 +6,6 @@ interface SkillDomainRepository: MongoRepository<SkillDomain, Long> {
 
   fun existsSkillDomainsByName(name: String): Boolean
   fun findSkillDomainByName(name: String): SkillDomain?
+  fun findSkillDomainsByUsername(username: String): List<SkillDomain>
 
 }

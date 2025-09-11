@@ -2,22 +2,37 @@ package pl.delukesoft.portfolioserver.application.skill
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
+import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainService
 
 @Component
 class SkillFacade(
   private val skillMapper: SkillMapper,
-  private val userContext: UserContext
+  private val skillDomainService: SkillDomainService,
+  private val userContext: UserContext,
+  private val skillService: SkillService
 ) {
 
   private val currentUser
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun addDomain(name: String): Boolean {
-    TODO("Not yet implemented")
+    val domainToAdd = skillMapper.mapToSkillDomain(name, currentUser.username, emptyList())
+    skillDomainService.addDomain(domainToAdd)
+    return true
   }
 
-  fun addSkill(skill: SkillDTO): Boolean {
-    skillMapper.mapToSkill(skill, currentUser.username)
+  fun retrieveOrAddSkill(skillDTO: SkillDTO): Skill {
+    return skillService.findUserSkills(currentUser.username).firstOrNull { it.name == skillDTO.name } ?: addSkill(
+      skillDTO
+    )
+  }
+
+  private fun addSkill(skill: SkillDTO): Skill {
+    val availableDomains = skillDomainService.getUserDomains(currentUser.username)
+    val skillToAdd = skillMapper.mapToSkill(skill, currentUser.username, availableDomains)
+    return skillService.addSkill(skillToAdd)
   }
 
 

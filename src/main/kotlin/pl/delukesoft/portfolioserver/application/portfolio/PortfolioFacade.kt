@@ -6,6 +6,8 @@ import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearc
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioShortcutDTO
+import pl.delukesoft.portfolioserver.application.skill.SkillDTO
+import pl.delukesoft.portfolioserver.application.skill.SkillFacade
 import pl.delukesoft.portfolioserver.domain.resume.ResumeFacade
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryFacade
 
@@ -14,7 +16,8 @@ class PortfolioFacade(
   private val resumeFacade: ResumeFacade,
   private val resumeHistoryFacade: ResumeHistoryFacade,
   private val portfolioMapper: PortfolioMapper,
-  private val userContext: UserContext
+  private val userContext: UserContext,
+  private val skillFacade: SkillFacade
 ) {
 
   private val currentUser
@@ -48,6 +51,12 @@ class PortfolioFacade(
     val publishedVersion = resumeHistoryFacade.getUserPublishedVersion()
     val versionToPublish = resumeHistoryFacade.getUserVersion(portfolioVersion)
     return resumeFacade.publishResume(publishedVersion, versionToPublish)
+  }
+
+  fun addSkillToPortfolio(version: Long, skillDTO: SkillDTO): Boolean {
+    val versionToModify = resumeHistoryFacade.getUserVersion(version)
+    val skillToAdd = skillFacade.retrieveOrAddSkill(skillDTO)
+    return resumeFacade.addSkillToResume(versionToModify, skillToAdd)
   }
 
 }

@@ -7,13 +7,16 @@ import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.domain.validation.exception.ValidationFailedException
 
 @Aspect
 @Component
 class ValidationInterceptor(
-  val resumeValidator: ResumeValidator,
-  val skillValidator: SkillValidator,
+  private val resumeValidator: ResumeValidator,
+  private val skillValidator: SkillValidator,
+  private val skillDomainValidator: SkillDomainValidator
 ) {
 
   @Before("@annotation(validateResume) && args(resume,..)")
@@ -29,6 +32,14 @@ class ValidationInterceptor(
     val validationResult: ValidationResult = skillValidator.validate(skill)
     if (!validationResult.isValid) {
       throw ValidationFailedException(listOf(DomainValidationResult.build("skill", validationResult)))
+    }
+  }
+
+  @Before("@annotation(validateDomain) && args(domain,..)")
+  fun validate(validateDomain: ValidateDomain, domain: SkillDomain) {
+    val validationResult: ValidationResult = skillDomainValidator.validate(domain)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("skillDomain", validationResult)))
     }
   }
 

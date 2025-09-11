@@ -6,6 +6,7 @@ import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
 @Component
@@ -61,6 +62,11 @@ class ResumeFacade(
       throw ResumeNotFound()
     }
     return resumeService.publishResume(versionToPublish, userContext.user?.username!!)
+  }
+
+
+  fun addSkillToResume(versionToModify: ResumeVersion, skillToAdd: Skill): ResumeVersion {
+
   }
 
 }

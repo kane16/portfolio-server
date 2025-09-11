@@ -84,7 +84,8 @@ Feature: Skill Operations
     {
       "name": "Kotlin",
       "description": "JVM Language",
-      "level": 4
+      "level": 4,
+      "domains": []
     }
     """
     Then Response status code should be 201
