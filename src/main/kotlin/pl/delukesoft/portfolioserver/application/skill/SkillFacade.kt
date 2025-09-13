@@ -23,16 +23,15 @@ class SkillFacade(
     return true
   }
 
-  fun retrieveOrAddSkill(skillDTO: SkillDTO): Skill {
-    return skillService.findUserSkills(currentUser.username).firstOrNull { it.name == skillDTO.name } ?: addSkill(
-      skillDTO
-    )
+  fun getSkill(name: String): Skill {
+    return skillService.getByName(name, currentUser.username)
   }
 
-  private fun addSkill(skill: SkillDTO): Skill {
+  fun addSkill(skill: SkillDTO): Boolean {
     val availableDomains = skillDomainService.getUserDomains(currentUser.username)
     val skillToAdd = skillMapper.mapToSkill(skill, currentUser.username, availableDomains)
-    return skillService.addSkill(skillToAdd)
+    skillService.addSkill(skillToAdd)
+    return true
   }
 
 

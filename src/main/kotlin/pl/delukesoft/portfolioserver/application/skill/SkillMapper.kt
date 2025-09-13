@@ -25,4 +25,14 @@ class SkillMapper {
       username = username
     )
 
+  fun mapToDTO(skill: Skill): SkillDTO {
+    return SkillDTO(
+      skill.id,
+      skill.name,
+      skill.level,
+      skill.description ?: "",
+      skill.domains.map { it.name }
+    )
+  }
+
 }

@@ -4,8 +4,10 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
+import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
@@ -27,6 +29,7 @@ class ResumeService(
         id,
         user.username
       ) ?: throw ResumeNotFound()
+
       else -> throw ResumeNotFound()
     }
   }
@@ -99,6 +102,13 @@ class ResumeService(
 
   fun publishResume(versionToPublish: ResumeVersion, username: String): Boolean {
     return resumeHistoryService.publishResumeVersion(versionToPublish, username)
+  }
+
+  fun addSkillToResume(versionToModify: ResumeVersion, skillToAdd: Skill): Boolean {
+    if (versionToModify.resume.skills.any { it.name == skillToAdd.name }) {
+      throw ResumeOperationNotAllowed("Skill '${skillToAdd.name}' already exists in resume")
+    }
+    return resumeRepository.addSkillToResume(versionToModify.resume.id!!, skillToAdd) > 0
   }
 
 }

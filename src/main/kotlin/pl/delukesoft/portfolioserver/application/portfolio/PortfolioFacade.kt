@@ -1,12 +1,12 @@
 package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioShortcutDTO
-import pl.delukesoft.portfolioserver.application.skill.SkillDTO
 import pl.delukesoft.portfolioserver.application.skill.SkillFacade
 import pl.delukesoft.portfolioserver.domain.resume.ResumeFacade
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryFacade
@@ -53,9 +53,9 @@ class PortfolioFacade(
     return resumeFacade.publishResume(publishedVersion, versionToPublish)
   }
 
-  fun addSkillToPortfolio(version: Long, skillDTO: SkillDTO): Boolean {
-    val versionToModify = resumeHistoryFacade.getUserVersion(version)
-    val skillToAdd = skillFacade.retrieveOrAddSkill(skillDTO)
+  fun addSkillToPortfolio(version: Long, name: String): Boolean {
+    val versionToModify = resumeHistoryFacade.getUserVersion(version) ?: throw ResumeNotFound()
+    val skillToAdd = skillFacade.getSkill(name)
     return resumeFacade.addSkillToResume(versionToModify, skillToAdd)
   }
 

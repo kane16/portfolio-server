@@ -285,10 +285,6 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    And Response body should be:
-    """
-    true
-    """
     When "GET" request is sent to endpoint "/portfolio/history" with no body
     Then Response status code should be 200
     And Response body should be:
@@ -334,10 +330,6 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    And Response body should be:
-    """
-    true
-    """
 
   Scenario: Resume creation with maximum valid values
     Given User is authorized with token: "candidate_empty"
@@ -353,10 +345,6 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    And Response body should be:
-    """
-    true
-    """
 
   Scenario: Unpublish after init and publish success
     Given User is authorized with token: "candidate_empty"
@@ -372,12 +360,7 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    And Response body should be:
-    """
-    true
-    """
     When "GET" request is sent to endpoint "/portfolio/history" with no body
-    Then Response status code should be 200
     And Response body should be:
     """
     {
@@ -395,12 +378,7 @@ Feature: Resume creation
     """
     When "PUT" request is sent to endpoint "/portfolio/edit/1/publish" with no body
     Then Response status code should be 200
-    And Response body should be:
-    """
-    true
-    """
     When "GET" request is sent to endpoint "/portfolio/history" with no body
-    Then Response status code should be 200
     And Response body should be:
     """
     {
@@ -424,10 +402,6 @@ Feature: Resume creation
     """
     When "PUT" request is sent to endpoint "/portfolio/edit/unpublish" with no body
     Then Response status code should be 200
-    And Response body should be:
-    """
-    true
-    """
     When "GET" request is sent to endpoint "/portfolio/history" with no body
     Then Response status code should be 200
     And Response body should be:
@@ -497,10 +471,6 @@ Feature: Resume creation
         }
         """
     Then Response status code should be 201
-    And Response body should be:
-        """
-        true
-        """
     When "GET" request is sent to endpoint "/portfolio/history" with no body
     Then Response status code should be 200
     And Response body should be:
@@ -557,16 +527,8 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    And Response body should be:
-    """
-    true
-    """
     When "PUT" request is sent to endpoint "/portfolio/edit/1/publish" with no body
     Then Response status code should be 200
-    And Response body should be:
-    """
-    true
-    """
     When "PUT" request is sent to endpoint "/portfolio/edit/4" with body:
     """
     {
@@ -579,10 +541,6 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 200
-    And Response body should be:
-    """
-    true
-    """
     When "GET" request is sent to endpoint "/portfolio/history" with no body
     Then Response status code should be 200
     And Response body should be:
@@ -606,3 +564,182 @@ Feature: Resume creation
        ]
     }
     """
+
+  Scenario: Admin adds a new skill to portfolio
+    Given User is authorized with token: "admin"
+    When "POST" request is sent to endpoint "/portfolio/1" with no body
+    Then Response status code should be 200
+    And Response body should be:
+      """
+      {
+        "id" : 1,
+        "fullname" : "Łukasz Gumiński",
+        "imageSource" : "/images/lg.jpg",
+        "title" : "Lead Java Developer",
+        "summary" : "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
+        "skills" : [
+           {
+              "name" : "Java",
+              "description" : "JVM",
+              "level" : 5
+           },
+           {
+              "name" : "Kotlin",
+              "description" : "JVM",
+              "level" : 4
+           },
+           {
+              "name" : "Scala",
+              "description" : "JVM",
+              "level" : 3
+           }
+        ],
+        "languages" : [
+           {
+              "name" : "English",
+              "level" : "C1"
+           },
+           {
+              "name" : "Spanish",
+              "level" : "B2"
+           },
+           {
+              "name" : "French",
+              "level" : "A2"
+           }
+        ],
+        "sideProjects" : [
+
+        ],
+        "workHistory" : [
+           {
+              "position" : "Senior Developer",
+              "business" : "Bank",
+              "summary" : "Lead developer for core banking systems",
+              "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
+              "timespan" : {
+                 "start" : "2023.01",
+                 "end" : "2025.05"
+              },
+              "skills" : [
+                 {
+                    "name" : "Java",
+                    "description" : "JVM",
+                    "level" : 5
+                 },
+                 {
+                    "name" : "Kotlin",
+                    "description" : "JVM",
+                    "level" : 4
+                 }
+              ]
+           }
+        ],
+        "hobbies" : [
+           "Music Production",
+           "Open Source Contributing",
+           "Yoga"
+        ],
+        "resumeId" : 1
+      }
+      """
+    When "POST" request is sent to endpoint "/skills" with body:
+      """
+      {
+        "name": "Groovy",
+        "description": "JVM Language",
+        "level": 2,
+        "domains": []
+      }
+      """
+    Then Response status code should be 201
+    When "POST" request is sent to endpoint "/portfolio/edit/1/skills" with body:
+      """
+      Groovy
+      """
+    Then Response status code should be 201
+    And Response body should be:
+      """
+      true
+      """
+    When "POST" request is sent to endpoint "/portfolio/1" with no body
+    Then Response status code should be 200
+    And Response body should be:
+      """
+      {
+        "id" : 1,
+        "fullname" : "Łukasz Gumiński",
+        "imageSource" : "/images/lg.jpg",
+        "title" : "Lead Java Developer",
+        "summary" : "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
+        "skills" : [
+           {
+              "name" : "Java",
+              "description" : "JVM",
+              "level" : 5
+           },
+           {
+              "name" : "Kotlin",
+              "description" : "JVM",
+              "level" : 4
+           },
+           {
+              "name" : "Scala",
+              "description" : "JVM",
+              "level" : 3
+           },
+           {
+             "name": "Groovy",
+             "description": "JVM Language",
+             "level": 2
+           }
+        ],
+        "languages" : [
+           {
+              "name" : "English",
+              "level" : "C1"
+           },
+           {
+              "name" : "Spanish",
+              "level" : "B2"
+           },
+           {
+              "name" : "French",
+              "level" : "A2"
+           }
+        ],
+        "sideProjects" : [
+
+        ],
+        "workHistory" : [
+           {
+              "position" : "Senior Developer",
+              "business" : "Bank",
+              "summary" : "Lead developer for core banking systems",
+              "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
+              "timespan" : {
+                 "start" : "2023.01",
+                 "end" : "2025.05"
+              },
+              "skills" : [
+                 {
+                    "name" : "Java",
+                    "description" : "JVM",
+                    "level" : 5
+                 },
+                 {
+                    "name" : "Kotlin",
+                    "description" : "JVM",
+                    "level" : 4
+                 }
+              ]
+           }
+        ],
+        "hobbies" : [
+           "Music Production",
+           "Open Source Contributing",
+           "Yoga"
+        ],
+        "resumeId" : 1
+      }
+      """

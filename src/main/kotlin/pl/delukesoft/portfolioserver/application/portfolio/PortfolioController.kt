@@ -10,7 +10,6 @@ import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearc
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioShortcutDTO
-import pl.delukesoft.portfolioserver.application.skill.SkillDTO
 
 @RestController
 @RequestMapping("portfolio")
@@ -91,14 +90,15 @@ class PortfolioController(
   }
 
   @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/edit/{version}/skill")
+  @PostMapping("/edit/{version}/skills")
+  @ResponseStatus(HttpStatus.CREATED)
   fun addSkillToPortfolio(
     @PathVariable("version") version: Long,
-    @RequestBody skillDTO: SkillDTO,
+    @RequestBody skillName: String,
     @RequestHeader("Authorization") token: String?,
   ): Boolean {
     log.info("Received request to add skill to portfolio")
-    return portfolioFacade.addSkillToPortfolio(version, skillDTO)
+    return portfolioFacade.addSkillToPortfolio(version, skillName)
   }
 
 }

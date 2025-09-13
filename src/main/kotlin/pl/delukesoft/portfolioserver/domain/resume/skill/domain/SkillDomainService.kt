@@ -2,6 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resume.skill.domain
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.exception.SkillDomainExistsException
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.exception.SkillDomainNotFound
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.domain.validation.ValidateDomain
@@ -24,7 +25,10 @@ class SkillDomainService(
 
   @ValidateDomain
   fun save(skillDomain: SkillDomain): SkillDomain {
-    if (skillDomain.id == null && !skillDomainRepository.existsSkillDomainsByName(skillDomain.name)) {
+    if (skillDomainRepository.existsSkillDomainsByNameAndUsername(skillDomain.name, skillDomain.username)) {
+      throw SkillDomainExistsException(skillDomain.name)
+    }
+    if (skillDomain.id == null) {
       val generatedId = generatorService.getAndIncrement("skill_domain")
       return skillDomainRepository.save(skillDomain.copy(id = generatedId))
     }

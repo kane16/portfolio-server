@@ -65,8 +65,8 @@ class ResumeFacade(
   }
 
 
-  fun addSkillToResume(versionToModify: ResumeVersion, skillToAdd: Skill): ResumeVersion {
-
+  fun addSkillToResume(versionToModify: ResumeVersion, skillToAdd: Skill): Boolean {
+    return resumeService.addSkillToResume(versionToModify, skillToAdd)
   }
 
 }

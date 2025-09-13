@@ -2,6 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resume.skill
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillExistsException
 import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.domain.validation.ValidateSkill
@@ -18,7 +19,14 @@ class SkillService(
     return skillRepository.findByName(name) ?: throw SkillNotFound(name)
   }
 
+  fun getByName(name: String, username: String): Skill {
+    return skillRepository.findByNameAndUsername(name, username) ?: throw SkillNotFound(name)
+  }
+
   fun addSkill(skill: Skill): Skill {
+    if (skillRepository.existsByNameAndUsername(skill.name, skill.username)) {
+      throw SkillExistsException(skill.name)
+    }
     log.info("Adding skill with name {}", skill.name)
     return save(skill)
   }

@@ -24,7 +24,7 @@ class AuthInterceptor(
     log.info("Intercepting token: $token")
     val user = if (token != null) authRequestService.getUser(token)
       else throw AuthorizationException("Anonymous access is restricted to this endpoint")
-    when (user.roles.any { role -> authRequired.roles.contains(role) }) {
+    when (user.roles.any { role -> authRequired.roles.contains(role) } || user.roles.contains("ROLE_ADMIN")) {
       false -> throw AuthenticationException(authRequired.roles.joinToString(", "))
       true -> {
         userContext.user = user
