@@ -23,6 +23,14 @@ class SkillFacade(
     return true
   }
 
+  fun getSkills(): List<SkillDTO> {
+    return skillService.getUserSkills(currentUser.username).map { skillMapper.mapToDTO(it) }
+  }
+
+  fun getSkillDomains(): List<String> {
+    return skillDomainService.getUserDomains(currentUser.username).map { it.name }
+  }
+
   fun getSkill(name: String): Skill {
     return skillService.getByName(name, currentUser.username)
   }

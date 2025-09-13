@@ -8,7 +8,9 @@ import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearc
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
+import pl.delukesoft.portfolioserver.application.skill.SkillDTO
 import pl.delukesoft.portfolioserver.application.skill.SkillFacade
+import pl.delukesoft.portfolioserver.application.skill.SkillMapper
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeSearchService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
@@ -23,13 +25,14 @@ class ResumeFacade(
   private val resumeMapper: ResumeMapper,
   private val userContext: UserContext,
   private val skillFacade: SkillFacade,
+  private val skillMapper: SkillMapper
 ) {
 
   private val currentUser
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
-    val resumeById = resumeService.getCvById(id, userContext.user)
+    val resumeById = resumeService.getResumeById(id, userContext.user)
     return getResumeWithOptionalFilter(resumeById, portfolioSearch)
   }
 
@@ -93,6 +96,11 @@ class ResumeFacade(
     val versionToModify =
       resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username) ?: throw ResumeNotFound()
     return resumeService.addSkillToResume(versionToModify, skillToAdd)
+  }
+
+  fun findSkillsByResumeId(resumeId: Long): List<SkillDTO> {
+    val resume = resumeService.getResumeById(resumeId, userContext.user)
+    return resume.skills.map { skillMapper.mapToDTO(it) }
   }
 
 }

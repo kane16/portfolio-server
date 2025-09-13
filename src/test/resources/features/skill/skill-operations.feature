@@ -59,3 +59,68 @@ Feature: Skill Operations
       "status": 400
     }
     """
+
+  Scenario: Finding User skills
+    When "GET" request is sent to endpoint "/skills" with no body
+    Then Response body should be:
+    """
+    [
+      {
+        "id": 1,
+        "name": "Java",
+        "level": 5,
+        "description": "JVM",
+        "domains": ["JVM", "Backend"]
+      },
+      {
+        "id": 2,
+        "name": "Kotlin",
+        "level": 4,
+        "description": "JVM",
+        "domains": ["JVM", "Backend"]
+      },
+      {
+        "id": 3,
+        "name": "Scala",
+        "level": 3,
+        "description": "JVM",
+        "domains": ["JVM", "Backend"]
+      }
+    ]
+    """
+
+  Scenario: Finding User skill domains
+    When "GET" request is sent to endpoint "/skills/domains" with no body
+    Then Response body should be:
+    """
+    ["JVM","Backend"]
+    """
+
+  Scenario: Finding Resume Skills
+    When "GET" request is sent to endpoint "/skills/resume/1" with no body
+    Then Response body should be:
+    """
+    [
+      {
+        "id": 1,
+        "name": "Java",
+        "level": 5,
+        "description": "JVM",
+        "domains": ["JVM", "Backend"]
+      },
+      {
+        "id": 2,
+        "name": "Kotlin",
+        "level": 4,
+        "description": "JVM",
+        "domains": ["JVM", "Backend"]
+      },
+      {
+        "id": 3,
+        "name": "Scala",
+        "level": 3,
+        "description": "JVM",
+        "domains": ["JVM", "Backend"]
+      }
+    ]
+    """

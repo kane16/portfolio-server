@@ -21,7 +21,7 @@ class ResumeService(
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  fun getCvById(id: Long, user: User?): Resume {
+  fun getResumeById(id: Long, user: User?): Resume {
     log.info("Getting CV with id: $id")
     return when {
       user != null && user.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw ResumeNotFound()

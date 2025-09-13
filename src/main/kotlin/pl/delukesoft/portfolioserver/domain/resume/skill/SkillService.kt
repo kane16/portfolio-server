@@ -40,12 +40,12 @@ class SkillService(
     return skillRepository.findByName(skill.name) ?: throw SkillNotFound(skill.name)
   }
 
-  fun findUserSkills(username: String): List<Skill> {
-    return skillRepository.findByUsername(username)
-  }
-
   fun getAll(): List<Skill> {
     return skillRepository.findAll()
+  }
+
+  fun getUserSkills(username: String): List<Skill> {
+    return skillRepository.findByUsername(username)
   }
 
 }
