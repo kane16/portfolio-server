@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.resume
+package pl.delukesoft.portfolioserver.application.resume
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.blog.image.exception.ResumeNotFound
@@ -6,16 +6,27 @@ import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
-import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
+import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
+import pl.delukesoft.portfolioserver.application.skill.SkillFacade
+import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.ResumeSearchService
+import pl.delukesoft.portfolioserver.domain.resume.ResumeService
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 
 @Component
 class ResumeFacade(
   private val resumeService: ResumeService,
+  private val resumeHistoryService: ResumeHistoryService,
   private val resumeSearchService: ResumeSearchService,
   private val portfolioSearchMapper: PortfolioSearchMapper,
-  private val userContext: UserContext
+  private val resumeMapper: ResumeMapper,
+  private val userContext: UserContext,
+  private val skillFacade: SkillFacade,
 ) {
+
+  private val currentUser
+    get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
     val resumeById = resumeService.getCvById(id, userContext.user)
@@ -38,23 +49,35 @@ class ResumeFacade(
     }
   }
 
-  fun initiateResume(resumeWithShortcutOnly: Resume): Boolean {
+  fun getUserHistory(): ResumeHistoryDTO {
+    val history = resumeHistoryService.findByUsername(currentUser.username)
+    return resumeMapper.mapHistoryToDTO(history)
+  }
+
+  fun initiateResume(shortcut: ResumeShortcutDTO): Boolean {
+    val resumeWithShortcutOnly = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
     resumeService.addResume(resumeWithShortcutOnly)
     return true
   }
 
-  fun unpublishResume(publishedVersion: ResumeVersion?): Boolean {
+  fun unpublishResume(): Boolean {
+    val publishedVersion = resumeHistoryService.findPublishedResumeVersion(currentUser.username)
     if (publishedVersion?.version == null) {
       throw ResumeOperationNotAllowed("No version has been published yet")
     }
     return resumeService.unpublishResume(publishedVersion, userContext.user?.username!!)
   }
 
-  fun editResume(resumeWithShortcutToModify: Resume): Boolean {
+  fun editResumeShortcut(versionId: Long, shortcut: ResumeShortcutDTO): Boolean {
+    val resumeVersion =
+      resumeHistoryService.findVersionByIdAndUsername(versionId, currentUser.username) ?: throw ResumeNotFound()
+    val resumeWithShortcutToModify = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser, resumeVersion.resume.id)
     return resumeService.editResumeShortcut(resumeWithShortcutToModify.id!!, resumeWithShortcutToModify.shortcut)
   }
 
-  fun publishResume(publishedVersion: ResumeVersion?, versionToPublish: ResumeVersion?): Boolean {
+  fun publishResume(version: Long): Boolean {
+    val publishedVersion = resumeHistoryService.findPublishedResumeVersion(currentUser.username)
+    val versionToPublish = resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username)
     if (publishedVersion != null) {
       throw ResumeOperationNotAllowed("Published version already exists")
     }
@@ -65,7 +88,10 @@ class ResumeFacade(
   }
 
 
-  fun addSkillToResume(versionToModify: ResumeVersion, skillToAdd: Skill): Boolean {
+  fun addSkillToResume(version: Long, skillName: String): Boolean {
+    val skillToAdd = skillFacade.getSkill(skillName)
+    val versionToModify =
+      resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username) ?: throw ResumeNotFound()
     return resumeService.addSkillToResume(versionToModify, skillToAdd)
   }
 

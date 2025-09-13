@@ -2,7 +2,7 @@ Feature: Resume creation
 
   Scenario: For given user no history exists, user should be able to initiate resume creation
     Given User is authorized with token: "candidate_empty"
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 404
     And Response body should be:
     """
@@ -11,7 +11,7 @@ Feature: Resume creation
       "status": 404
     }
     """
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -27,7 +27,7 @@ Feature: Resume creation
     """
     true
     """
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
     And Response body should be:
     """
@@ -46,7 +46,7 @@ Feature: Resume creation
     """
 
   Scenario: Unauthorized user tries to initiate resume creation
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -68,7 +68,7 @@ Feature: Resume creation
 
   Scenario: User with insufficient role tries to initiate resume creation
     Given User is authorized with token: "user"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -90,7 +90,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to title too short
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "Too",
@@ -112,7 +112,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to title too long
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "This title is way too long for validation and exceeds maximum",
@@ -134,7 +134,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to summary too short
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -156,7 +156,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to summary too long
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -178,7 +178,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to missing title field
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "summary": "Experienced software developer with strong background in web technologies",
@@ -199,7 +199,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to missing summary field
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -220,7 +220,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to missing image field
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -238,7 +238,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to empty request body
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     """
     Then Response status code should be 400
@@ -252,7 +252,7 @@ Feature: Resume creation
 
   Scenario: Resume creation fails due to malformed JSON
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -273,7 +273,7 @@ Feature: Resume creation
 
   Scenario: Candidate tries to create resume when already exists
     Given User is authorized with token: "candidate"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -285,7 +285,7 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
     And Response body should be:
     """
@@ -318,7 +318,7 @@ Feature: Resume creation
 
   Scenario: Resume creation with minimum valid values
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "Valid",
@@ -333,7 +333,7 @@ Feature: Resume creation
 
   Scenario: Resume creation with maximum valid values
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "Maximum length title allowed",
@@ -348,7 +348,7 @@ Feature: Resume creation
 
   Scenario: Unpublish after init and publish success
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -360,7 +360,7 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     And Response body should be:
     """
     {
@@ -376,9 +376,9 @@ Feature: Resume creation
        ]
     }
     """
-    When "PUT" request is sent to endpoint "/portfolio/edit/1/publish" with no body
+    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
     Then Response status code should be 200
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     And Response body should be:
     """
     {
@@ -400,9 +400,9 @@ Feature: Resume creation
        ]
     }
     """
-    When "PUT" request is sent to endpoint "/portfolio/edit/unpublish" with no body
+    When "PUT" request is sent to endpoint "/resume/edit/unpublish" with no body
     Then Response status code should be 200
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
     And Response body should be:
     """
@@ -422,7 +422,7 @@ Feature: Resume creation
 
   Scenario: Unpublish fails when version exists but is not in PUBLISHED state
     Given User is authorized with token: "candidate"
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
     And Response body should be:
     """
@@ -445,9 +445,9 @@ Feature: Resume creation
        ]
     }
     """
-    When "PUT" request is sent to endpoint "/portfolio/edit/unpublish" with no body
+    When "PUT" request is sent to endpoint "/resume/edit/unpublish" with no body
     Then Response status code should be 200
-    When "PUT" request is sent to endpoint "/portfolio/edit/unpublish" with no body
+    When "PUT" request is sent to endpoint "/resume/edit/unpublish" with no body
     Then Response status code should be 400
     And Response body should be:
     """
@@ -459,7 +459,7 @@ Feature: Resume creation
 
   Scenario: After Successful Resume creation candidate can read his resume by id
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
         """
         {
           "title": "My Professional Resume",
@@ -471,29 +471,29 @@ Feature: Resume creation
         }
         """
     Then Response status code should be 201
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
     And Response body should be:
-        """
-        {
-           "defaultPortfolio" : null,
-           "history" : [
-              {
-                 "id" : 4,
-                 "title" : "My Professional Resume",
-                 "summary" : "Experienced software developer with strong background in web technologies",
-                 "version" : 1,
-                 "state" : "DRAFT"
-              }
-           ]
-        }
-        """
-    When "POST" request is sent to endpoint "/portfolio/4" with no body
+    """
+    {
+       "defaultPortfolio" : null,
+       "history" : [
+          {
+             "id" : 4,
+             "title" : "My Professional Resume",
+             "summary" : "Experienced software developer with strong background in web technologies",
+             "version" : 1,
+             "state" : "DRAFT"
+          }
+       ]
+    }
+    """
+    When "POST" request is sent to endpoint "/cv/4" with no body
     Then Response status code should be 200
 
   Scenario: Update resume fails when resume with given id does not exist
     Given User is authorized with token: "candidate"
-    When "PUT" request is sent to endpoint "/portfolio/edit/999" with body:
+    When "PUT" request is sent to endpoint "/resume/edit/999" with body:
     """
     {
       "title": "Updated Resume Title",
@@ -515,7 +515,7 @@ Feature: Resume creation
 
   Scenario: Successful resume shortcut update
     Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/portfolio/edit/init" with body:
+    When "POST" request is sent to endpoint "/resume/edit/init" with body:
     """
     {
       "title": "My Professional Resume",
@@ -527,9 +527,9 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    When "PUT" request is sent to endpoint "/portfolio/edit/1/publish" with no body
+    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
     Then Response status code should be 200
-    When "PUT" request is sent to endpoint "/portfolio/edit/4" with body:
+    When "PUT" request is sent to endpoint "/resume/edit/1" with body:
     """
     {
       "title": "Updated Resume Title",
@@ -541,7 +541,7 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 200
-    When "GET" request is sent to endpoint "/portfolio/history" with no body
+    When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
     And Response body should be:
     """
@@ -565,9 +565,9 @@ Feature: Resume creation
     }
     """
 
-  Scenario: Admin adds a new skill to portfolio
+  Scenario: Admin adds a new skill to resume
     Given User is authorized with token: "admin"
-    When "POST" request is sent to endpoint "/portfolio/1" with no body
+    When "POST" request is sent to endpoint "/cv/1" with no body
     Then Response status code should be 200
     And Response body should be:
       """
@@ -653,7 +653,7 @@ Feature: Resume creation
       }
       """
     Then Response status code should be 201
-    When "POST" request is sent to endpoint "/portfolio/edit/1/skills" with body:
+    When "POST" request is sent to endpoint "/resume/edit/1/skills" with body:
       """
       Groovy
       """
@@ -662,7 +662,7 @@ Feature: Resume creation
       """
       true
       """
-    When "POST" request is sent to endpoint "/portfolio/1" with no body
+    When "POST" request is sent to endpoint "/cv/1" with no body
     Then Response status code should be 200
     And Response body should be:
       """
@@ -741,5 +741,66 @@ Feature: Resume creation
            "Yoga"
         ],
         "resumeId" : 1
+      }
+      """
+
+  Scenario: Candidate pulls resume history
+    Given User is authorized with token: "candidate"
+    When "GET" request is sent to endpoint "/resume/history" with no body
+    Then Response status code should be 200
+    And Response body should be:
+      """
+      {
+         "defaultPortfolio" : {
+            "id" : 3,
+            "title" : "Lead Java Developer",
+            "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+            "version" : 1,
+            "state" : "PUBLISHED"
+         },
+         "history" : [
+            {
+               "id" : 3,
+               "title" : "Lead Java Developer",
+               "summary" : "Experienced Backend Developer and Technical Lead with proven expertise in building scalable distributed systems and leading development teams.",
+               "version" : 1,
+               "state" : "PUBLISHED"
+            }
+         ]
+      }
+      """
+
+  Scenario: Unauthorized user tries to access resume history
+    When "GET" request is sent to endpoint "/resume/history" with no body
+    Then Response status code should be 401
+    And Response body should be:
+      """
+      {
+        "error": "Anonymous access is restricted to this endpoint",
+        "status": 401
+      }
+      """
+
+  Scenario: User tries to access resume history
+    Given User is authorized with token: "user"
+    When "GET" request is sent to endpoint "/resume/history" with no body
+    Then Response status code should be 403
+    And Response body should be:
+      """
+      {
+        "error": "Access denied. Required role: ROLE_CANDIDATE",
+        "status": 403
+      }
+      """
+
+  Scenario: Candidate with no resume history
+    Given User is authorized with token: "candidate_empty"
+    When "GET" request is sent to endpoint "/resume/history" with no body
+    Then Response status code should be 404
+    And Response body should be:
+      """
+      {
+        "error": "Resume History not found",
+        "status": 404
       }
       """

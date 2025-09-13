@@ -2,47 +2,14 @@ package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
 import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
 @Component
 @RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)
 class PortfolioMapper {
-
-  fun mapHistoryToDTO(history: ResumeHistory): PortfolioHistoryDTO {
-    return PortfolioHistoryDTO(
-      if (history.defaultResume != null) mapVersionToDTO(history.defaultResume) else null,
-      history.versions.map { mapVersionToDTO(it) }
-    )
-  }
-
-  fun mapVersionToDTO(version: ResumeVersion): PortfolioVersionDTO {
-    return PortfolioVersionDTO(
-      version.id!!,
-      version.resume.shortcut.title,
-      version.resume.shortcut.summary,
-      version.version,
-      version.state.name
-    )
-  }
-
-  fun mapShortcutDTOToResume(shortcut: PortfolioShortcutDTO, user: User, resumeId: Long? = null): Resume {
-    return Resume(
-      id = resumeId,
-      shortcut = ResumeShortcut(
-        title = shortcut.title,
-        summary = shortcut.summary,
-        image = shortcut.image,
-        user = user
-      )
-    )
-  }
 
   fun mapToDTO(resume: Resume): PortfolioDTO {
     return PortfolioDTO(
