@@ -14,15 +14,15 @@ class FilterFacade(
 ) {
 
   fun getAllSkills(): List<String> {
-    return skillService.getAll().map { it.name }
+    return skillService.getAll().map { it.name }.distinct()
   }
 
   fun getAllBusiness(): List<String> {
-    return businessService.getAll().map { it.name }
+    return businessService.getAll().map { it.name }.distinct()
   }
 
   fun getAllDomains(): List<String> {
-    return domainService.getAll().map { it.name }
+    return domainService.getAll().map { it.name }.distinct()
   }
 
   fun getAllFilters(): PortfolioSearch {

@@ -7,6 +7,9 @@ spring:
     active: ${ACTIVE_PROFILE:docker}
   aop:
     proxy-target-class: true
+  data:
+    mongodb:
+      database: portfolio
 server:
   error:
     include-message: always

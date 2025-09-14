@@ -11,12 +11,14 @@
             "id": "9843562ca7366896",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Edit View/mockup/Edit Main Page.md"
+                "file": "CV View/CV View.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "Edit Main Page"
+              "icon": "lucide-file",
+              "title": "CV View"
             }
           },
           {
@@ -233,20 +235,21 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "24b0e619044678b1",
+  "active": "9843562ca7366896",
   "lastOpenFiles": [
+    "CV View/mockup/CV print.md",
     "Edit View/mockup/Edit Main Page.md",
     "Edit View/mockup/Edit Overview Page.md",
-    "Portfolio main view/mockup/Main page view.md",
-    "Portfolio main view/Portfolio View.md",
-    "Portfolio main view/mockup/Delukesoft.jpg",
-    "Edit View/Resume Edit.md",
-    "UML/Domain/Resume model.md",
-    "CV View/CV View.md",
     "Portfolio App overview.md",
+    "Portfolio main view/Portfolio View.md",
+    "Portfolio main view/mockup/Main page view.md",
+    "Portfolio main view/mockup/Delukesoft.jpg",
+    "CV View/CV View.md",
+    "Edit View/Resume Edit.md",
+    "Application connector model.md",
+    "UML/Domain/Resume model.md",
     "UML/Domain/Application connector model.md",
     "Resume model.md",
-    "CV View/mockup/CV print.md",
     "copilot-custom-prompts/Rewrite as tweet thread.md",
     "copilot-custom-prompts/Rewrite as tweet.md",
     "copilot-custom-prompts/Remove URLs.md",
@@ -261,7 +264,6 @@
     "copilot-custom-prompts/Translate to Chinese.md",
     "copilot-custom-prompts/Fix grammar and spelling.md",
     "copilot-custom-prompts",
-    "UML/Domain/Read Resume model.md",
     "Portfolio main view/Portfolio View.md~",
     "Portfolio main view/mockup/print-solid.svg",
     "Excalidraw",

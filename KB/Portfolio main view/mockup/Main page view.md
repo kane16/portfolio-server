@@ -4,25 +4,30 @@ excalidraw-plugin: parsed
 tags: [excalidraw]
 
 ---
-==⚠  Switch to EXCALIDRAW VIEW in the MORE OPTIONS menu of this document. ⚠== You can decompress Drawing data with the command palette: 'Decompress current Excalidraw file'. For more info check in plugin settings under 'Saving'
 
+==⚠ Switch to EXCALIDRAW VIEW in the MORE OPTIONS menu of this document. ⚠== You can decompress Drawing data with the
+command palette: 'Decompress current Excalidraw file'. For more info check in plugin settings under 'Saving'
 
 # Excalidraw Data
 
 ## Text Elements
+
 CV ^5GzbMrWP
 
 Blog ^sJ16NQlY
 
-Copyright @ 2019-2025 DeLukeSoft Łukasz Gumiński  ^ApqUhj51
+Copyright @ 2019-2025 DeLukeSoft Łukasz Gumiński ^ApqUhj51
 
 65% ^9o8FqD3w
 
 ## Embedded Files
+
 c64ded89a584af5582d4ece01362f940e85d6704: [[Delukesoft.jpg]]
 
 %%
+
 ## Drawing
+
 ```compressed-json
 N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATLZMzYBXUtiRoIACyhQ4zZAHoFAc0JRJQgEYA6bGwC2CgF7N6hbEcK4OCtptbErHALRY8RMpWdx8Q1TdIEfARcZgRmBShcZQUebQBGABZtAGYaOiCEfQQOKGZuAG1wMFAwMogSbggAMwBOAAYAdQQANkSAJQQAa2xlAHEjAFUABWIASQArUgB5dLLIWEQqwOwo
 
@@ -122,4 +127,5 @@ j9qqXbS/LgPoHSDWQGUPvwdqd626JBkA2uHb0MGj+VUbvVQZf1ZBT+MicbJnF33MAqYpIS7UkQuCsRc0
 
 6tcpNEbiMvJsQvAWaKkcKOpG8hrwTIxYbQPuQ/9hIJA+wk4Cd1xENihAJ0FjB251+0sHIIEeCC6ypNjCRVruvKBHTZ9f2ruCohc6SbB60k+CZoGiGrBmAUoI6XAF8P+GjpQRvtoUlWCEBGAMiPQ/gAMPa7fImQHY9ehZRvReE+gfgxli9Ge7h4BgKUKccaOf8D56tXENQh2N7GDjrLASfhLoD2rwgk+6bHmCAA==
 ```
+
 %%

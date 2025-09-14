@@ -6,7 +6,5 @@ data class ProjectDTO(
   val summary: String,
   val description: String,
   val timespan: TimespanDTO,
-  val skills: List<SkillDTO>,
-) {
-
-}
+  val skills: List<SkillPortfolioDTO>,
+)

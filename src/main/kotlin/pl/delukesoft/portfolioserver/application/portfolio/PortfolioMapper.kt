@@ -2,47 +2,14 @@ package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
 import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
 @Component
-@RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)
+@RegisterReflectionForBinding(SkillPortfolioDTO::class, LanguageDTO::class, ProjectDTO::class)
 class PortfolioMapper {
-
-  fun mapHistoryToDTO(history: ResumeHistory): PortfolioHistoryDTO {
-    return PortfolioHistoryDTO(
-      if (history.defaultResume != null) mapVersionToDTO(history.defaultResume) else null,
-      history.versions.map { mapVersionToDTO(it) }
-    )
-  }
-
-  fun mapVersionToDTO(version: ResumeVersion): PortfolioVersionDTO {
-    return PortfolioVersionDTO(
-      version.id!!,
-      version.resume.shortcut.title,
-      version.resume.shortcut.summary,
-      version.version,
-      version.state.name
-    )
-  }
-
-  fun mapShortcutDTOToResume(shortcut: PortfolioShortcutDTO, user: User, resumeId: Long? = null): Resume {
-    return Resume(
-      id = resumeId,
-      shortcut = ResumeShortcut(
-        title = shortcut.title,
-        summary = shortcut.summary,
-        image = shortcut.image,
-        user = user
-      )
-    )
-  }
 
   fun mapToDTO(resume: Resume): PortfolioDTO {
     return PortfolioDTO(
@@ -51,7 +18,7 @@ class PortfolioMapper {
       imageSource = resume.shortcut.image?.src ?: "",
       title = resume.shortcut.title,
       summary = resume.shortcut.summary,
-      skills = resume.skills.map { SkillDTO(it.name, it.description, it.level) },
+      skills = resume.skills.map { SkillPortfolioDTO(it.name, it.description, it.level) },
       languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },
       sideProjects = mapToProjects(resume.sideProjects),
       workHistory = mapToProjects(resume.experience),
@@ -67,7 +34,7 @@ class PortfolioMapper {
         it.summary,
         it.description ?: "",
         mapTimespan(it.timeframe),
-        it.skills.map { SkillDTO(it.skill.name, it.detail, it.level) },
+        it.skills.map { SkillPortfolioDTO(it.skill.name, it.detail, it.level) },
       )
     }
   }

@@ -4,11 +4,12 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
+import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionState
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 import java.time.LocalDateTime
 
@@ -20,7 +21,7 @@ class ResumeService(
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)
 
-  fun getCvById(id: Long, user: User?): Resume {
+  fun getResumeById(id: Long, user: User?): Resume {
     log.info("Getting CV with id: $id")
     return when {
       user != null && user.roles.contains("ROLE_ADMIN") -> resumeRepository.findResumeById(id) ?: throw ResumeNotFound()
@@ -28,6 +29,7 @@ class ResumeService(
         id,
         user.username
       ) ?: throw ResumeNotFound()
+
       else -> throw ResumeNotFound()
     }
   }
@@ -79,10 +81,7 @@ class ResumeService(
   }
 
   fun unpublishResume(resumeVersion: ResumeVersion, username: String): Boolean {
-    return resumeHistoryService.changeResumeStatus(
-      resumeVersion,
-      ResumeVersionState.DRAFT
-    ) && resumeHistoryService.unpublishDefaultResume(username)
+    return resumeHistoryService.unpublishResumeVersion(resumeVersion, username)
   }
 
   private fun save(resume: Resume): Resume {
@@ -99,6 +98,17 @@ class ResumeService(
 
   private fun getDefaultApplicationResume(): Resume {
     return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume?.resume!!
+  }
+
+  fun publishResume(versionToPublish: ResumeVersion, username: String): Boolean {
+    return resumeHistoryService.publishResumeVersion(versionToPublish, username)
+  }
+
+  fun addSkillToResume(resume: Resume, skillToAdd: Skill): Boolean {
+    if (resume.skills.any { it.name == skillToAdd.name }) {
+      throw ResumeOperationNotAllowed("Skill '${skillToAdd.name}' already exists in resume")
+    }
+    return resumeRepository.addSkillToResume(resume.id!!, skillToAdd) > 0
   }
 
 }

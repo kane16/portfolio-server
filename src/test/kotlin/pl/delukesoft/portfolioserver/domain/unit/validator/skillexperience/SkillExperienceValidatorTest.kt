@@ -7,11 +7,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperienceValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class SkillExperienceValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = SkillExperienceValidator(SkillValidator())
+  private val validator = SkillExperienceValidator(SkillValidator(SkillDomainValidator()))
 
   @Test
   fun `single valid skill experience passes`() {

@@ -1,19 +1,22 @@
 package pl.delukesoft.portfolioserver.domain.resume.skill
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
 @Component
-class SkillValidator : Validator<Skill>() {
+class SkillValidator(
+  private val skillDomainValidator: SkillDomainValidator
+) : Validator<Skill>() {
 
   override fun validate(value: Skill): ValidationResult {
     val skillsValidations =
       listOf(
         validationFunc(value, ::skillLevelValid, "Skill level must be between 1 and 5"),
         validationFunc(value, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
-        validationFunc(value, ::skillDomainNotDuplicatedInSkill, "Skill domain cannot be duplicated"),
+        skillDomainValidator.validateList(value.domains)
       )
 
     return ValidationResult(
@@ -31,8 +34,7 @@ class SkillValidator : Validator<Skill>() {
         validationListFunc(values, ::skillLevelValid, "Skill level must be between 1 and 5"),
         validationListFunc(values, ::skillNameNotEmpty, "Skill name must be at least 1 character"),
         duplicateSkillValidation(values),
-        validationListFunc(values, ::skillDomainNotDuplicatedInSkill, "Skill domain cannot be duplicated"),
-      )
+      ) + values.map { skillDomainValidator.validateList(it.domains) }
 
     return ValidationResult(
       skillsValidations.all { it.isValid },
@@ -63,10 +65,6 @@ class SkillValidator : Validator<Skill>() {
         listOf("Skill cannot be duplicated")
       )
     }.firstOrNull() ?: ValidationResult(true, ValidationStatus.VALID, emptyList())
-  }
-
-  private fun skillDomainNotDuplicatedInSkill(skill: Skill): Boolean {
-    return skill.domains.groupBy { it.name.trim().lowercase() }.values.all { it.count() <= 1 }
   }
 
   private fun skillLevelValid(skill: Skill): Boolean {

@@ -13,6 +13,7 @@ import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyValidator
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguagesValidator
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcutValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
+import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
 import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 import pl.delukesoft.portfolioserver.domain.validation.ResumeValidatorResult
@@ -22,15 +23,15 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = ResumeValidator(
     ResumeShortcutValidator(),
-    SkillValidator(),
+    SkillValidator(SkillDomainValidator()),
     ExperienceValidator(
       ConsecutiveTimeframeValidator(false), BusinessValidator(), SkillExperienceValidator(
-        SkillValidator()
+        SkillValidator(SkillDomainValidator())
       )
     ),
     ExperienceValidator(
       ConsecutiveTimeframeValidator(true), BusinessValidator(), SkillExperienceValidator(
-        SkillValidator()
+        SkillValidator(SkillDomainValidator())
       )
     ),
     HobbyValidator(),

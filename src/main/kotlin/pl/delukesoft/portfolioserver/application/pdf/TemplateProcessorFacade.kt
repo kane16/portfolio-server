@@ -6,7 +6,7 @@ import pl.delukesoft.portfolioserver.adapters.print.DocumentGenerationService
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.portfolio.PortfolioMapper
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
-import pl.delukesoft.portfolioserver.domain.resume.ResumeFacade
+import pl.delukesoft.portfolioserver.application.resume.ResumeFacade
 
 @Component
 class TemplateProcessorFacade(

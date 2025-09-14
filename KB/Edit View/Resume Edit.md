@@ -31,7 +31,6 @@ mapped into a `PortfolioHistoryDTO` and returned to the client, enabling the fro
 overview of the candidate’s resume activity. This process ensures that only the authenticated candidate sees their own
 resume history while providing the necessary information for subsequent resume management actions.
 
-
 ```plantuml
 
 actor admin
@@ -49,10 +48,11 @@ system -> admin: PortfolioHistoryDTO
 end
 
 ```
+
 ### 3. Edit model
 
 Edit page users [[Resume model]] to read different versions, store and operate on them.
 
->[!Important]
->View will use [[Application connector model]]
+> [!Important]
+> View will use [[Application connector model]]
 
