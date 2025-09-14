@@ -8,7 +8,7 @@ import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 
 @Component
-@RegisterReflectionForBinding(SkillDTO::class, LanguageDTO::class, ProjectDTO::class)
+@RegisterReflectionForBinding(SkillPortfolioDTO::class, LanguageDTO::class, ProjectDTO::class)
 class PortfolioMapper {
 
   fun mapToDTO(resume: Resume): PortfolioDTO {
@@ -18,7 +18,7 @@ class PortfolioMapper {
       imageSource = resume.shortcut.image?.src ?: "",
       title = resume.shortcut.title,
       summary = resume.shortcut.summary,
-      skills = resume.skills.map { SkillDTO(it.name, it.description, it.level) },
+      skills = resume.skills.map { SkillPortfolioDTO(it.name, it.description, it.level) },
       languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },
       sideProjects = mapToProjects(resume.sideProjects),
       workHistory = mapToProjects(resume.experience),
@@ -34,7 +34,7 @@ class PortfolioMapper {
         it.summary,
         it.description ?: "",
         mapTimespan(it.timeframe),
-        it.skills.map { SkillDTO(it.skill.name, it.detail, it.level) },
+        it.skills.map { SkillPortfolioDTO(it.skill.name, it.detail, it.level) },
       )
     }
   }

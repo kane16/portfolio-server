@@ -39,12 +39,12 @@ class ResumeController(
   @AuthRequired("ROLE_CANDIDATE")
   @PutMapping("/edit/{id}")
   fun updatePortfolioShortcut(
-    @PathVariable("id") id: Long,
+    @PathVariable("id") resumeId: Long,
     @Valid @RequestBody shortcut: ResumeShortcutDTO,
     @RequestHeader("Authorization") token: String?,
   ): Boolean {
     log.info("Received request to update portfolio shortcut")
-    return resumeFacade.editResumeShortcut(id, shortcut)
+    return resumeFacade.editResumeShortcut(resumeId, shortcut)
   }
 
   @AuthRequired("ROLE_CANDIDATE")
@@ -67,15 +67,15 @@ class ResumeController(
   }
 
   @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/edit/{version}/skills")
+  @PostMapping("/edit/{resumeId}/skills")
   @ResponseStatus(HttpStatus.CREATED)
   fun addSkillToResume(
-    @PathVariable("version") version: Long,
+    @PathVariable("resumeId") resumeId: Long,
     @RequestBody skillName: String,
     @RequestHeader("Authorization") token: String?,
   ): Boolean {
     log.info("Received request to add skill to portfolio")
-    return resumeFacade.addSkillToResume(version, skillName)
+    return resumeFacade.addSkillToResume(resumeId, skillName)
   }
 
 }

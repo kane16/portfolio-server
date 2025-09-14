@@ -9,7 +9,7 @@ data class PortfolioDTO(
   val imageSource: String,
   val title: String,
   val summary: String,
-  val skills: List<SkillDTO>,
+  val skills: List<SkillPortfolioDTO>,
   val languages: List<LanguageDTO>,
   val sideProjects: List<ProjectDTO>,
   val workHistory: List<ProjectDTO>,

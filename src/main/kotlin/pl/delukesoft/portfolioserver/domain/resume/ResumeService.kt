@@ -104,11 +104,11 @@ class ResumeService(
     return resumeHistoryService.publishResumeVersion(versionToPublish, username)
   }
 
-  fun addSkillToResume(versionToModify: ResumeVersion, skillToAdd: Skill): Boolean {
-    if (versionToModify.resume.skills.any { it.name == skillToAdd.name }) {
+  fun addSkillToResume(resume: Resume, skillToAdd: Skill): Boolean {
+    if (resume.skills.any { it.name == skillToAdd.name }) {
       throw ResumeOperationNotAllowed("Skill '${skillToAdd.name}' already exists in resume")
     }
-    return resumeRepository.addSkillToResume(versionToModify.resume.id!!, skillToAdd) > 0
+    return resumeRepository.addSkillToResume(resume.id!!, skillToAdd) > 0
   }
 
 }

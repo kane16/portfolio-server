@@ -71,10 +71,9 @@ class ResumeFacade(
     return resumeService.unpublishResume(publishedVersion, userContext.user?.username!!)
   }
 
-  fun editResumeShortcut(versionId: Long, shortcut: ResumeShortcutDTO): Boolean {
-    val resumeVersion =
-      resumeHistoryService.findVersionByIdAndUsername(versionId, currentUser.username) ?: throw ResumeNotFound()
-    val resumeWithShortcutToModify = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser, resumeVersion.resume.id)
+  fun editResumeShortcut(id: Long, shortcut: ResumeShortcutDTO): Boolean {
+    val resume = resumeService.getResumeById(id, currentUser)
+    val resumeWithShortcutToModify = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser, resume.id)
     return resumeService.editResumeShortcut(resumeWithShortcutToModify.id!!, resumeWithShortcutToModify.shortcut)
   }
 
@@ -91,11 +90,10 @@ class ResumeFacade(
   }
 
 
-  fun addSkillToResume(version: Long, skillName: String): Boolean {
+  fun addSkillToResume(id: Long, skillName: String): Boolean {
     val skillToAdd = skillFacade.getSkill(skillName)
-    val versionToModify =
-      resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username) ?: throw ResumeNotFound()
-    return resumeService.addSkillToResume(versionToModify, skillToAdd)
+    val resumeToModify = resumeService.getResumeById(id, currentUser)
+    return resumeService.addSkillToResume(resumeToModify, skillToAdd)
   }
 
   fun findSkillsByResumeId(resumeId: Long): List<SkillDTO> {

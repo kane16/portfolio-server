@@ -529,7 +529,7 @@ Feature: Resume creation
     Then Response status code should be 201
     When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
     Then Response status code should be 200
-    When "PUT" request is sent to endpoint "/resume/edit/1" with body:
+    When "PUT" request is sent to endpoint "/resume/edit/4" with body:
     """
     {
       "title": "Updated Resume Title",
