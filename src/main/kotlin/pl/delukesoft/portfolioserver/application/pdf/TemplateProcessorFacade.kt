@@ -22,7 +22,7 @@ class TemplateProcessorFacade(
   }
 
   fun generateDefaultResumePdfById(webContext: WebContext, id: Long, portfolioSearch: PortfolioSearch? = null): String {
-    val resume = resumeFacade.getCvById(id, portfolioSearch)
+    val resume = resumeFacade.getById(id, portfolioSearch)
     val resumePrint: PrintDTO = printMapper.mapToDTO(resume)
     return documentGenerationService.generateResumeHtml(resumePrint, webContext)
   }

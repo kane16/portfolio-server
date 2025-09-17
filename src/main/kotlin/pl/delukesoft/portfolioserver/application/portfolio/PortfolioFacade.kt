@@ -12,7 +12,7 @@ class PortfolioFacade(
 ) {
 
   fun getCvById(id: Long, portfolioSearch: PortfolioSearch? = null): PortfolioDTO =
-    portfolioMapper.mapToDTO(resumeFacade.getCvById(id, portfolioSearch))
+    portfolioMapper.mapToDTO(resumeFacade.getById(id, portfolioSearch))
 
   fun getDefaultCV(portfolioSearch: PortfolioSearch? = null): PortfolioDTO =
     portfolioMapper.mapToDTO(resumeFacade.getDefaultCV(portfolioSearch))
