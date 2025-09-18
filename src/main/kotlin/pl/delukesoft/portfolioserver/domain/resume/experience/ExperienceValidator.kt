@@ -1,15 +1,16 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience
 
-import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessValidator
-import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperienceValidator
+import org.springframework.beans.factory.annotation.Qualifier
+import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
+import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
 class ExperienceValidator(
   private val consecutiveTimeframeValidator: ConsecutiveTimeframeValidator,
-  private val businessValidator: BusinessValidator,
-  private val skillExperienceValidator: SkillExperienceValidator
+  @Qualifier("businessValidator") private val businessValidator: Validator<Business>,
+  @Qualifier("skillExperienceValidator") private val skillExperienceValidator: Validator<SkillExperience>
 ) : Validator<Experience>() {
 
   override fun validate(value: Experience): ValidationResult {

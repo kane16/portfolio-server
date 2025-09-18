@@ -6,17 +6,15 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
-import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
-import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.domain.validation.exception.ValidationFailedException
 
 @Aspect
 @Component
 class ValidationInterceptor(
   private val resumeValidator: ResumeValidator,
-  private val skillValidator: SkillValidator,
-  private val skillDomainValidator: SkillDomainValidator
+  private val skillValidator: Validator<Skill>,
+  private val skillDomainValidator: Validator<SkillDomain>
 ) {
 
   @Before("@annotation(validateResume) && args(resume,..)")

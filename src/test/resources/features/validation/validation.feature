@@ -10,46 +10,70 @@ Feature: Resume validation
     """
     {
        "isValid" : false,
-       "progress" : 0.5,
+       "progress" : 50,
        "validationResults" : [
           {
              "validationStatus" : "INVALID",
-             "domain" : "SHORTCUT",
+             "domain" : {
+                "title" : "Shortcut",
+                "weight" : 10,
+                "endpoint" : ""
+             },
              "errors" : [
                 "Summary length must be between 30 and 100"
              ]
           },
           {
              "validationStatus" : "VALID",
-             "domain" : "SKILLS",
+             "domain" : {
+                "title" : "Skills",
+                "weight" : 15,
+                "endpoint" : "skills"
+             },
              "errors" : [
 
              ]
           },
           {
              "validationStatus" : "INVALID",
-             "domain" : "EXPERIENCES",
+             "domain" : {
+                "title" : "Experience",
+                "weight" : 30,
+                "endpoint" : "experience"
+             },
              "errors" : [
                 "Detail must be at least 10 characters"
              ]
           },
           {
              "validationStatus" : "VALID",
-             "domain" : "SIDE_PROJECTS",
+             "domain" : {
+                "title" : "Side projects",
+                "weight" : 20,
+                "endpoint" : "side-projects"
+             },
              "errors" : [
 
              ]
           },
           {
              "validationStatus" : "INVALID",
-             "domain" : "HOBBIES",
+             "domain" : {
+                "title" : "Hobbies",
+                "weight" : 10,
+                "endpoint" : "hobbies"
+             },
              "errors" : [
                 "Hobby name must be capitalized"
              ]
           },
           {
              "validationStatus" : "VALID",
-             "domain" : "LANGUAGES",
+             "domain" : {
+                "title" : "Languages",
+                "weight" : 15,
+                "endpoint" : "languages"
+             },
              "errors" : [
 
              ]

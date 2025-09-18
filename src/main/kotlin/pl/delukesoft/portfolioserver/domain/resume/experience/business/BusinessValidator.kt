@@ -1,10 +1,8 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience.business
 
-import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
-@Component
 class BusinessValidator : Validator<Business>() {
 
   override fun validate(value: Business): ValidationResult {

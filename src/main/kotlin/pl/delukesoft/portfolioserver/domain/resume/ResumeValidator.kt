@@ -2,11 +2,11 @@ package pl.delukesoft.portfolioserver.domain.resume
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.domain.resume.experience.ExperienceValidator
+import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyValidator
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguagesValidator
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcutValidator
-import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.validation.DomainValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ResumeValidatorResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
@@ -15,9 +15,9 @@ import pl.delukesoft.portfolioserver.domain.validation.Validator
 @Component
 class ResumeValidator(
   val resumeShortcutValidator: ResumeShortcutValidator,
-  val skillValidator: SkillValidator,
-  @Qualifier("jobExperienceValidator") val jobExperienceValidator: ExperienceValidator,
-  @Qualifier("sideProjectsValidator") val sideProjectValidator: ExperienceValidator,
+  @Qualifier("skillValidator") val skillValidator: Validator<Skill>,
+  @Qualifier("jobExperienceValidator") val jobExperienceValidator: Validator<Experience>,
+  @Qualifier("sideProjectsValidator") val sideProjectValidator: Validator<Experience>,
   val hobbyValidator: HobbyValidator,
   val languagesValidator: LanguagesValidator,
 ) : Validator<Resume>() {
