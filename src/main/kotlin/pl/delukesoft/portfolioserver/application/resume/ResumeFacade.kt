@@ -11,12 +11,12 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutD
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ValidationResultDTO
 import pl.delukesoft.portfolioserver.application.skill.SkillDTO
-import pl.delukesoft.portfolioserver.application.skill.SkillFacade
 import pl.delukesoft.portfolioserver.application.skill.SkillMapper
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeSearchService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
+import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.validation.ResumeValidatorResult
 
@@ -30,8 +30,7 @@ class ResumeFacade(
   private val userContext: UserContext,
   private val skillMapper: SkillMapper,
   private val resumeValidator: ResumeValidator,
-  private val validationMapper: ValidationMapper,
-  private val skillFacade: SkillFacade
+  private val validationMapper: ValidationMapper
 ) {
 
   private val currentUser
@@ -106,7 +105,7 @@ class ResumeFacade(
   fun addSkillToResume(id: Long, skill: SkillDTO): Boolean {
     val skillToAdd = skillMapper.mapToSkill(skill, currentAuthor.domains)
     val resumeToModify = resumeService.getResumeById(id, currentUser)
-    return resumeService.addSkillToResume(resumeToModify, skillToAdd) && skillFacade.addSkill(skill)
+    return resumeService.addSkillToResume(resumeToModify, skillToAdd)
   }
 
   fun findSkillsByResumeId(resumeId: Long): List<SkillDTO> {
@@ -118,6 +117,19 @@ class ResumeFacade(
     val resume = resumeService.getResumeById(id, userContext.user)
     val validationResult = resumeValidator.validate(resume) as ResumeValidatorResult
     return validationMapper.mapResumeValidationResultToDTO(validationResult)
+  }
+
+  fun deleteSkillFromResume(resumeId: Long, skillNameToRemove: String): Boolean {
+    val resume = resumeService.getResumeById(resumeId, userContext.user)
+    val skillToRemove = resume.skills.find { it.name == skillNameToRemove } ?: throw SkillNotFound(skillNameToRemove)
+    return resumeService.deleteSkillFromResume(resume, skillToRemove)
+  }
+
+  fun editSkillWithName(resumeId: Long, skillName: String, skill: SkillDTO): Boolean {
+    val resume = resumeService.getResumeById(resumeId, userContext.user)
+    val skillToEdit = resume.skills.find { it.name == skillName } ?: throw SkillNotFound(skillName)
+    val skillUpdate = skillMapper.mapToSkill(skill, currentAuthor.domains)
+    return resumeService.editSkill(resume, skillToEdit, skillUpdate)
   }
 
 }

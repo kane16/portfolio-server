@@ -101,4 +101,26 @@ class ResumeController(
     return resumeFacade.validateResume(id)
   }
 
+  @AuthRequired("ROLE_CANDIDATE")
+  @DeleteMapping("/edit/{resumeId}/skills/{skillName}")
+  fun deleteSkill(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("skillName") skillName: String,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.deleteSkillFromResume(resumeId, skillName)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @PutMapping("/edit/{resumeId}/skills/{skillName}")
+  fun editSkill(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("skillName") skillName: String,
+    @RequestBody skill: SkillDTO,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.editSkillWithName(resumeId, skillName, skill)
+  }
+
+
 }

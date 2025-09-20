@@ -16,4 +16,12 @@ interface ResumeRepository : MongoRepository<Resume, Long> {
   @Update("{ \$addToSet: { 'skills': ?1 } }")
   fun addSkillToResume(id: Long, skill: Skill): Long
 
+  @Query("{ 'id' : ?0 }")
+  @Update("{ \$pull: { 'skills': ?1 } }")
+  fun deleteSkillFromResume(id: Long, skillToRemove: Skill): Long
+
+  @Query("{ 'id' : ?0, 'skills': { '\$elemMatch': { 'name': ?1 } } }")
+  @Update("{ '\$set': { 'skills.$': ?2 } }")
+  fun updateSkill(id: Long, skillName: String, skillUpdate: Skill): Long
+
 }

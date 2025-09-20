@@ -14,7 +14,7 @@ class AuthorService(
   private val generatorService: GeneratorService
 ) {
 
-  fun getAuthorWithAddIfNotExists(user: User): Author {
+  fun getAuthorAndAddIfNotExists(user: User): Author {
     return authorRepository.findByUsername(user.username) ?: authorRepository.save(
       Author(
         id = generatorService.getAndIncrement("author"),

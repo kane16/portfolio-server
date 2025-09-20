@@ -30,7 +30,7 @@ class AuthInterceptor(
       false -> throw AuthenticationException(authRequired.roles.joinToString(", "))
       true -> {
         userContext.user = user
-        userContext.author = authorService.getAuthorWithAddIfNotExists(user)
+        userContext.author = authorService.getAuthorAndAddIfNotExists(user)
         log.info("User successfully authenticated with roles: ${user.roles.joinToString(", ")}")
       }
     }

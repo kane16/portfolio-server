@@ -111,4 +111,12 @@ class ResumeService(
     return resumeRepository.addSkillToResume(resume.id!!, skillToAdd) > 0
   }
 
+  fun deleteSkillFromResume(resume: Resume, skillToRemove: Skill): Boolean {
+    return resumeRepository.deleteSkillFromResume(resume.id!!, skillToRemove) > 0
+  }
+
+  fun editSkill(resume: Resume, skillToEdit: Skill, skillUpdate: Skill): Boolean {
+    return resumeRepository.updateSkill(resume.id!!, skillToEdit.name, skillUpdate) == 1L
+  }
+
 }

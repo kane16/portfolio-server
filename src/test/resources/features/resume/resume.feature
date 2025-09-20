@@ -799,3 +799,272 @@ Feature: Resume creation
         "status": 404
       }
       """
+
+  Scenario: Admin removing skill from resume successful
+    Given User is authorized with token: "admin"
+    When "POST" request is sent to endpoint "/cv/1" with no body
+    And Response body should be:
+    """
+    {
+      "id" : 1,
+      "fullname" : "Łukasz Gumiński",
+      "imageSource" : "/images/lg.jpg",
+      "title" : "Lead Java Developer",
+      "summary" : "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
+      "skills" : [
+         {
+            "name" : "Java",
+            "description" : "JVM",
+            "level" : 5
+         },
+         {
+            "name" : "Kotlin",
+            "description" : "JVM",
+            "level" : 4
+         },
+         {
+            "name" : "Scala",
+            "description" : "JVM",
+            "level" : 3
+         }
+      ],
+      "languages" : [
+         {
+            "name" : "English",
+            "level" : "C1"
+         },
+         {
+            "name" : "Spanish",
+            "level" : "B2"
+         },
+         {
+            "name" : "French",
+            "level" : "A2"
+         }
+      ],
+      "sideProjects" : [
+
+      ],
+      "workHistory" : [
+         {
+            "position" : "Senior Developer",
+            "business" : "Bank",
+            "summary" : "Lead developer for core banking systems",
+            "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
+            "timespan" : {
+               "start" : "2023.01",
+               "end" : "2025.05"
+            },
+            "skills" : [
+               {
+                  "name" : "Java",
+                  "description" : "JVM",
+                  "level" : 5
+               },
+               {
+                  "name" : "Kotlin",
+                  "description" : "JVM",
+                  "level" : 4
+               }
+            ]
+         }
+      ],
+      "hobbies" : [
+         "Music Production",
+         "Open Source Contributing",
+         "Yoga"
+      ],
+      "resumeId" : 1
+    }
+    """
+    When "DELETE" request is sent to endpoint "/resume/edit/1/skills/Java" with no body
+    Then Response status code should be 200
+    When "POST" request is sent to endpoint "/cv/1" with no body
+    And Response body should be:
+    """
+    {
+      "id" : 1,
+      "fullname" : "Łukasz Gumiński",
+      "imageSource" : "/images/lg.jpg",
+      "title" : "Lead Java Developer",
+      "summary" : "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
+      "skills" : [
+         {
+            "name" : "Kotlin",
+            "description" : "JVM",
+            "level" : 4
+         },
+         {
+            "name" : "Scala",
+            "description" : "JVM",
+            "level" : 3
+         }
+      ],
+      "languages" : [
+         {
+            "name" : "English",
+            "level" : "C1"
+         },
+         {
+            "name" : "Spanish",
+            "level" : "B2"
+         },
+         {
+            "name" : "French",
+            "level" : "A2"
+         }
+      ],
+      "sideProjects" : [
+
+      ],
+      "workHistory" : [
+         {
+            "position" : "Senior Developer",
+            "business" : "Bank",
+            "summary" : "Lead developer for core banking systems",
+            "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
+            "timespan" : {
+               "start" : "2023.01",
+               "end" : "2025.05"
+            },
+            "skills" : [
+               {
+                  "name" : "Java",
+                  "description" : "JVM",
+                  "level" : 5
+               },
+               {
+                  "name" : "Kotlin",
+                  "description" : "JVM",
+                  "level" : 4
+               }
+            ]
+         }
+      ],
+      "hobbies" : [
+         "Music Production",
+         "Open Source Contributing",
+         "Yoga"
+      ],
+      "resumeId" : 1
+    }
+    """
+
+  Scenario: Remove not existing skill
+    Given User is authorized with token: "admin"
+    When "DELETE" request is sent to endpoint "/resume/edit/1/skills/BBB" with no body
+    Then Response status code should be 404
+    And Response body should be:
+      """
+      {
+        "error" : "Skill with name BBB not found",
+        "status" : 404
+      }
+      """
+
+  Scenario: Edit existing skill should be successful
+    Given User is authorized with token: "admin"
+    When "PUT" request is sent to endpoint "/resume/edit/1/skills/Java" with body:
+      """
+      {
+         "name" : "Jaka",
+         "description" : "Java programming language",
+         "level" : 3,
+         "domains": []
+      }
+      """
+    Then Response status code should be 200
+    When "POST" request is sent to endpoint "/cv/1" with no body
+    And Response body should be:
+      """
+      {
+        "id" : 1,
+        "fullname" : "Łukasz Gumiński",
+        "imageSource" : "/images/lg.jpg",
+        "title" : "Lead Java Developer",
+        "summary" : "Senior Java Developer with extensive experience in banking software development. Specialized in building robust, secure, and scalable applications.",
+        "skills" : [
+           {
+              "name" : "Jaka",
+              "description" : "Java programming language",
+              "level" : 3
+           },
+           {
+              "name" : "Kotlin",
+              "description" : "JVM",
+              "level" : 4
+           },
+           {
+              "name" : "Scala",
+              "description" : "JVM",
+              "level" : 3
+           }
+        ],
+        "languages" : [
+           {
+              "name" : "English",
+              "level" : "C1"
+           },
+           {
+              "name" : "Spanish",
+              "level" : "B2"
+           },
+           {
+              "name" : "French",
+              "level" : "A2"
+           }
+        ],
+        "sideProjects" : [
+
+        ],
+        "workHistory" : [
+           {
+              "position" : "Senior Developer",
+              "business" : "Bank",
+              "summary" : "Lead developer for core banking systems",
+              "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
+              "timespan" : {
+                 "start" : "2023.01",
+                 "end" : "2025.05"
+              },
+              "skills" : [
+                 {
+                    "name" : "Java",
+                    "description" : "JVM",
+                    "level" : 5
+                 },
+                 {
+                    "name" : "Kotlin",
+                    "description" : "JVM",
+                    "level" : 4
+                 }
+              ]
+           }
+        ],
+        "hobbies" : [
+           "Music Production",
+           "Open Source Contributing",
+           "Yoga"
+        ],
+        "resumeId" : 1
+      }
+      """
+
+  Scenario: Edit existing skill should fail if skill does not exist
+    Given User is authorized with token: "admin"
+    When "PUT" request is sent to endpoint "/resume/edit/1/skills/mmm" with body:
+    """
+    {
+       "name" : "Jaka",
+       "description" : "Java programming language",
+       "level" : 3,
+       "domains": []
+    }
+    """
+    Then Response body should be:
+    """
+    {
+      "error" : "Skill with name mmm not found",
+      "status" : 404
+    }
+    """
