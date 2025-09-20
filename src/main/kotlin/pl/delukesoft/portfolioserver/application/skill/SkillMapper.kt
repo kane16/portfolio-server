@@ -9,25 +9,21 @@ import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 @RegisterReflectionForBinding(SkillDTO::class)
 class SkillMapper {
 
-  fun mapToSkill(skillDTO: SkillDTO, username: String, availableDomains: List<SkillDomain>): Skill =
+  fun mapToSkill(skillDTO: SkillDTO, availableDomains: List<SkillDomain>): Skill =
     Skill(
-      skillDTO.id,
       skillDTO.name,
       skillDTO.level,
       skillDTO.description,
-      username,
       availableDomains.filter { it.name in skillDTO.domains }
     )
 
-  fun mapToSkillDomain(domain: String, username: String, availableDomains: List<SkillDomain>): SkillDomain =
+  fun mapToSkillDomain(domain: String, availableDomains: List<SkillDomain>): SkillDomain =
     availableDomains.find { it.name == domain } ?: SkillDomain(
       name = domain,
-      username = username
     )
 
   fun mapToDTO(skill: Skill): SkillDTO {
     return SkillDTO(
-      skill.id,
       skill.name,
       skill.level,
       skill.description ?: "",

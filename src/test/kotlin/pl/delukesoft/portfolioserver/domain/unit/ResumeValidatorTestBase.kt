@@ -28,26 +28,20 @@ open class ResumeValidatorTestBase {
   protected fun language(
     name: String = "English",
     level: LanguageLevel = anyLevel(),
-    username: String = "alice"
   ) = Language(
-    id = null,
     name = name,
     level = level,
-    username = username
   )
 
   protected fun skill(
     name: String = "Kotlin",
     level: Int = 3,
-    username: String = "alice",
     description: String? = "some",
     domains: List<SkillDomain> = emptyList()
   ) = Skill(
-    id = null,
     name = name,
     level = level,
     description = description,
-    username = username,
     domains = domains
   )
 
@@ -59,20 +53,17 @@ open class ResumeValidatorTestBase {
 
   protected fun ofLen(n: Int, ch: Char = 'a') = buildString { repeat(n) { append(ch) } }
 
-  protected fun business(name: String, username: String = "user") =
-    Business(id = null, name = name, username = username)
+  protected fun business(name: String) =
+    Business(name = name)
 
   protected fun domain(
     name: String = "Backend",
-    username: String = "alice"
   ) = SkillDomain(
-    id = null,
     name = name,
-    username = username
   )
 
-  protected fun hobby(name: String, username: String = "user") =
-    Hobby(id = null, name = name, username = username)
+  protected fun hobby(name: String) =
+    Hobby(name = name)
 
   protected fun messages(result: ValidationResult): List<String> =
     result.errors.map { it }

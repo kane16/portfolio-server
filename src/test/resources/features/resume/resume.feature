@@ -643,20 +643,15 @@ Feature: Resume creation
         "resumeId" : 1
       }
       """
-    When "POST" request is sent to endpoint "/skills" with body:
-      """
-      {
-        "name": "Groovy",
-        "description": "JVM Language",
-        "level": 2,
-        "domains": []
-      }
-      """
-    Then Response status code should be 201
     When "POST" request is sent to endpoint "/resume/edit/1/skills" with body:
-      """
-      Groovy
-      """
+    """
+    {
+      "name": "Groovy",
+      "description": "JVM Language",
+      "level": 2,
+      "domains": []
+    }
+    """
     Then Response status code should be 201
     And Response body should be:
       """

@@ -11,11 +11,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
 import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
-import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessRepository
-import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyRepository
-import pl.delukesoft.portfolioserver.domain.resume.language.LanguageRepository
-import pl.delukesoft.portfolioserver.domain.resume.skill.SkillRepository
-import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorRepository
@@ -26,12 +21,7 @@ class BehaviourTestsSteps(
   private val resumeRepository: ResumeRepository,
   private val resumeHistoryRepository: ResumeHistoryRepository,
   private val resumeVersionRepository: ResumeVersionRepository,
-  private val generatorRepository: GeneratorRepository,
-  private val skillRepository: SkillRepository,
-  private val businessRepository: BusinessRepository,
-  private val skillDomainRepository: SkillDomainRepository,
-  private val hobbyRepository: HobbyRepository,
-  private val languageRepository: LanguageRepository
+  private val generatorRepository: GeneratorRepository
 ) : En {
 
   var result = ResponseEntity.ok("OK")
@@ -40,11 +30,6 @@ class BehaviourTestsSteps(
   val initialDbResumeVersions = resumeVersionRepository.findAll()
   val initialDbHistoryResumes = resumeHistoryRepository.findAll()
   val initialSequences = generatorRepository.findAll()
-  val initialSkills = skillRepository.findAll()
-  val initialBusiness = businessRepository.findAll()
-  val initialSkillDomains = skillDomainRepository.findAll()
-  val initialHobbies = hobbyRepository.findAll()
-  val initialLanguages = languageRepository.findAll()
 
   init {
     defineSteps()
@@ -61,16 +46,6 @@ class BehaviourTestsSteps(
     resumeVersionRepository.deleteAll()
     resumeRepository.deleteAll()
     generatorRepository.deleteAll()
-    skillRepository.deleteAll()
-    skillDomainRepository.deleteAll()
-    businessRepository.deleteAll()
-    hobbyRepository.deleteAll()
-    languageRepository.deleteAll()
-    languageRepository.saveAll(initialLanguages)
-    businessRepository.saveAll(initialBusiness)
-    hobbyRepository.saveAll(initialHobbies)
-    skillDomainRepository.saveAll(initialSkillDomains)
-    skillRepository.saveAll(initialSkills)
     resumeRepository.saveAll(intialDbResumes)
     resumeVersionRepository.saveAll(initialDbResumeVersions)
     resumeHistoryRepository.saveAll(initialDbHistoryResumes)

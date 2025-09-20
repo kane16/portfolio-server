@@ -9,6 +9,7 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDT
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ValidationResultDTO
+import pl.delukesoft.portfolioserver.application.skill.SkillDTO
 
 @RestController
 @RequestMapping("/resume")
@@ -73,11 +74,11 @@ class ResumeController(
   @ResponseStatus(HttpStatus.CREATED)
   fun addSkillToResume(
     @PathVariable("resumeId") resumeId: Long,
-    @RequestBody skillName: String,
+    @RequestBody skill: SkillDTO,
     @RequestHeader("Authorization") token: String?,
   ): Boolean {
     log.info("Received request to add skill to portfolio")
-    return resumeFacade.addSkillToResume(resumeId, skillName)
+    return resumeFacade.addSkillToResume(resumeId, skill)
   }
 
   @AuthRequired("ROLE_CANDIDATE")

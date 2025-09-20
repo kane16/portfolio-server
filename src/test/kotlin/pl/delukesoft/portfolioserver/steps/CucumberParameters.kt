@@ -1,7 +1,6 @@
 package pl.delukesoft.portfolioserver.steps
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.cucumber.java.DocStringType
 import io.cucumber.java.ParameterType
 
 class CucumberParameters {

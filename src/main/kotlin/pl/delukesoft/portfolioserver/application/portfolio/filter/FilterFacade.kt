@@ -1,41 +1,42 @@
 package pl.delukesoft.portfolioserver.application.portfolio.filter
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessService
-import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
-import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainService
-import java.util.concurrent.Executors
+import pl.delukesoft.portfolioserver.adapters.auth.UserContext
+import pl.delukesoft.portfolioserver.domain.user.AuthorService
 
 @Component
 class FilterFacade(
-  private val skillService: SkillService,
-  private val businessService: BusinessService,
-  private val domainService: SkillDomainService
+  private val authorService: AuthorService,
+  private val userContext: UserContext
 ) {
 
   fun getAllSkills(): List<String> {
-    return skillService.getAll().map { it.name }.distinct()
+    val author = if (userContext.author == null) {
+      authorService.getMainAuthor()
+    } else userContext.author!!
+    return author.skills.map { it.name }
   }
 
   fun getAllBusiness(): List<String> {
-    return businessService.getAll().map { it.name }.distinct()
+    val author = if (userContext.author == null) {
+      authorService.getMainAuthor()
+    } else userContext.author!!
+    return author.businesses.map { it.name }
   }
 
   fun getAllDomains(): List<String> {
-    return domainService.getAll().map { it.name }.distinct()
+    val author = if (userContext.author == null) {
+      authorService.getMainAuthor()
+    } else userContext.author!!
+    return author.domains.map { it.name }
   }
 
   fun getAllFilters(): PortfolioSearch {
-    Executors.newVirtualThreadPerTaskExecutor().use { pool ->
-      val skills = pool.submit<List<String>> { getAllSkills() }
-      val business = pool.submit<List<String>> { getAllBusiness() }
-      val domains = pool.submit<List<String>> { getAllDomains() }
-      return PortfolioSearch(
-        business.get(),
-        skills.get(),
-        domains.get()
-      )
-    }
+    return PortfolioSearch(
+      getAllBusiness(),
+      getAllSkills(),
+      getAllDomains()
+    )
   }
 
 }

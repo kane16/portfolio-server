@@ -20,53 +20,41 @@
     },
     "skills": [
       {
-        "_id": 1,
         "name": "Java",
         "level": 5,
         "description": "JVM",
-        "username": "admin",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 1
+            "name": "JVM"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 2
+            "name": "Backend"
           }
         ]
       },
       {
-        "_id": 2,
         "name": "Kotlin",
         "level": 4,
         "description": "JVM",
-        "username": "admin",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 1
+            "name": "JVM"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 2
+            "name": "Backend"
           }
         ]
       },
       {
-        "_id": 3,
         "name": "Scala",
         "level": 3,
         "description": "JVM",
-        "username": "admin",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 1
+            "name": "JVM"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 2
+            "name": "Backend"
           }
         ]
       }
@@ -74,9 +62,7 @@
     "experience": [
       {
         "business": {
-          "_id": 1,
-          "name": "Bank",
-          "username": "admin"
+          "name": "Bank"
         },
         "position": "Senior Developer",
         "summary": "Lead developer for core banking systems",
@@ -88,16 +74,34 @@
         "skills": [
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 1
+              "name": "Java",
+              "level": 5,
+              "description": "JVM",
+              "domains": [
+                {
+                  "name": "JVM"
+                },
+                {
+                  "name": "Backend"
+                }
+              ]
             },
             "level": 5,
             "detail": "JVM"
           },
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 2
+              "name": "Kotlin",
+              "level": 4,
+              "description": "JVM",
+              "domains": [
+                {
+                  "name": "JVM"
+                },
+                {
+                  "name": "Backend"
+                }
+              ]
             },
             "level": 4,
             "detail": "JVM"
@@ -108,39 +112,27 @@
     "sideProjects": [],
     "hobbies": [
       {
-        "_id": 1,
-        "name": "Music Production",
-        "username": "admin"
+        "name": "Music Production"
       },
       {
-        "_id": 2,
-        "name": "Open Source Contributing",
-        "username": "admin"
+        "name": "Open Source Contributing"
       },
       {
-        "_id": 3,
-        "name": "Yoga",
-        "username": "admin"
+        "name": "Yoga"
       }
     ],
     "languages": [
       {
-        "_id": 1,
         "name": "English",
-        "level": 5,
-        "username": "admin"
+        "level": 5
       },
       {
-        "_id": 2,
         "name": "Spanish",
-        "level": 4,
-        "username": "admin"
+        "level": 4
       },
       {
-        "_id": 3,
         "name": "French",
-        "level": 2,
-        "username": "admin"
+        "level": 2
       }
     ],
     "createdOn": "2025-05-08T15:04:57.824+00:00",
@@ -166,49 +158,38 @@
     },
     "skills": [
       {
-        "_id": 4,
         "name": "Java",
         "level": 4,
         "description": "JVM",
-        "username": "user",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 1
+            "name": "JVM"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 2
+            "name": "Backend"
           }
         ]
       },
       {
-        "_id": 5,
         "name": "JavaScript",
         "level": 5,
         "description": "Web Development",
-        "username": "user",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 3
+            "name": "Frontend"
           }
         ]
       },
       {
-        "_id": 6,
         "name": "React",
         "level": 5,
         "description": "Frontend Framework",
-        "username": "user",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 3
+            "name": "Frontend"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 4
+            "name": "Framework"
           }
         ]
       }
@@ -216,9 +197,7 @@
     "experience": [
       {
         "business": {
-          "_id": 2,
-          "name": "Tech Startup",
-          "username": "user"
+          "name": "Tech Startup"
         },
         "position": "Full Stack Developer",
         "summary": "Full-stack development of modern web applications",
@@ -230,16 +209,31 @@
         "skills": [
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 5
+              "name": "JavaScript",
+              "level": 5,
+              "description": "Web Development",
+              "domains": [
+                {
+                  "name": "Frontend"
+                }
+              ]
             },
             "level": 5,
             "detail": "Web Development"
           },
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 6
+              "name": "React",
+              "level": 5,
+              "description": "Frontend Framework",
+              "domains": [
+                {
+                  "name": "Frontend"
+                },
+                {
+                  "name": "Framework"
+                }
+              ]
             },
             "level": 5,
             "detail": "Frontend Framework"
@@ -250,39 +244,27 @@
     "sideProjects": [],
     "hobbies": [
       {
-        "_id": 4,
-        "name": "Music Production",
-        "username": "user"
+        "name": "Music Production"
       },
       {
-        "_id": 5,
-        "name": "Open Source Contributing",
-        "username": "user"
+        "name": "Open Source Contributing"
       },
       {
-        "_id": 6,
-        "name": "Yoga",
-        "username": "user"
+        "name": "Yoga"
       }
     ],
     "languages": [
       {
-        "_id": 4,
         "name": "English",
-        "level": 5,
-        "username": "user"
+        "level": 5
       },
       {
-        "_id": 5,
         "name": "Spanish",
-        "level": 4,
-        "username": "user"
+        "level": 4
       },
       {
-        "_id": 6,
         "name": "French",
-        "level": 2,
-        "username": "user"
+        "level": 2
       }
     ],
     "createdOn": "2025-06-10T12:30:00.000+00:00",
@@ -305,53 +287,41 @@
     },
     "skills": [
       {
-        "_id": 7,
         "name": "Kotlin",
         "level": 5,
         "description": "JVM",
-        "username": "candidate",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 1
+            "name": "JVM"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 2
+            "name": "Backend"
           }
         ]
       },
       {
-        "_id": 8,
         "name": "Spring Boot",
         "level": 5,
         "description": "Backend Framework",
-        "username": "candidate",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 1
+            "name": "JVM"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 2
+            "name": "Backend"
           },
           {
-            "$ref": "TechDomain",
-            "$id": 4
+            "name": "Framework"
           }
         ]
       },
       {
-        "_id": 9,
         "name": "MongoDB",
         "level": 4,
         "description": "Database",
-        "username": "candidate",
         "domains": [
           {
-            "$ref": "TechDomain",
-            "$id": 5
+            "name": "Database"
           }
         ]
       }
@@ -359,9 +329,7 @@
     "experience": [
       {
         "business": {
-          "_id": 3,
-          "name": "E-commerce Platform",
-          "username": "candidate"
+          "name": "E-commerce Platform"
         },
         "position": "Backend Developer",
         "summary": "Backend development for high-load e-commerce platform",
@@ -373,16 +341,31 @@
         "skills": [
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 2
+              "name": "Kotlin",
+              "level": 4,
+              "description": "JVM",
+              "domains": [
+                {
+                  "name": "JVM"
+                },
+                {
+                  "name": "Backend"
+                }
+              ]
             },
             "level": 5,
             "detail": "JVM"
           },
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 9
+              "name": "MongoDB",
+              "level": 4,
+              "description": "Database",
+              "domains": [
+                {
+                  "name": "Database"
+                }
+              ]
             },
             "level": 4,
             "detail": "Database"
@@ -391,9 +374,7 @@
       },
       {
         "business": {
-          "_id": 4,
-          "name": "IT Consulting",
-          "username": "candidate"
+          "name": "IT Consulting"
         },
         "position": "Technical Lead",
         "summary": "Technical leadership and architecture design",
@@ -405,16 +386,37 @@
         "skills": [
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 2
+              "name": "Kotlin",
+              "level": 4,
+              "description": "JVM",
+              "domains": [
+                {
+                  "name": "JVM"
+                },
+                {
+                  "name": "Backend"
+                }
+              ]
             },
             "level": 5,
             "detail": "JVM"
           },
           {
             "skill": {
-              "$ref": "Skill",
-              "$id": 8
+              "name": "Spring Boot",
+              "level": 5,
+              "description": "Backend Framework",
+              "domains": [
+                {
+                  "name": "JVM"
+                },
+                {
+                  "name": "Backend"
+                },
+                {
+                  "name": "Framework"
+                }
+              ]
             },
             "level": 5,
             "detail": "Backend Framework"
@@ -425,39 +427,27 @@
     "sideProjects": [],
     "hobbies": [
       {
-        "_id": 7,
-        "name": "Music Production",
-        "username": "candidate"
+        "name": "Music Production"
       },
       {
-        "_id": 8,
-        "name": "Open Source Contributing",
-        "username": "candidate"
+        "name": "Open Source Contributing"
       },
       {
-        "_id": 9,
-        "name": "Yoga",
-        "username": "candidate"
+        "name": "Yoga"
       }
     ],
     "languages": [
       {
-        "_id": 7,
         "name": "English",
-        "level": 5,
-        "username": "candidate"
+        "level": 5
       },
       {
-        "_id": 8,
         "name": "Spanish",
-        "level": 4,
-        "username": "candidate"
+        "level": 4
       },
       {
-        "_id": 9,
         "name": "French",
-        "level": 2,
-        "username": "candidate"
+        "level": 2
       }
     ],
     "createdOn": "2025-07-15T07:45:00.000+00:00",

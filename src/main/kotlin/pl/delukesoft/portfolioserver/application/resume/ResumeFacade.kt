@@ -28,14 +28,17 @@ class ResumeFacade(
   private val portfolioSearchMapper: PortfolioSearchMapper,
   private val resumeMapper: ResumeMapper,
   private val userContext: UserContext,
-  private val skillFacade: SkillFacade,
   private val skillMapper: SkillMapper,
   private val resumeValidator: ResumeValidator,
-  private val validationMapper: ValidationMapper
+  private val validationMapper: ValidationMapper,
+  private val skillFacade: SkillFacade
 ) {
 
   private val currentUser
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
+
+  private val currentAuthor
+    get() = requireNotNull(userContext.author) { "Authenticated author is required" }
 
   fun getById(id: Long): ResumeDTO {
     return resumeMapper.mapResumeToDTO(resumeService.getResumeById(id, userContext.user))
@@ -100,10 +103,10 @@ class ResumeFacade(
   }
 
 
-  fun addSkillToResume(id: Long, skillName: String): Boolean {
-    val skillToAdd = skillFacade.getSkill(skillName)
+  fun addSkillToResume(id: Long, skill: SkillDTO): Boolean {
+    val skillToAdd = skillMapper.mapToSkill(skill, currentAuthor.domains)
     val resumeToModify = resumeService.getResumeById(id, currentUser)
-    return resumeService.addSkillToResume(resumeToModify, skillToAdd)
+    return resumeService.addSkillToResume(resumeToModify, skillToAdd) && skillFacade.addSkill(skill)
   }
 
   fun findSkillsByResumeId(resumeId: Long): List<SkillDTO> {

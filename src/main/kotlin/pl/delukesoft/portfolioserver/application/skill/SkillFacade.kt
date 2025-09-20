@@ -2,44 +2,38 @@ package pl.delukesoft.portfolioserver.application.skill
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
-import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
-import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainService
+import pl.delukesoft.portfolioserver.domain.user.AuthorService
 
 @Component
 class SkillFacade(
   private val skillMapper: SkillMapper,
-  private val skillDomainService: SkillDomainService,
   private val userContext: UserContext,
-  private val skillService: SkillService
+  private val authorService: AuthorService,
 ) {
+
+  private val currentAuthor
+    get() = requireNotNull(userContext.author) { "Authenticated author is required" }
 
   private val currentUser
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun addDomain(name: String): Boolean {
-    val domainToAdd = skillMapper.mapToSkillDomain(name, currentUser.username, emptyList())
-    skillDomainService.addDomain(domainToAdd)
-    return true
+    val domainToAdd = skillMapper.mapToSkillDomain(name, currentAuthor.domains)
+    return authorService.addDomainToAuthor(domainToAdd, currentAuthor)
   }
 
   fun getSkills(): List<SkillDTO> {
-    return skillService.getUserSkills(currentUser.username).map { skillMapper.mapToDTO(it) }
+    return currentAuthor.skills.map { skillMapper.mapToDTO(it) }
   }
 
   fun getSkillDomains(): List<String> {
-    return skillDomainService.getUserDomains(currentUser.username).map { it.name }
-  }
-
-  fun getSkill(name: String): Skill {
-    return skillService.getByName(name, currentUser.username)
+    return currentAuthor.domains.map { it.name }
   }
 
   fun addSkill(skill: SkillDTO): Boolean {
-    val availableDomains = skillDomainService.getUserDomains(currentUser.username)
-    val skillToAdd = skillMapper.mapToSkill(skill, currentUser.username, availableDomains)
-    skillService.addSkill(skillToAdd)
-    return true
+    val availableDomains = currentAuthor.domains
+    val skillToAdd = skillMapper.mapToSkill(skill, availableDomains)
+    return authorService.addSkillToAuthor(skillToAdd, currentAuthor)
   }
 
 

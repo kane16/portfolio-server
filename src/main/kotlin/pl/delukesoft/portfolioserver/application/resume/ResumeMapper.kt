@@ -54,7 +54,7 @@ class ResumeMapper {
         it.summary,
         it.description ?: "",
         mapTimespan(it.timeframe),
-        it.skills.map { SkillPortfolioDTO(it.skill.name, it.detail, it.level) },
+        it.skills.map { SkillPortfolioDTO(it.skill.name, it.detail) },
       )
     }
   }

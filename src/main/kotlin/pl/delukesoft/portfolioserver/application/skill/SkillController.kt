@@ -37,16 +37,6 @@ class SkillController(
     return resumeFacade.findSkillsByResumeId(resumeId)
   }
 
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  @AuthRequired("ROLE_CANDIDATE")
-  fun addSkill(
-    @RequestBody skill: SkillDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return skillFacade.addSkill(skill)
-  }
-
   @PostMapping("/domains")
   @ResponseStatus(HttpStatus.CREATED)
   @AuthRequired("ROLE_CANDIDATE")
