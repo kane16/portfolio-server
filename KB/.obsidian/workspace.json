@@ -22,6 +22,20 @@
             }
           },
           {
+            "id": "0518ca8c7735e2d8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Resume vs Portfolio.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Resume vs Portfolio"
+            }
+          },
+          {
             "id": "d25d3ed59d48185d",
             "type": "leaf",
             "state": {
@@ -73,7 +87,8 @@
               "title": "Edit Main Page"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -223,19 +238,20 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "9bb319fc651f13d3",
+  "active": "0518ca8c7735e2d8",
   "lastOpenFiles": [
+    "Portfolio App overview.md",
+    "Resume vs Portfolio.md",
+    "UML/Domain/Resume model.md",
     "CV View/CV View.md",
     "Portfolio main view/Portfolio View.md",
     "CV View/mockup/CV print.md",
     "Edit View/mockup/Edit Main Page.md",
     "Edit View/mockup/Edit Overview Page.md",
-    "Portfolio App overview.md",
     "Portfolio main view/mockup/Main page view.md",
     "Portfolio main view/mockup/Delukesoft.jpg",
     "Edit View/Resume Edit.md",
     "Application connector model.md",
-    "UML/Domain/Resume model.md",
     "UML/Domain/Application connector model.md",
     "Resume model.md",
     "copilot-custom-prompts/Rewrite as tweet thread.md",

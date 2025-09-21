@@ -1,20 +1,30 @@
 ## Application goals and drivers
 
-Main goal of the app is to provide user information about candidate resume, in form of skills, business, experience and
-other data relevant for candidate portfolio.
+The main goal of the application is to provide users with information about a candidate’s resume. This includes skills, professional experience, business history, and other data relevant to the candidate’s portfolio.
 
 ## Portfolio core functionalities
 
-There are three separate parts in application independent on each other:
+The application is divided into three independent parts, each serving a distinct role. To be more precise, the system involves three main actors:
 
-To reiterate and be more specific, we differentiate between 3 actors in the system:
+- **Viewer (ROLE_USER):** Can browse resumes and optionally add comments.
+    
+- **Candidate (ROLE_CANDIDATE):** Can create their own resume, view its history, and edit it.
+    
+- **Administrator (ROLE_ADMIN):** Has all permissions of the other roles, plus the ability to view and edit resumes on behalf of other users.
 
-* Viewer user with potential option to comment - ROLE_USER
-* Candidate that is able to create his own resume, view resume history and edit it - ROLE_CANDIDATE
-* Administrator that will have all permissions of previous users, also will be able to view and change resume of other
-  users, create new candidates
+## Available views
 
-Two views are available for guests - [[CV View]] and [[Portfolio View]]. In order to be able to enter [[Resume Edit]],
-visit edit functionality - ROLE_CANDIDATE or ROLE_ADMIN are needed. After clicking link specific page should show up
-in _blank page
+There are two views accessible to guests and one that requires additional permissions:
 
+- **#CV-View** 
+	- Displays the resume in a standardized, printable format.
+- **#Portfolio-View** 
+	- Allows recruiters to interact with the CV by searching for specific skills, phrases, or other relevant criteria.
+- **#Edit-View**
+    - Handles the full resume lifecycle — from creating a shortcut, through editing and validation, to final publication.  
+    - Access is restricted to **ROLE_CANDIDATE** and **ROLE_ADMIN**. 
+    - Opens in a new page when accessed.
+
+## Data model used in views
+
+Each view has it's own purposes. #CV-View and #Portfolio-View are using #Portfolio as base Transfer Object, while #Edit-View is using #Resume, because it's internal part of an application and should better reflect internal structure. Difference Between #Resume and #Portfolio  is described in [[Resume vs Portfolio]] page.
