@@ -23,16 +23,38 @@
             "id": "19c7a6c80d8a5e1f",
             "type": "leaf",
             "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          },
+          {
+            "id": "172c063fb25c62fa",
+            "type": "leaf",
+            "state": {
               "type": "excalidraw",
               "state": {
-                "file": "UML/Experience Creation.md"
+                "file": "UML/Language Stage.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Experience Creation"
+              "title": "Language Stage"
+            }
+          },
+          {
+            "id": "36df1ac33c775ded",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "UML/Portfolio.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Portfolio"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -182,23 +204,41 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "19c7a6c80d8a5e1f",
+  "active": "36df1ac33c775ded",
   "lastOpenFiles": [
-    "UML/Experience Creation.md~",
-    "UML/Experience Creation.md",
+    "Pasted Image 20250924170718_679.png",
+    "Pasted Image 20250924170547_109.png",
+    "UML/Language Stage.md",
+    "UML/Portfolio.md",
     "UML/Domain/Resume model.md",
     "Resume vs Portfolio.md",
     "Portfolio App overview.md",
     "UML/Domain",
-    "UML",
-    "CV View/CV View.md",
-    "Portfolio main view/Portfolio View.md",
-    "CV View/mockup/CV print.md",
-    "Edit View/mockup/Edit Main Page.md",
-    "Edit View/mockup/Edit Overview Page.md",
+    "Edit View/Resume Edit.md",
     "Portfolio main view/mockup/Main page view.md",
     "Portfolio main view/mockup/Delukesoft.jpg",
-    "Edit View/Resume Edit.md",
+    "Portfolio main view/Portfolio View.md",
+    "Edit View/mockup/Edit Overview Page.md",
+    "Edit View/mockup/Edit Main Page.md",
+    "Portfolio main view/mockup",
+    "Portfolio main view",
+    "Edit View/mockup",
+    "Edit View",
+    "CV View/mockup/Pasted Image 20250628094342_673.svg",
+    "CV View/mockup/Pasted Image 20250628094342_672.svg",
+    "CV View/mockup/Pasted Image 20250628094342_671.png",
+    "CV View/mockup/Pasted Image 20250628094342_670.png",
+    "CV View/mockup/Pasted Image 20250628094342_669.png",
+    "CV View/mockup/Pasted Image 20250628094342_667.png",
+    "CV View/mockup/Pasted Image 20250628094342_663.png",
+    "CV View/mockup/Pasted Image 20250628094342_662.png",
+    "CV View/mockup/CV print.md",
+    "CV View/CV View.md",
+    "CV View/mockup",
+    "CV View",
+    "UML/Untitled",
+    "UML/Experience Creation.md",
+    "UML",
     "Application connector model.md",
     "UML/Domain/Application connector model.md",
     "Resume model.md",
@@ -211,24 +251,6 @@
     "copilot-custom-prompts/Make shorter.md",
     "copilot-custom-prompts/Emojify.md",
     "copilot-custom-prompts/Explain like I am 5.md",
-    "copilot-custom-prompts/Simplify.md",
-    "copilot-custom-prompts/Summarize.md",
-    "copilot-custom-prompts",
-    "Portfolio main view/Portfolio View.md~",
-    "Portfolio main view/mockup/print-solid.svg",
-    "Excalidraw",
-    "Edit View/mockup",
-    "Edit View",
-    "CV View/mockup",
-    "CV View",
-    "Portfolio main view",
-    "CV View/mockup/Pasted Image 20250628094342_644.png",
-    "CV View/mockup/Pasted Image 20250628094342_673.svg",
-    "CV View/mockup/Pasted Image 20250628094342_672.svg",
-    "CV View/mockup/Pasted Image 20250628094342_671.png",
-    "CV View/mockup/Pasted Image 20250628094342_670.png",
-    "CV View/mockup/Pasted Image 20250628094342_669.png",
-    "CV View/mockup/Pasted Image 20250628094342_667.png",
-    "CV View/mockup/Pasted Image 20250628094342_663.png"
+    "copilot-custom-prompts"
   ]
 }
