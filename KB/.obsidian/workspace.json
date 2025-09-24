@@ -47,10 +47,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "UML/Portfolio.md"
+                "file": "UML/Experience Creation.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Portfolio"
+              "title": "Experience Creation"
             }
           }
         ],
@@ -206,10 +206,11 @@
   },
   "active": "36df1ac33c775ded",
   "lastOpenFiles": [
-    "Pasted Image 20250924170718_679.png",
-    "Pasted Image 20250924170547_109.png",
     "UML/Language Stage.md",
     "UML/Portfolio.md",
+    "UML/Experience Creation.md",
+    "Pasted Image 20250924170718_679.png",
+    "Pasted Image 20250924170547_109.png",
     "UML/Domain/Resume model.md",
     "Resume vs Portfolio.md",
     "Portfolio App overview.md",
@@ -231,13 +232,11 @@
     "CV View/mockup/Pasted Image 20250628094342_669.png",
     "CV View/mockup/Pasted Image 20250628094342_667.png",
     "CV View/mockup/Pasted Image 20250628094342_663.png",
-    "CV View/mockup/Pasted Image 20250628094342_662.png",
     "CV View/mockup/CV print.md",
     "CV View/CV View.md",
     "CV View/mockup",
     "CV View",
     "UML/Untitled",
-    "UML/Experience Creation.md",
     "UML",
     "Application connector model.md",
     "UML/Domain/Application connector model.md",
