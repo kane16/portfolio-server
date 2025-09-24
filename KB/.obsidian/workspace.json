@@ -184,8 +184,9 @@
   },
   "active": "19c7a6c80d8a5e1f",
   "lastOpenFiles": [
-    "UML/Domain/Resume model.md",
+    "UML/Experience Creation.md~",
     "UML/Experience Creation.md",
+    "UML/Domain/Resume model.md",
     "Resume vs Portfolio.md",
     "Portfolio App overview.md",
     "UML/Domain",
@@ -212,7 +213,6 @@
     "copilot-custom-prompts/Explain like I am 5.md",
     "copilot-custom-prompts/Simplify.md",
     "copilot-custom-prompts/Summarize.md",
-    "copilot-custom-prompts/Translate to Chinese.md",
     "copilot-custom-prompts",
     "Portfolio main view/Portfolio View.md~",
     "Portfolio main view/mockup/print-solid.svg",
