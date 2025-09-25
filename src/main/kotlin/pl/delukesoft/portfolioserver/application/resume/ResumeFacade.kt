@@ -8,17 +8,13 @@ import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearc
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
-import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
-import pl.delukesoft.portfolioserver.application.resume.model.ValidationResultDTO
-import pl.delukesoft.portfolioserver.application.skill.SkillDTO
-import pl.delukesoft.portfolioserver.application.skill.SkillMapper
+import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
+import pl.delukesoft.portfolioserver.application.resume.skill.SkillMapper
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeSearchService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
-import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
-import pl.delukesoft.portfolioserver.domain.validation.ResumeValidatorResult
 
 @Component
 class ResumeFacade(
@@ -28,9 +24,7 @@ class ResumeFacade(
   private val portfolioSearchMapper: PortfolioSearchMapper,
   private val resumeMapper: ResumeMapper,
   private val userContext: UserContext,
-  private val skillMapper: SkillMapper,
-  private val resumeValidator: ResumeValidator,
-  private val validationMapper: ValidationMapper
+  private val skillMapper: SkillMapper
 ) {
 
   private val currentUser
@@ -38,10 +32,6 @@ class ResumeFacade(
 
   private val currentAuthor
     get() = requireNotNull(userContext.author) { "Authenticated author is required" }
-
-  fun getById(id: Long): ResumeDTO {
-    return resumeMapper.mapResumeToDTO(resumeService.getResumeById(id, userContext.user))
-  }
 
   fun getById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
     val resumeById = resumeService.getResumeById(id, userContext.user)
@@ -111,12 +101,6 @@ class ResumeFacade(
   fun findSkillsByResumeId(resumeId: Long): List<SkillDTO> {
     val resume = resumeService.getResumeById(resumeId, userContext.user)
     return resume.skills.map { skillMapper.mapToDTO(it) }
-  }
-
-  fun validateResume(id: Long): ValidationResultDTO {
-    val resume = resumeService.getResumeById(id, userContext.user)
-    val validationResult = resumeValidator.validate(resume) as ResumeValidatorResult
-    return validationMapper.mapResumeValidationResultToDTO(validationResult)
   }
 
   fun deleteSkillFromResume(resumeId: Long, skillNameToRemove: String): Boolean {

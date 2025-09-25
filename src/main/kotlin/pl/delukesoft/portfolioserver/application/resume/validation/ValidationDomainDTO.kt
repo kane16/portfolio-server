@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.resume.model
+package pl.delukesoft.portfolioserver.application.resume.validation
 
 data class ValidationDomainDTO(
   val title: String,

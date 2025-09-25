@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.skill
+package pl.delukesoft.portfolioserver.application.resume.skill
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component

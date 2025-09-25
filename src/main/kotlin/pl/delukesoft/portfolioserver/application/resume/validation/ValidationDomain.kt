@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.resume.model
+package pl.delukesoft.portfolioserver.application.resume.validation
 
 enum class ValidationDomain(val label: String, val weight: Int, val title: String, val endpoint: String) {
   SHORTCUT("shortcut", 10, "Shortcut", ""),

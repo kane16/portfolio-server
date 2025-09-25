@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
-import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
-import pl.delukesoft.portfolioserver.application.resume.model.ValidationResultDTO
-import pl.delukesoft.portfolioserver.application.skill.SkillDTO
+import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
 @RestController
 @RequestMapping("/resume")
@@ -79,26 +77,6 @@ class ResumeController(
   ): Boolean {
     log.info("Received request to add skill to portfolio")
     return resumeFacade.addSkillToResume(resumeId, skill)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @GetMapping("/{id}")
-  fun getCVById(
-    @PathVariable("id") id: Long,
-    @RequestHeader("Authorization") token: String?
-  ): ResumeDTO {
-    log.info("Received request to fetch Resume by id: {}", id)
-    return resumeFacade.getById(id)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @GetMapping("/{id}/validate")
-  fun validate(
-    @PathVariable("id") id: Long,
-    @RequestHeader("Authorization") token: String?
-  ): ValidationResultDTO {
-    log.info("Received request to validate Resume by id: {}", id)
-    return resumeFacade.validateResume(id)
   }
 
   @AuthRequired("ROLE_CANDIDATE")

@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.resume.model
+package pl.delukesoft.portfolioserver.application.resume.validation
 
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
 

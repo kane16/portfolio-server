@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.skill
+package pl.delukesoft.portfolioserver.application.resume.skill
 
 data class SkillDTO(
   val name: String,

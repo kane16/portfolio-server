@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.application.skill
+package pl.delukesoft.portfolioserver.application.resume.skill
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
@@ -14,9 +14,6 @@ class SkillFacade(
   private val currentAuthor
     get() = requireNotNull(userContext.author) { "Authenticated author is required" }
 
-  private val currentUser
-    get() = requireNotNull(userContext.user) { "Authenticated user is required" }
-
   fun addDomain(name: String): Boolean {
     val domainToAdd = skillMapper.mapToSkillDomain(name, currentAuthor.domains)
     return authorService.addDomainToAuthor(domainToAdd, currentAuthor)
@@ -28,12 +25,6 @@ class SkillFacade(
 
   fun getSkillDomains(): List<String> {
     return currentAuthor.domains.map { it.name }
-  }
-
-  fun addSkill(skill: SkillDTO): Boolean {
-    val availableDomains = currentAuthor.domains
-    val skillToAdd = skillMapper.mapToSkill(skill, availableDomains)
-    return authorService.addSkillToAuthor(skillToAdd, currentAuthor)
   }
 
 
