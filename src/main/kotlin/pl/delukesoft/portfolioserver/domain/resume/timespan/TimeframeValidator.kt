@@ -4,7 +4,7 @@ import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 import java.time.LocalDate
 
-class ConsecutiveTimeframeValidator(
+class TimeframeValidator(
   val lenientMode: Boolean = false
 ) : Validator<Timeframe>() {
 

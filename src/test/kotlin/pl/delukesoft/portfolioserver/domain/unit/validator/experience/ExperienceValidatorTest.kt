@@ -9,7 +9,7 @@ import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessV
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperienceValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
-import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
+import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
 import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 import java.time.LocalDate
 import kotlin.test.Test
@@ -17,7 +17,7 @@ import kotlin.test.Test
 class ExperienceValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = ExperienceValidator(
-    ConsecutiveTimeframeValidator(),
+    TimeframeValidator(),
     BusinessValidator(),
     SkillExperienceValidator(SkillValidator(SkillDomainValidator()))
   )

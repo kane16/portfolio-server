@@ -14,7 +14,7 @@ import pl.delukesoft.portfolioserver.domain.resume.language.LanguagesValidator
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcutValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
-import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
+import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
 import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 import pl.delukesoft.portfolioserver.domain.validation.ResumeValidatorResult
 import java.time.LocalDate
@@ -25,12 +25,12 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
     ResumeShortcutValidator(),
     SkillValidator(SkillDomainValidator()),
     ExperienceValidator(
-      ConsecutiveTimeframeValidator(false), BusinessValidator(), SkillExperienceValidator(
+      TimeframeValidator(false), BusinessValidator(), SkillExperienceValidator(
         SkillValidator(SkillDomainValidator())
       )
     ),
     ExperienceValidator(
-      ConsecutiveTimeframeValidator(true), BusinessValidator(), SkillExperienceValidator(
+      TimeframeValidator(true), BusinessValidator(), SkillExperienceValidator(
         SkillValidator(SkillDomainValidator())
       )
     ),

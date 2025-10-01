@@ -1,13 +1,15 @@
 package pl.delukesoft.portfolioserver.application.resume.validation
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.resume.ValidationMapper
-import pl.delukesoft.portfolioserver.application.resume.experience.business.BusinessDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
+import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
+import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
 import pl.delukesoft.portfolioserver.domain.validation.ResumeValidatorResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
@@ -17,7 +19,8 @@ class ValidationFacade(
   private val resumeValidator: ResumeValidator,
   private val businessValidator: Validator<Business>,
   private val userContext: UserContext,
-  private val validationMapper: ValidationMapper
+  private val validationMapper: ValidationMapper,
+  @Qualifier("consecutiveTimeframeValidator") private val experienceTimeframeValidator: TimeframeValidator
 ) {
 
   private val currentUser
@@ -29,15 +32,19 @@ class ValidationFacade(
     return validationMapper.mapResumeValidationResultToDTO(validationResult)
   }
 
-  fun validateBusiness(id: Long, businessDTO: BusinessDTO): SimpleValidationResultDTO {
+  fun validateBusiness(id: Long, business: String): SimpleValidationResultDTO {
     resumeService.getResumeById(id, currentUser)
-    val business = Business(businessDTO.name)
+    val business = Business(business)
     val validationResult = businessValidator.validate(business)
     return validationMapper.mapValidationResultToDTO(validationResult, "business")
   }
 
   fun validateExperienceTimeframe(id: Long, timeframe: TimeframeDTO): SimpleValidationResultDTO {
-    TODO("Not yet implemented")
+    val resume = resumeService.getResumeById(id, currentUser)
+    val addedTimeframe = Timeframe(timeframe.from, timeframe.to)
+    val validationResult = (resume.experience.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
+    val validationResults = experienceTimeframeValidator.validateList(validationResult)
+    return validationMapper.mapValidationResultToDTO(validationResults, "timeframe")
   }
 
 }

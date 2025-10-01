@@ -13,24 +13,24 @@ import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomainValidator
-import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
+import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
 
 @Configuration
 class ValidationConfiguration {
 
   @Bean("consecutiveTimeframeValidator")
-  fun consecutiveTimeframeValidator(): ConsecutiveTimeframeValidator {
-    return ConsecutiveTimeframeValidator(false)
+  fun consecutiveTimeframeValidator(): TimeframeValidator {
+    return TimeframeValidator(false)
   }
 
   @Bean("lenientTimeframeValidator")
-  fun lenientTimeframeValidator(): ConsecutiveTimeframeValidator {
-    return ConsecutiveTimeframeValidator(true)
+  fun lenientTimeframeValidator(): TimeframeValidator {
+    return TimeframeValidator(true)
   }
 
   @Bean("jobExperienceValidator")
   fun jobExperienceValidator(
-    @Qualifier("consecutiveTimeframeValidator") timeframeValidator: ConsecutiveTimeframeValidator,
+    @Qualifier("consecutiveTimeframeValidator") timeframeValidator: TimeframeValidator,
     @Qualifier("businessValidator") businessValidator: Validator<Business>,
     @Qualifier("skillExperienceValidator") skillExperienceValidator: Validator<SkillExperience>
   ): Validator<Experience> {
@@ -81,7 +81,7 @@ class ValidationConfiguration {
 
   @Bean("sideProjectsValidator")
   fun sideProjectsValidator(
-    @Qualifier("lenientTimeframeValidator") timeframeValidator: ConsecutiveTimeframeValidator,
+    @Qualifier("lenientTimeframeValidator") timeframeValidator: TimeframeValidator,
     @Qualifier("businessValidator") businessValidator: Validator<Business>,
     @Qualifier("skillExperienceValidator") skillExperienceValidator: Validator<SkillExperience>
   ): ExperienceValidator {

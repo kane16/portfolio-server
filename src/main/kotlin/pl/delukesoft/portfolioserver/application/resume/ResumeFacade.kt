@@ -8,6 +8,7 @@ import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearc
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
+import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillMapper
 import pl.delukesoft.portfolioserver.domain.resume.Resume
@@ -36,6 +37,10 @@ class ResumeFacade(
   fun getById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
     val resumeById = resumeService.getResumeById(id, userContext.user)
     return getResumeWithOptionalFilter(resumeById, portfolioSearch)
+  }
+
+  fun getById(id: Long): ResumeDTO {
+    return resumeMapper.mapResumeToDTO(resumeService.getResumeById(id, userContext.user))
   }
 
   fun getDefaultCV(portfolioSearch: PortfolioSearch? = null): Resume {

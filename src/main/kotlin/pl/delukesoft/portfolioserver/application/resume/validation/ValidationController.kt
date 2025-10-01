@@ -3,7 +3,6 @@ package pl.delukesoft.portfolioserver.application.resume.validation
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
-import pl.delukesoft.portfolioserver.application.resume.experience.business.BusinessDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 
 @RestController
@@ -28,11 +27,11 @@ class ValidationController(
   @PostMapping("/experience/business")
   fun validateBusiness(
     @PathVariable("id") id: Long,
-    @RequestBody businessDTO: BusinessDTO,
+    @RequestBody business: String,
     @RequestHeader("Authorization") token: String?
   ): SimpleValidationResultDTO {
     log.info("Received request to validate Experience Business")
-    return validationFacade.validateBusiness(id, businessDTO)
+    return validationFacade.validateBusiness(id, business)
   }
 
   @AuthRequired("ROLE_CANDIDATE")

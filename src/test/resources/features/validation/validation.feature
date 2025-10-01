@@ -95,9 +95,7 @@ Feature: Resume validation
   Scenario: Resume validation for partially completed resume
     When "POST" request is sent to endpoint "/resume/4/validate/experience/business" with body:
     """
-    {
-      "name": "Bank"
-    }
+    Bank
     """
     Then Response body should be:
     """

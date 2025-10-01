@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
+import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
 @RestController
@@ -16,6 +17,16 @@ class ResumeController(
 ) {
 
   private val log = LoggerFactory.getLogger(this::class.java)
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @GetMapping("/{id}")
+  fun getCVById(
+    @PathVariable("id") id: Long,
+    @RequestHeader("Authorization") token: String?
+  ): ResumeDTO {
+    log.info("Received request to fetch Resume by id: {}", id)
+    return resumeFacade.getById(id)
+  }
 
   @AuthRequired("ROLE_CANDIDATE")
   @GetMapping("/history")
