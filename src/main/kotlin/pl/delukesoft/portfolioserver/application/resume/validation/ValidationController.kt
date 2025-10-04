@@ -3,6 +3,8 @@ package pl.delukesoft.portfolioserver.application.resume.validation
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
+import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
+import pl.delukesoft.portfolioserver.application.resume.experience.skill.SkillExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 
 @RestController
@@ -43,6 +45,28 @@ class ValidationController(
   ): SimpleValidationResultDTO {
     log.info("Received request to validate Experience Timeframe")
     return validationFacade.validateExperienceTimeframe(id, timeframe)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @PostMapping("/experience/skills")
+  fun validateSkillsExperience(
+    @PathVariable("id") id: Long,
+    @RequestBody skills: List<SkillExperienceDTO>,
+    @RequestHeader("Authorization") token: String?,
+  ): SimpleValidationResultDTO {
+    log.info("Received request to validate Experience Skills")
+    return validationFacade.validateExperienceSkills(id, skills)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @PostMapping("/experience")
+  fun validateExperience(
+    @PathVariable("id") id: Long,
+    @RequestBody experience: ExperienceDTO,
+    @RequestHeader("Authorization") token: String?
+  ): SimpleValidationResultDTO {
+    log.info("Received request to validate Experience")
+    return validationFacade.validateExperience(id, experience)
   }
 
 

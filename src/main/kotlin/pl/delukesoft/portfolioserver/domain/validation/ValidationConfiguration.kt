@@ -84,7 +84,7 @@ class ValidationConfiguration {
     @Qualifier("lenientTimeframeValidator") timeframeValidator: TimeframeValidator,
     @Qualifier("businessValidator") businessValidator: Validator<Business>,
     @Qualifier("skillExperienceValidator") skillExperienceValidator: Validator<SkillExperience>
-  ): ExperienceValidator {
+  ): Validator<Experience> {
     return ExperienceValidator(
       timeframeValidator,
       businessValidator,
