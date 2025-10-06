@@ -4,8 +4,8 @@ import org.slf4j.LoggerFactory.getLogger
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.application.resume.experience.skill.SkillExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
+import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
 @RestController
 @RequestMapping("/resume/{id}/validate")
@@ -51,7 +51,7 @@ class ValidationController(
   @PostMapping("/experience/skills")
   fun validateSkillsExperience(
     @PathVariable("id") id: Long,
-    @RequestBody skills: List<SkillExperienceDTO>,
+    @RequestBody skills: List<SkillDTO>,
     @RequestHeader("Authorization") token: String?,
   ): SimpleValidationResultDTO {
     log.info("Received request to validate Experience Skills")

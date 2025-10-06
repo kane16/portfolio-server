@@ -1,7 +1,7 @@
 package pl.delukesoft.portfolioserver.application.resume.experience
 
-import pl.delukesoft.portfolioserver.application.resume.experience.skill.SkillExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
+import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
 
 data class ExperienceDTO(
@@ -10,5 +10,5 @@ data class ExperienceDTO(
   val summary: String,
   val description: String? = null,
   val timeframe: TimeframeDTO,
-  val skills: List<SkillExperienceDTO> = emptyList()
+  val skills: List<SkillDTO> = emptyList()
 )

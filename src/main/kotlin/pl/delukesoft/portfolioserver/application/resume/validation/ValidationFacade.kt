@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.resume.ValidationMapper
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.application.resume.experience.skill.SkillExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
+import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
@@ -17,6 +17,7 @@ import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
 import pl.delukesoft.portfolioserver.domain.validation.ResumeValidatorResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
+import pl.delukesoft.portfolioserver.utility.exception.InvalidMappingException
 
 @Component
 class ValidationFacade(
@@ -54,13 +55,13 @@ class ValidationFacade(
     return validationMapper.mapValidationResultToDTO(validationResults, "timeframe")
   }
 
-  fun validateExperienceSkills(id: Long, experienceSkillsDTO: List<SkillExperienceDTO>): SimpleValidationResultDTO {
+  fun validateExperienceSkills(id: Long, experienceSkillsDTO: List<SkillDTO>): SimpleValidationResultDTO {
     val resume = resumeService.getResumeById(id, currentUser)
     val experienceSkills = experienceSkillsDTO.map { skillExperienceDTO ->
       SkillExperience(
-        resume.skills.find { it.name == skillExperienceDTO.skill } ?: throw SkillNotFound(skillExperienceDTO.skill),
+        resume.skills.find { it.name == skillExperienceDTO.name } ?: throw SkillNotFound(skillExperienceDTO.name),
         skillExperienceDTO.level,
-        skillExperienceDTO.detail
+        skillExperienceDTO.detail ?: throw InvalidMappingException("Detail is expected to be provided")
       )
     }
     val validationResults = experienceSkillsValidator.validateList(experienceSkills)
@@ -77,9 +78,9 @@ class ValidationFacade(
       Timeframe(experienceDTO.timeframe.from, experienceDTO.timeframe.to),
       experienceDTO.skills.map { skillExperienceDTO ->
         SkillExperience(
-          resume.skills.find { it.name == skillExperienceDTO.skill }!!,
+          resume.skills.find { it.name == skillExperienceDTO.name }!!,
           skillExperienceDTO.level,
-          skillExperienceDTO.detail
+          skillExperienceDTO.detail ?: throw InvalidMappingException("Detail is expected to be provided")
         )
       }
     )

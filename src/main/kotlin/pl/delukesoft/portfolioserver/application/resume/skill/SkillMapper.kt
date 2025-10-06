@@ -26,6 +26,7 @@ class SkillMapper {
     return SkillDTO(
       skill.name,
       skill.level,
+      null,
       skill.description ?: "",
       skill.domains.map { it.name }
     )
