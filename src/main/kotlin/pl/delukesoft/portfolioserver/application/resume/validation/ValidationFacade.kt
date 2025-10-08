@@ -49,7 +49,7 @@ class ValidationFacade(
 
   fun validateExperienceTimeframe(id: Long, timeframe: TimeframeDTO): SimpleValidationResultDTO {
     val resume = resumeService.getResumeById(id, currentUser)
-    val addedTimeframe = Timeframe(timeframe.from, timeframe.to)
+    val addedTimeframe = Timeframe(timeframe.start, timeframe.end)
     val validationResult = (resume.experience.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
     val validationResults = experienceTimeframeValidator.validateList(validationResult)
     return validationMapper.mapValidationResultToDTO(validationResults, "timeframe")
@@ -75,7 +75,7 @@ class ValidationFacade(
       experienceDTO.position,
       experienceDTO.summary,
       experienceDTO.description,
-      Timeframe(experienceDTO.timeframe.from, experienceDTO.timeframe.to),
+      Timeframe(experienceDTO.timeframe.start, experienceDTO.timeframe.end),
       experienceDTO.skills.map { skillExperienceDTO ->
         SkillExperience(
           resume.skills.find { it.name == skillExperienceDTO.name }!!,
