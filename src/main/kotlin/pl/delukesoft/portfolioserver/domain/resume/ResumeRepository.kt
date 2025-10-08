@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.domain.resume
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 import org.springframework.data.mongodb.repository.Update
+import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 
 interface ResumeRepository : MongoRepository<Resume, Long> {
@@ -23,5 +24,9 @@ interface ResumeRepository : MongoRepository<Resume, Long> {
   @Query("{ 'id' : ?0, 'skills': { '\$elemMatch': { 'name': ?1 } } }")
   @Update("{ '\$set': { 'skills.$': ?2 } }")
   fun updateSkill(id: Long, skillName: String, skillUpdate: Skill): Long
+
+  @Query("{ 'id' : ?0 }")
+  @Update("{ \$addToSet: { 'experience': ?1 } }")
+  fun addExperienceToResume(id: Long, experienceToAdd: Experience): Long
 
 }

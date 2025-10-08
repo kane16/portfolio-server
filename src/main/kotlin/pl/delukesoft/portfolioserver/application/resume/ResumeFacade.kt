@@ -8,12 +8,14 @@ import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearc
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
+import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillMapper
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeSearchService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
+import pl.delukesoft.portfolioserver.domain.resume.experience.ExperienceService
 import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 
@@ -25,7 +27,8 @@ class ResumeFacade(
   private val portfolioSearchMapper: PortfolioSearchMapper,
   private val resumeMapper: ResumeMapper,
   private val userContext: UserContext,
-  private val skillMapper: SkillMapper
+  private val skillMapper: SkillMapper,
+  private val experienceService: ExperienceService,
 ) {
 
   private val currentUser
@@ -119,6 +122,13 @@ class ResumeFacade(
     val skillToEdit = resume.skills.find { it.name == skillName } ?: throw SkillNotFound(skillName)
     val skillUpdate = skillMapper.mapToSkill(skill, currentAuthor.domains)
     return resumeService.editSkill(resume, skillToEdit, skillUpdate)
+  }
+
+  fun addExperienceToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeSkills = resume.skills
+    val experienceToAdd = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills)
+    return experienceService.addExperienceToResume(experienceToAdd, resume)
   }
 
 }

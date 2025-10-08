@@ -7,13 +7,19 @@ import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
+import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
+import pl.delukesoft.portfolioserver.application.resume.validation.ValidationFacade
+import pl.delukesoft.portfolioserver.domain.validation.DomainValidationResult
+import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
+import pl.delukesoft.portfolioserver.domain.validation.exception.ValidationFailedException
 
 @RestController
 @RequestMapping("/resume")
 class ResumeController(
   private val resumeFacade: ResumeFacade,
+  private val validationFacade: ValidationFacade,
 ) {
 
   private val log = LoggerFactory.getLogger(this::class.java)
@@ -111,5 +117,25 @@ class ResumeController(
     return resumeFacade.editSkillWithName(resumeId, skillName, skill)
   }
 
+  @AuthRequired("ROLE_CANDIDATE")
+  @PostMapping("/edit/{resumeId}/experience")
+  fun addExperienceToResume(
+    @PathVariable("resumeId") resumeId: Long,
+    @RequestBody experience: ExperienceDTO,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    val validationResult = validationFacade.validateExperience(resumeId, experience)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "experience",
+            ValidationResult.build(validationResult.errors)
+          )
+        )
+      )
+    }
+    return resumeFacade.addExperienceToResume(resumeId, experience)
+  }
 
 }

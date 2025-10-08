@@ -5,6 +5,7 @@ import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.Sk
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 
 data class Experience(
+  val id: Long? = null,
   val business: Business,
   val position: String,
   val summary: String,

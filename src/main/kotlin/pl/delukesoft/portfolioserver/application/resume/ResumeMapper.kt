@@ -3,10 +3,15 @@ package pl.delukesoft.portfolioserver.application.resume
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
+import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
+import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
+import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
@@ -77,6 +82,24 @@ class ResumeMapper {
         image = shortcut.image,
         user = user
       )
+    )
+  }
+
+  fun mapExperienceDTOToResume(dto: ExperienceDTO, skills: List<Skill>): Experience {
+    return Experience(
+      dto.id,
+      Business(dto.business),
+      dto.position,
+      dto.summary,
+      dto.description,
+      Timeframe(dto.timespan.start, dto.timespan.end),
+      dto.skills.map { skill ->
+        SkillExperience(
+          skills.find { it.name == skill.name } ?: throw SkillNotFound(skill.name),
+          skill.level,
+          skill.detail ?: ""
+        )
+      }
     )
   }
 

@@ -1,23 +1,27 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeExistsException
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
+import pl.delukesoft.portfolioserver.domain.validation.Validator
 import java.time.LocalDateTime
 
 @Service
 class ResumeService(
   private val resumeRepository: ResumeRepository,
   private val resumeHistoryService: ResumeHistoryService,
-  private val generatorService: GeneratorService
+  private val generatorService: GeneratorService,
+  @Qualifier("jobExperienceValidator") private val experienceValidator: Validator<Experience>,
 ) {
   private val log = LoggerFactory.getLogger(this.javaClass)
 

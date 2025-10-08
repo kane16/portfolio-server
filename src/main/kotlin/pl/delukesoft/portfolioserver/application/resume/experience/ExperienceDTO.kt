@@ -5,10 +5,11 @@ import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
 
 data class ExperienceDTO(
+  val id: Long? = null,
   val business: String,
   val position: String,
   val summary: String,
   val description: String? = null,
-  val timeframe: TimeframeDTO,
+  val timespan: TimeframeDTO,
   val skills: List<SkillDTO> = emptyList()
 )

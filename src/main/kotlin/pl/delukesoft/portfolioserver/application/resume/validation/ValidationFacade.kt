@@ -68,14 +68,15 @@ class ValidationFacade(
     return validationMapper.mapValidationResultToDTO(validationResults, "skillExperience")
   }
 
-  fun validateExperience(id: Long, experienceDTO: ExperienceDTO): SimpleValidationResultDTO {
-    val resume = resumeService.getResumeById(id, currentUser)
+  fun validateExperience(resumeId: Long, experienceDTO: ExperienceDTO): SimpleValidationResultDTO {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
     val experience = Experience(
+      null,
       Business(experienceDTO.business),
       experienceDTO.position,
       experienceDTO.summary,
       experienceDTO.description,
-      Timeframe(experienceDTO.timeframe.start, experienceDTO.timeframe.end),
+      Timeframe(experienceDTO.timespan.start, experienceDTO.timespan.end),
       experienceDTO.skills.map { skillExperienceDTO ->
         SkillExperience(
           resume.skills.find { it.name == skillExperienceDTO.name }!!,
@@ -84,7 +85,8 @@ class ValidationFacade(
         )
       }
     )
-    val validationResult = jobValidator.validate(experience)
+    val experiences = (resume.experience + experience).sortedBy { it.timeframe.start }
+    val validationResult = jobValidator.validateList(experiences)
     return validationMapper.mapValidationResultToDTO(validationResult, "experience")
   }
 
