@@ -9,7 +9,7 @@ import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearc
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
+import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillMapper
 import pl.delukesoft.portfolioserver.domain.resume.Resume
@@ -42,8 +42,8 @@ class ResumeFacade(
     return getResumeWithOptionalFilter(resumeById, portfolioSearch)
   }
 
-  fun getById(id: Long): ResumeDTO {
-    return resumeMapper.mapResumeToDTO(resumeService.getResumeById(id, userContext.user))
+  fun getById(id: Long): ResumeEditDTO {
+    return resumeMapper.mapResumeToEditDTO(resumeService.getResumeById(id, userContext.user))
   }
 
   fun getDefaultCV(portfolioSearch: PortfolioSearch? = null): Resume {
@@ -129,6 +129,18 @@ class ResumeFacade(
     val resumeSkills = resume.skills
     val experienceToAdd = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills)
     return experienceService.addExperienceToResume(experienceToAdd, resume)
+  }
+
+  fun editExperienceInResume(resumeId: Long, experienceId: Long, experience: ExperienceDTO): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeSkills = resume.skills
+    val experienceToEdit = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills).copy(id = experienceId)
+    return experienceService.editResume(experienceToEdit, resume)
+  }
+
+  fun deleteExperienceFromResume(resumeId: Long, experienceId: Long): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    return experienceService.deleteExperienceFromResume(experienceId, resume)
   }
 
 }

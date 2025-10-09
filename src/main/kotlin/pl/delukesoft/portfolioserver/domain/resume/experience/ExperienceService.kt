@@ -18,5 +18,13 @@ class ExperienceService(
     return resumeRepository.addExperienceToResume(resume.id!!, experienceToSave) > 0
   }
 
+  fun editResume(experienceToEdit: Experience, resume: Resume): Boolean {
+    return resumeRepository.editExperienceInResume(resume.id!!, experienceToEdit.id!!, experienceToEdit) > 0
+  }
+
+  fun deleteExperienceFromResume(experienceId: Long, resume: Resume): Boolean {
+    return resumeRepository.deleteExperienceFromResume(resume.id!!, experienceId) > 0
+  }
+
 
 }

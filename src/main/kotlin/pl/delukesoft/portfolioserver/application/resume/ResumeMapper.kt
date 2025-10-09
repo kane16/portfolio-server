@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
+import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
+import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
+import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
@@ -51,6 +53,21 @@ class ResumeMapper {
     )
   }
 
+  fun mapResumeToEditDTO(resume: Resume): ResumeEditDTO {
+    return ResumeEditDTO(
+      id = resume.id!!,
+      fullname = "Łukasz Gumiński",
+      imageSource = resume.shortcut.image?.src ?: "",
+      title = resume.shortcut.title,
+      summary = resume.shortcut.summary,
+      skills = resume.skills.map { SkillDTO(it.name, it.level, "", it.description, it.domains.map { it.name }) },
+      languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },
+      sideProjects = mapToExperienceDTO(resume.sideProjects),
+      workHistory = mapToExperienceDTO(resume.experience),
+      hobbies = resume.hobbies.map { it.name },
+    )
+  }
+
   private fun mapToProjects(experience: List<Experience>): List<ProjectDTO> {
     return experience.map {
       ProjectDTO(
@@ -60,6 +77,27 @@ class ResumeMapper {
         it.description ?: "",
         mapTimespan(it.timeframe),
         it.skills.map { SkillPortfolioDTO(it.skill.name, it.detail) },
+      )
+    }
+  }
+
+  private fun mapToExperienceDTO(experiences: List<Experience>): List<ExperienceDTO> {
+    return experiences.map {
+      ExperienceDTO(
+        it.id,
+        it.business.name,
+        it.position,
+        it.summary,
+        it.description,
+        TimeframeDTO(it.timeframe.start, it.timeframe.end),
+        it.skills.map {
+          SkillDTO(
+            it.skill.name,
+            it.level,
+            it.detail,
+            it.skill.description,
+            it.skill.domains.map { it.name })
+        }
       )
     }
   }

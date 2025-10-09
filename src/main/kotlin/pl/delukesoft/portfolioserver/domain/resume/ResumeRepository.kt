@@ -29,4 +29,12 @@ interface ResumeRepository : MongoRepository<Resume, Long> {
   @Update("{ \$addToSet: { 'experience': ?1 } }")
   fun addExperienceToResume(id: Long, experienceToAdd: Experience): Long
 
+  @Query("{ 'id' : ?0, 'experience': { '\$elemMatch': { 'id': ?1 } } }")
+  @Update("{ '\$set': { 'experience.$': ?2 } }")
+  fun editExperienceInResume(id: Long, id2: Long, experienceToEdit: Experience): Long
+
+  @Query("{ 'id' : ?0 }")
+  @Update("{ '\$pull': { 'experience': { 'id': ?1 } } }")
+  fun deleteExperienceFromResume(id: Long, experienceId: Long): Long
+
 }

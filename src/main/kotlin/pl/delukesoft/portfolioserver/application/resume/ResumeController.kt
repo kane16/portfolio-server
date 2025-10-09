@@ -8,7 +8,7 @@ import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.application.resume.model.ResumeDTO
+import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.application.resume.validation.ValidationFacade
 import pl.delukesoft.portfolioserver.domain.validation.DomainValidationResult
@@ -29,7 +29,7 @@ class ResumeController(
   fun getCVById(
     @PathVariable("id") id: Long,
     @RequestHeader("Authorization") token: String?
-  ): ResumeDTO {
+  ): ResumeEditDTO {
     log.info("Received request to fetch Resume by id: {}", id)
     return resumeFacade.getById(id)
   }
@@ -136,6 +136,35 @@ class ResumeController(
       )
     }
     return resumeFacade.addExperienceToResume(resumeId, experience)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @PutMapping("/edit/{resumeId}/experience/{experienceId}")
+  fun editExperience(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("experienceId") experienceId: Long,
+    @RequestBody experience: ExperienceDTO,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    val validationResult = validationFacade.validateExperience(resumeId, experience)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build("experience", ValidationResult.build(validationResult.errors))
+        )
+      )
+    }
+    return resumeFacade.editExperienceInResume(resumeId, experienceId, experience)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @DeleteMapping("/edit/{resumeId}/experience/{experienceId}")
+  fun deleteExperience(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("experienceId") experienceId: Long,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.deleteExperienceFromResume(resumeId, experienceId)
   }
 
 }
