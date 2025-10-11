@@ -143,4 +143,9 @@ class ResumeFacade(
     return experienceService.deleteExperienceFromResume(experienceId, resume)
   }
 
+  fun addHobbyToResume(resumeId: Long, hobby: String): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    return true
+  }
+
 }

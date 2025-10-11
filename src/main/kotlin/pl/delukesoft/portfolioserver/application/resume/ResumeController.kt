@@ -143,4 +143,14 @@ class ResumeController(
     return resumeFacade.deleteExperienceFromResume(resumeId, experienceId)
   }
 
+  @AuthRequired("ROLE_CANDIDATE")
+  @PostMapping("/edit/{resumeId}/hobbies")
+  fun addHobby(
+    @PathVariable("resumeId") resumeId: Long,
+    @RequestBody hobby: String,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.addHobbyToResume(resumeId, hobby)
+  }
+
 }
