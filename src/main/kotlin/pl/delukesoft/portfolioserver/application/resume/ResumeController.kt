@@ -10,16 +10,11 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutD
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
-import pl.delukesoft.portfolioserver.application.resume.validation.ValidationFacade
-import pl.delukesoft.portfolioserver.domain.validation.DomainValidationResult
-import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
-import pl.delukesoft.portfolioserver.domain.validation.exception.ValidationFailedException
 
 @RestController
 @RequestMapping("/resume")
 class ResumeController(
   private val resumeFacade: ResumeFacade,
-  private val validationFacade: ValidationFacade,
 ) {
 
   private val log = LoggerFactory.getLogger(this::class.java)
@@ -124,17 +119,6 @@ class ResumeController(
     @RequestBody experience: ExperienceDTO,
     @RequestHeader("Authorization") token: String?
   ): Boolean {
-    val validationResult = validationFacade.validateExperience(resumeId, experience)
-    if (!validationResult.isValid) {
-      throw ValidationFailedException(
-        listOf(
-          DomainValidationResult.build(
-            "experience",
-            ValidationResult.build(validationResult.errors)
-          )
-        )
-      )
-    }
     return resumeFacade.addExperienceToResume(resumeId, experience)
   }
 
@@ -146,14 +130,6 @@ class ResumeController(
     @RequestBody experience: ExperienceDTO,
     @RequestHeader("Authorization") token: String?
   ): Boolean {
-    val validationResult = validationFacade.validateExperience(resumeId, experience)
-    if (!validationResult.isValid) {
-      throw ValidationFailedException(
-        listOf(
-          DomainValidationResult.build("experience", ValidationResult.build(validationResult.errors))
-        )
-      )
-    }
     return resumeFacade.editExperienceInResume(resumeId, experienceId, experience)
   }
 

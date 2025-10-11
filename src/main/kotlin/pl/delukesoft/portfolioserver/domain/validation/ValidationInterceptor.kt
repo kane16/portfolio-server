@@ -44,4 +44,12 @@ class ValidationInterceptor(
     }
   }
 
+  @Before("@annotation(validateExperiences) && args(experiences,..)")
+  fun validate(validateExperiences: ValidateExperiences, experiences: List<Experience>) {
+    val validationResult: ValidationResult = experienceValidator.validateList(experiences)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("experience", validationResult)))
+    }
+  }
+
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 data class Timeframe(
   val start: LocalDate,
-  val end: LocalDate? = LocalDate.now()
+  val end: LocalDate? = null
 ) {
 
   fun isOverlappingWith(next: Timeframe): Boolean {
