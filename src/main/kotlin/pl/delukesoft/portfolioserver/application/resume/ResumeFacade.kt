@@ -1,11 +1,13 @@
 package pl.delukesoft.portfolioserver.application.resume
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.blog.image.exception.LanguageNotFound
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
 import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
+import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
@@ -16,6 +18,11 @@ import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeSearchService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
 import pl.delukesoft.portfolioserver.domain.resume.experience.ExperienceService
+import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
+import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyService
+import pl.delukesoft.portfolioserver.domain.resume.language.Language
+import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
+import pl.delukesoft.portfolioserver.domain.resume.language.LanguageService
 import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 
@@ -29,6 +36,8 @@ class ResumeFacade(
   private val userContext: UserContext,
   private val skillMapper: SkillMapper,
   private val experienceService: ExperienceService,
+  private val hobbyService: HobbyService,
+  private val languageService: LanguageService
 ) {
 
   private val currentUser
@@ -143,9 +152,42 @@ class ResumeFacade(
     return experienceService.deleteExperienceFromResume(experienceId, resume)
   }
 
-  fun addHobbyToResume(resumeId: Long, hobby: String): Boolean {
+  fun addHobbyToResume(resumeId: Long, hobbyName: String): Boolean {
     val resume = resumeService.getResumeById(resumeId, currentUser)
-    return true
+    val hobby = Hobby(hobbyName)
+    return hobbyService.addHobbyToResume(hobby, resume)
+  }
+
+  fun deleteHobbyFromResume(resumeId: Long, hobbyName: String): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val hobby = Hobby(hobbyName)
+    return hobbyService.deleteHobbyFromResume(hobby, resume)
+  }
+
+  fun addLanguageToResume(resumeId: Long, language: LanguageDTO): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val language = Language(
+      null,
+      language.name,
+      LanguageLevel.entries.first { it.name == language.level }
+    )
+    return languageService.addLanguageToResume(resume, language)
+  }
+
+  fun editLanguageInResume(resumeId: Long, language: LanguageDTO, languageId: Long): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val language = Language(
+      languageId,
+      language.name,
+      LanguageLevel.entries.first { it.name == language.level }
+    )
+    return languageService.editLanguageInResume(resume, language)
+  }
+
+  fun deleteLanguageFromResume(resumeId: Long, languageId: Long): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val languageToDelete = resume.languages.find { it.id == languageId } ?: throw LanguageNotFound("id: $languageId")
+    return languageService.deleteLanguageFromResume(resume, languageToDelete)
   }
 
 }

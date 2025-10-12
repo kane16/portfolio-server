@@ -596,14 +596,17 @@ Feature: Resume creation
         ],
         "languages" : [
            {
+              "id": null,
               "name" : "English",
               "level" : "C1"
            },
            {
+              "id": null,
               "name" : "Spanish",
               "level" : "B2"
            },
            {
+              "id": null,
               "name" : "French",
               "level" : "A2"
            }
@@ -691,14 +694,17 @@ Feature: Resume creation
         ],
         "languages" : [
            {
+              "id": null,
               "name" : "English",
               "level" : "C1"
            },
            {
+              "id": null,
               "name" : "Spanish",
               "level" : "B2"
            },
            {
+              "id": null,
               "name" : "French",
               "level" : "A2"
            }
@@ -830,14 +836,17 @@ Feature: Resume creation
       ],
       "languages" : [
          {
+            "id": null,
             "name" : "English",
             "level" : "C1"
          },
          {
+            "id": null,
             "name" : "Spanish",
             "level" : "B2"
          },
          {
+            "id": null,
             "name" : "French",
             "level" : "A2"
          }
@@ -902,14 +911,17 @@ Feature: Resume creation
       ],
       "languages" : [
          {
+            "id": null,
             "name" : "English",
             "level" : "C1"
          },
          {
+            "id": null,
             "name" : "Spanish",
             "level" : "B2"
          },
          {
+            "id": null,
             "name" : "French",
             "level" : "A2"
          }
@@ -1002,14 +1014,17 @@ Feature: Resume creation
         ],
         "languages" : [
            {
+              "id": null,
               "name" : "English",
               "level" : "C1"
            },
            {
+              "id": null,
               "name" : "Spanish",
               "level" : "B2"
            },
            {
+              "id": null,
               "name" : "French",
               "level" : "A2"
            }

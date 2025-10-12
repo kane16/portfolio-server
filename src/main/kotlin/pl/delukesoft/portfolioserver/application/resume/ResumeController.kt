@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
+import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
@@ -151,6 +152,47 @@ class ResumeController(
     @RequestHeader("Authorization") token: String?
   ): Boolean {
     return resumeFacade.addHobbyToResume(resumeId, hobby)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @DeleteMapping("/edit/{resumeId}/hobbies")
+  fun deleteHobby(
+    @PathVariable("resumeId") resumeId: Long,
+    @RequestBody hobby: String,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.deleteHobbyFromResume(resumeId, hobby)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @PostMapping("/edit/{resumeId}/languages")
+  fun addLanguage(
+    @PathVariable("resumeId") resumeId: Long,
+    @RequestBody language: LanguageDTO,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.addLanguageToResume(resumeId, language)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @PutMapping("/edit/{resumeId}/languages/{languageId}")
+  fun editLanguage(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("languageId") languageId: Long,
+    @RequestBody language: LanguageDTO,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.editLanguageInResume(resumeId, language, languageId)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @DeleteMapping("/edit/{resumeId}/languages/{languageId}")
+  fun deleteLanguageInResumeById(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("languageId") languageId: Long,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.deleteLanguageFromResume(resumeId, languageId)
   }
 
 }

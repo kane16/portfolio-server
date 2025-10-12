@@ -30,7 +30,7 @@ open class ResumeValidatorTestBase {
     level: LanguageLevel = anyLevel(),
   ) = Language(
     name = name,
-    level = level,
+    level = level
   )
 
   protected fun skill(

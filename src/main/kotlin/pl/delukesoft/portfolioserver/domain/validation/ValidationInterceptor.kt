@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
+import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyValidator
+import pl.delukesoft.portfolioserver.domain.resume.language.Language
+import pl.delukesoft.portfolioserver.domain.resume.language.LanguagesValidator
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.validation.exception.ValidationFailedException
@@ -18,6 +22,8 @@ class ValidationInterceptor(
   private val skillValidator: Validator<Skill>,
   private val skillDomainValidator: Validator<SkillDomain>,
   @Qualifier("jobExperienceValidator") private val experienceValidator: Validator<Experience>,
+  private val hobbyValidator: HobbyValidator,
+  private val languagesValidator: LanguagesValidator
 ) {
 
   @Before("@annotation(validateResume) && args(resume,..)")
@@ -49,6 +55,22 @@ class ValidationInterceptor(
     val validationResult: ValidationResult = experienceValidator.validateList(experiences)
     if (!validationResult.isValid) {
       throw ValidationFailedException(listOf(DomainValidationResult.build("experience", validationResult)))
+    }
+  }
+
+  @Before("@annotation(validateHobbies) && args(hobbies,..)")
+  fun validate(validateHobbies: ValidateHobbies, hobbies: List<Hobby>) {
+    val validationResult: ValidationResult = hobbyValidator.validateList(hobbies)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("hobby", validationResult)))
+    }
+  }
+
+  @Before("@annotation(validateLanguages) && args(languages))")
+  fun validate(validateLanguages: ValidateLanguages, languages: List<Language>) {
+    val validationResult: ValidationResult = languagesValidator.validateList(languages)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("language", validationResult)))
     }
   }
 

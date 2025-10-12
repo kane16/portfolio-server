@@ -33,14 +33,17 @@ Feature: CV View with search
        ],
        "languages" : [
           {
+             "id" : null,
              "name" : "English",
              "level" : "C1"
           },
           {
+             "id" : null,
              "name" : "Spanish",
              "level" : "B2"
           },
           {
+             "id" : null,
              "name" : "French",
              "level" : "A2"
           }
@@ -123,14 +126,17 @@ Feature: CV View with search
        ],
        "languages" : [
           {
+             "id" : null,
              "name" : "English",
              "level" : "C1"
           },
           {
+             "id" : null,
              "name" : "Spanish",
              "level" : "B2"
           },
           {
+             "id" : null,
              "name" : "French",
              "level" : "A2"
           }
@@ -201,14 +207,17 @@ Feature: CV View with search
        ],
        "languages" : [
           {
+             "id" : null,
              "name" : "English",
              "level" : "C1"
           },
           {
+             "id" : null,
              "name" : "Spanish",
              "level" : "B2"
           },
           {
+             "id" : null,
              "name" : "French",
              "level" : "A2"
           }
@@ -269,14 +278,17 @@ Feature: CV View with search
        ],
        "languages" : [
           {
+             "id" : null,
              "name" : "English",
              "level" : "C1"
           },
           {
+             "id" : null,
              "name" : "Spanish",
              "level" : "B2"
           },
           {
+             "id" : null,
              "name" : "French",
              "level" : "A2"
           }
@@ -337,14 +349,17 @@ Feature: CV View with search
          ],
          "languages" : [
             {
+               "id": null,
                "name" : "English",
                "level" : "C1"
             },
             {
+               "id": null,
                "name" : "Spanish",
                "level" : "B2"
             },
             {
+               "id": null,
                "name" : "French",
                "level" : "A2"
             }
