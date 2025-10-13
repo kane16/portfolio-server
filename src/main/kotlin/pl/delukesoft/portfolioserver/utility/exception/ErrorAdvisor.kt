@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import pl.delukesoft.portfolioserver.domain.validation.exception.ValidationFailedException
 import java.time.LocalDateTime
 
 private data class ResponsePair(
@@ -73,6 +74,15 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
       Pair("status", exc.statusCode.value())
     )
     return ResponseEntity(body, exc.statusCode)
+  }
+
+  @ExceptionHandler(ValidationFailedException::class)
+  fun handleValidationFailedException(exc: ValidationFailedException, response: WebRequest): ResponseEntity<Any> {
+    val body = mapOf<String, Any>(
+      Pair("error", exc.validationResults.flatMap { it.errors }),
+      Pair("status", HttpStatus.BAD_REQUEST.value())
+    )
+    return ResponseEntity(body, HttpStatus.BAD_REQUEST)
   }
 
   @ExceptionHandler(MongoException::class)

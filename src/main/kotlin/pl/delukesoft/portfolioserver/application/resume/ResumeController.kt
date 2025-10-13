@@ -146,6 +146,7 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @PostMapping("/edit/{resumeId}/hobbies")
+  @ResponseStatus(HttpStatus.CREATED)
   fun addHobby(
     @PathVariable("resumeId") resumeId: Long,
     @RequestBody hobby: String,
@@ -156,7 +157,7 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @DeleteMapping("/edit/{resumeId}/hobbies")
-  fun deleteHobby(
+  fun deleteHobbyFromResume(
     @PathVariable("resumeId") resumeId: Long,
     @RequestBody hobby: String,
     @RequestHeader("Authorization") token: String?
@@ -166,6 +167,7 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @PostMapping("/edit/{resumeId}/languages")
+  @ResponseStatus(HttpStatus.CREATED)
   fun addLanguage(
     @PathVariable("resumeId") resumeId: Long,
     @RequestBody language: LanguageDTO,
