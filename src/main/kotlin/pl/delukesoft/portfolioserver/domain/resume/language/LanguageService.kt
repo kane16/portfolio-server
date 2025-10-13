@@ -20,13 +20,13 @@ class LanguageService(
 
   fun editLanguageInResume(resume: Resume, language: Language): Boolean {
     val languages = resume.languages.map {
-      if (it.name == language.name) language else it
+      if (it.id == language.id) language else it
     }
     return resumeModifyRepository.changeLanguagesInResume(languages, resume)
   }
 
   fun deleteLanguageFromResume(resume: Resume, languageToDelete: Language): Boolean {
-    val languages = resume.languages.filter { it.id == languageToDelete.id }
+    val languages = resume.languages.filter { it.id != languageToDelete.id }
     return resumeModifyRepository.changeLanguagesInResume(languages, resume)
   }
 

@@ -66,9 +66,9 @@ class ValidationInterceptor(
     }
   }
 
-  @Before("@annotation(validateLanguages) && args(languages))")
+  @Before("@annotation(validateLanguages) && args(languages,..))")
   fun validate(validateLanguages: ValidateLanguages, languages: List<Language>) {
-    val validationResult: ValidationResult = languagesValidator.validateList(languages)
+    val validationResult: ValidationResult = languagesValidator.validateListForEditOperation(languages)
     if (!validationResult.isValid) {
       throw ValidationFailedException(listOf(DomainValidationResult.build("language", validationResult)))
     }

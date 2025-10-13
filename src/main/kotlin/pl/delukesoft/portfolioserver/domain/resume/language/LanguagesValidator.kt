@@ -56,6 +56,30 @@ class LanguagesValidator : Validator<Language>() {
     )
   }
 
+  fun validateListForEditOperation(values: List<Language>): ValidationResult {
+    val languagesValidations = listOf(
+      validationListFunc(
+        values,
+        ::hasAtLeastThreeCharactersForLanguageName,
+        "Language name must be at least 3 characters long"
+      ),
+      normalizedLanguageNamesValidator(values),
+      validationListFunc(
+        values,
+        ::trimmedLanguageName,
+        "Language name must not contain leading or trailing spaces"
+      ),
+      validationListFunc(values, ::capitalizedLanguageName, "Language name must be capitalized")
+    )
+
+    return ValidationResult(
+      languagesValidations.all { it.isValid },
+      languagesValidations.firstOrNull { it.validationStatus == ValidationStatus.INVALID }?.validationStatus
+        ?: ValidationStatus.VALID,
+      languagesValidations.flatMap { it.errors }
+    )
+  }
+
   private fun atLeastTwoLanguagesValidation(languages: List<Language>): ValidationResult {
     return if (languages.count() < 2) {
       ValidationResult(

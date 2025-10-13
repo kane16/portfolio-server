@@ -61,7 +61,7 @@ class ResumeMapper {
       title = resume.shortcut.title,
       summary = resume.shortcut.summary,
       skills = resume.skills.map { SkillDTO(it.name, it.level, "", it.description, it.domains.map { it.name }) },
-      languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },
+      languages = resume.languages.map { LanguageDTO(it.name, it.level.name, it.id) },
       sideProjects = mapToExperienceDTO(resume.sideProjects),
       workHistory = mapToExperienceDTO(resume.experience),
       hobbies = resume.hobbies.map { it.name },
