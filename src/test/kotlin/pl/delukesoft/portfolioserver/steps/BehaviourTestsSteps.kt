@@ -14,6 +14,7 @@ import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorRepository
+import pl.delukesoft.portfolioserver.domain.user.AuthorRepository
 
 
 class BehaviourTestsSteps(
@@ -21,7 +22,8 @@ class BehaviourTestsSteps(
   private val resumeRepository: ResumeRepository,
   private val resumeHistoryRepository: ResumeHistoryRepository,
   private val resumeVersionRepository: ResumeVersionRepository,
-  private val generatorRepository: GeneratorRepository
+  private val generatorRepository: GeneratorRepository,
+  private val authorRepository: AuthorRepository
 ) : En {
 
   var result = ResponseEntity.ok("OK")
@@ -30,6 +32,7 @@ class BehaviourTestsSteps(
   val initialDbResumeVersions = resumeVersionRepository.findAll()
   val initialDbHistoryResumes = resumeHistoryRepository.findAll()
   val initialSequences = generatorRepository.findAll()
+  val initialAuthors = authorRepository.findAll()
 
   init {
     defineSteps()
@@ -50,6 +53,7 @@ class BehaviourTestsSteps(
     resumeVersionRepository.saveAll(initialDbResumeVersions)
     resumeHistoryRepository.saveAll(initialDbHistoryResumes)
     generatorRepository.saveAll(initialSequences)
+    authorRepository.saveAll(initialAuthors)
   }
 
   fun defineSteps() {
@@ -59,6 +63,7 @@ class BehaviourTestsSteps(
       resumeVersionRepository.deleteAll()
       resumeRepository.deleteAll()
       generatorRepository.deleteAll()
+      authorRepository.deleteAll()
     }
     When("{string} request is sent to endpoint {string} with no body") { method: String, endpoint: String ->
       try {

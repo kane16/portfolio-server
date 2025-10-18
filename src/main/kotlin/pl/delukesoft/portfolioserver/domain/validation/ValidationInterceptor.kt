@@ -11,6 +11,7 @@ import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyValidator
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguagesValidator
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.validation.exception.ValidationFailedException
@@ -23,7 +24,8 @@ class ValidationInterceptor(
   private val skillDomainValidator: Validator<SkillDomain>,
   @Qualifier("jobExperienceValidator") private val experienceValidator: Validator<Experience>,
   private val hobbyValidator: HobbyValidator,
-  private val languagesValidator: LanguagesValidator
+  private val languagesValidator: LanguagesValidator,
+  private val shortcutValidator: Validator<ResumeShortcut>
 ) {
 
   @Before("@annotation(validateResume) && args(resume,..)")
@@ -37,6 +39,14 @@ class ValidationInterceptor(
   @Before("@annotation(validateSkill) && args(skill,..)")
   fun validate(validateSkill: ValidateSkill, skill: Skill) {
     val validationResult: ValidationResult = skillValidator.validate(skill)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("skill", validationResult)))
+    }
+  }
+
+  @Before("@annotation(validateSkill) && args(skills,..)")
+  fun validate(validateSkill: ValidateSkill, skills: List<Skill>) {
+    val validationResult: ValidationResult = skillValidator.validateList(skills)
     if (!validationResult.isValid) {
       throw ValidationFailedException(listOf(DomainValidationResult.build("skill", validationResult)))
     }
@@ -72,6 +82,15 @@ class ValidationInterceptor(
     if (!validationResult.isValid) {
       throw ValidationFailedException(listOf(DomainValidationResult.build("language", validationResult)))
     }
+  }
+
+  @Before("@annotation(validateShortcut) && args(shortcut,..)")
+  fun validate(validateShortcut: ValidateShortcut, shortcut: ResumeShortcut) {
+    val validationResult: ValidationResult = shortcutValidator.validate(shortcut)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("shortcut", validationResult)))
+    }
+
   }
 
 }

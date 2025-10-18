@@ -124,6 +124,16 @@ class ResumeController(
   }
 
   @AuthRequired("ROLE_CANDIDATE")
+  @PostMapping("/edit/{resumeId}/sideProjects")
+  fun addSideProjectToResume(
+    @PathVariable("resumeId") resumeId: Long,
+    @RequestBody experience: ExperienceDTO,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.addSideProjectToResume(resumeId, experience)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
   @PutMapping("/edit/{resumeId}/experience/{experienceId}")
   fun editExperience(
     @PathVariable("resumeId") resumeId: Long,
@@ -135,6 +145,17 @@ class ResumeController(
   }
 
   @AuthRequired("ROLE_CANDIDATE")
+  @PutMapping("/edit/{resumeId}/sideProjects/{sideProjectId}")
+  fun editSideProject(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("sideProjectId") sideProjectId: Long,
+    @RequestBody experience: ExperienceDTO,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.editSideProjectInResume(resumeId, sideProjectId, experience)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
   @DeleteMapping("/edit/{resumeId}/experience/{experienceId}")
   fun deleteExperience(
     @PathVariable("resumeId") resumeId: Long,
@@ -142,6 +163,16 @@ class ResumeController(
     @RequestHeader("Authorization") token: String?
   ): Boolean {
     return resumeFacade.deleteExperienceFromResume(resumeId, experienceId)
+  }
+
+  @AuthRequired("ROLE_CANDIDATE")
+  @DeleteMapping("/edit/{resumeId}/sideProjects/{sideProjectId}")
+  fun deleteSideProject(
+    @PathVariable("resumeId") resumeId: Long,
+    @PathVariable("sideProjectId") sideProjectId: Long,
+    @RequestHeader("Authorization") token: String?
+  ): Boolean {
+    return resumeFacade.deleteSideProjectFromResume(resumeId, sideProjectId)
   }
 
   @AuthRequired("ROLE_CANDIDATE")

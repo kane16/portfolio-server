@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
-import pl.delukesoft.portfolioserver.domain.validation.ValidateExperiences
-import pl.delukesoft.portfolioserver.domain.validation.ValidateHobbies
-import pl.delukesoft.portfolioserver.domain.validation.ValidateLanguages
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
+import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
+import pl.delukesoft.portfolioserver.domain.validation.*
 
 @Component
 class ResumeModifyRepository(
@@ -31,7 +31,22 @@ class ResumeModifyRepository(
     return resumeRepository.changeLanguagesInResume(resume.id!!, languages) > 0
   }
 
+  @ResumeModification
+  @ValidateExperiences
+  fun changeSideProjectsInResume(sideProjects: List<Experience>, resume: Resume): Boolean {
+    return resumeRepository.changeSideProjectsInResume(resume.id!!, sideProjects) > 0
+  }
 
+  @ResumeModification
+  @ValidateShortcut
+  fun changeShortcutInResume(shortcut: ResumeShortcut, resume: Resume): Boolean {
+    return resumeRepository.changeShortcutInResume(resume.id!!, shortcut) > 0
+  }
 
+  @ResumeModification
+  @ValidateSkill
+  fun changeSkillsInResume(skills: List<Skill>, resume: Resume): Boolean {
+    return resumeRepository.changeSkillsInResume(resume.id!!, skills) > 0
+  }
 
 }

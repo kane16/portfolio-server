@@ -6,5 +6,5 @@ import pl.delukesoft.portfolioserver.utility.exception.LoggableResponseStatusExc
 
 class ValidationFailedException(val validationResults: List<DomainValidationResult>) : LoggableResponseStatusException(
   HttpStatus.BAD_REQUEST,
-  "Validation failed"
+  "Validation failed: ${validationResults.joinToString(", ") { it.errors.first() }}"
 )

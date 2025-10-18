@@ -23,6 +23,8 @@ import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyService
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageService
+import pl.delukesoft.portfolioserver.domain.resume.sideProject.SideProjectService
+import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
 import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
 
@@ -37,7 +39,9 @@ class ResumeFacade(
   private val skillMapper: SkillMapper,
   private val experienceService: ExperienceService,
   private val hobbyService: HobbyService,
-  private val languageService: LanguageService
+  private val languageService: LanguageService,
+  private val sideProjectService: SideProjectService,
+  private val skillService: SkillService,
 ) {
 
   private val currentUser
@@ -77,8 +81,8 @@ class ResumeFacade(
   }
 
   fun initiateResume(shortcut: ResumeShortcutDTO): Boolean {
-    val resumeWithShortcutOnly = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
-    resumeService.addResume(resumeWithShortcutOnly)
+    val shortcut = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
+    resumeService.addResume(shortcut)
     return true
   }
 
@@ -92,8 +96,8 @@ class ResumeFacade(
 
   fun editResumeShortcut(id: Long, shortcut: ResumeShortcutDTO): Boolean {
     val resume = resumeService.getResumeById(id, currentUser)
-    val resumeWithShortcutToModify = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser, resume.id)
-    return resumeService.editResumeShortcut(resumeWithShortcutToModify.id!!, resumeWithShortcutToModify.shortcut)
+    val shortcut = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
+    return resumeService.editResumeShortcut(resume, shortcut)
   }
 
   fun publishResume(version: Long): Boolean {
@@ -112,7 +116,7 @@ class ResumeFacade(
   fun addSkillToResume(id: Long, skill: SkillDTO): Boolean {
     val skillToAdd = skillMapper.mapToSkill(skill, currentAuthor.domains)
     val resumeToModify = resumeService.getResumeById(id, currentUser)
-    return resumeService.addSkillToResume(resumeToModify, skillToAdd)
+    return skillService.addSkillToResume(resumeToModify, skillToAdd)
   }
 
   fun findSkillsByResumeId(resumeId: Long): List<SkillDTO> {
@@ -123,14 +127,14 @@ class ResumeFacade(
   fun deleteSkillFromResume(resumeId: Long, skillNameToRemove: String): Boolean {
     val resume = resumeService.getResumeById(resumeId, userContext.user)
     val skillToRemove = resume.skills.find { it.name == skillNameToRemove } ?: throw SkillNotFound(skillNameToRemove)
-    return resumeService.deleteSkillFromResume(resume, skillToRemove)
+    return skillService.deleteSkillFromResume(resume, skillToRemove)
   }
 
   fun editSkillWithName(resumeId: Long, skillName: String, skill: SkillDTO): Boolean {
     val resume = resumeService.getResumeById(resumeId, userContext.user)
     val skillToEdit = resume.skills.find { it.name == skillName } ?: throw SkillNotFound(skillName)
     val skillUpdate = skillMapper.mapToSkill(skill, currentAuthor.domains)
-    return resumeService.editSkill(resume, skillToEdit, skillUpdate)
+    return skillService.editSkill(resume, skillToEdit, skillUpdate)
   }
 
   fun addExperienceToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
@@ -140,6 +144,13 @@ class ResumeFacade(
     return experienceService.addExperienceToResume(experienceToAdd, resume)
   }
 
+  fun addSideProjectToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeSkills = resume.skills
+    val sideProjectToAdd = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills)
+    return sideProjectService.addSideProjectToResume(sideProjectToAdd, resume)
+  }
+
   fun editExperienceInResume(resumeId: Long, experienceId: Long, experience: ExperienceDTO): Boolean {
     val resume = resumeService.getResumeById(resumeId, currentUser)
     val resumeSkills = resume.skills
@@ -147,9 +158,21 @@ class ResumeFacade(
     return experienceService.editResume(experienceToEdit, resume)
   }
 
+  fun editSideProjectInResume(resumeId: Long, sideProjectId: Long, experience: ExperienceDTO): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeSkills = resume.skills
+    val sideProjectToEdit = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills).copy(id = sideProjectId)
+    return sideProjectService.editResume(sideProjectToEdit, resume)
+  }
+
   fun deleteExperienceFromResume(resumeId: Long, experienceId: Long): Boolean {
     val resume = resumeService.getResumeById(resumeId, currentUser)
     return experienceService.deleteExperienceFromResume(experienceId, resume)
+  }
+
+  fun deleteSideProjectFromResume(resumeId: Long, sideProjectId: Long): Boolean {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    return sideProjectService.deleteExperienceFromResume(sideProjectId, resume)
   }
 
   fun addHobbyToResume(resumeId: Long, hobbyName: String): Boolean {

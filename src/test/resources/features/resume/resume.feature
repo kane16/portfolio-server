@@ -646,13 +646,18 @@ Feature: Resume creation
         "resumeId" : 1
       }
       """
+    When "POST" request is sent to endpoint "/skills/domains" with body:
+    """
+    JVM
+    """
+    Then Response status code should be 201
     When "POST" request is sent to endpoint "/resume/edit/1/skills" with body:
     """
     {
       "name": "Groovy",
       "description": "JVM Language",
       "level": 2,
-      "domains": []
+      "domains": ["JVM"]
     }
     """
     Then Response status code should be 201
@@ -976,13 +981,18 @@ Feature: Resume creation
 
   Scenario: Edit existing skill should be successful
     Given User is authorized with token: "admin"
+    When "POST" request is sent to endpoint "/skills/domains" with body:
+    """
+    JVM
+    """
+    Then Response status code should be 201
     When "PUT" request is sent to endpoint "/resume/edit/1/skills/Java" with body:
       """
       {
          "name" : "Jaka",
          "description" : "Java programming language",
          "level" : 3,
-         "domains": []
+         "domains": ["JVM"]
       }
       """
     Then Response status code should be 200

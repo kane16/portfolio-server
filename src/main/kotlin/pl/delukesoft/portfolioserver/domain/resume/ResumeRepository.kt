@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.Update
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import java.time.LocalDateTime
 
@@ -17,16 +18,8 @@ interface ResumeRepository : MongoRepository<Resume, Long> {
   fun findResumeById(id: Long): Resume?
 
   @Query("{ 'id' : ?0 }")
-  @Update("{ \$addToSet: { 'skills': ?1 } }")
-  fun addSkillToResume(id: Long, skill: Skill): Long
-
-  @Query("{ 'id' : ?0 }")
-  @Update("{ \$pull: { 'skills': ?1 } }")
-  fun deleteSkillFromResume(id: Long, skillToRemove: Skill): Long
-
-  @Query("{ 'id' : ?0, 'skills': { '\$elemMatch': { 'name': ?1 } } }")
-  @Update("{ '\$set': { 'skills.$': ?2 } }")
-  fun updateSkill(id: Long, skillName: String, skillUpdate: Skill): Long
+  @Update("{ \$set: { 'skills': ?1 } }")
+  fun changeSkillsInResume(id: Long, skills: List<Skill>): Long
 
   @Query("{ 'id' : ?0 }")
   @Update("{ \$set: { 'experience': ?1 } }")
@@ -43,5 +36,13 @@ interface ResumeRepository : MongoRepository<Resume, Long> {
   @Query("{ 'id' : ?0 }")
   @Update("{ \$set: { 'languages': ?1 } }")
   fun changeLanguagesInResume(id: Long, languages: List<Language>): Long
+
+  @Query("{ 'id' : ?0 }")
+  @Update("{ \$set: { 'sideProjects': ?1 } }")
+  fun changeSideProjectsInResume(id: Long, sideProjects: List<Experience>): Long
+
+  @Query("{ 'id' : ?0 }")
+  @Update("{ \$set: { 'shortcut': ?1 } }")
+  fun changeShortcutInResume(id: Long, shortcut: ResumeShortcut): Long
 
 }

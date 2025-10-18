@@ -38,21 +38,6 @@ class ResumeMapper {
     )
   }
 
-  fun mapResumeToDTO(resume: Resume): ResumeDTO {
-    return ResumeDTO(
-      id = resume.id!!,
-      fullname = "Łukasz Gumiński",
-      imageSource = resume.shortcut.image?.src ?: "",
-      title = resume.shortcut.title,
-      summary = resume.shortcut.summary,
-      skills = resume.skills.map { SkillPortfolioDTO(it.name, it.description, it.level) },
-      languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },
-      sideProjects = mapToProjects(resume.sideProjects),
-      workHistory = mapToProjects(resume.experience),
-      hobbies = resume.hobbies.map { it.name },
-    )
-  }
-
   fun mapResumeToEditDTO(resume: Resume): ResumeEditDTO {
     return ResumeEditDTO(
       id = resume.id!!,
@@ -111,15 +96,12 @@ class ResumeMapper {
     )
   }
 
-  fun mapShortcutDTOToResume(shortcut: ResumeShortcutDTO, user: User, resumeId: Long? = null): Resume {
-    return Resume(
-      id = resumeId,
-      shortcut = ResumeShortcut(
-        title = shortcut.title,
-        summary = shortcut.summary,
-        image = shortcut.image,
-        user = user
-      )
+  fun mapShortcutDTOToResume(shortcut: ResumeShortcutDTO, user: User): ResumeShortcut {
+    return ResumeShortcut(
+      title = shortcut.title,
+      summary = shortcut.summary,
+      image = shortcut.image,
+      user = user
     )
   }
 
