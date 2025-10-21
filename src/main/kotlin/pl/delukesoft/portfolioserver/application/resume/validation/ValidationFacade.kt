@@ -27,8 +27,10 @@ class ValidationFacade(
   private val userContext: UserContext,
   private val validationMapper: ValidationMapper,
   @Qualifier("consecutiveTimeframeValidator") private val experienceTimeframeValidator: TimeframeValidator,
+  @Qualifier("lenientTimeframeValidator") private val lenientTimeframeValidator: TimeframeValidator,
   private val experienceSkillsValidator: Validator<SkillExperience>,
   @Qualifier("jobExperienceValidator") private val jobValidator: Validator<Experience>,
+  @Qualifier("sideProjectsValidator") private val sideProjectsValidator: Validator<Experience>,
 ) {
 
   private val currentUser
@@ -52,6 +54,14 @@ class ValidationFacade(
     val addedTimeframe = Timeframe(timeframe.start, timeframe.end)
     val validationResult = (resume.experience.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
     val validationResults = experienceTimeframeValidator.validateList(validationResult)
+    return validationMapper.mapValidationResultToDTO(validationResults, "timeframe")
+  }
+
+  fun validateSideProjectTimeframe(id: Long, timeframe: TimeframeDTO): SimpleValidationResultDTO {
+    val resume = resumeService.getResumeById(id, currentUser)
+    val addedTimeframe = Timeframe(timeframe.start, timeframe.end)
+    val validationResult = (resume.sideProjects.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
+    val validationResults = lenientTimeframeValidator.validateList(validationResult)
     return validationMapper.mapValidationResultToDTO(validationResults, "timeframe")
   }
 
@@ -88,6 +98,28 @@ class ValidationFacade(
     val experiences = (resume.experience + experience).sortedBy { it.timeframe.start }
     val validationResult = jobValidator.validateList(experiences)
     return validationMapper.mapValidationResultToDTO(validationResult, "experience")
+  }
+
+  fun validateSideProject(resumeId: Long, sideProjectDTO: ExperienceDTO): SimpleValidationResultDTO {
+    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val sideProject = Experience(
+      null,
+      Business(sideProjectDTO.business),
+      sideProjectDTO.position,
+      sideProjectDTO.summary,
+      sideProjectDTO.description,
+      Timeframe(sideProjectDTO.timespan.start, sideProjectDTO.timespan.end),
+      sideProjectDTO.skills.map { skillExperienceDTO ->
+        SkillExperience(
+          resume.skills.find { it.name == skillExperienceDTO.name }!!,
+          skillExperienceDTO.level,
+          skillExperienceDTO.detail ?: throw InvalidMappingException("Detail is expected to be provided")
+        )
+      }
+    )
+    val experiences = (resume.sideProjects + sideProject).sortedBy { it.timeframe.start }
+    val validationResult = jobValidator.validateList(experiences)
+    return validationMapper.mapValidationResultToDTO(validationResult, "sideProject")
   }
 
 }

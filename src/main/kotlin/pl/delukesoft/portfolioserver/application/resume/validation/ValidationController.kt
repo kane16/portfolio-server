@@ -3,9 +3,6 @@ package pl.delukesoft.portfolioserver.application.resume.validation
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
-import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
-import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
 @RestController
 @RequestMapping("/resume/{id}/validate")
@@ -23,50 +20,6 @@ class ValidationController(
   ): ValidationResultDTO {
     log.info("Received request to validate Resume by id: {}", id)
     return validationFacade.validateResume(id)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/experience/business")
-  fun validateBusiness(
-    @PathVariable("id") id: Long,
-    @RequestBody business: String,
-    @RequestHeader("Authorization") token: String?
-  ): SimpleValidationResultDTO {
-    log.info("Received request to validate Experience Business")
-    return validationFacade.validateBusiness(id, business)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/experience/timeframe")
-  fun validateExperienceTimeframe(
-    @PathVariable("id") id: Long,
-    @RequestBody timeframe: TimeframeDTO,
-    @RequestHeader("Authorization") token: String?,
-  ): SimpleValidationResultDTO {
-    log.info("Received request to validate Experience Timeframe")
-    return validationFacade.validateExperienceTimeframe(id, timeframe)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/experience/skills")
-  fun validateSkillsExperience(
-    @PathVariable("id") id: Long,
-    @RequestBody skills: List<SkillDTO>,
-    @RequestHeader("Authorization") token: String?,
-  ): SimpleValidationResultDTO {
-    log.info("Received request to validate Experience Skills")
-    return validationFacade.validateExperienceSkills(id, skills)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/experience")
-  fun validateExperience(
-    @PathVariable("id") id: Long,
-    @RequestBody experience: ExperienceDTO,
-    @RequestHeader("Authorization") token: String?
-  ): SimpleValidationResultDTO {
-    log.info("Received request to validate Experience")
-    return validationFacade.validateExperience(id, experience)
   }
 
 

@@ -5,12 +5,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
-import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
-import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
-import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
 @RestController
 @RequestMapping("/resume")
@@ -78,154 +75,6 @@ class ResumeController(
   ): Boolean {
     log.info("Received request to unpublish portfolio")
     return resumeFacade.unpublishResume()
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/edit/{resumeId}/skills")
-  @ResponseStatus(HttpStatus.CREATED)
-  fun addSkillToResume(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestBody skill: SkillDTO,
-    @RequestHeader("Authorization") token: String?,
-  ): Boolean {
-    log.info("Received request to add skill to portfolio")
-    return resumeFacade.addSkillToResume(resumeId, skill)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @DeleteMapping("/edit/{resumeId}/skills/{skillName}")
-  fun deleteSkill(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("skillName") skillName: String,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.deleteSkillFromResume(resumeId, skillName)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PutMapping("/edit/{resumeId}/skills/{skillName}")
-  fun editSkill(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("skillName") skillName: String,
-    @RequestBody skill: SkillDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.editSkillWithName(resumeId, skillName, skill)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/edit/{resumeId}/experience")
-  fun addExperienceToResume(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestBody experience: ExperienceDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.addExperienceToResume(resumeId, experience)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/edit/{resumeId}/sideProjects")
-  fun addSideProjectToResume(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestBody experience: ExperienceDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.addSideProjectToResume(resumeId, experience)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PutMapping("/edit/{resumeId}/experience/{experienceId}")
-  fun editExperience(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("experienceId") experienceId: Long,
-    @RequestBody experience: ExperienceDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.editExperienceInResume(resumeId, experienceId, experience)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PutMapping("/edit/{resumeId}/sideProjects/{sideProjectId}")
-  fun editSideProject(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("sideProjectId") sideProjectId: Long,
-    @RequestBody experience: ExperienceDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.editSideProjectInResume(resumeId, sideProjectId, experience)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @DeleteMapping("/edit/{resumeId}/experience/{experienceId}")
-  fun deleteExperience(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("experienceId") experienceId: Long,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.deleteExperienceFromResume(resumeId, experienceId)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @DeleteMapping("/edit/{resumeId}/sideProjects/{sideProjectId}")
-  fun deleteSideProject(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("sideProjectId") sideProjectId: Long,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.deleteSideProjectFromResume(resumeId, sideProjectId)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/edit/{resumeId}/hobbies")
-  @ResponseStatus(HttpStatus.CREATED)
-  fun addHobby(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestBody hobby: String,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.addHobbyToResume(resumeId, hobby)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @DeleteMapping("/edit/{resumeId}/hobbies")
-  fun deleteHobbyFromResume(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestBody hobby: String,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.deleteHobbyFromResume(resumeId, hobby)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PostMapping("/edit/{resumeId}/languages")
-  @ResponseStatus(HttpStatus.CREATED)
-  fun addLanguage(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestBody language: LanguageDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.addLanguageToResume(resumeId, language)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PutMapping("/edit/{resumeId}/languages/{languageId}")
-  fun editLanguage(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("languageId") languageId: Long,
-    @RequestBody language: LanguageDTO,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.editLanguageInResume(resumeId, language, languageId)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @DeleteMapping("/edit/{resumeId}/languages/{languageId}")
-  fun deleteLanguageInResumeById(
-    @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("languageId") languageId: Long,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    return resumeFacade.deleteLanguageFromResume(resumeId, languageId)
   }
 
 }
