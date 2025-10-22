@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
+import pl.delukesoft.portfolioserver.domain.resume.education.Education
+import pl.delukesoft.portfolioserver.domain.resume.education.EducationValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyValidator
@@ -25,7 +27,8 @@ class ValidationInterceptor(
   @Qualifier("jobExperienceValidator") private val experienceValidator: Validator<Experience>,
   private val hobbyValidator: HobbyValidator,
   private val languagesValidator: LanguagesValidator,
-  private val shortcutValidator: Validator<ResumeShortcut>
+  private val shortcutValidator: Validator<ResumeShortcut>,
+  private val educationValidator: EducationValidator,
 ) {
 
   @Before("@annotation(validateResume) && args(resume,..)")
@@ -91,6 +94,14 @@ class ValidationInterceptor(
       throw ValidationFailedException(listOf(DomainValidationResult.build("shortcut", validationResult)))
     }
 
+  }
+
+  @Before("@annotation(validateEducation) && args(education,..)")
+  fun validate(validateEducation: ValidateEducation, education: List<Education>) {
+    val validationResult: ValidationResult = educationValidator.validateList(education)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("education", validationResult)))
+    }
   }
 
 }

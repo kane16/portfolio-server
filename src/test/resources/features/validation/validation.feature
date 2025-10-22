@@ -20,7 +20,7 @@ Feature: Resume validation
     """
     {
        "isValid" : false,
-       "progress" : 40,
+       "progress" : 35,
        "validationResults" : [
           {
              "validationStatus" : "VALID",
@@ -37,11 +37,22 @@ Feature: Resume validation
              "validationStatus" : "INVALID",
              "domain" : {
                 "title" : "Skills",
-                "weight" : 15,
+                "weight" : 10,
                 "endpoint" : "skills"
              },
              "errors" : [
                 "List must not be empty"
+             ]
+          },
+          {
+             "validationStatus" : "INVALID",
+             "domain" : {
+                "title" : "Education",
+                "weight" : 20,
+                "endpoint" : "education"
+             },
+             "errors" : [
+                "Education list must not be empty"
              ]
           },
           {
@@ -70,7 +81,7 @@ Feature: Resume validation
              "validationStatus" : "VALID",
              "domain" : {
                 "title" : "Hobbies",
-                "weight" : 10,
+                "weight" : 5,
                 "endpoint" : "hobbies"
              },
              "errors" : [
@@ -81,7 +92,7 @@ Feature: Resume validation
              "validationStatus" : "INVALID",
              "domain" : {
                 "title" : "Languages",
-                "weight" : 15,
+                "weight" : 5,
                 "endpoint" : "languages"
              },
              "errors" : [

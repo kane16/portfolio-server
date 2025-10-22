@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
+import pl.delukesoft.portfolioserver.domain.resume.education.EducationValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.ExperienceValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.BusinessValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperienceValidator
@@ -34,14 +34,14 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
         SkillValidator(SkillDomainValidator())
       )
     ),
+    EducationValidator(TimeframeValidator(false)),
     HobbyValidator(),
     LanguagesValidator()
   )
 
   @Test
   fun `all domains valid, ResumeValidatorResult valid and domainResults are valid`() {
-    val resume = Resume(
-      shortcut = shortcut(title = ofLen(10), summary = ofLen(50)),
+    val resume = baseResume(
       skills = listOf(skill(name = "Kotlin", level = 3)),
       experience = listOf(
         exp(
@@ -62,22 +62,19 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
           timeframeStart = LocalDate.of(2020, 7, 2), // lenient allows gap
           timeframeEnd = LocalDate.of(2020, 12, 31)
         )
-      ),
-      hobbies = listOf(hobby("Reading")),
-      languages = listOf(language("English"), language("German"))
-    )
+      )
+    ).copy(shortcut = shortcut(title = ofLen(10), summary = ofLen(50)), hobbies = listOf(hobby("Reading")))
 
     val result = validator.validate(resume) as ResumeValidatorResult
 
     assertTrue(result.isValid, "Expected overall valid. Errors: ${messages(result)}")
-    assertEquals(6, result.domainResults.size)
+    assertEquals(7, result.domainResults.size)
     assertTrue(result.domainResults.all { it.isValid }, "Expected all domain results valid")
   }
 
   @Test
   fun `aggregates errors across all domains`() {
-    val resume = Resume(
-      shortcut = shortcut(title = ofLen(3), summary = ofLen(10)), // both invalid
+    val resume = baseResume(
       skills = emptyList(), // invalid - at least one required
       experience = listOf(
         exp(
@@ -102,9 +99,11 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
           timeframeStart = LocalDate.of(2022, 6, 15),
           timeframeEnd = LocalDate.of(2022, 12, 31)
         )
-      ),
-      hobbies = listOf(hobby(" leading")), // leading space
-      languages = listOf(language("en")) // only one + too short + not capitalized
+      )
+    ).copy(
+      shortcut = shortcut(title = ofLen(3), summary = ofLen(10)),
+      hobbies = listOf(hobby(" leading")),
+      languages = listOf(language("en"))
     )
 
     val result = validator.validate(resume) as ResumeValidatorResult
@@ -134,9 +133,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `strict vs lenient consecutive - strict invalid gap, lenient valid gap`() {
-    val strictGapResume = Resume(
-      shortcut = shortcut(),
-      skills = listOf(skill()),
+    val strictGapResume = baseResume(
       experience = listOf(
         exp(timeframeStart = LocalDate.of(2023, 1, 1), timeframeEnd = LocalDate.of(2023, 6, 30)),
         exp(
@@ -144,10 +141,8 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
           timeframeEnd = LocalDate.of(2023, 12, 31)
         ) // gap -> strict invalid
       ),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Running")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(hobbies = listOf(hobby("Running")))
 
     val lenientGapResume = strictGapResume.copy(
       experience = listOf(
@@ -175,14 +170,10 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   @ParameterizedTest
   @ValueSource(ints = [5, 30])
   fun `shortcut title bounds are valid`(len: Int) {
-    val resume = Resume(
-      shortcut = shortcut(title = ofLen(len), summary = ofLen(50)),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = emptyList(),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Chess")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(shortcut = shortcut(title = ofLen(len), summary = ofLen(50)), hobbies = listOf(hobby("Chess")))
 
     val result = validator.validate(resume)
     assertTrue(result.isValid, "Expected valid, got: ${messages(result)}")
@@ -191,14 +182,10 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   @ParameterizedTest
   @ValueSource(ints = [0, 1, 2, 3, 4, 31, 40])
   fun `shortcut title outside bounds is invalid`(len: Int) {
-    val resume = Resume(
-      shortcut = shortcut(title = ofLen(len), summary = ofLen(50)),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = emptyList(),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Chess")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(shortcut = shortcut(title = ofLen(len), summary = ofLen(50)), hobbies = listOf(hobby("Chess")))
 
     val result = validator.validate(resume)
     assertFalse(result.isValid)
@@ -208,14 +195,10 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   @ParameterizedTest
   @ValueSource(ints = [30, 100])
   fun `shortcut summary bounds are valid`(len: Int) {
-    val resume = Resume(
-      shortcut = shortcut(title = ofLen(10), summary = ofLen(len)),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = emptyList(),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Chess")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(shortcut = shortcut(title = ofLen(10), summary = ofLen(len)), hobbies = listOf(hobby("Chess")))
     val result = validator.validate(resume)
     assertTrue(result.isValid, "Expected valid, got: ${messages(result)}")
   }
@@ -223,14 +206,10 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   @ParameterizedTest
   @ValueSource(ints = [0, 10, 29, 101, 120])
   fun `shortcut summary outside bounds is invalid`(len: Int) {
-    val resume = Resume(
-      shortcut = shortcut(title = ofLen(10), summary = ofLen(len)),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = emptyList(),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Chess")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(shortcut = shortcut(title = ofLen(10), summary = ofLen(len)), hobbies = listOf(hobby("Chess")))
     val result = validator.validate(resume)
     assertFalse(result.isValid)
     assertHasMessage(result, "Summary length must be between 30 and 100")
@@ -242,13 +221,10 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   fun `skills - must have at least one, no duplicates, valid bounds`() {
     // empty -> invalid
     val rEmpty = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = emptyList(),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("English"), language("German"))
+        sideProjects = emptyList()
       )
     )
     assertFalse(rEmpty.isValid)
@@ -256,13 +232,10 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     // duplicate by name (case-insensitive)
     val rDup = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill(name = "Kotlin"), skill(name = "kotlin")),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("English"), language("German"))
+        sideProjects = emptyList()
       )
     )
     assertFalse(rDup.isValid)
@@ -270,15 +243,12 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     // domain duplication within a skill
     val rDomainDup = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(
           skill(name = "Kotlin", domains = listOf(domain("Backend"), domain("backend")))
         ),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("English"), language("German"))
+        sideProjects = emptyList()
       )
     )
     assertFalse(rDomainDup.isValid)
@@ -286,15 +256,12 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     // level bounds and non-empty name
     val rBounds = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(
           skill(name = "", level = 0) // name empty + level out of bounds
         ),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("English"), language("German"))
+        sideProjects = emptyList()
       )
     )
     assertFalse(rBounds.isValid)
@@ -303,13 +270,10 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     // valid skill case
     val rValid = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill(name = "Kotlin", level = 5)),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("English"), language("German"))
+        sideProjects = emptyList()
       )
     )
     assertTrue(rValid.isValid, "Expected valid, got: ${messages(rValid)}")
@@ -321,14 +285,11 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   fun `languages - at least two, names trimmed, capitalized, no duplicates`() {
     // one language -> invalid
     val rMin = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("english")) // one + not capitalized
-      )
+        sideProjects = emptyList()
+      ).copy(languages = listOf(language("english")))
     )
     assertFalse(rMin.isValid)
     assertHasMessage(rMin, "At least two languages are required")
@@ -336,14 +297,11 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     // invalid length and trimmed
     val rTrimLen = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language(" Eng"), language("de")) // leading space + too short
-      )
+        sideProjects = emptyList()
+      ).copy(languages = listOf(language(" Eng"), language("de")))
     )
     assertFalse(rTrimLen.isValid)
     assertHasMessage(rTrimLen, "Language name must not contain leading or trailing spaces")
@@ -351,28 +309,22 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     // duplicated languages
     val rDup = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("Polish"), language("polish"))
-      )
+        sideProjects = emptyList()
+      ).copy(languages = listOf(language("Polish"), language("polish")))
     )
     assertFalse(rDup.isValid)
     assertHasMessage(rDup, "Language cannot be duplicated")
 
     // valid
     val rValid = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Chess")),
-        languages = listOf(language("English"), language("German"))
-      )
+        sideProjects = emptyList()
+      ).copy(languages = listOf(language("English"), language("German")))
     )
     assertTrue(rValid.isValid, "Expected valid, got: ${messages(rValid)}")
   }
@@ -382,53 +334,41 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   @Test
   fun `hobby - trimmed, capitalized, not empty`() {
     val rTrim = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby(" space"), hobby("Valid")),
-        languages = listOf(language("English"), language("German"))
-      )
+        sideProjects = emptyList()
+      ).copy(hobbies = listOf(hobby(" space"), hobby("Valid")))
     )
     assertFalse(rTrim.isValid)
     assertHasMessage(rTrim, "Hobby name must not contain spaces")
 
     val rCap = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("valid")),
-        languages = listOf(language("English"), language("German"))
-      )
+        sideProjects = emptyList()
+      ).copy(hobbies = listOf(hobby("valid")))
     )
     assertFalse(rCap.isValid)
     assertHasMessage(rCap, "Hobby name must be capitalized")
 
     val rEmpty = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("   ")),
-        languages = listOf(language("English"), language("German"))
-      )
+        sideProjects = emptyList()
+      ).copy(hobbies = listOf(hobby("   ")))
     )
     assertFalse(rEmpty.isValid)
     assertHasMessage(rEmpty, "Hobby name must not be empty")
 
     val rValid = validator.validate(
-      Resume(
-        shortcut = shortcut(),
+      baseResume(
         skills = listOf(skill()),
         experience = emptyList(),
-        sideProjects = emptyList(),
-        hobbies = listOf(hobby("Running")),
-        languages = listOf(language("English"), language("German"))
-      )
+        sideProjects = emptyList()
+      ).copy(hobbies = listOf(hobby("Running")))
     )
     assertTrue(rValid.isValid, "Expected valid, got: ${messages(rValid)}")
   }
@@ -437,9 +377,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `experience - position and summary bounds valid at edges`() {
-    val resume = Resume(
-      shortcut = shortcut(),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = listOf(
         exp(
           position = ofLen(6),
@@ -449,19 +387,15 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
         ),
         exp(position = ofLen(30), summary = ofLen(100), timeframeStart = LocalDate.of(2023, 1, 1), timeframeEnd = null)
       ),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Reading")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(hobbies = listOf(hobby("Reading")))
     val result = validator.validate(resume)
     assertTrue(result.isValid, "Expected valid, got: ${messages(result)}")
   }
 
   @Test
   fun `experience - invalid position, summary and description collected`() {
-    val resume = Resume(
-      shortcut = shortcut(),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = listOf(
         exp(
           position = ofLen(5), // invalid
@@ -470,10 +404,8 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
           timeframeEnd = LocalDate.of(2022, 12, 31)
         ).copy(description = ofLen(5)) // invalid description
       ),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Reading")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(hobbies = listOf(hobby("Reading")))
 
     val result = validator.validate(resume)
     assertFalse(result.isValid)
@@ -484,16 +416,12 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `experience - business validation errors are included`() {
-    val resume = Resume(
-      shortcut = shortcut(),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = listOf(
         exp().copy(business = business("ac ")) // not capitalized + non-letters + less than 3 letters
       ),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Reading")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(hobbies = listOf(hobby("Reading")))
 
     val result = validator.validate(resume)
     assertFalse(result.isValid)
@@ -504,16 +432,12 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `experience - skill experience level bounds and detail length`() {
-    val resume = Resume(
-      shortcut = shortcut(),
-      skills = listOf(skill()),
+    val resume = baseResume(
       experience = listOf(
         exp(skills = listOf(se(level = 0, detail = ofLen(9)), se(level = 6, detail = ofLen(9))))
       ),
-      sideProjects = emptyList(),
-      hobbies = listOf(hobby("Reading")),
-      languages = listOf(language("English"), language("German"))
-    )
+      sideProjects = emptyList()
+    ).copy(hobbies = listOf(hobby("Reading")))
 
     val result = validator.validate(resume)
     assertFalse(result.isValid)
@@ -525,8 +449,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `validateList aggregates domainResults from multiple resumes and overall validity`() {
-    val validResume = Resume(
-      shortcut = shortcut(),
+    val validResume = baseResume(
       skills = listOf(skill()),
       experience = listOf(
         exp(timeframeStart = LocalDate.of(2022, 1, 1), timeframeEnd = LocalDate.of(2022, 12, 31)),
@@ -535,9 +458,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
       sideProjects = listOf(
         exp(timeframeStart = LocalDate.of(2020, 1, 1), timeframeEnd = LocalDate.of(2020, 6, 30)),
         exp(timeframeStart = LocalDate.of(2020, 7, 2), timeframeEnd = LocalDate.of(2020, 12, 31))
-      ),
-      hobbies = listOf(hobby("Chess")),
-      languages = listOf(language("English"), language("German"))
+      )
     )
 
     val invalidResume = validResume.copy(
@@ -553,7 +474,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
     val result = validator.validateList(listOf(validResume, invalidResume)) as ResumeValidatorResult
 
     assertFalse(result.isValid, "Combined should be invalid due to the invalid resume")
-    assertEquals(12, result.domainResults.size, "Expect 6 domains per resume x 2 resumes")
+    assertEquals(14, result.domainResults.size, "Expect 7 domains per resume x 2 resumes")
     assertHasMessage(result, "Title length must be between 5 and 30")
     assertHasMessage(result, "At least one skill is required")
     assertHasMessage(result, "At least two languages are required")

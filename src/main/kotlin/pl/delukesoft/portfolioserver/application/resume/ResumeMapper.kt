@@ -3,11 +3,15 @@ package pl.delukesoft.portfolioserver.application.resume
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
+import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.education.Education
+import pl.delukesoft.portfolioserver.domain.resume.education.EducationInstitution
+import pl.delukesoft.portfolioserver.domain.resume.education.EducationType
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
@@ -120,6 +124,24 @@ class ResumeMapper {
           skill.detail ?: ""
         )
       }
+    )
+  }
+
+  fun mapDTOToEducation(educationDTO: EducationDTO): Education {
+    return Education(
+      id = null,
+      title = educationDTO.title,
+      institution = EducationInstitution(
+        educationDTO.institution.name,
+        educationDTO.institution.city,
+        educationDTO.institution.country
+      ),
+      timeframe = Timeframe(educationDTO.timeframe.start, educationDTO.timeframe.end),
+      fieldOfStudy = educationDTO.fieldOfStudy,
+      grade = educationDTO.grade,
+      type = EducationType.valueOf(educationDTO.type),
+      description = educationDTO.description,
+      externalLinks = educationDTO.externalLinks
     )
   }
 

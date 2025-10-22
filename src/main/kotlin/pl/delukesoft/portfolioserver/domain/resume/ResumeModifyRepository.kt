@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.domain.resume.education.Education
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
@@ -47,6 +48,12 @@ class ResumeModifyRepository(
   @ValidateSkill
   fun changeSkillsInResume(skills: List<Skill>, resume: Resume): Boolean {
     return resumeRepository.changeSkillsInResume(resume.id!!, skills) > 0
+  }
+
+  @ResumeModification
+  @ValidateEducation
+  fun changeEducationInResume(education: List<Education>, resume: Resume): Boolean {
+    return resumeRepository.changeEducationInResume(resume.id!!, education) > 0
   }
 
 }

@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.domain.resume
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 import org.springframework.data.mongodb.repository.Update
+import pl.delukesoft.portfolioserver.domain.resume.education.Education
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
@@ -44,5 +45,9 @@ interface ResumeRepository : MongoRepository<Resume, Long> {
   @Query("{ 'id' : ?0 }")
   @Update("{ \$set: { 'shortcut': ?1 } }")
   fun changeShortcutInResume(id: Long, shortcut: ResumeShortcut): Long
+
+  @Query("{ 'id' : ?0 }")
+  @Update("{ \$set: { 'education': ?1 } }")
+  fun changeEducationInResume(id: Long, education: List<Education>): Long
 
 }

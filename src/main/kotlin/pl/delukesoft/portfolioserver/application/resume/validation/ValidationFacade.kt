@@ -3,12 +3,15 @@ package pl.delukesoft.portfolioserver.application.resume.validation
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
+import pl.delukesoft.portfolioserver.application.resume.ResumeMapper
 import pl.delukesoft.portfolioserver.application.resume.ValidationMapper
+import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeValidator
+import pl.delukesoft.portfolioserver.domain.resume.education.Education
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
@@ -30,7 +33,8 @@ class ValidationFacade(
   @Qualifier("lenientTimeframeValidator") private val lenientTimeframeValidator: TimeframeValidator,
   private val experienceSkillsValidator: Validator<SkillExperience>,
   @Qualifier("jobExperienceValidator") private val jobValidator: Validator<Experience>,
-  @Qualifier("sideProjectsValidator") private val sideProjectsValidator: Validator<Experience>,
+  @Qualifier("educationValidator") private val educationValidator: Validator<Education>,
+  private val resumeMapper: ResumeMapper,
 ) {
 
   private val currentUser
@@ -120,6 +124,15 @@ class ValidationFacade(
     val experiences = (resume.sideProjects + sideProject).sortedBy { it.timeframe.start }
     val validationResult = jobValidator.validateList(experiences)
     return validationMapper.mapValidationResultToDTO(validationResult, "sideProject")
+  }
+
+  fun validateEducation(resumeId: Long, educationDTO: EducationDTO): SimpleValidationResultDTO {
+    resumeService.getResumeById(resumeId, currentUser)
+
+    val education = resumeMapper.mapDTOToEducation(educationDTO)
+
+    val validationResult = educationValidator.validate(education)
+    return validationMapper.mapValidationResultToDTO(validationResult, "education")
   }
 
 }

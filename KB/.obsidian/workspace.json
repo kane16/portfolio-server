@@ -20,6 +20,18 @@
             }
           },
           {
+            "id": "daa1a62fd65f8538",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.14"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.9.14"
+            }
+          },
+          {
             "id": "19c7a6c80d8a5e1f",
             "type": "leaf",
             "state": {
@@ -31,7 +43,8 @@
               "title": "Experience Creation"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -181,7 +194,7 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "f2f02584328d663a",
+  "active": "aa79ce6f4cc68a75",
   "lastOpenFiles": [
     "UML/Experience Creation.md",
     "UML/Language Stage.md",
