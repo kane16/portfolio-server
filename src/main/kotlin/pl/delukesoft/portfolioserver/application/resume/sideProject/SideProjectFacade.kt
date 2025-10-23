@@ -21,14 +21,14 @@ class SideProjectFacade(
   fun addSideProjectToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
     val resume = resumeService.getResumeById(resumeId, currentUser)
     val resumeSkills = resume.skills
-    val sideProjectToAdd = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills)
+    val sideProjectToAdd = resumeMapper.mapDTOToExperience(experience, resumeSkills)
     return sideProjectService.addSideProjectToResume(sideProjectToAdd, resume)
   }
 
   fun editSideProjectInResume(resumeId: Long, sideProjectId: Long, experience: ExperienceDTO): Boolean {
     val resume = resumeService.getResumeById(resumeId, currentUser)
     val resumeSkills = resume.skills
-    val sideProjectToEdit = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills).copy(id = sideProjectId)
+    val sideProjectToEdit = resumeMapper.mapDTOToExperience(experience, resumeSkills).copy(id = sideProjectId)
     return sideProjectService.editResume(sideProjectToEdit, resume)
   }
 

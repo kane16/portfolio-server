@@ -1,5 +1,7 @@
 package pl.delukesoft.portfolioserver.application.portfolio.model
 
+import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
+
 data class ResumeDTO(
   val id: Long,
   val fullname: String,
@@ -10,5 +12,6 @@ data class ResumeDTO(
   val languages: List<LanguageDTO>,
   val sideProjects: List<ProjectDTO>,
   val workHistory: List<ProjectDTO>,
-  val hobbies: List<String>
+  val hobbies: List<String>,
+  val education: List<EducationDTO>
 )

@@ -20,14 +20,14 @@ class ExperienceFacade(
   fun addExperienceToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
     val resume = resumeService.getResumeById(resumeId, currentUser)
     val resumeSkills = resume.skills
-    val experienceToAdd = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills)
+    val experienceToAdd = resumeMapper.mapDTOToExperience(experience, resumeSkills)
     return experienceService.addExperienceToResume(experienceToAdd, resume)
   }
 
   fun editExperienceInResume(resumeId: Long, experienceId: Long, experience: ExperienceDTO): Boolean {
     val resume = resumeService.getResumeById(resumeId, currentUser)
     val resumeSkills = resume.skills
-    val experienceToEdit = resumeMapper.mapExperienceDTOToResume(experience, resumeSkills).copy(id = experienceId)
+    val experienceToEdit = resumeMapper.mapDTOToExperience(experience, resumeSkills).copy(id = experienceId)
     return experienceService.editResume(experienceToEdit, resume)
   }
 

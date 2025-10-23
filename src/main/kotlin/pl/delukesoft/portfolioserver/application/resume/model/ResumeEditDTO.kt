@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.application.resume.model
 
 import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
+import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 
@@ -14,5 +15,6 @@ data class ResumeEditDTO(
   val languages: List<LanguageDTO>,
   val sideProjects: List<ExperienceDTO>,
   val workHistory: List<ExperienceDTO>,
-  val hobbies: List<String>
+  val hobbies: List<String>,
+  val education: List<EducationDTO>
 )
