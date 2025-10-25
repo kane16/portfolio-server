@@ -1,5 +1,6 @@
 package pl.delukesoft.portfolioserver.application.resume.education
 
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 
@@ -10,9 +11,11 @@ class EducationController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @PostMapping("/resume/edit/{resumeId}/education")
+  @ResponseStatus(HttpStatus.CREATED)
   fun addEducationToResume(
     @PathVariable("resumeId") resumeId: Long,
-    @RequestBody education: EducationDTO
+    @RequestBody education: EducationDTO,
+    @RequestHeader("Authorization") token: String?
   ): Boolean {
     return educationFacade.addEducationToResume(resumeId, education)
   }
@@ -22,7 +25,8 @@ class EducationController(
   fun editEducationById(
     @PathVariable("resumeId") resumeId: Long,
     @PathVariable("educationId") educationId: Long,
-    @RequestBody education: EducationDTO
+    @RequestBody education: EducationDTO,
+    @RequestHeader("Authorization") token: String?
   ): Boolean {
     return educationFacade.modifyEducationInResume(resumeId, education, educationId)
   }
@@ -31,7 +35,8 @@ class EducationController(
   @DeleteMapping("/resume/edit/{resumeId}/education/{educationId}")
   fun deleteEducationById(
     @PathVariable("resumeId") resumeId: Long,
-    @PathVariable("educationId") educationId: Long
+    @PathVariable("educationId") educationId: Long,
+    @RequestHeader("Authorization") token: String?
   ): Boolean {
     return educationFacade.deleteEducationFromResume(resumeId, educationId)
   }

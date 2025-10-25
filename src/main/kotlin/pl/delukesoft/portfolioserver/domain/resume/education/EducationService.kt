@@ -3,14 +3,18 @@ package pl.delukesoft.portfolioserver.domain.resume.education
 import org.springframework.stereotype.Service
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeModifyRepository
+import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
 @Service
 class EducationService(
-  private val resumeModifyRepository: ResumeModifyRepository
+  private val resumeModifyRepository: ResumeModifyRepository,
+  private val generatorService: GeneratorService
 ) {
 
   fun addEducationToResume(educationEntry: Education, resume: Resume): Boolean {
-    val education = resume.education + educationEntry
+    val education = resume.education + educationEntry.copy(
+      id = generatorService.getAndIncrement("education")
+    )
 
     return resumeModifyRepository.changeEducationInResume(education, resume)
   }
