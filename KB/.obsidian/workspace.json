@@ -194,9 +194,11 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "aa79ce6f4cc68a75",
+  "active": "f2f02584328d663a",
   "lastOpenFiles": [
     "UML/Experience Creation.md",
+    "UML/Education entry creation.md",
+    "UML/Untitled.md",
     "UML/Language Stage.md",
     "UML/Portfolio.md",
     "UML/Domain/Resume model.md",
@@ -226,8 +228,6 @@
     "copilot-custom-prompts/Make longer.md",
     "copilot-custom-prompts/Make shorter.md",
     "copilot-custom-prompts/Emojify.md",
-    "copilot-custom-prompts/Explain like I am 5.md",
-    "copilot-custom-prompts/Simplify.md",
     "copilot-custom-prompts",
     "Portfolio main view/Portfolio View.md~",
     "Portfolio main view/mockup/print-solid.svg",

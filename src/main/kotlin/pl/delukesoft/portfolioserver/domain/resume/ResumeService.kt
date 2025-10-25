@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.domain.resume
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeNotFound
+import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
@@ -70,6 +71,20 @@ class ResumeService(
 
   fun publishResume(versionToPublish: ResumeVersion, username: String): Boolean {
     return resumeHistoryService.publishResumeVersion(versionToPublish, username)
+  }
+
+  fun markResumeReadyForPublishing(resume: Resume): Boolean {
+    if (resume.isReadyToPublish) {
+      throw ResumeOperationNotAllowed("Resume is ready for publishing - cannot redo the operation")
+    }
+    return resumeModifyRepository.markResumeReadyForPublication(resume)
+  }
+
+  fun unmarkResumeReadyForPublish(resume: Resume): Boolean {
+    if (!resume.isReadyToPublish) {
+      throw ResumeOperationNotAllowed("Resume is not ready for publishing - cannot redo the operation")
+    }
+    return resumeModifyRepository.unmarkResumeReadyForPublication(resume)
   }
 
 }

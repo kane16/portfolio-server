@@ -21,5 +21,6 @@ data class Resume(
   val hobbies: List<Hobby> = emptyList(),
   val languages: List<Language> = emptyList(),
   val createdOn: LocalDateTime = LocalDateTime.now(),
-  val lastModified: LocalDateTime = LocalDateTime.now()
+  val lastModified: LocalDateTime = LocalDateTime.now(),
+  val isReadyToPublish: Boolean = false
 )

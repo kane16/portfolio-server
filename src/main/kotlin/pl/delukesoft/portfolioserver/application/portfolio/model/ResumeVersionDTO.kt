@@ -6,4 +6,5 @@ data class ResumeVersionDTO(
   val summary: String,
   val version: Long,
   val state: String,
+  val isReadyToPublish: Boolean
 )

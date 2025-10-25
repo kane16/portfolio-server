@@ -56,4 +56,16 @@ class ResumeModifyRepository(
     return resumeRepository.changeEducationInResume(resume.id!!, education) > 0
   }
 
+  @ResumeModification
+  @ValidateResume
+  fun markResumeReadyForPublication(resume: Resume): Boolean {
+    return resumeRepository.markResumeReadyForPublication(resume.id!!, true) > 0
+  }
+
+  @ResumeModification
+  @ValidateResume
+  fun unmarkResumeReadyForPublication(resume: Resume): Boolean {
+    return resumeRepository.markResumeReadyForPublication(resume.id!!, false) > 0
+  }
+
 }

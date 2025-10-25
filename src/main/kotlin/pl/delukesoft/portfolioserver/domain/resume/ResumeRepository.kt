@@ -50,4 +50,8 @@ interface ResumeRepository : MongoRepository<Resume, Long> {
   @Update("{ \$set: { 'education': ?1 } }")
   fun changeEducationInResume(id: Long, education: List<Education>): Long
 
+  @Query("{ 'id' : ?0 }")
+  @Update("{ \$set: { 'isReadyToPublish': ?1 } }")
+  fun markResumeReadyForPublication(id: Long, readyForPublication: Boolean): Long
+
 }

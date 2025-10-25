@@ -39,7 +39,8 @@ class ResumeMapper {
       version.resume.shortcut.title,
       version.resume.shortcut.summary,
       version.version,
-      version.state.name
+      version.state.name,
+      version.resume.isReadyToPublish
     )
   }
 
@@ -55,7 +56,8 @@ class ResumeMapper {
       sideProjects = mapToExperienceDTO(resume.sideProjects),
       workHistory = mapToExperienceDTO(resume.experience),
       hobbies = resume.hobbies.map { it.name },
-      education = resume.education.map { mapEducationToDTO(it) }
+      education = resume.education.map { mapEducationToDTO(it) },
+      isReadyForPublishing = resume.isReadyToPublish
     )
   }
 
