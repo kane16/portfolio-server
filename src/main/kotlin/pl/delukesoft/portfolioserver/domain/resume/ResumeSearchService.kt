@@ -1,47 +1,41 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
 import org.springframework.stereotype.Service
-import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
-import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
-import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 
 @Service
 class ResumeSearchService {
 
   fun filterResumeWithCriteria(resume: Resume, search: ResumeSearch): Resume {
     var filteredResume = resume
-    if (search.skills.isNotEmpty()) {
-      filteredResume = filterBySkills(filteredResume, search.skills)
+    if (search.skillNames.isNotEmpty()) {
+      filteredResume = filterBySkills(filteredResume, search.skillNames)
     }
-    if (search.domains.isNotEmpty()) {
-      filteredResume = filterByDomains(filteredResume, search.domains)
+    if (search.domainNames.isNotEmpty()) {
+      filteredResume = filterByDomains(filteredResume, search.domainNames)
     }
-    if (search.business.isNotEmpty()) {
-      filteredResume = filterByBusiness(filteredResume, search.business)
+    if (search.businessNames.isNotEmpty()) {
+      filteredResume = filterByBusiness(filteredResume, search.businessNames)
     }
     return filteredResume
   }
 
-  private fun filterBySkills(resume: Resume, skills: List<Skill>): Resume {
-    val skillIds = skills.map { it.id }
+  private fun filterBySkills(resume: Resume, skillNames: List<String>): Resume {
     return resume.copy(
-      skills = resume.skills.filter { it.id in skillIds },
-      experience = resume.experience.filter { it.skills.any { it.skill.id in skillIds } }
+      skills = resume.skills.filter { it.name in skillNames },
+      experience = resume.experience.filter { it.skills.any { it.skill.name in skillNames } }
     )
   }
 
-  private fun filterByDomains(resume: Resume, domains: List<SkillDomain>): Resume {
-    val businessDomainIds = domains.map { it.id }
+  private fun filterByDomains(resume: Resume, domains: List<String>): Resume {
     return resume.copy(
-      skills = resume.skills.filter { it.domains.any { it.id in businessDomainIds} },
-      experience = resume.experience.filter { it.skills.any { it.skill.domains.any { it.id in businessDomainIds} } }
+      skills = resume.skills.filter { it.domains.any { it.name in domains } },
+      experience = resume.experience.filter { it.skills.any { it.skill.domains.any { it.name in domains } } }
     )
   }
 
-  private fun filterByBusiness(resume: Resume, business: List<Business>): Resume {
-    val businessIds = business.map { it.id }
+  private fun filterByBusiness(resume: Resume, businessNames: List<String>): Resume {
     return resume.copy(
-      experience = resume.experience.filter { it.business.id in businessIds }
+      experience = resume.experience.filter { businessNames.contains(it.business.name) }
     )
   }
 

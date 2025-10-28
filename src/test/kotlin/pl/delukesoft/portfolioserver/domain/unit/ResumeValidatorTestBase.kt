@@ -2,6 +2,10 @@ package pl.delukesoft.portfolioserver.domain.unit
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.education.Education
+import pl.delukesoft.portfolioserver.domain.resume.education.EducationInstitution
+import pl.delukesoft.portfolioserver.domain.resume.education.EducationType
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
@@ -28,26 +32,20 @@ open class ResumeValidatorTestBase {
   protected fun language(
     name: String = "English",
     level: LanguageLevel = anyLevel(),
-    username: String = "alice"
   ) = Language(
-    id = null,
     name = name,
-    level = level,
-    username = username
+    level = level
   )
 
   protected fun skill(
     name: String = "Kotlin",
     level: Int = 3,
-    username: String = "alice",
     description: String? = "some",
     domains: List<SkillDomain> = emptyList()
   ) = Skill(
-    id = null,
     name = name,
     level = level,
     description = description,
-    username = username,
     domains = domains
   )
 
@@ -59,20 +57,17 @@ open class ResumeValidatorTestBase {
 
   protected fun ofLen(n: Int, ch: Char = 'a') = buildString { repeat(n) { append(ch) } }
 
-  protected fun business(name: String, username: String = "user") =
-    Business(id = null, name = name, username = username)
+  protected fun business(name: String) =
+    Business(name = name)
 
   protected fun domain(
     name: String = "Backend",
-    username: String = "alice"
   ) = SkillDomain(
-    id = null,
     name = name,
-    username = username
   )
 
-  protected fun hobby(name: String, username: String = "user") =
-    Hobby(id = null, name = name, username = username)
+  protected fun hobby(name: String) =
+    Hobby(name = name)
 
   protected fun messages(result: ValidationResult): List<String> =
     result.errors.map { it }
@@ -110,4 +105,45 @@ open class ResumeValidatorTestBase {
     skills = skills
   )
 
+  // ----- Education helpers -----
+  protected fun eduInstitution(
+    name: String = "Uni",
+    city: String = "City",
+    country: String = "Country"
+  ) = EducationInstitution(name = name, city = city, country = country)
+
+  protected fun education(
+    title: String = ofLen(10),
+    institution: EducationInstitution = eduInstitution(),
+    fieldOfStudy: String = "Computer Science",
+    grade: Double = 4.5,
+    type: EducationType? = EducationType.DEGREE,
+    start: LocalDate = LocalDate.of(2020, 1, 1),
+    end: LocalDate? = LocalDate.of(2023, 6, 30),
+    description: String? = null,
+    externalLinks: List<String> = emptyList()
+  ): Education = Education(
+    title = title,
+    institution = institution,
+    timeframe = Timeframe(start = start, end = end),
+    fieldOfStudy = fieldOfStudy,
+    grade = grade,
+    type = type,
+    description = description,
+    externalLinks = externalLinks
+  )
+
+  protected fun baseResume(
+    skills: List<Skill> = listOf(skill()),
+    experience: List<Experience> = emptyList(),
+    sideProjects: List<Experience> = emptyList()
+  ): Resume = Resume(
+    shortcut = shortcut(),
+    skills = skills,
+    experience = experience,
+    sideProjects = sideProjects,
+    education = listOf(education()),
+    hobbies = listOf(hobby("Chess")),
+    languages = listOf(language("English"), language("German"))
+  )
 }

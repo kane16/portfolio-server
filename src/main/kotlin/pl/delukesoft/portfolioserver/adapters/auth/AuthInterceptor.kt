@@ -6,12 +6,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.exception.AuthenticationException
 import pl.delukesoft.portfolioserver.adapters.auth.exception.AuthorizationException
+import pl.delukesoft.portfolioserver.domain.user.AuthorService
 
 @Aspect
 @Component
 class AuthInterceptor(
   private val userContext: UserContext,
   private val authRequestService: AuthRequestService,
+  private val authorService: AuthorService
 ) {
 
   private val log = LoggerFactory.getLogger(AuthInterceptor::class.java)
@@ -28,6 +30,7 @@ class AuthInterceptor(
       false -> throw AuthenticationException(authRequired.roles.joinToString(", "))
       true -> {
         userContext.user = user
+        userContext.author = authorService.getAuthorAndAddIfNotExists(user)
         log.info("User successfully authenticated with roles: ${user.roles.joinToString(", ")}")
       }
     }

@@ -2,6 +2,7 @@ package pl.delukesoft.portfolioserver.domain.resume
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.domain.resume.education.EducationValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.hobby.HobbyValidator
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguagesValidator
@@ -18,6 +19,7 @@ class ResumeValidator(
   @Qualifier("skillValidator") val skillValidator: Validator<Skill>,
   @Qualifier("jobExperienceValidator") val jobExperienceValidator: Validator<Experience>,
   @Qualifier("sideProjectsValidator") val sideProjectValidator: Validator<Experience>,
+  val educationValidator: EducationValidator,
   val hobbyValidator: HobbyValidator,
   val languagesValidator: LanguagesValidator,
 ) : Validator<Resume>() {
@@ -30,6 +32,7 @@ class ResumeValidator(
     val domainValidationResults = listOf(
       DomainValidationResult.build("shortcut", resumeShortcutValidator.validate(value.shortcut)),
       DomainValidationResult.build("skill", skillValidator.validateList(value.skills)),
+      DomainValidationResult.build("education", educationValidator.validateList(value.education)),
       DomainValidationResult.build("experience", jobExperienceValidator.validateList(value.experience)),
       DomainValidationResult.build("sideProject", sideProjectValidator.validateList(value.sideProjects)),
       DomainValidationResult.build("hobby", hobbyValidator.validateList(value.hobbies)),

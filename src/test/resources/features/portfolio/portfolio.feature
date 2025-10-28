@@ -30,14 +30,17 @@ Feature: Portfolio data read from server
        ],
        "languages" : [
           {
+             "id" : null,
              "name" : "English",
              "level" : "C1"
           },
           {
+             "id" : null,
              "name" : "Spanish",
              "level" : "B2"
           },
           {
+             "id" : null,
              "name" : "French",
              "level" : "A2"
           }
@@ -146,6 +149,23 @@ Feature: Portfolio data read from server
                    "level" : 5
                 }
              ]
+          }
+       ],
+       "languages" : [
+          {
+             "id" : null,
+             "name" : "English",
+             "level" : "C1"
+          },
+          {
+             "id" : null,
+             "name" : "Spanish",
+             "level" : "B2"
+          },
+          {
+             "id" : null,
+             "name" : "French",
+             "level" : "A2"
           }
        ],
        "hobbies" : [

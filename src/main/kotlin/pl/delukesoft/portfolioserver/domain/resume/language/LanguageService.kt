@@ -1,25 +1,33 @@
 package pl.delukesoft.portfolioserver.domain.resume.language
 
 import org.springframework.stereotype.Service
-import pl.delukesoft.blog.image.exception.LanguageNotFound
+import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.ResumeModifyRepository
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
 @Service
 class LanguageService(
-  private val languageRepository: LanguageRepository,
+  private val resumeModifyRepository: ResumeModifyRepository,
   private val generatorService: GeneratorService
 ) {
 
-  fun saveAll(languages: List<Language>): List<Language> {
-    return languages.map { save(it) }
+  fun addLanguageToResume(resume: Resume, language: Language): Boolean {
+    val languages = resume.languages + language.copy(
+      id = generatorService.getAndIncrement("language")
+    )
+    return resumeModifyRepository.changeLanguagesInResume(languages, resume)
   }
 
-  fun save(language: Language): Language {
-    if (language.id == null) {
-      val generatedId = generatorService.getAndIncrement("language")
-      return languageRepository.save(language.copy(id = generatedId))
+  fun editLanguageInResume(resume: Resume, language: Language): Boolean {
+    val languages = resume.languages.map {
+      if (it.id == language.id) language else it
     }
-    return languageRepository.findByName(language.name) ?: throw LanguageNotFound(language.name)
+    return resumeModifyRepository.changeLanguagesInResume(languages, resume)
+  }
+
+  fun deleteLanguageFromResume(resume: Resume, languageToDelete: Language): Boolean {
+    val languages = resume.languages.filter { it.id != languageToDelete.id }
+    return resumeModifyRepository.changeLanguagesInResume(languages, resume)
   }
 
 }

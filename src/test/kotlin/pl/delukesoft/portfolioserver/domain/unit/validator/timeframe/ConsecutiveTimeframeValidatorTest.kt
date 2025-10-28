@@ -4,15 +4,15 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
+import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
 import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 import java.time.LocalDate
 import kotlin.test.Test
 
 class ConsecutiveTimeframeValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = ConsecutiveTimeframeValidator()
-  private val lenientValidator = ConsecutiveTimeframeValidator(lenientMode = true)
+  private val validator = TimeframeValidator()
+  private val lenientValidator = TimeframeValidator(lenientMode = true)
   private val today = LocalDate.now()
 
   @Test

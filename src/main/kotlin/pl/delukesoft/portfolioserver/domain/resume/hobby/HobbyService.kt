@@ -1,24 +1,23 @@
 package pl.delukesoft.portfolioserver.domain.resume.hobby
 
 import org.springframework.stereotype.Service
-import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
+import pl.delukesoft.portfolioserver.domain.resume.Resume
+import pl.delukesoft.portfolioserver.domain.resume.ResumeModifyRepository
 
 @Service
 class HobbyService(
-  private val hobbyRepository: HobbyRepository,
-  private val generatorService: GeneratorService
+  private val resumeModifyRepository: ResumeModifyRepository
 ) {
 
-  fun saveAll(hobbies: List<Hobby>): List<Hobby> {
-    return hobbies.map { save(it) }
+  fun addHobbyToResume(hobby: Hobby, resume: Resume): Boolean {
+    val hobbies = resume.hobbies + hobby
+    return resumeModifyRepository.changeHobbiesInResume(hobbies, resume)
   }
 
-  fun save(hobby: Hobby): Hobby {
-    if (hobby.id == null) {
-      val generatedId = generatorService.getAndIncrement("hobby")
-      return hobbyRepository.save(hobby.copy(id = generatedId))
-    }
-    TODO("Not yet implemented")
+  fun deleteHobbyFromResume(hobby: Hobby, resume: Resume): Boolean {
+    val hobbies = resume.hobbies.filter { it.name != hobby.name }
+    return resumeModifyRepository.changeHobbiesInResume(hobbies, resume)
   }
+
 
 }

@@ -3,12 +3,12 @@ package pl.delukesoft.portfolioserver.domain.resume.experience
 import org.springframework.beans.factory.annotation.Qualifier
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
-import pl.delukesoft.portfolioserver.domain.resume.timespan.ConsecutiveTimeframeValidator
+import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
 class ExperienceValidator(
-  private val consecutiveTimeframeValidator: ConsecutiveTimeframeValidator,
+  val timeframeValidator: TimeframeValidator,
   @Qualifier("businessValidator") private val businessValidator: Validator<Business>,
   @Qualifier("skillExperienceValidator") private val skillExperienceValidator: Validator<SkillExperience>
 ) : Validator<Experience>() {
@@ -28,7 +28,7 @@ class ExperienceValidator(
 
   override fun validateList(values: List<Experience>): ValidationResult {
     val validationResults = values.map { validate(it) } + listOf(
-      consecutiveTimeframeValidator.validateList(values.map { it.timeframe })
+      timeframeValidator.validateList(values.map { it.timeframe })
     )
 
     return if (validationResults.all { it.isValid }) ValidationResult.build() else ValidationResult.build(
