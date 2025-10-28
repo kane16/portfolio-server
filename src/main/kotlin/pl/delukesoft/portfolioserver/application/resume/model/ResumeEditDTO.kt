@@ -16,6 +16,5 @@ data class ResumeEditDTO(
   val sideProjects: List<ExperienceDTO>,
   val workHistory: List<ExperienceDTO>,
   val hobbies: List<String>,
-  val education: List<EducationDTO>,
-  val isReadyForPublishing: Boolean
+  val education: List<EducationDTO>
 )

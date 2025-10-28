@@ -15,6 +15,12 @@ class ResumeModifyRepository(
 ) {
 
   @ResumeModification
+  @ValidateShortcut
+  fun changeShortcutInResume(shortcut: ResumeShortcut, resume: Resume): Boolean {
+    return resumeRepository.changeShortcutInResume(resume.id!!, shortcut) > 0
+  }
+
+  @ResumeModification
   @ValidateExperiences
   fun changeExperiencesInResume(experiences: List<Experience>, resume: Resume): Boolean {
     return resumeRepository.changeExperienceToResume(resume.id!!, experiences) > 0
@@ -39,12 +45,6 @@ class ResumeModifyRepository(
   }
 
   @ResumeModification
-  @ValidateShortcut
-  fun changeShortcutInResume(shortcut: ResumeShortcut, resume: Resume): Boolean {
-    return resumeRepository.changeShortcutInResume(resume.id!!, shortcut) > 0
-  }
-
-  @ResumeModification
   @ValidateSkill
   fun changeSkillsInResume(skills: List<Skill>, resume: Resume): Boolean {
     return resumeRepository.changeSkillsInResume(resume.id!!, skills) > 0
@@ -54,18 +54,6 @@ class ResumeModifyRepository(
   @ValidateEducation
   fun changeEducationInResume(education: List<Education>, resume: Resume): Boolean {
     return resumeRepository.changeEducationInResume(resume.id!!, education) > 0
-  }
-
-  @ResumeModification
-  @ValidateResume
-  fun markResumeReadyForPublication(resume: Resume): Boolean {
-    return resumeRepository.markResumeReadyForPublication(resume.id!!, true) > 0
-  }
-
-  @ResumeModification
-  @ValidateResume
-  fun unmarkResumeReadyForPublication(resume: Resume): Boolean {
-    return resumeRepository.markResumeReadyForPublication(resume.id!!, false) > 0
   }
 
 }

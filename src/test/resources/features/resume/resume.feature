@@ -527,8 +527,6 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 201
-    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
-    Then Response status code should be 200
     When "PUT" request is sent to endpoint "/resume/edit/4" with body:
     """
     {
@@ -540,6 +538,8 @@ Feature: Resume creation
       }
     }
     """
+    Then Response status code should be 200
+    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
     Then Response status code should be 200
     When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
@@ -646,6 +646,8 @@ Feature: Resume creation
         "resumeId" : 1
       }
       """
+    When "PUT" request is sent to endpoint "/resume/edit/unpublish" with no body
+    Then Response status code should be 200
     When "POST" request is sent to endpoint "/skills/domains" with body:
     """
     JVM
@@ -665,6 +667,8 @@ Feature: Resume creation
       """
       true
       """
+    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
+    Then Response status code should be 200
     When "POST" request is sent to endpoint "/cv/1" with no body
     Then Response status code should be 200
     And Response body should be:
@@ -891,7 +895,11 @@ Feature: Resume creation
       "resumeId" : 1
     }
     """
+    When "PUT" request is sent to endpoint "/resume/edit/unpublish" with no body
+    Then Response status code should be 200
     When "DELETE" request is sent to endpoint "/resume/edit/1/skills/Java" with no body
+    Then Response status code should be 200
+    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
     Then Response status code should be 200
     When "POST" request is sent to endpoint "/cv/1" with no body
     And Response body should be:
@@ -981,6 +989,8 @@ Feature: Resume creation
 
   Scenario: Edit existing skill should be successful
     Given User is authorized with token: "admin"
+    When "PUT" request is sent to endpoint "/resume/edit/unpublish" with no body
+    Then Response status code should be 200
     When "POST" request is sent to endpoint "/skills/domains" with body:
     """
     JVM
@@ -995,6 +1005,8 @@ Feature: Resume creation
          "domains": ["JVM"]
       }
       """
+    Then Response status code should be 200
+    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
     Then Response status code should be 200
     When "POST" request is sent to endpoint "/cv/1" with no body
     And Response body should be:

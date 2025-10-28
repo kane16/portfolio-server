@@ -10,4 +10,7 @@ interface ResumeVersionRepository : MongoRepository<ResumeVersion, Long> {
   @Update("{ '\$set': { 'state' : ?1 } }")
   fun changeResumeStatus(id: Long, status: ResumeVersionState): Long
 
+  @Query("{ 'resumeId' : ?0 }")
+  fun findResumeVersionsByResumeId(resumeId: Long): ResumeVersion?
+
 }

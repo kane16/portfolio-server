@@ -13,10 +13,22 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "UML/Experience Creation.md"
+                "file": "UML/Domain/Resume model.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Experience Creation"
+              "title": "Resume model"
+            }
+          },
+          {
+            "id": "93ec5ece571b8a7d",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "UML/Requirements - use cases.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Requirements - use cases"
             }
           },
           {
@@ -196,12 +208,13 @@
   },
   "active": "f2f02584328d663a",
   "lastOpenFiles": [
+    "UML/Domain/Resume model.md",
+    "UML/Requirements - use cases.md",
     "UML/Experience Creation.md",
     "UML/Education entry creation.md",
     "UML/Untitled.md",
     "UML/Language Stage.md",
     "UML/Portfolio.md",
-    "UML/Domain/Resume model.md",
     "Pasted Image 20250924170718_679.png",
     "Pasted Image 20250924170547_109.png",
     "UML/Experience Creation.md~",

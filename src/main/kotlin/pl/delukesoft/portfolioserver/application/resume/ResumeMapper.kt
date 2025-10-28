@@ -35,12 +35,11 @@ class ResumeMapper {
 
   fun mapVersionToDTO(version: ResumeVersion): ResumeVersionDTO {
     return ResumeVersionDTO(
-      version.id!!,
+      version.resume.id!!,
       version.resume.shortcut.title,
       version.resume.shortcut.summary,
       version.version,
-      version.state.name,
-      version.resume.isReadyToPublish
+      version.state.name
     )
   }
 
@@ -57,7 +56,6 @@ class ResumeMapper {
       workHistory = mapToExperienceDTO(resume.experience),
       hobbies = resume.hobbies.map { it.name },
       education = resume.education.map { mapEducationToDTO(it) },
-      isReadyForPublishing = resume.isReadyToPublish
     )
   }
 

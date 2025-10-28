@@ -28,26 +28,6 @@ class ResumeController(
   }
 
   @AuthRequired("ROLE_CANDIDATE")
-  @PutMapping("/{resumeId}/readyForPublish")
-  fun markResumeReadyForPublish(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    log.info("Received request to mark resume ready for publishing")
-    return resumeFacade.markResumeReadyForPublish(resumeId)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
-  @PutMapping("/{resumeId}/unmarkReadyForPublish")
-  fun unmarkResumeReadyForPublish(
-    @PathVariable("resumeId") resumeId: Long,
-    @RequestHeader("Authorization") token: String?
-  ): Boolean {
-    log.info("Received request to unmark resume ready for publishing")
-    return resumeFacade.unmarkResumeReadyForPublish(resumeId)
-  }
-
-  @AuthRequired("ROLE_CANDIDATE")
   @GetMapping("/history")
   fun getHistoryByUser(
     @RequestHeader("Authorization") token: String?

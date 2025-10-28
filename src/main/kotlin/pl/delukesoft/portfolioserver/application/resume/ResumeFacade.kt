@@ -123,14 +123,4 @@ class ResumeFacade(
     return skillService.editSkill(resume, skillToEdit, skillUpdate)
   }
 
-  fun markResumeReadyForPublish(resumeId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, userContext.user)
-    return resumeService.markResumeReadyForPublishing(resume)
-  }
-
-  fun unmarkResumeReadyForPublish(resumeId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, userContext.user)
-    return resumeService.unmarkResumeReadyForPublish(resume)
-  }
-
 }
