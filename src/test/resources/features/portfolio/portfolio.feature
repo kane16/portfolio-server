@@ -45,6 +45,9 @@ Feature: Portfolio data read from server
              "level" : "A2"
           }
        ],
+       "education" : [
+
+       ],
        "sideProjects" : [
 
        ],
@@ -123,6 +126,9 @@ Feature: Portfolio data read from server
              "name" : "French",
              "level" : "A2"
           }
+       ],
+       "education" : [
+
        ],
        "sideProjects" : [
 

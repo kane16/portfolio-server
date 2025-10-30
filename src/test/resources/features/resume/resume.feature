@@ -611,6 +611,9 @@ Feature: Resume creation
               "level" : "A2"
            }
         ],
+        "education" : [
+
+        ],
         "sideProjects" : [
 
         ],
@@ -717,6 +720,9 @@ Feature: Resume creation
               "name" : "French",
               "level" : "A2"
            }
+        ],
+        "education" : [
+
         ],
         "sideProjects" : [
 
@@ -860,6 +866,9 @@ Feature: Resume creation
             "level" : "A2"
          }
       ],
+      "education" : [
+
+      ],
       "sideProjects" : [
 
       ],
@@ -938,6 +947,9 @@ Feature: Resume creation
             "name" : "French",
             "level" : "A2"
          }
+      ],
+      "education" : [
+
       ],
       "sideProjects" : [
 
@@ -1050,6 +1062,9 @@ Feature: Resume creation
               "name" : "French",
               "level" : "A2"
            }
+        ],
+        "education" : [
+
         ],
         "sideProjects" : [
 

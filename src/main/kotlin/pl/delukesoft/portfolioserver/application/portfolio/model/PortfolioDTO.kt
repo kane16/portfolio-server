@@ -2,6 +2,7 @@ package pl.delukesoft.portfolioserver.application.portfolio.model
 
 import org.thymeleaf.context.WebContext
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
+import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 
 data class PortfolioDTO(
   val id: Long,
@@ -13,7 +14,8 @@ data class PortfolioDTO(
   val languages: List<LanguageDTO>,
   val sideProjects: List<ProjectDTO>,
   val workHistory: List<ProjectDTO>,
-  val hobbies: List<String>
+  val hobbies: List<String>,
+  val education: List<EducationDTO>
 ): PrintDTO {
 
   override fun attachDataToContext(context: WebContext) {

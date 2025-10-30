@@ -48,6 +48,9 @@ Feature: CV View with search
              "level" : "A2"
           }
        ],
+       "education" : [
+
+       ],
        "sideProjects" : [
 
        ],
@@ -141,6 +144,9 @@ Feature: CV View with search
              "level" : "A2"
           }
        ],
+       "education" : [
+
+       ],
        "sideProjects" : [
 
        ],
@@ -222,6 +228,9 @@ Feature: CV View with search
              "level" : "A2"
           }
        ],
+       "education" : [
+
+       ],
        "sideProjects" : [
 
        ],
@@ -292,6 +301,9 @@ Feature: CV View with search
              "name" : "French",
              "level" : "A2"
           }
+       ],
+       "education" : [
+
        ],
        "sideProjects" : [
 
@@ -374,6 +386,8 @@ Feature: CV View with search
             "Music Production",
             "Open Source Contributing",
             "Yoga"
+         ],
+         "education" : [
          ],
          "resumeId" : 3
       }

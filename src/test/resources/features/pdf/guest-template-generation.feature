@@ -45,6 +45,9 @@ Feature: CV View functionality
              "level" : "A2"
           }
        ],
+       "education" : [
+
+       ],
        "sideProjects" : [
 
        ],

@@ -3,6 +3,9 @@ package pl.delukesoft.portfolioserver.application.portfolio
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.application.portfolio.model.*
+import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
+import pl.delukesoft.portfolioserver.application.resume.education.InstitutionDTO
+import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
@@ -23,6 +26,19 @@ class PortfolioMapper {
       sideProjects = mapToProjects(resume.sideProjects),
       workHistory = mapToProjects(resume.experience),
       hobbies = resume.hobbies.map { it.name },
+      education = resume.education.map {
+        EducationDTO(
+          it.id,
+          it.title,
+          InstitutionDTO(it.institution.name, it.institution.city, it.institution.country),
+          TimeframeDTO(it.timeframe.start, it.timeframe.end),
+          it.fieldOfStudy,
+          it.grade,
+          it.type.toString(),
+          it.description,
+          it.externalLinks
+        )
+      }
     )
   }
 

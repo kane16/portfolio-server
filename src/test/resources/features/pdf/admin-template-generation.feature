@@ -48,6 +48,9 @@ Feature: CV View functionality
              "level" : "A2"
           }
        ],
+       "education" : [
+
+       ],
        "sideProjects" : [
 
        ],
@@ -128,6 +131,9 @@ Feature: CV View functionality
              "name" : "French",
              "level" : "A2"
           }
+       ],
+       "education" : [
+
        ],
        "sideProjects" : [
 
