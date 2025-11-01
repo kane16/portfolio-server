@@ -204,7 +204,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = [0, 10, 29, 101, 120])
+  @ValueSource(ints = [0, 10, 29, 1001, 1200])
   fun `shortcut summary outside bounds is invalid`(len: Int) {
     val resume = baseResume(
       experience = emptyList(),

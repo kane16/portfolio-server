@@ -115,7 +115,7 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = [101, 120, 200])
+  @ValueSource(ints = [1001, 1200, 2000])
   fun `summary must be between 30 and 100 characters - too long`(len: Int) {
     val result = validator.validate(
       shortcut(
@@ -125,7 +125,7 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Summary length must be between 30 and 100")
+    assertHasMessage(result, "Summary length must be between 30 and 1000")
   }
 
   @Test
@@ -133,13 +133,13 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
     val result = validator.validate(
       shortcut(
         title = ofLen(3),
-        summary = ofLen(150)
+        summary = ofLen(1500)
       )
     )
 
     assertFalse(result.isValid)
     assertHasMessage(result, "Title length must be between 5 and 30")
-    assertHasMessage(result, "Summary length must be between 30 and 100")
+    assertHasMessage(result, "Summary length must be between 30 and 1000")
   }
 
 

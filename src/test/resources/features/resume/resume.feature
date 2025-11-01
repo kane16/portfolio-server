@@ -149,29 +149,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Summary length must be between 30 and 100",
-      "status": 400
-    }
-    """
-
-  Scenario: Resume creation fails due to summary too long
-    Given User is authorized with token: "candidate_empty"
-    When "POST" request is sent to endpoint "/resume/edit/init" with body:
-    """
-    {
-      "title": "My Professional Resume",
-      "summary": "This summary is way too long for validation purposes and exceeds the maximum allowed length significantly making it invalid",
-      "image": {
-        "name": "My image",
-        "src": "123.jpg"
-      }
-    }
-    """
-    Then Response status code should be 400
-    And Response body should be:
-    """
-    {
-      "error": "Summary length must be between 30 and 100",
+      "error": "Summary length must be between 30 and 1000",
       "status": 400
     }
     """

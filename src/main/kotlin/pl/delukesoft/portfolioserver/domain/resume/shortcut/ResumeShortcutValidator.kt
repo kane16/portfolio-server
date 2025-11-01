@@ -10,7 +10,7 @@ class ResumeShortcutValidator : Validator<ResumeShortcut>() {
   override fun validate(value: ResumeShortcut): ValidationResult {
     val validationResults: List<ValidationResult> = listOf(
       validationFunc(value, ::titleLengthInBounds, "Title length must be between 5 and 30"),
-      validationFunc(value, ::summaryLengthInBounds, "Summary length must be between 30 and 100")
+      validationFunc(value, ::summaryLengthInBounds, "Summary length must be between 30 and 1000")
     )
 
     return if (validationResults.all { it.isValid }) ValidationResult.build() else ValidationResult.build(
@@ -27,6 +27,6 @@ class ResumeShortcutValidator : Validator<ResumeShortcut>() {
     shortcut.title.length in 5..30
 
   private fun summaryLengthInBounds(shortcut: ResumeShortcut): Boolean =
-    shortcut.summary.length in 30..100
+    shortcut.summary.length in 30..1000
 
 }
