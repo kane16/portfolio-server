@@ -11,12 +11,14 @@
             "id": "9bb319fc651f13d3",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "UML/Domain/Resume model.md"
+                "file": "Resume manipulation and access via DTOs.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "Resume model"
+              "icon": "lucide-file",
+              "title": "Resume manipulation and access via DTOs"
             }
           },
           {
@@ -55,8 +57,7 @@
               "title": "Experience Creation"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -206,19 +207,22 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "f2f02584328d663a",
+  "active": "9bb319fc651f13d3",
   "lastOpenFiles": [
-    "UML/Domain/Resume model.md",
+    "Resume vs Portfolio.md",
+    "Resume manipulation and access via DTOs.md~",
+    "Resume vs Portfolio.md~",
+    "Resume manipulation and access via DTOs.md",
+    "UML/Portfolio.md",
     "UML/Requirements - use cases.md",
+    "UML/Language Stage.md",
     "UML/Experience Creation.md",
+    "UML/Domain/Resume model.md",
     "UML/Education entry creation.md",
     "UML/Untitled.md",
-    "UML/Language Stage.md",
-    "UML/Portfolio.md",
     "Pasted Image 20250924170718_679.png",
     "Pasted Image 20250924170547_109.png",
     "UML/Experience Creation.md~",
-    "Resume vs Portfolio.md",
     "Portfolio App overview.md",
     "UML/Domain",
     "UML",
@@ -238,17 +242,12 @@
     "copilot-custom-prompts/Remove URLs.md",
     "copilot-custom-prompts/Generate glossary.md",
     "copilot-custom-prompts/Generate table of contents.md",
-    "copilot-custom-prompts/Make longer.md",
-    "copilot-custom-prompts/Make shorter.md",
-    "copilot-custom-prompts/Emojify.md",
     "copilot-custom-prompts",
     "Portfolio main view/Portfolio View.md~",
     "Portfolio main view/mockup/print-solid.svg",
     "Excalidraw",
     "Edit View/mockup",
     "Edit View",
-    "CV View/mockup",
-    "CV View",
     "CV View/mockup/Pasted Image 20250628094342_644.png",
     "CV View/mockup/Pasted Image 20250628094342_673.svg",
     "CV View/mockup/Pasted Image 20250628094342_672.svg",
