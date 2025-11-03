@@ -1,0 +1,31 @@
+[
+{
+  "_id": 1,
+  "versions": [
+    {
+      "$ref": "ResumeVersion",
+      "$id": 1
+    }
+  ],
+  "user": {
+    "username": "admin",
+    "email": "lukasz.guminski629@gmail.com",
+    "roles": [
+      "ROLE_USER",
+      "ROLE_EDITOR",
+      "ROLE_ADMIN",
+      "ROLE_CANDIDATE"
+    ]
+  },
+  "_class": "pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistory",
+  "defaultResume": {
+    "_id": 1,
+    "resume": {
+      "$ref": "Resume",
+      "$id": 1
+    },
+    "version": 1,
+    "state": "PUBLISHED"
+  }
+}
+]

@@ -1,0 +1,44 @@
+[
+{
+  "_id": 1,
+  "collectionName": "author",
+  "sequenceNumber": 2,
+  "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+},
+{
+  "_id": 2,
+  "collectionName": "resume",
+  "sequenceNumber": 2,
+  "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+},
+{
+  "_id": 3,
+  "collectionName": "resume_history",
+  "sequenceNumber": 2,
+  "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+},
+{
+  "_id": 4,
+  "collectionName": "resume_version",
+  "sequenceNumber": 2,
+  "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+},
+{
+  "_id": 5,
+  "collectionName": "education",
+  "sequenceNumber": 5,
+  "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+},
+{
+  "_id": 6,
+  "collectionName": "experience",
+  "sequenceNumber": 5,
+  "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+},
+{
+  "_id": 7,
+  "collectionName": "language",
+  "sequenceNumber": 4,
+  "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+}
+]

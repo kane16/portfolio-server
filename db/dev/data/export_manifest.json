@@ -1,0 +1,33 @@
+{
+  "database": "portfolio",
+  "timestamp": "2025-11-01T17:37:00.078429",
+  "output": "dev/data",
+  "format": "json-array",
+  "collections": [
+    {
+      "name": "Author",
+      "file": "Author.json",
+      "count": 1
+    },
+    {
+      "name": "Resume",
+      "file": "Resume.json",
+      "count": 1
+    },
+    {
+      "name": "ResumeHistory",
+      "file": "ResumeHistory.json",
+      "count": 1
+    },
+    {
+      "name": "ResumeVersion",
+      "file": "ResumeVersion.json",
+      "count": 1
+    },
+    {
+      "name": "Sequence",
+      "file": "Sequence.json",
+      "count": 7
+    }
+  ]
+}

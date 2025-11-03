@@ -1,0 +1,36 @@
+[
+{
+  "_id": 1,
+  "username": "admin",
+  "email": "lukasz.guminski629@gmail.com",
+  "roles": [
+    "ROLE_USER",
+    "ROLE_ADMIN",
+    "ROLE_CANDIDATE",
+    "ROLE_EDITOR"
+  ],
+  "skills": [],
+  "domains": [
+    {
+      "name": "JVM"
+    },
+    {
+      "name": "Databases"
+    },
+    {
+      "name": "AI Tools"
+    },
+    {
+      "name": "JS Framework"
+    },
+    {
+      "name": "Architecture"
+    },
+    {
+      "name": "CI/CD"
+    }
+  ],
+  "businesses": [],
+  "_class": "pl.delukesoft.portfolioserver.domain.user.Author"
+}
+]
