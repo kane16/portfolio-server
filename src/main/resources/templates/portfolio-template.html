@@ -1,226 +1,497 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>CV form</title>
+  <title>Łukasz Gumiński · Lead Java Developer</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" th:href="@{/resources/css/output.css}"/>
-  <script src="https://kit.fontawesome.com/61f95dda41.js" crossorigin="anonymous"></script>
-  <style>
-      body {
-          background: #ccc; /* to visualize the page border */
-      }
-
-      .page {
-          width: 21cm;
-          height: 29.7cm;
-          background: white;
-          margin: auto;
-          margin-top: 10px;
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-          box-sizing: border-box;
-      }
-
-      @media print {
-          .print\:page {
-              margin: 0;
-              height: fit-content;
-              box-sizing: initial;
-              border: initial;
-              border-radius: initial;
-              width: initial;
-              min-height: initial;
-              box-shadow: initial;
-              break-after: page;
-          }
-      }
-  </style>
+  <script
+    crossorigin="anonymous"
+    src="https://kit.fontawesome.com/61f95dda41.js"
+  ></script>
 </head>
-<body class="bg-gray-200">
-<div class="page print:page">
-  <div class="flex justify-between bg-[#003d74] p-2 h-[3.8cm]">
-    <div class="flex-col w-full px-2 py-2 text-white">
-      <div class="text-4xl font-bold" th:text="${fullname}"></div>
-      <div class="text-md" th:text="${title}"></div>
-    </div>
-    <img class="w-32 h-32 rounded-sm" th:src="@{resources/images/lg.jpg}" alt="Profile picture"/>
-  </div>
-  <div class="w-full grid grid-cols-8">
-    <div
-      class="hidden print:flex py-2 justify-evenly text-black p-2 print print:col-span-8 print:col-start-1 print:py-4">
-      <div class="flex flex-row gap-4">
-        <i class="fa-solid fa-envelope text-4xl pt-1"></i>
-        <div class="flex flex-col">
-          <div class="font-bold text-md">Email:</div>
-          <a href="mailto:lukasz.guminski629@gmail.com" class="text-xs
-              text-blue-600 hover:text-blue-500 transition duration-300">lukasz.guminski629@gmail.com</a>
+<body
+  class="min-h-screen bg-slate-100 py-6 text-slate-700 print:bg-white print:py-0 print:text-[0.82rem] print:leading-tight"
+>
+<main class="flex flex-col items-center gap-6 print:gap-0">
+  <section
+    class="relative mx-auto w-full max-w-[21cm] min-h-[29.7cm] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl print:w-full print:max-w-[21cm] print:min-h-0 print:rounded-none print:border print:border-transparent print:shadow-none print:overflow-visible"
+  >
+    <header
+      class="header-gradient flex flex-col gap-6 px-8 py-8 text-white print:gap-4 print:bg-white print:bg-none print:px-6 print:py-6 print:text-slate-800"
+    >
+      <div
+        class="flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
+      >
+        <div class="max-w-xl">
+          <h1 class="text-4xl font-bold tracking-tight print:text-3xl" th:text="${fullname}">
+          </h1>
+          <p
+            class="mt-1 text-lg font-medium text-sky-100/90 print:mt-0.5 print:text-slate-600 print:text-base"
+          >
+            Lead Java Developer · Solutions Architect · Team Mentor
+          </p>
+          <p
+            class="mt-4 text-sm leading-relaxed text-sky-100/80 print:mt-2 print:text-slate-600"
+          >
+            Crafting robust, resilient platforms across regulated industries
+            with a focus on developer experience, sustainable delivery, and
+            thoughtful architecture.
+          </p>
         </div>
+        <img
+          alt="Portrait of Łukasz Gumiński"
+          class="h-32 w-32 rounded-full border-4 border-white object-cover shadow-xl ring-4 ring-sky-500/40 print:border-slate-300 print:ring-0"
+          th:src="@{imageSource}"
+        />
       </div>
-      <div class="flex flex-row gap-4">
-        <i class="fa-solid fa-phone text-4xl pt-1"></i>
-        <div class="flex flex-col">
-          <div class="font-bold text-md">Phone:</div>
-          <a href="tel:+48668020777"
-             class="text-xs text-blue-600 hover:text-blue-500 transition duration-300 underline">+48 668 020
-            777</a>
-        </div>
+      <div
+        class="flex flex-wrap items-center gap-6 text-sm font-medium text-sky-100/90 print:gap-4 print:text-slate-600"
+      >
+        <a
+          class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
+          href="mailto:lukasz.guminski629@gmail.com"
+        >
+          <i class="fa-solid fa-envelope text-base"></i>
+          <span>lukasz.guminski629@gmail.com</span>
+        </a>
+        <a
+          class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
+          href="tel:+48668020777"
+        >
+          <i class="fa-solid fa-phone text-base"></i>
+          <span>+48 668 020 777</span>
+        </a>
+        <span class="flex items-center gap-2 print:hidden">
+              <i class="fa-solid fa-location-dot text-base"></i>
+              <span>Kraków, Poland · Hybrid &amp; Remote</span>
+            </span>
+        <a
+          class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
+          href="https://www.linkedin.com/in/lukasz-guminski"
+        >
+          <i class="fa-brands fa-linkedin text-base"></i>
+          <span>linkedin.com/in/lukasz-guminski</span>
+        </a>
+        <a
+          class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
+          href="https://github.com/lguminski"
+        >
+          <i class="fa-brands fa-github text-base"></i>
+          <span>github.com/lguminski</span>
+        </a>
       </div>
-    </div>
-    <div class="col-start-1 col-span-6 print:col-span-8 text-black p-4 py-8 print:p-0">
-      <div class="border-2 border-black p-4">
-        <h2 class="font-bold underline text-xl pb-2 text-center">Summary:</h2>
-        <p class="text-sm" th:text="${summary}"></p>
-      </div>
-      <div class="print:pb-4">
-        <h2 class="font-bold text-xl py-4 text-center print:pt-2">Skills</h2>
-        <div class="flex justify-center">
-          <div class="p-2">
-            <ul class="list-disc text-sm pl-4">
-              <li th:each="skill : ${skills1}">
-                <div>
-                  <div>
-                    <span th:text="${skill.name}"></span>
-                    <span>
-                      <i th:each="i: ${#numbers.sequence(1, skill.level)}" class="fa-solid fa-star"></i>
-                      <span class="-ml-3"></span>
-                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}"
-                         class="fa-regular fa-star"></i>
-                      </span>
-                    </span>
-                  </div>
-                  <div class="text-xs italic" th:text="${skill.description}"></div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="p-2">
-            <ul class="list-disc text-sm pl-4" th:each="skill : ${skills2}">
-              <li>
-                <div>
-                  <div>
-                    <span th:text="${skill.name}"></span>
-                    <span>
-                      <i th:each="i: ${#numbers.sequence(1, skill.level)}" class="fa-solid fa-star"></i>
-                      <span class="-ml-3"></span>
-                      <i th:if="${skill.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}"
-                         class="fa-regular fa-star"></i>
-                    </span>
-                  </div>
-                  <div class="text-xs italic" th:text="${skill.description}">
+    </header>
 
-                  </div>
-                </div>
-              </li>
-            </ul>
+    <div
+      class="grid gap-10 px-8 py-10 lg:grid-cols-[2fr_1fr] lg:gap-12 print:grid-cols-[60%_35%] print:gap-3 print:px-5 print:py-5"
+    >
+      <section class="space-y-10 print:space-y-3">
+        <article
+          class="rounded-2xl border border-sky-100 bg-sky-50/60 p-6 shadow-sm print:break-inside-avoid print:border-slate-200 print:bg-white print:p-4 print:shadow-none"
+        >
+          <h2
+            class="text-base font-semibold uppercase tracking-[0.2em] text-sky-900 print:text-slate-700"
+          >
+            Summary
+          </h2>
+          <p class="mt-3 text-sm leading-relaxed text-slate-700 print:mt-2" th:text="${summary}">
+            Highly accomplished Java engineer with a decade of experience
+            building enterprise systems in finance, telecom, and public
+            safety. Comfortable steering cross-functional teams through
+            demanding delivery cycles, shaping platform vision, and evolving
+            legacy estates into cloud-ready services.
+          </p>
+        </article>
+
+        <article class="space-y-6 print:space-y-3 print:break-inside-avoid">
+          <div class="flex items-center justify-between">
+            <h2
+              class="text-base font-semibold uppercase tracking-[0.2em] text-slate-800"
+            >
+              Core Skills
+            </h2>
+            <span
+              class="text-xs font-medium uppercase tracking-[0.35em] text-slate-400"
+            >
+                  Selected highlights
+                </span>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-start-7 col-span-2 h-[25.9cm] bg-gray-300 text-black p-2 print:hidden">
-      <div class="font-bold text-md">Email:</div>
-      <a href="mailto:lukasz.guminski629@gmail.com" class="text-xs
-                   text-blue-600 hover:text-blue-500 transition duration-300">lukasz.guminski629@gmail.com</a>
-      <div class="font-bold text-md">Phone:</div>
-      <a href="tel:+48668020777"
-         class="text-xs text-blue-600 hover:text-blue-500 transition duration-300 underline">+48 668 020 777</a>
-      <div>
-        <h2 class="font-bold text-md py-2">Languages</h2>
-        <ul class="list-disc text-sm pl-4">
-          <li th:each="language: ${languages}">
-            <div>
-              <div th:text="${language.name}"></div>
-              <div class="italic text-xs" th:text="${language.level}">Native</div>
+          <div class="grid gap-4 sm:grid-cols-2 print:gap-2">
+            <div
+              class="rounded-2xl border border-slate-200 p-5 shadow-sm print:p-3.5 print:shadow-none"
+            >
+              <h3
+                class="text-sm font-semibold uppercase tracking-wider text-slate-500"
+              >
+                Backend
+              </h3>
+              <ul
+                class="mt-3 space-y-2 text-sm leading-relaxed print:space-y-1.5"
+              >
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Java 17 · 21, Kotlin, Groovy</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Spring Boot, Quarkus, Micronaut</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Reactive streams, event-driven design</span>
+                </li>
+              </ul>
+                </div>
+            <div
+              class="rounded-2xl border border-slate-200 p-5 shadow-sm print:p-3.5 print:shadow-none"
+            >
+              <h3
+                class="text-sm font-semibold uppercase tracking-wider text-slate-500"
+              >
+                Architecture
+              </h3>
+              <ul
+                class="mt-3 space-y-2 text-sm leading-relaxed print:space-y-1.5"
+              >
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Domain-driven design, bounded contexts</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Microservices, service mesh, API gateways</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Legacy modernization, strangler patterns</span>
+                </li>
+              </ul>
             </div>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="font-bold text-md py-2">Side Projects</h2>
-        <ul class="list-disc text-sm pl-4">
-          <li th:each="project: ${sideProjects}">
-            <div>
-              <div th:text="${project.position}"></div>
-              <span th:text="${#strings.listJoin(project.skills.![name], ', ')}" class="text-sm italic"></span>
-              <div class="italic text-xs" th:text="${project.description}"></div>
+            <div
+              class="rounded-2xl border border-slate-200 p-5 shadow-sm print:p-3.5 print:shadow-none"
+            >
+              <h3
+                class="text-sm font-semibold uppercase tracking-wider text-slate-500"
+              >
+                Delivery
+              </h3>
+              <ul
+                class="mt-3 space-y-2 text-sm leading-relaxed print:space-y-1.5"
+              >
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Hands-on leadership of 6–12 person squads</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Blueprinting CI/CD pipelines &amp; KPIs</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Mentoring, pair-programming, talent growth</span>
+                </li>
+              </ul>
             </div>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="font-bold text-md py-2">Hobbies</h2>
-        <ul class="list-disc text-sm pl-4">
-          <li th:each="hobby: ${hobbies}" th:text="${hobby}" class="text-xs italic"></li>
-        </ul>
-      </div>
+            <div
+              class="rounded-2xl border border-slate-200 p-5 shadow-sm print:p-3.5 print:shadow-none"
+            >
+              <h3
+                class="text-sm font-semibold uppercase tracking-wider text-slate-500"
+              >
+                Tooling
+              </h3>
+              <ul
+                class="mt-3 space-y-2 text-sm leading-relaxed print:space-y-1.5"
+              >
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Kafka, RabbitMQ, Camunda BPM</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Docker, Kubernetes, OpenShift</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fa-solid fa-check mt-1 text-sky-600"></i>
+                  <span>Terraform, GitHub Actions, GitLab CI</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <aside
+        class="flex flex-col gap-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 shadow-sm print:gap-3 print:border print:border-slate-200 print:bg-white print:px-3.5 print:py-3.5 print:shadow-none"
+      >
+        <section class="print:break-inside-avoid">
+          <h2
+            class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600"
+          >
+            Contact
+          </h2>
+          <div class="mt-4 space-y-3 text-sm print:mt-3 print:space-y-2">
+            <p class="flex gap-2 text-slate-700">
+              <i class="fa-solid fa-location-dot pt-0.5 text-sky-600"></i>
+              <span>Kraków, Poland · CET (UTC+1)</span>
+            </p>
+            <p class="flex gap-2 text-slate-700">
+              <i class="fa-solid fa-language pt-0.5 text-sky-600"></i>
+              <span>Polish (native), English (C1), German (B1)</span>
+            </p>
+            <p class="flex gap-2 text-slate-700">
+              <i class="fa-solid fa-passport pt-0.5 text-sky-600"></i>
+              <span>Schengen work permit · Willing to travel</span>
+            </p>
+          </div>
+        </section>
+
+        <section class="print:break-inside-avoid">
+          <h2
+            class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600"
+          >
+            Highlights
+          </h2>
+          <ul
+            class="mt-4 space-y-3 text-sm leading-relaxed print:space-y-2"
+          >
+            <li
+              class="rounded-xl bg-white/70 p-3 shadow-sm print:p-2.5 print:text-xs print:shadow-none"
+            >
+              <p class="font-semibold">Speaker &amp; Coach</p>
+              <p class="mt-1 text-xs text-slate-500">
+                DWJ, Voxxed Days, Java User Groups
+              </p>
+            </li>
+            <li
+              class="rounded-xl bg-white/70 p-3 shadow-sm print:p-2.5 print:text-xs print:shadow-none"
+            >
+              <p class="font-semibold">Certified</p>
+              <p class="mt-1 text-xs text-slate-500">
+                Oracle Certified Professional, AWS Practitioner
+              </p>
+            </li>
+            <li
+              class="rounded-xl bg-white/70 p-3 shadow-sm print:p-2.5 print:text-xs print:shadow-none"
+            >
+              <p class="font-semibold">Community Builder</p>
+              <p class="mt-1 text-xs text-slate-500">
+                Founded an internal Java guild mentoring 40+ engineers
+              </p>
+            </li>
+          </ul>
+        </section>
+      </aside>
     </div>
-  </div>
-</div>
-<div class="page p-4 print:p-0 print:page">
-  <h2 class="font-bold text-xl text-center pb-2">Work History</h2>
-  <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory1}">
-    <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
-      th:text="${work.timespan.end}"/></div>
-    <div class="flex flex-col gap-2 w-full">
-      <div class="flex justify-between px-4 border-b-2">
-        <div class="font-bold text-lg" th:text="${work.position}"></div>
-      </div>
-      <div class="px-4">
-        <span>Business domain: <span th:text="${work.business}"></span></span>
-        <p th:text="${work.summary}"></p>
-        <p class="font-semibold">Key tech stack</p>
-        <ul class="list-disc pl-4 text-sm">
-          <li th:each="tech : ${work.skills}">
-            <div><span th:text="${tech.name}"></span>
-              <span>
-                <i th:each="i: ${#numbers.sequence(1, tech.level)}" class="fa-solid fa-star"></i>
-                <span class="-ml-3"></span>
-                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}"
-                   class="fa-regular fa-star"></i>
+  </section>
+
+  <section
+    class="relative mx-auto w-full max-w-[21cm] min-h-[29.7cm] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl print:w-full print:max-w-[21cm] print:min-h-0 print:rounded-none print:border print:border-transparent print:shadow-none print:overflow-visible"
+  >
+    <div
+      class="grid gap-10 px-8 py-10 lg:grid-cols-[2.3fr_1fr] lg:gap-12 print:grid-cols-[65%_32%] print:gap-3 print:px-5 print:py-5"
+    >
+      <section class="space-y-8 print:space-y-3">
+        <div
+          class="flex items-center justify-between print:flex-col print:items-start print:gap-1"
+        >
+          <h2
+            class="text-base font-semibold uppercase tracking-[0.3em] text-slate-800"
+          >
+            Experience
+          </h2>
+          <span
+            class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400 print:text-slate-500"
+          >
+                Recent roles
               </span>
             </div>
-            <div class="text-xs italic" th:text="${tech.description}"></div>
-          </li>
-        </ul>
-      </div>
-      <div class="px-4">
-        <p class="font-semibold text-md">Responsibilities:</p>
-        <p th:text="${work.description}" class="text-sm"></p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="page p-4 print:p-0 print:page">
-  <div class="flex pb-2 print:flex-col print:justify-center print:items-center" th:each="work: ${workHistory2}">
-    <div class="text-lg italic underline w-48"><span th:text="${work.timespan.start}"/> - <span
-      th:text="${work.timespan.end}"/></div>
-    <div class="flex flex-col gap-2 w-full">
-      <div class="flex justify-between px-4 border-b-2">
-        <div class="font-bold text-lg" th:text="${work.position}"></div>
-      </div>
-      <div class="px-4">
-        <span>Business domain: <span th:text="${work.business}"></span></span>
-        <p th:text="${work.summary}"></p>
-        <p class="font-semibold">Key tech stack</p>
-        <ul class="list-disc pl-4 text-sm">
-          <li th:each="tech : ${work.skills}">
+
+        <article
+          class="space-y-4 rounded-2xl border border-slate-200 p-6 shadow-sm print:break-inside-avoid print:p-3.5 print:shadow-none"
+        >
+          <div
+            class="flex flex-col gap-2 border-b border-slate-100 pb-4 md:flex-row md:items-center md:justify-between"
+          >
             <div>
-              <span th:text="${tech.name}"></span>
-              <span>
-                <i th:each="i: ${#numbers.sequence(1, tech.level)}" class="fa-solid fa-star"></i>
-                <span class="-ml-3"></span>
-                <i th:if="${tech.level < 5}" th:each="i: ${#numbers.sequence(1, 5 - tech.level)}"
-                   class="fa-regular fa-star"></i>
-              </span>
+              <h3 class="text-lg font-semibold text-slate-800">
+                EPAM Systems
+              </h3>
+              <p class="text-sm font-medium text-slate-500">
+                Senior / Lead Java Developer
+              </p>
             </div>
-            <div class="text-xs italic" th:text="${tech.description}"></div>
-          </li>
-        </ul>
-      </div>
-      <div class="px-4">
-        <p class="font-semibold text-md">Responsibilities:</p>
-        <p th:text="${work.description}"></p>
-      </div>
+            <div
+              class="text-sm font-semibold uppercase tracking-wide text-slate-400"
+            >
+              2021 – Present
+            </div>
+          </div>
+          <p class="text-sm leading-relaxed">
+            Led a multi-team initiative upgrading core banking platforms to
+            modular services with strict SLAs and regulatory oversight.
+          </p>
+          <ul class="space-y-2 text-sm leading-relaxed print:space-y-1.5">
+            <li class="flex items-start gap-2">
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
+              ></i>
+              <span
+              >Scaled payment orchestration layer from 8 to 45 ops/sec
+                    while cutting incident volume by 40%.</span
+              >
+            </li>
+            <li class="flex items-start gap-2">
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
+              ></i>
+              <span
+              >Architected an event-driven loan approval workflow,
+                    replacing nightly batches with near-real-time
+                    decisions.</span
+              >
+            </li>
+            <li class="flex items-start gap-2">
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
+              ></i>
+              <span
+              >Introduced engineering guilds that reduced onboarding time
+                    for new engineers by 30%.</span
+              >
+            </li>
+          </ul>
+          <div
+            class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
+          >
+            <span class="rounded-full bg-slate-100 px-3 py-1">Java 17</span>
+            <span class="rounded-full bg-slate-100 px-3 py-1"
+            >Spring Boot</span
+            >
+            <span class="rounded-full bg-slate-100 px-3 py-1">Kafka</span>
+            <span class="rounded-full bg-slate-100 px-3 py-1"
+            >Kubernetes</span
+            >
+          </div>
+        </article>
+
+        <article
+          class="space-y-4 rounded-2xl border border-slate-200 p-6 shadow-sm print:break-inside-avoid print:p-3.5 print:shadow-none"
+        >
+          <div
+            class="flex flex-col gap-2 border-b border-slate-100 pb-4 md:flex-row md:items-center md:justify-between"
+          >
+            <div>
+              <h3 class="text-lg font-semibold text-slate-800">
+                Objectivity
+              </h3>
+              <p class="text-sm font-medium text-slate-500">
+                Senior Java Developer
+              </p>
+            </div>
+            <div
+              class="text-sm font-semibold uppercase tracking-wide text-slate-400"
+            >
+              2017 – 2021
+            </div>
+          </div>
+          <p class="text-sm leading-relaxed">
+            Delivered omni-channel experiences for telecom customers,
+            integrating legacy CRM systems with customer-facing
+            micro-frontends.
+          </p>
+          <ul class="space-y-2 text-sm leading-relaxed print:space-y-1.5">
+            <li class="flex items-start gap-2">
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
+              ></i>
+              <span
+              >Designed resilience patterns that improved uptime to 99.95%
+                    across 20+ microservices.</span
+              >
+            </li>
+            <li class="flex items-start gap-2">
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
+              ></i>
+              <span
+              >Automated contract testing pipeline, catching 75% of
+                    breaking changes before staging.</span
+              >
+            </li>
+            <li class="flex items-start gap-2">
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
+              ></i>
+              <span
+              >Championed trunk-based development and feature flags,
+                    reducing release cycle from monthly to weekly.</span
+              >
+            </li>
+          </ul>
+          <div
+            class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
+          >
+            <span class="rounded-full bg-slate-100 px-3 py-1">Java 11</span>
+            <span class="rounded-full bg-slate-100 px-3 py-1"
+            >Spring Cloud</span
+            >
+            <span class="rounded-full bg-slate-100 px-3 py-1">Camunda</span>
+            <span class="rounded-full bg-slate-100 px-3 py-1">Azure</span>
+          </div>
+        </article>
+      </section>
+
+      <aside
+        class="flex flex-col gap-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 shadow-sm print:gap-3 print:border print:border-slate-200 print:bg-white print:px-3.5 print:py-3.5 print:shadow-none"
+      >
+        <section class="print:break-inside-avoid">
+          <h2
+            class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600"
+          >
+            Side Projects
+          </h2>
+          <div class="mt-4 space-y-3 text-sm print:mt-3 print:space-y-2">
+            <article
+              class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm print:p-2.5 print:text-[0.7rem] print:shadow-none"
+            >
+              <h3 class="font-semibold text-slate-700">Sport Bets App</h3>
+              <p class="mt-1 text-xs text-slate-500">
+                Desktop analytics tool · .NET WPF, Event sourcing
+              </p>
+              <p class="mt-2 text-xs text-slate-500">
+                Deployed for local fantasy leagues with live dashboards.
+              </p>
+            </article>
+            <article
+              class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm print:p-2.5 print:text-[0.7rem] print:shadow-none"
+            >
+              <h3 class="font-semibold text-slate-700">Blog Platform</h3>
+              <p class="mt-1 text-xs text-slate-500">
+                React, Micronaut, Kotlin
+              </p>
+              <p class="mt-2 text-xs text-slate-500">
+                Multi-tenant architecture with editorial workflows.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="print:break-inside-avoid">
+          <h2
+            class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600"
+          >
+            Hobbies
+          </h2>
+          <p class="mt-4 text-sm leading-relaxed text-slate-700">
+            Trail running, jazz improvisation, and tinkering with home
+            automation — balancing creativity with analytical thinking.
+          </p>
+        </section>
+      </aside>
     </div>
-  </div>
-</div>
+  </section>
+</main>
 </body>
 </html>

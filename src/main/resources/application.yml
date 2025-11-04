@@ -10,6 +10,9 @@ spring:
   data:
     mongodb:
       database: portfolio
+  devtools:
+    livereload:
+      enabled: true
 server:
   error:
     include-message: always

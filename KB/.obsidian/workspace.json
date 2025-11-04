@@ -11,14 +11,12 @@
             "id": "9bb319fc651f13d3",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Resume manipulation and access via DTOs.md",
-                "mode": "source",
-                "source": false
+                "file": "Pasted Image 20250924170718_679.png"
               },
-              "icon": "lucide-file",
-              "title": "Resume manipulation and access via DTOs"
+              "icon": "lucide-image",
+              "title": "Pasted Image 20250924170718_679"
             }
           },
           {
@@ -209,10 +207,12 @@
   },
   "active": "9bb319fc651f13d3",
   "lastOpenFiles": [
+    "Implementation Pointers.md",
+    "Editing Endpoints.md",
+    "Resume manipulation and access via DTOs.md",
     "Resume vs Portfolio.md",
     "Resume manipulation and access via DTOs.md~",
     "Resume vs Portfolio.md~",
-    "Resume manipulation and access via DTOs.md",
     "UML/Portfolio.md",
     "UML/Requirements - use cases.md",
     "UML/Language Stage.md",
@@ -241,7 +241,6 @@
     "copilot-custom-prompts/Rewrite as tweet.md",
     "copilot-custom-prompts/Remove URLs.md",
     "copilot-custom-prompts/Generate glossary.md",
-    "copilot-custom-prompts/Generate table of contents.md",
     "copilot-custom-prompts",
     "Portfolio main view/Portfolio View.md~",
     "Portfolio main view/mockup/print-solid.svg",
