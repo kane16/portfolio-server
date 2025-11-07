@@ -262,7 +262,7 @@
             </div>
             <div
               class="text-sm font-semibold uppercase tracking-wide text-slate-400"
-              th:text="${experience.timespan.start + ' - ' + experience.timespan.end}"
+              th:text="${#temporals.format(experience.timespan.start, 'MMM yyyy') + ' - ' + (experience.timespan.end != null ? #temporals.format(experience.timespan.end, 'MMM yyyy') : 'Present')}"
             ></div>
           </div>
           <p
@@ -288,94 +288,10 @@
                 </span>
           </div>
         </article>
-
-        <th:block
-          th:if="${education != null and !#lists.isEmpty(education)}"
-        >
-          <div
-            class="flex items-center justify-between print:flex-col print:items-start print:gap-1"
-          >
-            <h2
-              class="text-base font-semibold uppercase tracking-[0.3em] text-slate-800"
-            >
-              Education
-            </h2>
-            <span
-              class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400 print:text-slate-500"
-            >
-                  Academic background
-                </span>
-          </div>
-
-          <article
-            class="space-y-4 rounded-2xl border border-slate-200 p-6 shadow-sm print:break-inside-avoid print:p-3.5 print:shadow-none"
-            th:each="educationEntry : ${education}"
-          >
-            <div
-              class="flex flex-col gap-2 border-b border-slate-100 pb-4 md:flex-row md:items-center md:justify-between"
-            >
-              <div>
-                <h3
-                  class="text-lg font-semibold text-slate-800"
-                  th:text="${educationEntry.institution.name}"
-                ></h3>
-                <p
-                  class="text-sm font-medium text-slate-500"
-                  th:text="${educationEntry.title + ' · ' + educationEntry.fieldOfStudy}"
-                ></p>
-                <p
-                  class="text-xs font-medium uppercase tracking-wide text-slate-400"
-                  th:text="${educationEntry.institution.city + ', ' + educationEntry.institution.country}"
-                ></p>
-              </div>
-              <div
-                class="text-sm font-semibold uppercase tracking-wide text-slate-400"
-                th:text="${#temporals.format(educationEntry.timeframe.start, 'MMM yyyy') + ' - ' + (educationEntry.timeframe.end != null ? #temporals.format(educationEntry.timeframe.end, 'MMM yyyy') : 'Present')}"
-              ></div>
-            </div>
-            <p
-              class="text-sm leading-relaxed"
-              th:if="${educationEntry.description != null}"
-              th:text="${educationEntry.description}"
-            ></p>
-            <ul class="space-y-2 text-sm leading-relaxed print:space-y-1.5">
-              <li class="flex items-start gap-2">
-                <i
-                  class="fa-solid fa-circle text-[0.45rem] pt-2 text-sky-600"
-                ></i>
-                <span
-                  th:text="${'Study type: ' + educationEntry.type}"
-                ></span>
-              </li>
-              <li
-                class="flex items-start gap-2"
-                th:if="${educationEntry.grade != null}"
-              >
-                <i
-                  class="fa-solid fa-circle text-[0.45rem] pt-2 text-sky-600"
-                ></i>
-                <span th:text="${'Grade: ' + educationEntry.grade}"></span>
-              </li>
-            </ul>
-            <div
-              class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
-              th:if="${educationEntry.externalLinks != null and !#lists.isEmpty(educationEntry.externalLinks)}"
-            >
-              <a
-                class="rounded-full bg-slate-100 px-3 py-1 transition hover:bg-slate-200"
-                rel="noopener"
-                target="_blank"
-                th:each="link : ${educationEntry.externalLinks}"
-                th:href="${link}"
-                th:text="${link}"
-              ></a>
-            </div>
-          </article>
-        </th:block>
       </section>
 
       <aside
-        class="flex flex-col gap-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 shadow-sm print:gap-3 print:border print:border-slate-200 print:bg-white print:px-3.5 print:py-3.5 print:shadow-none"
+        class="flex print:hidden flex-col gap-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 shadow-sm print:gap-3 print:border print:border-slate-200 print:bg-white print:px-3.5 print:py-3.5 print:shadow-none"
       >
         <section class="print:break-inside-avoid">
           <h2
@@ -424,6 +340,95 @@
           </p>
         </section>
       </aside>
+    </div>
+  </section>
+
+  <section
+    class="relative mx-auto w-full max-w-[21cm] min-h-[29.7cm] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl print:w-full print:max-w-[21cm] print:min-h-0 print:rounded-none print:border print:border-transparent print:shadow-none print:overflow-visible print:break-before-page"
+    th:if="${education != null and !#lists.isEmpty(education)}"
+  >
+    <div class="px-8 py-10 print:px-5 print:py-5">
+      <section class="space-y-8 print:space-y-3">
+        <div
+          class="flex items-center justify-between print:flex-col print:items-start print:gap-1"
+        >
+          <h2
+            class="text-base font-semibold uppercase tracking-[0.3em] text-slate-800"
+          >
+            Education
+          </h2>
+          <span
+            class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400 print:text-slate-500"
+          >
+                Academic background
+              </span>
+        </div>
+
+        <article
+          class="space-y-4 rounded-2xl border border-slate-200 p-6 shadow-sm print:break-inside-avoid print:p-3.5 print:shadow-none"
+          th:each="educationEntry : ${education}"
+        >
+          <div
+            class="flex flex-col gap-2 border-b border-slate-100 pb-4 md:flex-row md:items-center md:justify-between"
+          >
+            <div>
+              <h3
+                class="text-lg font-semibold text-slate-800"
+                th:text="${educationEntry.institution.name}"
+              ></h3>
+              <p
+                class="text-sm font-medium text-slate-500"
+                th:text="${educationEntry.title + ' · ' + educationEntry.fieldOfStudy}"
+              ></p>
+              <p
+                class="text-xs font-medium uppercase tracking-wide text-slate-400"
+                th:text="${educationEntry.institution.city + ', ' + educationEntry.institution.country}"
+              ></p>
+            </div>
+            <div
+              class="text-sm font-semibold uppercase tracking-wide text-slate-400 md:shrink-0 md:text-right md:whitespace-nowrap print:whitespace-nowrap"
+              th:text="${#temporals.format(educationEntry.timeframe.start, 'MMM yyyy') + ' - ' + (educationEntry.timeframe.end != null ? #temporals.format(educationEntry.timeframe.end, 'MMM yyyy') : 'Present')}"
+            ></div>
+          </div>
+          <p
+            class="text-sm leading-relaxed"
+            th:if="${educationEntry.description != null}"
+            th:text="${educationEntry.description}"
+          ></p>
+          <ul class="space-y-2 text-sm leading-relaxed print:space-y-1.5">
+            <li class="flex items-start gap-2">
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-2 text-sky-600"
+              ></i>
+              <span
+                th:text="${'Study type: ' + educationEntry.type}"
+              ></span>
+            </li>
+            <li
+              class="flex items-start gap-2"
+              th:if="${educationEntry.grade != null}"
+            >
+              <i
+                class="fa-solid fa-circle text-[0.45rem] pt-2 text-sky-600"
+              ></i>
+              <span th:text="${'Grade: ' + educationEntry.grade}"></span>
+            </li>
+          </ul>
+          <div
+            class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
+            th:if="${educationEntry.externalLinks != null and !#lists.isEmpty(educationEntry.externalLinks)}"
+          >
+            <a
+              class="rounded-full bg-slate-100 px-3 py-1 transition hover:bg-slate-200"
+              rel="noopener"
+              target="_blank"
+              th:each="link : ${educationEntry.externalLinks}"
+              th:href="${link}"
+              th:text="${link}"
+            ></a>
+          </div>
+        </article>
+      </section>
     </div>
   </section>
 </main>

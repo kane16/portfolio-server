@@ -2,7 +2,10 @@ package pl.delukesoft.portfolioserver.application.resume
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.application.portfolio.model.*
+import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeVersionDTO
 import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.application.resume.education.InstitutionDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
@@ -59,19 +62,6 @@ class ResumeMapper {
     )
   }
 
-  private fun mapToProjects(experience: List<Experience>): List<ProjectDTO> {
-    return experience.map {
-      ProjectDTO(
-        it.position,
-        it.business.name,
-        it.summary,
-        it.description ?: "",
-        mapTimespan(it.timeframe),
-        it.skills.map { SkillPortfolioDTO(it.skill.name, it.detail) },
-      )
-    }
-  }
-
   private fun mapToExperienceDTO(experiences: List<Experience>): List<ExperienceDTO> {
     return experiences.map {
       ExperienceDTO(
@@ -91,15 +81,6 @@ class ResumeMapper {
         }
       )
     }
-  }
-
-  private fun mapTimespan(timeframe: Timeframe): TimespanDTO {
-    return TimespanDTO(
-      "${timeframe.start.year}.${timeframe.start.monthValue.toString().padStart(2, '0')}",
-      if (timeframe.end != null) "${timeframe.end.year}.${
-        timeframe.end.monthValue.toString().padStart(2, '0')
-      }" else "",
-    )
   }
 
   fun mapShortcutDTOToResume(shortcut: ResumeShortcutDTO, user: User): ResumeShortcut {

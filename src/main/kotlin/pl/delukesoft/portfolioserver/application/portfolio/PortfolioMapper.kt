@@ -2,13 +2,15 @@ package pl.delukesoft.portfolioserver.application.portfolio
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.application.portfolio.model.*
+import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.PortfolioDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.ProjectDTO
+import pl.delukesoft.portfolioserver.application.portfolio.model.SkillPortfolioDTO
 import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.application.resume.education.InstitutionDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
-import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
 
 @Component
 @RegisterReflectionForBinding(SkillPortfolioDTO::class, LanguageDTO::class, ProjectDTO::class)
@@ -50,19 +52,10 @@ class PortfolioMapper {
         it.business.name,
         it.summary,
         it.description ?: "",
-        mapTimespan(it.timeframe),
+        TimeframeDTO(it.timeframe.start, it.timeframe.end),
         it.skills.map { SkillPortfolioDTO(it.skill.name, it.detail, it.level) },
       )
     }
-  }
-
-  private fun mapTimespan(timeframe: Timeframe): TimespanDTO {
-    return TimespanDTO(
-      "${timeframe.start.year}.${timeframe.start.monthValue.toString().padStart(2, '0')}",
-      if (timeframe.end != null) "${timeframe.end.year}.${
-        timeframe.end.monthValue.toString().padStart(2, '0')
-      }" else "",
-    )
   }
 
 }
