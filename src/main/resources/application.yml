@@ -13,6 +13,8 @@ spring:
   devtools:
     livereload:
       enabled: true
+  thymeleaf:
+    cache: false
 server:
   error:
     include-message: always

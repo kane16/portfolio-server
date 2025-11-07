@@ -20,6 +20,7 @@ class PortfolioMapper {
       fullname = "Łukasz Gumiński",
       imageSource = resume.shortcut.image?.src ?: "",
       title = resume.shortcut.title,
+      email = resume.shortcut.user.email,
       summary = resume.shortcut.summary,
       skills = resume.skills.map { SkillPortfolioDTO(it.name, it.description, it.level) },
       languages = resume.languages.map { LanguageDTO(it.name, it.level.name) },

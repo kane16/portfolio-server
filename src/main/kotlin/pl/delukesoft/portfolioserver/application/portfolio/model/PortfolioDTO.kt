@@ -10,6 +10,7 @@ data class PortfolioDTO(
   val imageSource: String,
   val title: String,
   val summary: String,
+  val email: String,
   val skills: List<SkillPortfolioDTO>,
   val languages: List<LanguageDTO>,
   val sideProjects: List<ProjectDTO>,
@@ -23,14 +24,11 @@ data class PortfolioDTO(
     context.setVariable("imageSource", imageSource)
     context.setVariable("title", title)
     context.setVariable("summary", summary)
-    val (skills1, skills2) = partitionToHalf(skills)
-    context.setVariable("skills1", skills1)
-    context.setVariable("skills2", skills2)
+    context.setVariable("email", email)
+    context.setVariable("skills", skills)
     context.setVariable("languages", languages)
     context.setVariable("sideProjects", sideProjects)
-    val (workHistory1, workHistory2) = partitionToHalf(workHistory)
-    context.setVariable("workHistory1", workHistory1)
-    context.setVariable("workHistory2", workHistory2)
+    context.setVariable("workHistory", skills)
     context.setVariable("hobbies", hobbies)
   }
 
