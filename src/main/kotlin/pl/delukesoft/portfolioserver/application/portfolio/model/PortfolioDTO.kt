@@ -30,6 +30,7 @@ data class PortfolioDTO(
     context.setVariable("sideProjects", sideProjects)
     context.setVariable("workHistory", workHistory)
     context.setVariable("hobbies", hobbies)
+    context.setVariable("education", education)
   }
 
   override fun getResumeId(): Long {
@@ -37,7 +38,7 @@ data class PortfolioDTO(
   }
 
   override fun toString(): String {
-    return "ResumePrintDTO(id=$id, fullname='$fullname', imageSource='$imageSource', title='$title', summary='$summary', skills=$skills, languages=$languages, sideProjects=$sideProjects, workHistory=$workHistory, hobbies=$hobbies)"
+    return "ResumePrintDTO(id=$id, fullname='$fullname', imageSource='$imageSource', title='$title', summary='$summary', skills=$skills, languages=$languages, sideProjects=$sideProjects, workHistory=$workHistory, hobbies=$hobbies, education=$education)"
   }
 
 
