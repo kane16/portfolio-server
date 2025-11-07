@@ -117,33 +117,43 @@
                   Selected highlights
                 </span>
           </div>
-          <div class="grid gap-4 sm:grid-cols-2 print:gap-2">
+          <div class="grid gap-4 sm:grid-cols-2 print:grid-cols-3 print:gap-2">
             <div
               class="flex flex-col gap-3 rounded-2xl border border-slate-200 p-5 shadow-sm print:p-3.5 print:shadow-none"
-              th:each="skill: ${skills}">
+              th:each="skill: ${skills}"
+            >
               <div class="flex flex-col gap-1">
-                <h3 class="text-base font-semibold text-slate-800" th:text="${skill.name}">
-
-                </h3>
+                <h3
+                  class="text-base font-semibold text-slate-800"
+                  th:text="${skill.name}"
+                ></h3>
                 <div
                   class="flex items-center gap-1 text-amber-400"
                   role="img"
                   th:aria-label="'Skill level: ' + ${skill.level} + ' out of 5'"
                 >
-                  <i class="fa-solid fa-star" th:each="i: ${#numbers.sequence(1, skill.level)}"></i>
-                  <i class="fa-regular fa-star" th:each="i: ${#numbers.sequence(1, 5 - skill.level)}"
-                     th:if="${skill.level < 5}"></i>
+                  <i
+                    class="fa-solid fa-star"
+                    th:each="i: ${#numbers.sequence(1, skill.level)}"
+                  ></i>
+                  <i
+                    class="fa-regular fa-star"
+                    th:each="i: ${#numbers.sequence(1, 5 - skill.level)}"
+                    th:if="${skill.level < 5}"
+                  ></i>
                 </div>
               </div>
-              <p class="text-sm leading-relaxed text-slate-600" th:text="${skill.description}">
-              </p>
+              <p
+                class="text-sm leading-relaxed text-slate-600"
+                th:text="${skill.description}"
+              ></p>
             </div>
           </div>
         </article>
       </section>
 
       <aside
-        class="flex flex-col gap-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 shadow-sm print:gap-3 print:border print:border-slate-200 print:bg-white print:px-3.5 print:py-3.5 print:shadow-none"
+        class="flex flex-col gap-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 shadow-sm print:max-h-[15cm] print:overflow-hidden print:gap-3 print:border print:border-slate-200 print:bg-white print:px-3.5 print:py-3.5 print:shadow-none"
       >
         <section class="print:break-inside-avoid">
           <h2
@@ -157,9 +167,10 @@
               <span>Kraków, Poland · CET (UTC+1)</span>
             </p>
             <p class="flex gap-2 text-slate-700">
+            <div th:each="language: ${languages}">
               <i class="fa-solid fa-language pt-0.5 text-sky-600"></i>
-              <span>Polish (native), English (C1), German (B1)</span>
-            </p>
+              <span th:text="${language.name + ' (' + language.level + ')'}"></span>
+            </div>
             <p class="flex gap-2 text-slate-700">
               <i class="fa-solid fa-passport pt-0.5 text-sky-600"></i>
               <span>Schengen work permit · Willing to travel</span>
@@ -230,135 +241,40 @@
 
         <article
           class="space-y-4 rounded-2xl border border-slate-200 p-6 shadow-sm print:break-inside-avoid print:p-3.5 print:shadow-none"
+          th:each="experience : ${workHistory}"
         >
           <div
             class="flex flex-col gap-2 border-b border-slate-100 pb-4 md:flex-row md:items-center md:justify-between"
           >
             <div>
-              <h3 class="text-lg font-semibold text-slate-800">
-                EPAM Systems
-              </h3>
-              <p class="text-sm font-medium text-slate-500">
-                Senior / Lead Java Developer
-              </p>
-            </div>
-            <div
-              class="text-sm font-semibold uppercase tracking-wide text-slate-400"
-            >
-              2021 – Present
-            </div>
-          </div>
-          <p class="text-sm leading-relaxed">
-            Led a multi-team initiative upgrading core banking platforms to
-            modular services with strict SLAs and regulatory oversight.
-          </p>
-          <ul class="space-y-2 text-sm leading-relaxed print:space-y-1.5">
-            <li class="flex items-start gap-2">
-              <i
-                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
-              ></i>
-              <span
-              >Scaled payment orchestration layer from 8 to 45 ops/sec
-                    while cutting incident volume by 40%.</span
-              >
-            </li>
-            <li class="flex items-start gap-2">
-              <i
-                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
-              ></i>
-              <span
-              >Architected an event-driven loan approval workflow,
-                    replacing nightly batches with near-real-time
-                    decisions.</span
-              >
-            </li>
-            <li class="flex items-start gap-2">
-              <i
-                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
-              ></i>
-              <span
-              >Introduced engineering guilds that reduced onboarding time
-                    for new engineers by 30%.</span
-              >
-            </li>
-          </ul>
-          <div
-            class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
-          >
-            <span class="rounded-full bg-slate-100 px-3 py-1">Java 17</span>
-            <span class="rounded-full bg-slate-100 px-3 py-1"
-            >Spring Boot</span
-            >
-            <span class="rounded-full bg-slate-100 px-3 py-1">Kafka</span>
-            <span class="rounded-full bg-slate-100 px-3 py-1"
-            >Kubernetes</span
-            >
-          </div>
-        </article>
+              <h3 class="text-lg font-semibold text-slate-800" th:text="${experience.business}">
 
-        <article
-          class="space-y-4 rounded-2xl border border-slate-200 p-6 shadow-sm print:break-inside-avoid print:p-3.5 print:shadow-none"
-        >
-          <div
-            class="flex flex-col gap-2 border-b border-slate-100 pb-4 md:flex-row md:items-center md:justify-between"
-          >
-            <div>
-              <h3 class="text-lg font-semibold text-slate-800">
-                Objectivity
               </h3>
-              <p class="text-sm font-medium text-slate-500">
-                Senior Java Developer
-              </p>
+              <p class="text-sm font-medium text-slate-500" th:text="${experience.position}"></p>
             </div>
             <div
               class="text-sm font-semibold uppercase tracking-wide text-slate-400"
+              th:text="${experience.timespan.start + ' - ' + experience.timespan.end}"
             >
-              2017 – 2021
+
             </div>
           </div>
-          <p class="text-sm leading-relaxed">
-            Delivered omni-channel experiences for telecom customers,
-            integrating legacy CRM systems with customer-facing
-            micro-frontends.
+          <p class="text-sm leading-relaxed" th:text="${experience.description}">
           </p>
           <ul class="space-y-2 text-sm leading-relaxed print:space-y-1.5">
             <li class="flex items-start gap-2">
               <i
-                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
+                class="fa-solid fa-circle text-[0.45rem] pt-2 text-sky-600"
               ></i>
-              <span
-              >Designed resilience patterns that improved uptime to 99.95%
-                    across 20+ microservices.</span
-              >
-            </li>
-            <li class="flex items-start gap-2">
-              <i
-                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
-              ></i>
-              <span
-              >Automated contract testing pipeline, catching 75% of
-                    breaking changes before staging.</span
-              >
-            </li>
-            <li class="flex items-start gap-2">
-              <i
-                class="fa-solid fa-circle text-[0.45rem] pt-1 text-sky-600"
-              ></i>
-              <span
-              >Championed trunk-based development and feature flags,
-                    reducing release cycle from monthly to weekly.</span
-              >
+              <span th:text="${experience.summary}"></span>
             </li>
           </ul>
           <div
             class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
           >
-            <span class="rounded-full bg-slate-100 px-3 py-1">Java 11</span>
-            <span class="rounded-full bg-slate-100 px-3 py-1"
-            >Spring Cloud</span
-            >
-            <span class="rounded-full bg-slate-100 px-3 py-1">Camunda</span>
-            <span class="rounded-full bg-slate-100 px-3 py-1">Azure</span>
+                <span class="rounded-full bg-slate-100 px-3 py-1" th:each="skill : ${experience.skills}">
+                  <span th:text="${skill.name}"></span>
+                </span>
           </div>
         </article>
       </section>
@@ -375,38 +291,30 @@
           <div class="mt-4 space-y-3 text-sm print:mt-3 print:space-y-2">
             <article
               class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm print:p-2.5 print:text-[0.7rem] print:shadow-none"
+              th:each="project: ${sideProjects}"
             >
-              <h3 class="font-semibold text-slate-700">Sport Bets App</h3>
-              <p class="mt-1 text-xs text-slate-500">
-                Desktop analytics tool · .NET WPF, Event sourcing
+              <h3 class="font-semibold text-slate-700" th:text="${project.description}"></h3>
+              <p class="mt-1 text-xs text-slate-500" th:text="${project.summary}">
               </p>
-              <p class="mt-2 text-xs text-slate-500">
-                Deployed for local fantasy leagues with live dashboards.
-              </p>
-            </article>
-            <article
-              class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm print:p-2.5 print:text-[0.7rem] print:shadow-none"
-            >
-              <h3 class="font-semibold text-slate-700">Blog Platform</h3>
-              <p class="mt-1 text-xs text-slate-500">
-                React, Micronaut, Kotlin
-              </p>
-              <p class="mt-2 text-xs text-slate-500">
-                Multi-tenant architecture with editorial workflows.
-              </p>
+              <div
+                class="flex flex-wrap gap-2 text-xs font-semibold mt-4 uppercase tracking-wide text-slate-400"
+              >
+                <span class="rounded-full bg-slate-100 px-3 py-1" th:each="skill : ${project.skills}">
+                  <span th:text="${skill.name}"></span>
+                </span>
+              </div>
             </article>
           </div>
         </section>
 
         <section class="print:break-inside-avoid">
           <h2
-            class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600"
+            class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600 mb-2"
           >
             Hobbies
           </h2>
-          <p class="mt-4 text-sm leading-relaxed text-slate-700">
-            Trail running, jazz improvisation, and tinkering with home
-            automation — balancing creativity with analytical thinking.
+          <p class="text-sm leading-relaxed text-slate-700" th:each="hobby: ${hobbies}">
+            <span th:text="${hobby}"></span>
           </p>
         </section>
       </aside>

@@ -28,17 +28,12 @@ data class PortfolioDTO(
     context.setVariable("skills", skills)
     context.setVariable("languages", languages)
     context.setVariable("sideProjects", sideProjects)
-    context.setVariable("workHistory", skills)
+    context.setVariable("workHistory", workHistory)
     context.setVariable("hobbies", hobbies)
   }
 
   override fun getResumeId(): Long {
     return id
-  }
-
-  private fun <T> partitionToHalf(list: List<T>): Pair<List<T>, List<T>> {
-    val half = list.size / 2
-    return list.take(half) to list.takeLast(list.size - half)
   }
 
   override fun toString(): String {
