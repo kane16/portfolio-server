@@ -16,14 +16,29 @@ data class FieldConstraint(
       return ValidationResult.build("$path is not nullable")
     }
     if (value != null) {
-      if (value.length < constraints.minLength) {
+      if (value.trim().length < constraints.minLength) {
         return ValidationResult.build("$path length must be at least ${constraints.minLength}")
       }
-      if (value.length > constraints.maxLength) {
+      if (value.trim().length > constraints.maxLength) {
         return ValidationResult.build("$path length must be at most ${constraints.maxLength}")
       }
     }
     return ValidationResult(true, ValidationStatus.VALID)
+
+  }
+
+  companion object {
+
+    fun build(path: String, minLength: Int?, maxLength: Int?): FieldConstraint {
+      return FieldConstraint(
+        path = path,
+        constraints = FieldValidationConstraints(
+          nullable = minLength == null && maxLength == null,
+          minLength = minLength ?: 0,
+          maxLength = maxLength ?: Int.MAX_VALUE
+        )
+      )
+    }
 
   }
 

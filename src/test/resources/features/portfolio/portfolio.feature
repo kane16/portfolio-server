@@ -7,6 +7,7 @@ Feature: Portfolio data read from server
     """
     {
        "id" : 1,
+       "email" : "john.doe@example.com",
        "fullname" : "Łukasz Gumiński",
        "imageSource" : "/images/lg.jpg",
        "title" : "Lead Java Developer",
@@ -58,8 +59,8 @@ Feature: Portfolio data read from server
              "summary" : "Lead developer for core banking systems",
              "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
              "timespan" : {
-                "start" : "2023.01",
-                "end" : "2025.05"
+                "start" : "2023-01-01",
+                "end" : "2025-05-08"
              },
              "skills" : [
                 {
@@ -92,6 +93,7 @@ Feature: Portfolio data read from server
     """
     {
        "id" : 2,
+       "email" : "jane.smith@example.com",
        "fullname" : "Łukasz Gumiński",
        "imageSource" : "/images/lg.jpg",
        "title" : "Lead Java Developer",
@@ -140,8 +142,8 @@ Feature: Portfolio data read from server
              "summary" : "Full-stack development of modern web applications",
              "description" : "Designed and implemented full-stack solutions using React and Spring Boot, including real-time data processing features and responsive UI components",
              "timespan" : {
-                "start" : "2024.01",
-                "end" : "2025.06"
+                "start" : "2024-01-01",
+                "end" : "2025-06-10"
              },
              "skills" : [
                 {

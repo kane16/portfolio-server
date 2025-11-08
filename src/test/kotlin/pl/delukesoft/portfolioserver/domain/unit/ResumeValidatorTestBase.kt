@@ -7,7 +7,6 @@ import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.domain.constraint.ConstraintRepository
 import pl.delukesoft.portfolioserver.domain.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint
-import pl.delukesoft.portfolioserver.domain.constraint.FieldValidationConstraints
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.education.Education
 import pl.delukesoft.portfolioserver.domain.resume.education.EducationInstitution
@@ -159,13 +158,35 @@ open class ResumeValidatorTestBase {
   init {
     every { constraintRepositoryMock.findCachedConstraints() }.answers {
       listOf(
-        FieldConstraint(
-          path = "resume.skill.name",
-          constraints = FieldValidationConstraints(
-            minLength = 3,
-            maxLength = 50,
-            nullable = false
-          )
+        FieldConstraint.build(
+          path = "resume.education.title",
+          minLength = 10,
+          maxLength = 100
+        ),
+        FieldConstraint.build(
+          path = "resume.shortcut.title",
+          minLength = 5,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          path = "resume.language.name",
+          minLength = 3,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.skill.description",
+          3,
+          100
+        ),
+        FieldConstraint.build(
+          "resume.skill.name",
+          minLength = 1,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.skill.domain.name",
+          minLength = 1,
+          maxLength = 50
         )
       )
     }

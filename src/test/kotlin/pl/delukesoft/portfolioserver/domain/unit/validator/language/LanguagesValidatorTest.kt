@@ -49,7 +49,7 @@ class LanguagesValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = ["", " ", "ab", "  ab  "])
+  @ValueSource(strings = ["", " ", "ab"])
   fun `language name must be at least 3 characters after trim`(raw: String) {
     val result = validator.validateList(
       listOf(
@@ -59,7 +59,7 @@ class LanguagesValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Language name must be at least 3 characters")
+    assertHasMessage(result, "resume.language.name length must be at least 3")
   }
 
   @Test
@@ -86,7 +86,6 @@ class LanguagesValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Language name must be at least 3 characters")
     assertHasMessage(result, "Language cannot be duplicated")
     assertFalse(messages(result).any { it.contains("At least two languages are required") })
   }

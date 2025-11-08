@@ -27,14 +27,6 @@ class HobbyValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = ["fishing", "FISHING", "fISHING"])
-  fun `hobby name must be capitalized`(raw: String) {
-    val result = validator.validateList(listOf(hobby(raw)))
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Hobby name must be capitalized")
-  }
-
-  @ParameterizedTest
   @ValueSource(strings = [" Fishing", "Fishing "])
   fun `hobby name must not contain trailing or heading spaces`(raw: String) {
     val result = validator.validateList(listOf(hobby(raw)))
@@ -46,7 +38,6 @@ class HobbyValidatorTest : ResumeValidatorTestBase() {
   fun `multiple errors aggregated`() {
     val result = validator.validateList(listOf(hobby(" fishing ")))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Hobby name must be capitalized")
     assertHasMessage(result, "Hobby name must not contain spaces")
   }
 

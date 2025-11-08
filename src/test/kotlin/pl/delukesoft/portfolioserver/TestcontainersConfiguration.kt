@@ -1,5 +1,6 @@
 package pl.delukesoft.portfolioserver
 
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -26,6 +27,7 @@ class TestcontainersConfiguration {
   private var jsonMapper = JsonMapper.builder()
     .addModule(JavaTimeModule())
     .addModule(KotlinModule.Builder().build())
+    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
     .build()
 
   @Bean

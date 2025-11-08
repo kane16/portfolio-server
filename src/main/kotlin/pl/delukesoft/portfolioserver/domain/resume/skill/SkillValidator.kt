@@ -29,6 +29,7 @@ class SkillValidator(
   override fun validateList(values: List<Skill>): ValidationResult {
     val skillsValidations =
       listOf(
+        emptySkillsValidation(values),
         duplicateSkillValidation(values),
       ) + values.map { skillDomainValidator.validateList(it.domains) } + values.map { validate(it) }
 
@@ -38,6 +39,17 @@ class SkillValidator(
         ?: ValidationStatus.VALID,
       skillsValidations.flatMap { it.errors }
     )
+  }
+
+  private fun emptySkillsValidation(skills: List<Skill>): ValidationResult {
+    if (skills.isEmpty()) {
+      return ValidationResult(
+        false,
+        ValidationStatus.INVALID,
+        listOf("At least one skill is required")
+      )
+    }
+    return ValidationResult(true, ValidationStatus.VALID, emptyList())
   }
 
   private fun duplicateSkillValidation(skills: List<Skill>): ValidationResult {
