@@ -1,7 +1,13 @@
 package pl.delukesoft.portfolioserver.domain.unit
 
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertTrue
 import pl.delukesoft.portfolioserver.adapters.auth.User
+import pl.delukesoft.portfolioserver.domain.constraint.ConstraintRepository
+import pl.delukesoft.portfolioserver.domain.constraint.ConstraintService
+import pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint
+import pl.delukesoft.portfolioserver.domain.constraint.FieldValidationConstraints
 import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.education.Education
 import pl.delukesoft.portfolioserver.domain.resume.education.EducationInstitution
@@ -20,6 +26,9 @@ import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import java.time.LocalDate
 
 open class ResumeValidatorTestBase {
+
+  private val constraintRepositoryMock = mockk<ConstraintRepository>()
+  protected val constraintService = ConstraintService(constraintRepositoryMock)
 
   protected fun anyLevel(): LanguageLevel =
     LanguageLevel.entries.first()
@@ -146,4 +155,20 @@ open class ResumeValidatorTestBase {
     hobbies = listOf(hobby("Chess")),
     languages = listOf(language("English"), language("German"))
   )
+
+  init {
+    every { constraintRepositoryMock.findCachedConstraints() }.answers {
+      listOf(
+        FieldConstraint(
+          path = "resume.skill.name",
+          constraints = FieldValidationConstraints(
+            minLength = 3,
+            maxLength = 50,
+            nullable = false
+          )
+        )
+      )
+    }
+  }
+
 }

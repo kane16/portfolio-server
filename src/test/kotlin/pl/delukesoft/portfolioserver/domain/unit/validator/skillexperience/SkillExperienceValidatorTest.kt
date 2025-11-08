@@ -12,7 +12,10 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class SkillExperienceValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = SkillExperienceValidator(SkillValidator(SkillDomainValidator()))
+  private val validator = SkillExperienceValidator(
+    SkillValidator(SkillDomainValidator(constraintService), constraintService),
+    constraintService
+  )
 
   @Test
   fun `single valid skill experience passes`() {

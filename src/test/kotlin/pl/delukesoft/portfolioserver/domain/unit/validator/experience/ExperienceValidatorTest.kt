@@ -18,8 +18,12 @@ class ExperienceValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = ExperienceValidator(
     TimeframeValidator(),
-    BusinessValidator(),
-    SkillExperienceValidator(SkillValidator(SkillDomainValidator()))
+    BusinessValidator(constraintService),
+    SkillExperienceValidator(
+      SkillValidator(SkillDomainValidator(constraintService), constraintService),
+      constraintService
+    ),
+    constraintService
   )
   private val today = LocalDate.now()
 

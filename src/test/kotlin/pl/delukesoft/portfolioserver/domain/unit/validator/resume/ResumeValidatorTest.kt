@@ -22,21 +22,25 @@ import java.time.LocalDate
 class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = ResumeValidator(
-    ResumeShortcutValidator(),
-    SkillValidator(SkillDomainValidator()),
+    ResumeShortcutValidator(constraintService),
+    SkillValidator(SkillDomainValidator(constraintService), constraintService),
     ExperienceValidator(
-      TimeframeValidator(false), BusinessValidator(), SkillExperienceValidator(
-        SkillValidator(SkillDomainValidator())
-      )
+      TimeframeValidator(false), BusinessValidator(constraintService), SkillExperienceValidator(
+        SkillValidator(SkillDomainValidator(constraintService), constraintService),
+        constraintService
+      ),
+      constraintService
     ),
     ExperienceValidator(
-      TimeframeValidator(true), BusinessValidator(), SkillExperienceValidator(
-        SkillValidator(SkillDomainValidator())
-      )
+      TimeframeValidator(true), BusinessValidator(constraintService), SkillExperienceValidator(
+        SkillValidator(SkillDomainValidator(constraintService), constraintService),
+        constraintService
+      ),
+      constraintService
     ),
-    EducationValidator(TimeframeValidator(false)),
+    EducationValidator(TimeframeValidator(false), constraintService),
     HobbyValidator(),
-    LanguagesValidator()
+    LanguagesValidator(constraintService)
   )
 
   @Test

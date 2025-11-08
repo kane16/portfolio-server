@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience
 
 import org.springframework.beans.factory.annotation.Qualifier
+import pl.delukesoft.portfolioserver.domain.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.domain.resume.timespan.TimeframeValidator
@@ -10,17 +11,15 @@ import pl.delukesoft.portfolioserver.domain.validation.Validator
 class ExperienceValidator(
   val timeframeValidator: TimeframeValidator,
   @Qualifier("businessValidator") private val businessValidator: Validator<Business>,
-  @Qualifier("skillExperienceValidator") private val skillExperienceValidator: Validator<SkillExperience>
+  @Qualifier("skillExperienceValidator") private val skillExperienceValidator: Validator<SkillExperience>,
+  private val constraintService: ConstraintService
 ) : Validator<Experience>() {
 
   override fun validate(value: Experience): ValidationResult {
     val validationResults: List<ValidationResult> = listOf(
-      validationFunc(value, ::summaryInBounds, "Experience summary must be between 10 and 100 characters"),
-      validationFunc(value, ::descriptionInBounds, "Experience description must be between 10 and 300 characters"),
-      validationFunc(value, ::positionInBounds, "Experience position must be between 6 and 30 characters"),
       businessValidator.validate(value.business),
       skillExperienceValidator.validateList(value.skills)
-    )
+    ) + value.validateConstraintPaths(constraintService::validateConstraint)
 
     return if (validationResults.all { it.isValid }) ValidationResult.build() else ValidationResult.build(
       validationResults.flatMap { it.errors })
@@ -34,14 +33,5 @@ class ExperienceValidator(
     return if (validationResults.all { it.isValid }) ValidationResult.build() else ValidationResult.build(
       validationResults.flatMap { it.errors })
   }
-
-  private fun summaryInBounds(experience: Experience): Boolean =
-    experience.summary.length in 10..100
-
-  private fun descriptionInBounds(experience: Experience): Boolean =
-    if (experience.description != null) experience.description.length in 10..300 else true
-
-  private fun positionInBounds(experience: Experience): Boolean =
-    experience.position.length in 6..30
 
 }

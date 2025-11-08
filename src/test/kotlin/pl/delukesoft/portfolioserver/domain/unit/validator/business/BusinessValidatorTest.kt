@@ -10,7 +10,7 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class BusinessValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = BusinessValidator()
+  private val validator = BusinessValidator(constraintService)
 
   @Test
   fun `single valid business passes`() {

@@ -10,7 +10,7 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class LanguagesValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = LanguagesValidator()
+  private val validator = LanguagesValidator(constraintService)
 
   @Test
   fun `valid resume with 2 distinct languages passes`() {

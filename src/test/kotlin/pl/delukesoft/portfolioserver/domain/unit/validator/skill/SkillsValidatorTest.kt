@@ -10,7 +10,7 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class SkillsValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator: SkillValidator = SkillValidator(SkillDomainValidator())
+  private val validator: SkillValidator = SkillValidator(SkillDomainValidator(constraintService), constraintService)
 
   @Test
   fun `valid resume with 2 distinct skills and unique domains passes`() {

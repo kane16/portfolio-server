@@ -1,27 +1,25 @@
 package pl.delukesoft.portfolioserver.domain.resume.language
 
 import org.springframework.stereotype.Component
+import pl.delukesoft.portfolioserver.domain.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
 @Component
-class LanguagesValidator : Validator<Language>() {
+class LanguagesValidator(
+  private val constraintService: ConstraintService
+) : Validator<Language>() {
 
   override fun validate(value: Language): ValidationResult {
     val languagesValidations = listOf(
-      validationFunc(
-        value,
-        ::hasAtLeastThreeCharactersForLanguageName,
-        "Language name must be at least 3 characters long"
-      ),
       validationFunc(
         value,
         ::trimmedLanguageName,
         "Language name must not contain leading or trailing spaces"
       ),
       validationFunc(value, ::capitalizedLanguageName, "Language name must be capitalized")
-    )
+    ) + value.validateConstraintPaths(constraintService::validateConstraint)
 
     return ValidationResult(
       languagesValidations.all { it.isValid },
@@ -34,19 +32,8 @@ class LanguagesValidator : Validator<Language>() {
   override fun validateList(values: List<Language>): ValidationResult {
     val languagesValidations = listOf(
       atLeastTwoLanguagesValidation(values),
-      validationListFunc(
-        values,
-        ::hasAtLeastThreeCharactersForLanguageName,
-        "Language name must be at least 3 characters long"
-      ),
       normalizedLanguageNamesValidator(values),
-      validationListFunc(
-        values,
-        ::trimmedLanguageName,
-        "Language name must not contain leading or trailing spaces"
-      ),
-      validationListFunc(values, ::capitalizedLanguageName, "Language name must be capitalized")
-    )
+    ) + values.map { validate(it) }
 
     return ValidationResult(
       languagesValidations.all { it.isValid },
@@ -58,19 +45,9 @@ class LanguagesValidator : Validator<Language>() {
 
   fun validateListForEditOperation(values: List<Language>): ValidationResult {
     val languagesValidations = listOf(
-      validationListFunc(
-        values,
-        ::hasAtLeastThreeCharactersForLanguageName,
-        "Language name must be at least 3 characters long"
-      ),
       normalizedLanguageNamesValidator(values),
-      validationListFunc(
-        values,
-        ::trimmedLanguageName,
-        "Language name must not contain leading or trailing spaces"
-      ),
       validationListFunc(values, ::capitalizedLanguageName, "Language name must be capitalized")
-    )
+    ) + values.map { validate(it) }
 
     return ValidationResult(
       languagesValidations.all { it.isValid },
@@ -109,10 +86,6 @@ class LanguagesValidator : Validator<Language>() {
 
   private fun capitalizedLanguageName(language: Language): Boolean {
     return language.name.trim().firstOrNull { it.isUpperCase() } != null
-  }
-
-  private fun hasAtLeastThreeCharactersForLanguageName(language: Language): Boolean {
-    return language.name.trim().length > 3
   }
 
 }

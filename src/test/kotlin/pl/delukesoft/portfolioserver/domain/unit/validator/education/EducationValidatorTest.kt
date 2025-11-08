@@ -17,7 +17,8 @@ import java.time.LocalDate
 class EducationValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = EducationValidator(
-    TimeframeValidator(false)
+    TimeframeValidator(false),
+    constraintService
   )
 
   private val today: LocalDate = LocalDate.now()

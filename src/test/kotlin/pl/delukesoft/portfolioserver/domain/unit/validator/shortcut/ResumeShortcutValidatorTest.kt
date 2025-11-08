@@ -10,7 +10,7 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = ResumeShortcutValidator()
+  private val validator = ResumeShortcutValidator(constraintService)
 
   @Test
   fun `single valid shortcut passes`() {
