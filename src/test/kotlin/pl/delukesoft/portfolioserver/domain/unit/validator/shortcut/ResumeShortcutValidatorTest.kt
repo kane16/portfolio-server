@@ -59,7 +59,7 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Title length must be between 5 and 30")
+    assertHasMessage(result, "resume.shortcut.title length must be at least 5")
   }
 
   @ParameterizedTest
@@ -73,7 +73,7 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Title length must be between 5 and 30")
+    assertHasMessage(result, "resume.shortcut.title length must be at most 30")
   }
 
   @Test
@@ -111,7 +111,7 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Summary length must be between 30 and 100")
+    assertHasMessage(result, "resume.shortcut.summary length must be at least 30")
   }
 
   @ParameterizedTest
@@ -125,7 +125,7 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Summary length must be between 30 and 1000")
+    assertHasMessage(result, "resume.shortcut.summary length must be at most 1000")
   }
 
   @Test
@@ -138,8 +138,8 @@ class ResumeShortcutValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Title length must be between 5 and 30")
-    assertHasMessage(result, "Summary length must be between 30 and 1000")
+    assertHasMessage(result, "resume.shortcut.title length must be at least 5")
+    assertHasMessage(result, "resume.shortcut.summary length must be at most 1000")
   }
 
 

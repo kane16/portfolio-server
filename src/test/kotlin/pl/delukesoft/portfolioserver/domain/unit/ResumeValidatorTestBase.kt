@@ -160,13 +160,13 @@ open class ResumeValidatorTestBase {
       listOf(
         FieldConstraint.build(
           path = "resume.education.title",
-          minLength = 10,
-          maxLength = 100
+          minLength = 5,
+          maxLength = 30
         ),
         FieldConstraint.build(
           path = "resume.shortcut.title",
           minLength = 5,
-          maxLength = 50
+          maxLength = 30
         ),
         FieldConstraint.build(
           path = "resume.language.name",
@@ -187,6 +187,44 @@ open class ResumeValidatorTestBase {
           "resume.skill.domain.name",
           minLength = 1,
           maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.experience.business.name",
+          minLength = 3,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.shortcut.summary",
+          minLength = 30,
+          maxLength = 1000
+        ),
+        FieldConstraint.build(
+          "resume.experience.skill.detail",
+          minLength = 3,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.hobby.name",
+          minLength = 3,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.experience.summary",
+          minLength = 5,
+          maxLength = 1000
+        ),
+        FieldConstraint.build(
+          "resume.education.fieldOfStudy",
+          minLength = 3,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.experience.position",
+          minLength = 3,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          "resume.experience.description"
         )
       )
     }

@@ -1,9 +1,8 @@
 package pl.delukesoft.portfolioserver.domain.sequence
 
 import org.springframework.data.mongodb.repository.MongoRepository
-import java.util.UUID
 
-interface GeneratorRepository: MongoRepository<Sequence, UUID> {
+interface GeneratorRepository : MongoRepository<Sequence, Long> {
 
   fun existsByCollectionName(name: String): Boolean
 

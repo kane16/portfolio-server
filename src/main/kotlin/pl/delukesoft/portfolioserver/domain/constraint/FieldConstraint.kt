@@ -1,11 +1,13 @@
 package pl.delukesoft.portfolioserver.domain.constraint
 
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.ValidationStatus
 
 @Document("FieldConstraint")
 data class FieldConstraint(
+  @Id
   val id: Long? = null,
   val path: String,
   val constraints: FieldValidationConstraints
@@ -29,7 +31,7 @@ data class FieldConstraint(
 
   companion object {
 
-    fun build(path: String, minLength: Int?, maxLength: Int?): FieldConstraint {
+    fun build(path: String, minLength: Int? = null, maxLength: Int? = null): FieldConstraint {
       return FieldConstraint(
         path = path,
         constraints = FieldValidationConstraints(

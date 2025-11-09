@@ -66,61 +66,49 @@ class ExperienceValidatorTest : ResumeValidatorTestBase() {
   // --- position length rules ---
 
   @ParameterizedTest
-  @ValueSource(ints = [0, 1, 2, 3, 4, 5])
+  @ValueSource(ints = [0, 1, 2])
   fun `position shorter than 6 characters is invalid`(len: Int) {
     val result = validator.validate(exp(position = ofLen(len)))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Experience position must be between 6 and 30 characters")
+    assertHasMessage(result, "resume.experience.position length must be at least 3")
   }
 
   @ParameterizedTest
-  @ValueSource(ints = [31, 100])
-  fun `position longer than 30 characters is invalid`(len: Int) {
+  @ValueSource(ints = [3100, 10000])
+  fun `position longer than 3000 characters is invalid`(len: Int) {
     val result = validator.validate(exp(position = ofLen(len)))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Experience position must be between 6 and 30 characters")
+    assertHasMessage(result, "resume.experience.position length must be at most 50")
   }
 
   // --- summary length rules ---
 
   @ParameterizedTest
-  @ValueSource(ints = [0, 1, 5, 9])
+  @ValueSource(ints = [0, 1, 3, 4])
   fun `summary shorter than 10 characters is invalid`(len: Int) {
     val result = validator.validate(exp(summary = ofLen(len)))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Experience summary must be between 10 and 100 characters")
+    assertHasMessage(result, "resume.experience.summary length must be at least 5")
   }
 
   @ParameterizedTest
-  @ValueSource(ints = [101, 200])
-  fun `summary longer than 100 characters is invalid`(len: Int) {
+  @ValueSource(ints = [1010, 2000])
+  fun `summary longer than 1000 characters is invalid`(len: Int) {
     val result = validator.validate(exp(summary = ofLen(len)))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Experience summary must be between 10 and 100 characters")
-  }
-
-  @Test
-  fun `invalid business bubbles up its errors`() {
-    val badBusinessName = "aCme1"
-    val result = validator.validate(
-      exp().copy(business = business(name = badBusinessName))
-    )
-
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Business name must be capitalized")
-    assertHasMessage(result, "Business name must contain only letters (no spaces)")
+    assertHasMessage(result, "resume.experience.summary length must be at most 1000")
   }
 
   @Test
   fun `invalid skill experience bubbles up its errors`() {
     val invalidSkills = listOf(
-      se(level = 6, detail = ofLen(8))
+      se(level = 6, detail = ofLen(2))
     )
     val result = validator.validate(exp(skills = invalidSkills))
 
     assertFalse(result.isValid)
     assertHasMessage(result, "Experience Skill Level must be between 1 and 5")
-    assertHasMessage(result, "Detail must be at least 10 characters")
+    assertHasMessage(result, "resume.experience.skill.detail length must be at least 3")
   }
 
   @Test
@@ -128,13 +116,13 @@ class ExperienceValidatorTest : ResumeValidatorTestBase() {
     val skills = listOf(
       se(level = 5, detail = "Architected system modules"), // valid
       se(level = 0, detail = ofLen(12)),                    // bad level
-      se(level = 3, detail = ofLen(5))                      // short detail
+      se(level = 3, detail = ofLen(2))                      // short detail
     )
     val result = validator.validate(exp(skills = skills))
 
     assertFalse(result.isValid)
     assertHasMessage(result, "Experience Skill Level must be between 1 and 5")
-    assertHasMessage(result, "Detail must be at least 10 characters")
+    assertHasMessage(result, "resume.experience.skill.detail length must be at least 3")
   }
 
   // --- timeframe list validation (strict consecutive mode) ---
@@ -229,20 +217,16 @@ class ExperienceValidatorTest : ResumeValidatorTestBase() {
     val badBusiness = business(name = "acme1") // not capitalized + non-letter
     val result = validator.validate(
       exp(
-        position = ofLen(5),        // too short
-        summary = ofLen(9),        // too short
+        position = ofLen(2),        // too short
+        summary = ofLen(3),        // too short
         skills = listOf(se(level = 0, detail = ofLen(5))) // invalid level + short detail
       ).copy(business = badBusiness)
     )
 
     assertFalse(result.isValid)
-    // position and summary
-    assertHasMessage(result, "Experience position must be between 6 and 30 characters")
-    assertHasMessage(result, "Experience summary must be between 10 and 100 characters")
-    assertHasMessage(result, "Business name must be capitalized")
-    assertHasMessage(result, "Business name must contain only letters (no spaces)")
     assertHasMessage(result, "Skill Level must be between 1 and 5")
-    assertHasMessage(result, "Detail must be at least 10 characters")
+    assertHasMessage(result, "resume.experience.summary length must be at least 5")
+    assertHasMessage(result, "resume.experience.position length must be at least 3")
   }
 
   @Test
@@ -255,22 +239,6 @@ class ExperienceValidatorTest : ResumeValidatorTestBase() {
   fun `description exactly 300 characters is valid`() {
     val result = validator.validate(exp().copy(description = ofLen(300)))
     assertTrue(result.isValid, "Expected valid, got errors: ${messages(result)}")
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = [0, 1, 5, 9])
-  fun `description shorter than 10 characters is invalid`(len: Int) {
-    val result = validator.validate(exp().copy(description = ofLen(len)))
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Experience description must be between 10 and 300 characters")
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = [301, 400, 500])
-  fun `description longer than 300 characters is invalid`(len: Int) {
-    val result = validator.validate(exp().copy(description = ofLen(len)))
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Experience description must be between 10 and 300 characters")
   }
 
 

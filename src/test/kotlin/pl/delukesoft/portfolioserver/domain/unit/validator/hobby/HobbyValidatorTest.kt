@@ -10,7 +10,7 @@ import kotlin.test.Test
 
 class HobbyValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = HobbyValidator()
+  private val validator = HobbyValidator(constraintService)
 
   @Test
   fun `valid hobby passes`() {
@@ -27,18 +27,11 @@ class HobbyValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = [" Fishing", "Fishing "])
-  fun `hobby name must not contain trailing or heading spaces`(raw: String) {
+  @ValueSource(strings = ["ab", "ab ", "ab  "])
+  fun `hobby name must be at least 3 characters`(raw: String) {
     val result = validator.validateList(listOf(hobby(raw)))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Hobby name must not contain spaces")
-  }
-
-  @Test
-  fun `multiple errors aggregated`() {
-    val result = validator.validateList(listOf(hobby(" fishing ")))
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Hobby name must not contain spaces")
+    assertHasMessage(result, "resume.hobby.name length must be at least 3")
   }
 
 }
