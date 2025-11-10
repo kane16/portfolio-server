@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 import pl.delukesoft.portfolioserver.adapters.auth.AuthRequired
 
 @RestController
-@RequestMapping("/constraint")
+@RequestMapping("/constraints")
 class ConstraintController(
   private val constraintFacade: ConstraintFacade
 ) {
