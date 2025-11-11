@@ -33,6 +33,7 @@ class ValidationFacade(
   @Qualifier("lenientTimeframeValidator") private val lenientTimeframeValidator: TimeframeValidator,
   private val experienceSkillsValidator: Validator<SkillExperience>,
   @Qualifier("jobExperienceValidator") private val jobValidator: Validator<Experience>,
+  @Qualifier("sideProjectsValidator") private val sideProjectValidator: Validator<Experience>,
   @Qualifier("educationValidator") private val educationValidator: Validator<Education>,
   private val resumeMapper: ResumeMapper,
 ) {
@@ -122,7 +123,7 @@ class ValidationFacade(
       }
     )
     val experiences = (resume.sideProjects + sideProject).sortedBy { it.timeframe.start }
-    val validationResult = jobValidator.validateList(experiences)
+    val validationResult = sideProjectValidator.validateList(experiences)
     return validationMapper.mapValidationResultToDTO(validationResult, "sideProject")
   }
 

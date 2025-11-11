@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.application.portfolio.model
 import org.thymeleaf.context.WebContext
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ContactInfo
 
 data class PortfolioDTO(
   val id: Long,
@@ -16,7 +17,8 @@ data class PortfolioDTO(
   val sideProjects: List<ProjectDTO>,
   val workHistory: List<ProjectDTO>,
   val hobbies: List<String>,
-  val education: List<EducationDTO>
+  val education: List<EducationDTO>,
+  val contact: ContactInfo? = null
 ): PrintDTO {
 
   override fun attachDataToContext(context: WebContext) {
@@ -31,6 +33,7 @@ data class PortfolioDTO(
     context.setVariable("workHistory", workHistory)
     context.setVariable("hobbies", hobbies)
     context.setVariable("education", education)
+    context.setVariable("contact", contact)
   }
 
   override fun getResumeId(): Long {

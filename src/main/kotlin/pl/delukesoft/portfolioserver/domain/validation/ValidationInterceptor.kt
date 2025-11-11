@@ -25,6 +25,7 @@ class ValidationInterceptor(
   private val skillValidator: Validator<Skill>,
   private val skillDomainValidator: Validator<SkillDomain>,
   @Qualifier("jobExperienceValidator") private val experienceValidator: Validator<Experience>,
+  @Qualifier("sideProjectsValidator") private val sideProjectValidator: Validator<Experience>,
   private val hobbyValidator: HobbyValidator,
   private val languagesValidator: LanguagesValidator,
   private val shortcutValidator: Validator<ResumeShortcut>,
@@ -101,6 +102,14 @@ class ValidationInterceptor(
     val validationResult: ValidationResult = educationValidator.validateList(education)
     if (!validationResult.isValid) {
       throw ValidationFailedException(listOf(DomainValidationResult.build("education", validationResult)))
+    }
+  }
+
+  @Before("@annotation(validateSideProjects) && args(sideProject,..)")
+  fun validate(validateSideProjects: ValidateSideProjects, sideProject: List<Experience>) {
+    val validationResult: ValidationResult = sideProjectValidator.validateList(sideProject)
+    if (!validationResult.isValid) {
+      throw ValidationFailedException(listOf(DomainValidationResult.build("sideProject", validationResult)))
     }
   }
 

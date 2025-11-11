@@ -37,9 +37,6 @@
           <p
             class="mt-4 text-sm leading-relaxed text-sky-100/80 print:mt-2 print:text-slate-600"
           >
-            Crafting robust, resilient platforms across regulated industries
-            with a focus on developer experience, sustainable delivery, and
-            thoughtful architecture.
           </p>
         </div>
         <div class="min-w-32">
@@ -55,35 +52,35 @@
       >
         <a
           class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
-          href="mailto:lukasz.guminski629@gmail.com"
+          th:href="'mailto:' + ${contact.email}"
         >
           <i class="fa-solid fa-envelope text-base"></i>
-          <span th:text="${email}"></span>
+          <span th:text="${contact.email}"></span>
         </a>
         <a
           class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
-          href="tel:+48668020777"
+          th:href="'tel:' + ${contact.phone}"
         >
           <i class="fa-solid fa-phone text-base"></i>
-          <span>+48 668 020 777</span>
+          <span th:text="${contact.phone}"></span>
         </a>
         <span class="flex items-center gap-2 print:hidden">
               <i class="fa-solid fa-location-dot text-base"></i>
-              <span>Kraków, Poland · Hybrid &amp; Remote</span>
+              <span th:text="${contact.location}"></span>
             </span>
         <a
           class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
           href="https://www.linkedin.com/in/lukasz-guminski"
         >
           <i class="fa-brands fa-linkedin text-base"></i>
-          <span>linkedin.com/in/lukasz-guminski</span>
+          <span th:text="${contact.linkedin}"></span>
         </a>
         <a
           class="flex items-center gap-2 transition hover:text-white print:hover:text-slate-800"
-          href="https://github.com/lguminski"
+          th:href="${contact.github}"
         >
           <i class="fa-brands fa-github text-base"></i>
-          <span>github.com/lguminski</span>
+          <span th:text="${contact.github}"></span>
         </a>
       </div>
     </header>
@@ -168,7 +165,7 @@
           <div class="mt-4 space-y-3 text-sm print:mt-3 print:space-y-2">
             <p class="flex gap-2 text-slate-700">
               <i class="fa-solid fa-location-dot pt-0.5 text-sky-600"></i>
-              <span>Kraków, Poland · CET (UTC+1)</span>
+              <span th:text="${contact.location} + ' · ' + ${contact.timezone}"></span>
             </p>
             <p class="flex gap-2 text-slate-700"></p>
             <div th:each="language: ${languages}">

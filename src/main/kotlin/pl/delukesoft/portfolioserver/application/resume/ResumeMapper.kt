@@ -59,6 +59,7 @@ class ResumeMapper {
       workHistory = mapToExperienceDTO(resume.experience),
       hobbies = resume.hobbies.map { it.name },
       education = resume.education.map { mapEducationToDTO(it) },
+      contact = resume.shortcut.contact
     )
   }
 
@@ -88,7 +89,8 @@ class ResumeMapper {
       title = shortcut.title,
       summary = shortcut.summary,
       image = shortcut.image,
-      user = user
+      user = user,
+      contact = shortcut.contact
     )
   }
 

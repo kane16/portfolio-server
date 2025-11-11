@@ -91,7 +91,7 @@ class BehaviourTestsSteps(
       if (!responseBody.contains("{")) {
         assertEquals(responseBody, result.body)
       } else {
-        if (JSONCompare.compareJSON(result.body.toString(), responseBody, JSONCompareMode.LENIENT).failed()) {
+        if (JSONCompare.compareJSON(responseBody, result.body.toString(), JSONCompareMode.LENIENT).failed()) {
           logger.error("Invalid response body:\n{}", prettyPrint(result.body))
           logger.error("Response should be JSON:\n{}", prettyPrint(responseBody))
           logger.error(
@@ -99,7 +99,7 @@ class BehaviourTestsSteps(
             JSONCompare.compareJSON(result.body.toString(), responseBody, JSONCompareMode.LENIENT).message
           )
         }
-        JSONAssert.assertEquals(responseBody, result.body, true)
+        JSONAssert.assertEquals(responseBody, result.body, JSONCompareMode.LENIENT)
       }
     }
   }

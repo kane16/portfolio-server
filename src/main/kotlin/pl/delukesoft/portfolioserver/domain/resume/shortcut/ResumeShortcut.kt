@@ -10,6 +10,7 @@ data class ResumeShortcut(
   val title: String,
   val summary: String,
   val image: Image? = null,
+  val contact: ContactInfo? = null,
 ) : WithConstraints {
 
   override fun validateConstraintPaths(validationFunc: (String, String?) -> ValidationResult): List<ValidationResult> {
