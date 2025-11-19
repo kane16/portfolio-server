@@ -4,6 +4,7 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.LanguageDTO
 import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ContactInfo
 
 data class ResumeEditDTO(
   val id: Long,
@@ -16,5 +17,6 @@ data class ResumeEditDTO(
   val sideProjects: List<ExperienceDTO>,
   val workHistory: List<ExperienceDTO>,
   val hobbies: List<String>,
-  val education: List<EducationDTO>
+  val education: List<EducationDTO>,
+  val contact: ContactInfo? = null
 )

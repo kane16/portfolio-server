@@ -41,7 +41,8 @@ class PortfolioMapper {
           it.description,
           it.externalLinks
         )
-      }
+      },
+      contact = resume.shortcut.contact
     )
   }
 

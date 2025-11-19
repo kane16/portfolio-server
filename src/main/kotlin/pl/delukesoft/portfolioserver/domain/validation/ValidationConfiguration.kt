@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.domain.validation
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import pl.delukesoft.portfolioserver.domain.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
 import pl.delukesoft.portfolioserver.domain.resume.experience.ExperienceValidator
 import pl.delukesoft.portfolioserver.domain.resume.experience.business.Business
@@ -32,50 +33,58 @@ class ValidationConfiguration {
   fun jobExperienceValidator(
     @Qualifier("consecutiveTimeframeValidator") timeframeValidator: TimeframeValidator,
     @Qualifier("businessValidator") businessValidator: Validator<Business>,
-    @Qualifier("skillExperienceValidator") skillExperienceValidator: Validator<SkillExperience>
+    @Qualifier("skillExperienceValidator") skillExperienceValidator: Validator<SkillExperience>,
+    constraintService: ConstraintService
   ): Validator<Experience> {
     return ObligatoryElementValidatorDecorator(
       ExperienceValidator(
-      timeframeValidator,
-      businessValidator,
-      skillExperienceValidator
+        timeframeValidator,
+        businessValidator,
+        skillExperienceValidator,
+        constraintService
       )
     )
   }
 
   @Bean("businessValidator")
-  fun businessValidator(): Validator<Business> {
+  fun businessValidator(constraintService: ConstraintService): Validator<Business> {
     return ObligatoryElementValidatorDecorator(
-      BusinessValidator()
+      BusinessValidator(constraintService)
     )
   }
 
   @Bean("skillExperienceValidator")
   fun skillExperienceValidator(
     @Qualifier("skillValidator") skillValidator: Validator<Skill>,
+    constraintService: ConstraintService
   ): Validator<SkillExperience> {
     return ObligatoryElementValidatorDecorator(
       SkillExperienceValidator(
-        skillValidator
+        skillValidator,
+        constraintService
       )
     )
   }
 
   @Bean("skillValidator")
   fun skillValidator(
-    @Qualifier("skillDomainValidator") skillDomainValidator: Validator<SkillDomain>
+    @Qualifier("skillDomainValidator") skillDomainValidator: Validator<SkillDomain>,
+    constraintService: ConstraintService
   ): Validator<Skill> {
     return ObligatoryElementValidatorDecorator(
       SkillValidator(
-        skillDomainValidator
+        skillDomainValidator,
+        constraintService
       )
     )
   }
 
   @Bean("skillDomainValidator")
-  fun skillDomainValidator(): Validator<SkillDomain> {
+  fun skillDomainValidator(
+    constraintService: ConstraintService
+  ): Validator<SkillDomain> {
     return ObligatoryElementValidatorDecorator(
-      SkillDomainValidator()
+      SkillDomainValidator(constraintService)
     )
   }
 
@@ -83,12 +92,14 @@ class ValidationConfiguration {
   fun sideProjectsValidator(
     @Qualifier("lenientTimeframeValidator") timeframeValidator: TimeframeValidator,
     @Qualifier("businessValidator") businessValidator: Validator<Business>,
-    @Qualifier("skillExperienceValidator") skillExperienceValidator: Validator<SkillExperience>
+    @Qualifier("skillExperienceValidator") skillExperienceValidator: Validator<SkillExperience>,
+    constraintService: ConstraintService
   ): Validator<Experience> {
     return ExperienceValidator(
       timeframeValidator,
       businessValidator,
-      skillExperienceValidator
+      skillExperienceValidator,
+      constraintService
     )
   }
 

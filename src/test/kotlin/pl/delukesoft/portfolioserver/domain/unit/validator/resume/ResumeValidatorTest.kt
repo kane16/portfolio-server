@@ -22,21 +22,25 @@ import java.time.LocalDate
 class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = ResumeValidator(
-    ResumeShortcutValidator(),
-    SkillValidator(SkillDomainValidator()),
+    ResumeShortcutValidator(constraintService),
+    SkillValidator(SkillDomainValidator(constraintService), constraintService),
     ExperienceValidator(
-      TimeframeValidator(false), BusinessValidator(), SkillExperienceValidator(
-        SkillValidator(SkillDomainValidator())
-      )
+      TimeframeValidator(false), BusinessValidator(constraintService), SkillExperienceValidator(
+        SkillValidator(SkillDomainValidator(constraintService), constraintService),
+        constraintService
+      ),
+      constraintService
     ),
     ExperienceValidator(
-      TimeframeValidator(true), BusinessValidator(), SkillExperienceValidator(
-        SkillValidator(SkillDomainValidator())
-      )
+      TimeframeValidator(true), BusinessValidator(constraintService), SkillExperienceValidator(
+        SkillValidator(SkillDomainValidator(constraintService), constraintService),
+        constraintService
+      ),
+      constraintService
     ),
-    EducationValidator(TimeframeValidator(false)),
-    HobbyValidator(),
-    LanguagesValidator()
+    EducationValidator(TimeframeValidator(false), constraintService),
+    HobbyValidator(constraintService),
+    LanguagesValidator(constraintService)
   )
 
   @Test
@@ -110,24 +114,18 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     assertFalse(result.isValid)
     // Shortcut
-    assertHasMessage(result, "Title length must be between 5 and 30")
-    assertHasMessage(result, "Summary length must be between 30 and 100")
+    assertHasMessage(result, "resume.shortcut.title length must be at least 5")
+    assertHasMessage(result, "resume.shortcut.summary length must be at least 30")
     // Skills
     assertHasMessage(result, "At least one skill is required")
-    // Experience (strict)
-    assertHasMessage(result, "Experience position must be between 6 and 30 characters")
-    assertHasMessage(result, "Experience summary must be between 10 and 100 characters")
     assertHasMessage(result, "Timeframes must be consecutive")
     // SkillExperience inside Experience
     assertHasMessage(result, "Experience Skill Level must be between 1 and 5")
-    assertHasMessage(result, "Detail must be at least 10 characters")
     // Side projects (lenient but overlapping)
     assertHasMessage(result, "Timeframes must not overlap")
-    // Hobby
-    assertHasMessage(result, "Hobby name must not contain spaces")
     // Languages
     assertHasMessage(result, "At least two languages are required")
-    assertHasMessage(result, "Language name must be at least 3 characters long")
+    assertHasMessage(result, "resume.language.name length must be at least 3")
     assertHasMessage(result, "Language name must be capitalized")
   }
 
@@ -180,8 +178,8 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = [0, 1, 2, 3, 4, 31, 40])
-  fun `shortcut title outside bounds is invalid`(len: Int) {
+  @ValueSource(ints = [0, 1, 2, 3, 4])
+  fun `shortcut title outside lower bounds is invalid`(len: Int) {
     val resume = baseResume(
       experience = emptyList(),
       sideProjects = emptyList()
@@ -189,7 +187,20 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     val result = validator.validate(resume)
     assertFalse(result.isValid)
-    assertHasMessage(result, "Title length must be between 5 and 30")
+    assertHasMessage(result, "resume.shortcut.title length must be at least 5")
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = [31, 40])
+  fun `shortcut title outside upper bounds is invalid`(len: Int) {
+    val resume = baseResume(
+      experience = emptyList(),
+      sideProjects = emptyList()
+    ).copy(shortcut = shortcut(title = ofLen(len), summary = ofLen(50)), hobbies = listOf(hobby("Chess")))
+
+    val result = validator.validate(resume)
+    assertFalse(result.isValid)
+    assertHasMessage(result, "resume.shortcut.title length must be at most 30")
   }
 
   @ParameterizedTest
@@ -204,15 +215,27 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = [0, 10, 29, 1001, 1200])
-  fun `shortcut summary outside bounds is invalid`(len: Int) {
+  @ValueSource(ints = [0, 10, 29])
+  fun `shortcut summary outside lower bounds is invalid`(len: Int) {
     val resume = baseResume(
       experience = emptyList(),
       sideProjects = emptyList()
     ).copy(shortcut = shortcut(title = ofLen(10), summary = ofLen(len)), hobbies = listOf(hobby("Chess")))
     val result = validator.validate(resume)
     assertFalse(result.isValid)
-    assertHasMessage(result, "Summary length must be between 30 and 100")
+    assertHasMessage(result, "resume.shortcut.summary length must be at least 30")
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = [1001, 1200])
+  fun `shortcut summary outside upper bounds is invalid`(len: Int) {
+    val resume = baseResume(
+      experience = emptyList(),
+      sideProjects = emptyList()
+    ).copy(shortcut = shortcut(title = ofLen(10), summary = ofLen(len)), hobbies = listOf(hobby("Chess")))
+    val result = validator.validate(resume)
+    assertFalse(result.isValid)
+    assertHasMessage(result, "resume.shortcut.summary length must be at most 1000")
   }
 
   // -------- Skill rules (list + item) --------
@@ -266,7 +289,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
     )
     assertFalse(rBounds.isValid)
     assertHasMessage(rBounds, "Skill level must be between 1 and 5")
-    assertHasMessage(rBounds, "Skill name must be at least 1 character")
+    assertHasMessage(rBounds, "resume.skill.name length must be at least 1")
 
     // valid skill case
     val rValid = validator.validate(
@@ -305,7 +328,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
     )
     assertFalse(rTrimLen.isValid)
     assertHasMessage(rTrimLen, "Language name must not contain leading or trailing spaces")
-    assertHasMessage(rTrimLen, "Language name must be at least 3 characters long")
+    assertHasMessage(rTrimLen, "resume.language.name length must be at least 3")
 
     // duplicated languages
     val rDup = validator.validate(
@@ -333,25 +356,6 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `hobby - trimmed, capitalized, not empty`() {
-    val rTrim = validator.validate(
-      baseResume(
-        skills = listOf(skill()),
-        experience = emptyList(),
-        sideProjects = emptyList()
-      ).copy(hobbies = listOf(hobby(" space"), hobby("Valid")))
-    )
-    assertFalse(rTrim.isValid)
-    assertHasMessage(rTrim, "Hobby name must not contain spaces")
-
-    val rCap = validator.validate(
-      baseResume(
-        skills = listOf(skill()),
-        experience = emptyList(),
-        sideProjects = emptyList()
-      ).copy(hobbies = listOf(hobby("valid")))
-    )
-    assertFalse(rCap.isValid)
-    assertHasMessage(rCap, "Hobby name must be capitalized")
 
     val rEmpty = validator.validate(
       baseResume(
@@ -398,8 +402,8 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
     val resume = baseResume(
       experience = listOf(
         exp(
-          position = ofLen(5), // invalid
-          summary = ofLen(9),  // invalid
+          position = ofLen(2), // invalid
+          summary = ofLen(1200),  // invalid
           timeframeStart = LocalDate.of(2022, 1, 1),
           timeframeEnd = LocalDate.of(2022, 12, 31)
         ).copy(description = ofLen(5)) // invalid description
@@ -409,9 +413,8 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     val result = validator.validate(resume)
     assertFalse(result.isValid)
-    assertHasMessage(result, "Experience position must be between 6 and 30 characters")
-    assertHasMessage(result, "Experience summary must be between 10 and 100 characters")
-    assertHasMessage(result, "Experience description must be between 10 and 300 characters")
+    assertHasMessage(result, "resume.experience.position length must be at least 3")
+    assertHasMessage(result, "resume.experience.summary length must be at most 1000")
   }
 
   @Test
@@ -425,9 +428,7 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     val result = validator.validate(resume)
     assertFalse(result.isValid)
-    assertHasMessage(result, "Business name must be capitalized")
-    assertHasMessage(result, "Business name must be at least 3 letters")
-    assertHasMessage(result, "Business name must contain only letters (no spaces)")
+    assertHasMessage(result, "resume.experience.business.name length must be at least 3")
   }
 
   @Test
@@ -442,7 +443,6 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
     val result = validator.validate(resume)
     assertFalse(result.isValid)
     assertHasMessage(result, "Experience Skill Level must be between 1 and 5")
-    assertHasMessage(result, "Detail must be at least 10 characters")
   }
 
   // -------- validateList aggregation across multiple resumes --------
@@ -475,7 +475,8 @@ class ResumeValidatorTest : ResumeValidatorTestBase() {
 
     assertFalse(result.isValid, "Combined should be invalid due to the invalid resume")
     assertEquals(14, result.domainResults.size, "Expect 7 domains per resume x 2 resumes")
-    assertHasMessage(result, "Title length must be between 5 and 30")
+    assertHasMessage(result, "resume.shortcut.title length must be at least 5")
+    assertHasMessage(result, "resume.language.name length must be at least 3")
     assertHasMessage(result, "At least one skill is required")
     assertHasMessage(result, "At least two languages are required")
     assertHasMessage(result, "Timeframes must be consecutive")

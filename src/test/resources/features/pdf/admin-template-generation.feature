@@ -10,6 +10,7 @@ Feature: CV View functionality
     """
     {
        "id" : 1,
+       "email": "john.doe@example.com",
        "fullname" : "Łukasz Gumiński",
        "imageSource" : "/images/lg.jpg",
        "title" : "Lead Java Developer",
@@ -61,8 +62,8 @@ Feature: CV View functionality
              "summary" : "Lead developer for core banking systems",
              "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
              "timespan" : {
-                "start" : "2023.01",
-                "end" : "2025.05"
+                "start" : "2023-01-01",
+                "end" : "2025-05-08"
              },
              "skills" : [
                 {
@@ -94,6 +95,7 @@ Feature: CV View functionality
     """
     {
        "id" : 3,
+       "email": "alex.tech@example.com",
        "fullname" : "Łukasz Gumiński",
        "imageSource" : "",
        "title" : "Lead Java Developer",
@@ -145,8 +147,8 @@ Feature: CV View functionality
              "summary" : "Backend development for high-load e-commerce platform",
              "description" : "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance",
              "timespan" : {
-                "start" : "2022.06",
-                "end" : "2024.01"
+                "start" : "2022-06-01",
+                "end" : "2024-01-15"
              },
              "skills" : [
                 {
@@ -167,8 +169,8 @@ Feature: CV View functionality
              "summary" : "Technical leadership and architecture design",
              "description" : "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes",
              "timespan" : {
-                "start" : "2024.01",
-                "end" : "2025.07"
+                "start" : "2024-01-15",
+                "end" : "2025-07-15"
              },
              "skills" : [
                 {

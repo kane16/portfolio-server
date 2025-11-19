@@ -10,7 +10,7 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class BusinessValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = BusinessValidator()
+  private val validator = BusinessValidator(constraintService)
 
   @Test
   fun `single valid business passes`() {
@@ -38,50 +38,7 @@ class BusinessValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Business name must be at least 3 letters")
-  }
-
-  @ParameterizedTest
-  @ValueSource(strings = ["acme", "ACME", "aCme", "acME"])
-  fun `business name must be capitalized - first letter uppercase, rest lowercase`(raw: String) {
-    val result = validator.validate(
-      business(name = raw)
-    )
-
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Business name must be capitalized")
-  }
-
-  @ParameterizedTest
-  @ValueSource(
-    strings = [
-      "Acme1",   // digit
-      "Ac-me",   // hyphen
-      "Ac_me",   // underscore
-      "Acme!",   // punctuation
-      "Ac me",   // internal space
-      " Acme",   // leading space
-      "Acme "    // trailing space
-    ]
-  )
-  fun `business name must contain only letters with no spaces`(raw: String) {
-    val result = validator.validate(
-      business(name = raw)
-    )
-
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Business name must contain only letters (no spaces)")
-  }
-
-  @Test
-  fun `aggregates multiple errors - not capitalized and contains non-letter`() {
-    val result = validator.validate(
-      business(name = "aCme1")
-    )
-
-    assertFalse(result.isValid)
-    assertHasMessage(result, "Business name must be capitalized")
-    assertHasMessage(result, "Business name must contain only letters (no spaces)")
+    assertHasMessage(result, "resume.experience.business.name length must be at least 3")
   }
 
   @Test
@@ -91,8 +48,7 @@ class BusinessValidatorTest : ResumeValidatorTestBase() {
     )
 
     assertFalse(result.isValid)
-    assertHasMessage(result, "Business name must be at least 3 letters")
-    assertHasMessage(result, "Business name must contain only letters (no spaces)")
+    assertHasMessage(result, "resume.experience.business.name length must be at least 3")
   }
 
 }

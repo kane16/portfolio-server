@@ -7,6 +7,7 @@ Feature: CV View functionality
     """
     {
        "id" : 1,
+       "email": "john.doe@example.com",
        "fullname" : "Łukasz Gumiński",
        "imageSource" : "/images/lg.jpg",
        "title" : "Lead Java Developer",
@@ -58,8 +59,8 @@ Feature: CV View functionality
              "summary" : "Lead developer for core banking systems",
              "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
              "timespan" : {
-                "start" : "2023.01",
-                "end" : "2025.05"
+                "start" : "2023-01-01",
+                "end" : "2025-05-08"
              },
              "skills" : [
                 {

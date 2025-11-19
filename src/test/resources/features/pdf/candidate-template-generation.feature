@@ -10,6 +10,7 @@ Feature: CV View functionality
     """
     {
        "id" : 3,
+       "email": "alex.tech@example.com",
        "fullname" : "Łukasz Gumiński",
        "imageSource" : "",
        "title" : "Lead Java Developer",
@@ -61,8 +62,8 @@ Feature: CV View functionality
              "summary" : "Backend development for high-load e-commerce platform",
              "description" : "Developed and maintained high-load microservices architecture, implementing efficient caching strategies and optimizing database performance",
              "timespan" : {
-                "start" : "2022.06",
-                "end" : "2024.01"
+                "start" : "2022-06-01",
+                "end" : "2024-01-15"
              },
              "skills" : [
                 {
@@ -83,8 +84,8 @@ Feature: CV View functionality
              "summary" : "Technical leadership and architecture design",
              "description" : "Led multiple development teams, architected solution designs, and implemented best practices for code quality and development processes",
              "timespan" : {
-                "start" : "2024.01",
-                "end" : "2025.07"
+                "start" : "2024-01-15",
+                "end" : "2025-07-15"
              },
              "skills" : [
                 {

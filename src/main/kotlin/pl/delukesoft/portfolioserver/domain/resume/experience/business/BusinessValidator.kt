@@ -1,20 +1,15 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience.business
 
+import pl.delukesoft.portfolioserver.domain.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
-class BusinessValidator : Validator<Business>() {
+class BusinessValidator(
+  private val constraintService: ConstraintService
+) : Validator<Business>() {
 
   override fun validate(value: Business): ValidationResult {
-    val validationResults: List<ValidationResult> = listOf(
-      validationFunc(value, ::nameCapitalizedPredicate, "Business name must be capitalized"),
-      validationFunc(value, ::nameAtLeastThreeCharactersPredicate, "Business name must be at least 3 letters"),
-      validationFunc(
-        value,
-        ::nameMustContainLettersOnlyPredicate,
-        "Business name must contain only letters (no spaces)"
-      )
-    )
+    val validationResults: List<ValidationResult> = value.validateConstraintPaths(constraintService::validateConstraint)
 
     return if (validationResults.any { !it.isValid }) {
       ValidationResult.build(validationResults.map { it.errors }.flatten())
@@ -30,14 +25,5 @@ class BusinessValidator : Validator<Business>() {
       ValidationResult.build(validationResults.map { it.errors }.flatten())
     } else ValidationResult.build()
   }
-
-  private fun nameCapitalizedPredicate(business: Business): Boolean =
-    business.name.trim().first().isUpperCase() && business.name.trim().drop(1).all { it.isLowerCase() }
-
-  private fun nameAtLeastThreeCharactersPredicate(business: Business): Boolean =
-    business.name.trim().length >= 3
-
-  private fun nameMustContainLettersOnlyPredicate(business: Business): Boolean =
-    business.name.matches(Regex("[a-zA-Z]+"))
 
 }

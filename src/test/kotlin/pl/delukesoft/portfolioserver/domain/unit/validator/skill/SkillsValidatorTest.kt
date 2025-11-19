@@ -10,7 +10,7 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class SkillsValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator: SkillValidator = SkillValidator(SkillDomainValidator())
+  private val validator: SkillValidator = SkillValidator(SkillDomainValidator(constraintService), constraintService)
 
   @Test
   fun `valid resume with 2 distinct skills and unique domains passes`() {
@@ -62,7 +62,7 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
     )
 
     Assertions.assertFalse(result.isValid)
-    assertHasMessage(result, "Skill name must be at least 1 character")
+    assertHasMessage(result, "resume.skill.name length must be at least 1")
   }
 
   @Test
@@ -135,7 +135,7 @@ class SkillsValidatorTest : ResumeValidatorTestBase() {
     )
 
     Assertions.assertFalse(result.isValid)
-    assertHasMessage(result, "Skill name must be at least 1 character")
+    assertHasMessage(result, "resume.skill.name length must be at least 1")
     assertHasMessage(result, "Skill level must be between 1 and 5")
     assertHasMessage(result, "Skill domain cannot be duplicated")
     Assertions.assertFalse(messages(result).any { it.contains("At least two skills are required") })

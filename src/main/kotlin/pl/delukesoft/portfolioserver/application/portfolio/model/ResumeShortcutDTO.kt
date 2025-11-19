@@ -1,10 +1,11 @@
 package pl.delukesoft.portfolioserver.application.portfolio.model
 
-import jakarta.validation.constraints.Size
 import pl.delukesoft.portfolioserver.adapters.image.Image
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.ContactInfo
 
 data class ResumeShortcutDTO(
-  @field:Size(message = "Title length must be between 5 and 30", min = 5, max = 30) val title: String,
-  @field:Size(message = "Summary length must be between 30 and 1000", min = 30, max = 1000) val summary: String,
+  val title: String,
+  val summary: String,
   val image: Image,
+  val contact: ContactInfo? = null
 )

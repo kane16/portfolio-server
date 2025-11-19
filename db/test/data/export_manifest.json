@@ -1,23 +1,28 @@
 {
   "database": "portfolio",
-  "timestamp": "2025-08-17T15:08:02.751052",
+  "timestamp": "2025-11-09T14:11:31.916352",
   "output": "test/data",
   "format": "json-array",
   "collections": [
     {
+      "name": "FieldConstraint",
+      "file": "FieldConstraint.json",
+      "count": 14
+    },
+    {
       "name": "Resume",
       "file": "Resume.json",
-      "count": 3
+      "count": 1
     },
     {
       "name": "ResumeHistory",
       "file": "ResumeHistory.json",
-      "count": 3
+      "count": 1
     },
     {
       "name": "ResumeVersion",
       "file": "ResumeVersion.json",
-      "count": 3
+      "count": 1
     },
     {
       "name": "Sequence",

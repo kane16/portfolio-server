@@ -17,7 +17,8 @@ import java.time.LocalDate
 class EducationValidatorTest : ResumeValidatorTestBase() {
 
   private val validator = EducationValidator(
-    TimeframeValidator(false)
+    TimeframeValidator(false),
+    constraintService
   )
 
   private val today: LocalDate = LocalDate.now()
@@ -69,7 +70,7 @@ class EducationValidatorTest : ResumeValidatorTestBase() {
   fun `title shorter than 5 characters is invalid`(len: Int) {
     val result = validator.validate(edu(title = ofLen(len)))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Education title must be between 5 and 30 characters")
+    assertHasMessage(result, "resume.education.title length must be at least 5")
   }
 
   @ParameterizedTest
@@ -77,7 +78,7 @@ class EducationValidatorTest : ResumeValidatorTestBase() {
   fun `title longer than 30 characters is invalid`(len: Int) {
     val result = validator.validate(edu(title = ofLen(len)))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Education title must be between 5 and 30 characters")
+    assertHasMessage(result, "resume.education.title length must be at most 30")
   }
 
   @Test

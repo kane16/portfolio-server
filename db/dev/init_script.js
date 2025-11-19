@@ -484,6 +484,12 @@ db.Sequence.insertMany([
       "collectionName": "language",
       "sequenceNumber": 4,
       "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
+    },
+  {
+    "_id": 8,
+    "collectionName": "field_constraint",
+    "sequenceNumber": 15,
+    "_class": "pl.delukesoft.portfolioserver.domain.sequence.Sequence"
     }
   ]
 );
@@ -520,3 +526,95 @@ db.ResumeHistory.insertMany([
     }
   ]
 );
+
+
+// FieldConstraint collection with validation constraints for resume fields
+// Inserted by automation to seed Mongo with constraints used by validators
+// If collection already exists in your environment, you may remove the createCollection call below.
+db.createCollection('FieldConstraint');
+db.FieldConstraint.insertMany([
+  {
+    "_id": 1,
+    "path": "resume.education.title",
+    "constraints": {"minLength": 5, "maxLength": 30, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 2,
+    "path": "resume.shortcut.title",
+    "constraints": {"minLength": 5, "maxLength": 30, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 3,
+    "path": "resume.language.name",
+    "constraints": {"minLength": 3, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 4,
+    "path": "resume.skill.description",
+    "constraints": {"minLength": 3, "maxLength": 100, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 5,
+    "path": "resume.skill.name",
+    "constraints": {"minLength": 1, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 6,
+    "path": "resume.skill.domain.name",
+    "constraints": {"minLength": 1, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 7,
+    "path": "resume.experience.business.name",
+    "constraints": {"minLength": 3, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 8,
+    "path": "resume.shortcut.summary",
+    "constraints": {"minLength": 30, "maxLength": 1000, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 9,
+    "path": "resume.experience.skill.detail",
+    "constraints": {"minLength": 3, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 10,
+    "path": "resume.hobby.name",
+    "constraints": {"minLength": 3, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 11,
+    "path": "resume.experience.summary",
+    "constraints": {"minLength": 5, "maxLength": 1000, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 12,
+    "path": "resume.education.fieldOfStudy",
+    "constraints": {"minLength": 3, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 13,
+    "path": "resume.experience.position",
+    "constraints": {"minLength": 3, "maxLength": 50, "nullable": false},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 14,
+    "path": "resume.experience.description",
+    "constraints": {"minLength": 0, "maxLength": 2147483647, "nullable": true},
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  }
+]);

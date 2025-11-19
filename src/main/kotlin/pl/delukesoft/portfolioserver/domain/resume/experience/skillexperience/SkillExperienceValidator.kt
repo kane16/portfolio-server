@@ -1,19 +1,20 @@
 package pl.delukesoft.portfolioserver.domain.resume.experience.skillexperience
 
+import pl.delukesoft.portfolioserver.domain.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.validation.ValidationResult
 import pl.delukesoft.portfolioserver.domain.validation.Validator
 
 class SkillExperienceValidator(
-  private val skillValidator: Validator<Skill>
+  private val skillValidator: Validator<Skill>,
+  private val constraintService: ConstraintService
 ) : Validator<SkillExperience>() {
 
   override fun validate(value: SkillExperience): ValidationResult {
     val validationResults: List<ValidationResult> = listOf(
       validationFunc(value, ::levelInBounds, "Experience Skill Level must be between 1 and 5"),
-      validationFunc(value, ::detailAtLeastTenCharacters, "Detail must be at least 10 characters"),
       skillValidator.validate(value.skill)
-    )
+    ) + value.validateConstraintPaths(constraintService::validateConstraint)
 
     return if (validationResults.any { !it.isValid }) {
       ValidationResult.build(validationResults.map { it.errors }.flatten())
@@ -30,8 +31,5 @@ class SkillExperienceValidator(
 
   private fun levelInBounds(skillExperience: SkillExperience): Boolean =
     skillExperience.level in 1..5
-
-  private fun detailAtLeastTenCharacters(skillExperience: SkillExperience): Boolean =
-    skillExperience.detail.trim().length >= 10
 
 }

@@ -12,7 +12,10 @@ import pl.delukesoft.portfolioserver.domain.unit.ResumeValidatorTestBase
 
 class SkillExperienceValidatorTest : ResumeValidatorTestBase() {
 
-  private val validator = SkillExperienceValidator(SkillValidator(SkillDomainValidator()))
+  private val validator = SkillExperienceValidator(
+    SkillValidator(SkillDomainValidator(constraintService), constraintService),
+    constraintService
+  )
 
   @Test
   fun `single valid skill experience passes`() {
@@ -48,11 +51,11 @@ class SkillExperienceValidatorTest : ResumeValidatorTestBase() {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = [0, 1, 5, 9])
+  @ValueSource(ints = [0, 1, 2])
   fun `detail shorter than 10 characters is invalid`(len: Int) {
     val result = validator.validateList(listOf(se(level = 3, detail = ofLen(len))))
     assertFalse(result.isValid)
-    assertHasMessage(result, "Detail must be at least 10 characters")
+    assertHasMessage(result, "resume.experience.skill.detail length must be at least 3")
   }
 
   @Test
@@ -65,10 +68,10 @@ class SkillExperienceValidatorTest : ResumeValidatorTestBase() {
 
   @Test
   fun `aggregates multiple errors - bad level and too-short detail`() {
-    val result = validator.validateList(listOf(se(level = 0, detail = ofLen(3))))
+    val result = validator.validateList(listOf(se(level = 0, detail = ofLen(2))))
     assertFalse(result.isValid)
     assertHasMessage(result, "Experience Skill Level must be between 1 and 5")
-    assertHasMessage(result, "Detail must be at least 10 characters")
+    assertHasMessage(result, "resume.experience.skill.detail length must be at least 3")
   }
 
   // --- multiple entries, some invalid ---
@@ -78,14 +81,14 @@ class SkillExperienceValidatorTest : ResumeValidatorTestBase() {
     val list = listOf(
       se(skill("Kotlin"), level = 5, detail = "Mentored team members"), // valid
       se(skill("React"), level = 6, detail = "Frontend work"),          // bad level
-      se(skill("MongoDB"), level = 3, detail = ofLen(8))                // short detail
+      se(skill("MongoDB"), level = 3, detail = ofLen(2))                // short detail
     )
 
     val result = validator.validateList(list)
 
     assertFalse(result.isValid)
     assertHasMessage(result, "Experience Skill Level must be between 1 and 5")
-    assertHasMessage(result, "Detail must be at least 10 characters")
+    assertHasMessage(result, "resume.experience.skill.detail length must be at least 3")
   }
 
 }

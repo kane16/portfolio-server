@@ -39,7 +39,7 @@ class ResumeModifyRepository(
   }
 
   @ResumeModification
-  @ValidateExperiences
+  @ValidateSideProjects
   fun changeSideProjectsInResume(sideProjects: List<Experience>, resume: Resume): Boolean {
     return resumeRepository.changeSideProjectsInResume(resume.id!!, sideProjects) > 0
   }

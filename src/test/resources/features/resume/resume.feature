@@ -105,7 +105,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Title length must be between 5 and 30",
+      "error": ["resume.shortcut.title length must be at least 5"],
       "status": 400
     }
     """
@@ -127,7 +127,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Title length must be between 5 and 30",
+      "error": ["resume.shortcut.title length must be at most 30"],
       "status": 400
     }
     """
@@ -149,7 +149,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Summary length must be between 30 and 1000",
+      "error": ["resume.shortcut.summary length must be at least 30"],
       "status": 400
     }
     """
@@ -551,6 +551,7 @@ Feature: Resume creation
       """
       {
         "id" : 1,
+        "email" : "john.doe@example.com",
         "fullname" : "Łukasz Gumiński",
         "imageSource" : "/images/lg.jpg",
         "title" : "Lead Java Developer",
@@ -602,8 +603,8 @@ Feature: Resume creation
               "summary" : "Lead developer for core banking systems",
               "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
               "timespan" : {
-                 "start" : "2023.01",
-                 "end" : "2025.05"
+                 "start" : "2023-01-01",
+                 "end" : "2025-05-08"
               },
               "skills" : [
                  {
@@ -656,6 +657,7 @@ Feature: Resume creation
       """
       {
         "id" : 1,
+        "email" : "john.doe@example.com",
         "fullname" : "Łukasz Gumiński",
         "imageSource" : "/images/lg.jpg",
         "title" : "Lead Java Developer",
@@ -712,8 +714,8 @@ Feature: Resume creation
               "summary" : "Lead developer for core banking systems",
               "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
               "timespan" : {
-                 "start" : "2023.01",
-                 "end" : "2025.05"
+                 "start" : "2023-01-01",
+                 "end" : "2025-05-08"
               },
               "skills" : [
                  {
@@ -806,6 +808,7 @@ Feature: Resume creation
     """
     {
       "id" : 1,
+      "email" : "john.doe@example.com",
       "fullname" : "Łukasz Gumiński",
       "imageSource" : "/images/lg.jpg",
       "title" : "Lead Java Developer",
@@ -857,8 +860,8 @@ Feature: Resume creation
             "summary" : "Lead developer for core banking systems",
             "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
             "timespan" : {
-               "start" : "2023.01",
-               "end" : "2025.05"
+               "start" : "2023-01-01",
+               "end" : "2025-05-08"
             },
             "skills" : [
                {
@@ -893,6 +896,7 @@ Feature: Resume creation
     """
     {
       "id" : 1,
+      "email" : "john.doe@example.com",
       "fullname" : "Łukasz Gumiński",
       "imageSource" : "/images/lg.jpg",
       "title" : "Lead Java Developer",
@@ -939,8 +943,8 @@ Feature: Resume creation
             "summary" : "Lead developer for core banking systems",
             "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
             "timespan" : {
-               "start" : "2023.01",
-               "end" : "2025.05"
+               "start" : "2023-01-01",
+               "end" : "2025-05-08"
             },
             "skills" : [
                {
@@ -1003,6 +1007,7 @@ Feature: Resume creation
       """
       {
         "id" : 1,
+        "email" : "john.doe@example.com",
         "fullname" : "Łukasz Gumiński",
         "imageSource" : "/images/lg.jpg",
         "title" : "Lead Java Developer",
@@ -1054,8 +1059,8 @@ Feature: Resume creation
               "summary" : "Lead developer for core banking systems",
               "description" : "Development of core banking applications, implementing secure transaction processing systems and leading integration projects with external financial services",
               "timespan" : {
-                 "start" : "2023.01",
-                 "end" : "2025.05"
+                 "start" : "2023-01-01",
+                 "end" : "2025-05-08"
               },
               "skills" : [
                  {
