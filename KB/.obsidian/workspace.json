@@ -8,27 +8,39 @@
         "type": "tabs",
         "children": [
           {
-            "id": "9bb319fc651f13d3",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Pasted Image 20250924170718_679.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted Image 20250924170718_679"
-            }
-          },
-          {
             "id": "93ec5ece571b8a7d",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "UML/Requirements - use cases.md"
+                "file": "Drawing 2025-11-12 16.24.44.excalidraw.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Requirements - use cases"
+              "title": "Drawing 2025-11-12 16.24.44.excalidraw"
+            }
+          },
+          {
+            "id": "af0eefb9bc557c4c",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Drawing 2025-11-14 23.25.31.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2025-11-14 23.25.31.excalidraw"
+            }
+          },
+          {
+            "id": "97b6059672aac1b2",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.10.3"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.10.3"
             }
           },
           {
@@ -55,7 +67,8 @@
               "title": "Experience Creation"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -205,23 +218,30 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "9bb319fc651f13d3",
+  "active": "af0eefb9bc557c4c",
   "lastOpenFiles": [
+    "Drawing 2025-11-12 16.24.44.excalidraw.md",
+    "Drawing 2025-11-14 23.25.31.excalidraw.md",
+    "Pasted Image 20251113210014_203.png",
+    "Pasted Image 20251112162809_068.png",
+    "Screenshot From 2025-11-12 16-24-14.png",
+    "DTO Shapes.md",
+    "Typical Flows.md",
+    "UML/Requirements - use cases.md",
+    "UML/Portfolio.md",
+    "UML/Language Stage.md",
+    "UML/Experience Creation.md",
+    "UML/Domain/Resume model.md",
+    "Pasted Image 20250924170547_109.png",
+    "Pasted Image 20250924170718_679.png",
     "Implementation Pointers.md",
     "Editing Endpoints.md",
     "Resume manipulation and access via DTOs.md",
     "Resume vs Portfolio.md",
     "Resume manipulation and access via DTOs.md~",
     "Resume vs Portfolio.md~",
-    "UML/Portfolio.md",
-    "UML/Requirements - use cases.md",
-    "UML/Language Stage.md",
-    "UML/Experience Creation.md",
-    "UML/Domain/Resume model.md",
     "UML/Education entry creation.md",
     "UML/Untitled.md",
-    "Pasted Image 20250924170718_679.png",
-    "Pasted Image 20250924170547_109.png",
     "UML/Experience Creation.md~",
     "Portfolio App overview.md",
     "UML/Domain",
@@ -237,10 +257,6 @@
     "Application connector model.md",
     "UML/Domain/Application connector model.md",
     "Resume model.md",
-    "copilot-custom-prompts/Rewrite as tweet thread.md",
-    "copilot-custom-prompts/Rewrite as tweet.md",
-    "copilot-custom-prompts/Remove URLs.md",
-    "copilot-custom-prompts/Generate glossary.md",
     "copilot-custom-prompts",
     "Portfolio main view/Portfolio View.md~",
     "Portfolio main view/mockup/print-solid.svg",
@@ -249,9 +265,6 @@
     "Edit View",
     "CV View/mockup/Pasted Image 20250628094342_644.png",
     "CV View/mockup/Pasted Image 20250628094342_673.svg",
-    "CV View/mockup/Pasted Image 20250628094342_672.svg",
-    "CV View/mockup/Pasted Image 20250628094342_671.png",
-    "CV View/mockup/Pasted Image 20250628094342_670.png",
-    "CV View/mockup/Pasted Image 20250628094342_669.png"
+    "CV View/mockup/Pasted Image 20250628094342_672.svg"
   ]
 }

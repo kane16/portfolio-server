@@ -5,6 +5,11 @@
   "format": "json-array",
   "collections": [
     {
+      "name": "FieldConstraint",
+      "file": "FieldConstraint.json",
+      "count": 14
+    },
+    {
       "name": "Author",
       "file": "Author.json",
       "count": 1

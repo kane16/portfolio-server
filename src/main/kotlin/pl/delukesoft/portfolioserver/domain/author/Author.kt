@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.user
+package pl.delukesoft.portfolioserver.domain.author
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

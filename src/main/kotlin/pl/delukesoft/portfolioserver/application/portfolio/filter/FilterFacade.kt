@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.application.portfolio.filter
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.domain.user.AuthorService
+import pl.delukesoft.portfolioserver.domain.author.AuthorService
 
 @Component
 class FilterFacade(

@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.user.exception
+package pl.delukesoft.portfolioserver.domain.author.exception
 
 import org.springframework.http.HttpStatus
 import pl.delukesoft.portfolioserver.utility.exception.LoggableResponseStatusException
