@@ -3,7 +3,7 @@ package pl.delukesoft.portfolioserver.application.portfolio.model
 import org.thymeleaf.context.WebContext
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
 import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
-import pl.delukesoft.portfolioserver.domain.resume.shortcut.ContactInfo
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.contact.ContactInfo
 
 data class PortfolioDTO(
   val id: Long,

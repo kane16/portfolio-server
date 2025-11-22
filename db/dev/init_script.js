@@ -1,9 +1,8 @@
+let portfolio_db = portfolio_db.getSiblingDB("portfolio");
 
-let db = db.getSiblingDB("portfolio");
-
-db.createUser({user: "root", pwd: "pass", roles: [{role: "readWrite", db: "portfolio"}]});
-db.createCollection('Author');
-db.Author.insertMany([
+portfolio_db.createUser({user: "root", pwd: "pass", roles: [{role: "readWrite", db: "portfolio"}]});
+portfolio_db.createCollection('Author');
+portfolio_db.Author.insertMany([
     {
       "_id": 1,
       "username": "admin",
@@ -40,8 +39,8 @@ db.Author.insertMany([
     }
   ]
 );
-db.createCollection('Resume');
-db.Resume.insertMany([
+portfolio_db.createCollection('Resume');
+portfolio_db.Resume.insertMany([
     {
       "_id": 1,
       "shortcut": {
@@ -60,6 +59,14 @@ db.Resume.insertMany([
         "image": {
           "name": "me",
           "src": "/resources/images/me.jpg"
+        },
+        "contact": {
+          "email": "lukasz.guminski629@gmail.com",
+          "phone": "+48123456789",
+          "location": "Wrocław, Poland",
+          "linkedin": "https://linkedin.com/in/lukaszguminski",
+          "github": "https://github.com/lukaszguminski",
+          "timezone": "CET"
         }
       },
       "skills": [
@@ -427,8 +434,8 @@ db.Resume.insertMany([
     }
   ]
 );
-db.createCollection('FieldConstraint');
-db.FieldConstraint.insertMany([
+portfolio_db.createCollection('FieldConstraint');
+portfolio_db.FieldConstraint.insertMany([
     {
       "_id": 1,
       "path": "resume.education.title",
@@ -568,11 +575,71 @@ db.FieldConstraint.insertMany([
         "nullable": true
       },
       "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+    },
+  {
+    "_id": 15,
+    "path": "resume.shortcut.contact.email",
+    "constraints": {
+      "minLength": 5,
+      "maxLength": 50,
+      "nullable": false
+    },
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 16,
+    "path": "resume.shortcut.contact.phone",
+    "constraints": {
+      "minLength": 5,
+      "maxLength": 20,
+      "nullable": false
+    },
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 17,
+    "path": "resume.shortcut.contact.location",
+    "constraints": {
+      "minLength": 3,
+      "maxLength": 100,
+      "nullable": false
+    },
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 18,
+    "path": "resume.shortcut.contact.linkedin",
+    "constraints": {
+      "minLength": 5,
+      "maxLength": 100,
+      "nullable": false
+    },
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 19,
+    "path": "resume.shortcut.contact.github",
+    "constraints": {
+      "minLength": 5,
+      "maxLength": 100,
+      "nullable": false
+    },
+    "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
+  },
+  {
+    "_id": 20,
+    "path": "resume.shortcut.contact.timezone",
+    "constraints": {
+      "minLength": 2,
+      "maxLength": 50,
+      "nullable": false
+      },
+      "_class": "pl.delukesoft.portfolioserver.domain.constraint.FieldConstraint"
     }
   ]
 );
-db.createCollection('ResumeVersion');
-db.ResumeVersion.insertMany([
+portfolio_db.createCollection('ResumeVersion');
+portfolio_db.ResumeVersion.insertMany([
     {
       "_id": 1,
       "resume": {
@@ -585,8 +652,8 @@ db.ResumeVersion.insertMany([
     }
   ]
 );
-db.createCollection('Sequence');
-db.Sequence.insertMany([
+portfolio_db.createCollection('Sequence');
+portfolio_db.Sequence.insertMany([
     {
       "_id": 1,
       "collectionName": "author",
@@ -631,8 +698,8 @@ db.Sequence.insertMany([
     }
   ]
 );
-db.createCollection('ResumeHistory');
-db.ResumeHistory.insertMany([
+portfolio_db.createCollection('ResumeHistory');
+portfolio_db.ResumeHistory.insertMany([
     {
       "_id": 1,
       "versions": [

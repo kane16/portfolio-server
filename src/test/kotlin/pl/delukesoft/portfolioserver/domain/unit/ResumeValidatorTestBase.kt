@@ -18,6 +18,7 @@ import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.language.LanguageLevel
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
+import pl.delukesoft.portfolioserver.domain.resume.shortcut.contact.ContactInfo
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.resume.timespan.Timeframe
@@ -87,15 +88,33 @@ open class ResumeValidatorTestBase {
     )
   }
 
+  protected fun contactInfo(
+    email: String = "alice@example.com",
+    phone: String = "+1234567890",
+    location: String = "San Francisco, CA",
+    linkedin: String = "https://linkedin.com/in/alice",
+    github: String = "https://github.com/alice",
+    timezone: String = "PST"
+  ) = ContactInfo(
+    email = email,
+    phone = phone,
+    location = location,
+    linkedin = linkedin,
+    github = github,
+    timezone = timezone
+  )
+
   protected fun shortcut(
     title: String = ofLen(10),
     summary: String = ofLen(50),
-    username: String = "alice"
+    username: String = "alice",
+    contact: ContactInfo? = contactInfo()
   ) = ResumeShortcut(
     user = User(username = username, email = "$username@example.com"),
     title = title,
     summary = summary,
-    image = null
+    image = null,
+    contact = contact
   )
 
   protected fun exp(
@@ -225,6 +244,36 @@ open class ResumeValidatorTestBase {
         ),
         FieldConstraint.build(
           "resume.experience.description"
+        ),
+        FieldConstraint.build(
+          path = "resume.shortcut.contact.email",
+          minLength = 5,
+          maxLength = 50
+        ),
+        FieldConstraint.build(
+          path = "resume.shortcut.contact.phone",
+          minLength = 5,
+          maxLength = 20
+        ),
+        FieldConstraint.build(
+          path = "resume.shortcut.contact.location",
+          minLength = 3,
+          maxLength = 100
+        ),
+        FieldConstraint.build(
+          path = "resume.shortcut.contact.linkedin",
+          minLength = 5,
+          maxLength = 100
+        ),
+        FieldConstraint.build(
+          path = "resume.shortcut.contact.github",
+          minLength = 5,
+          maxLength = 100
+        ),
+        FieldConstraint.build(
+          path = "resume.shortcut.contact.timezone",
+          minLength = 2,
+          maxLength = 50
         )
       )
     }
