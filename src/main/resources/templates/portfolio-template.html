@@ -351,7 +351,7 @@
 
   <section
     class="relative mx-auto w-full max-w-[21cm] min-h-[29.7cm] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl print:w-full print:max-w-[21cm] print:min-h-0 print:rounded-none print:border print:border-transparent print:shadow-none print:overflow-visible print:break-before-page"
-    th:if="${education != null and !#lists.isEmpty(education)}"
+    th:if="${education != null and !education.isEmpty()}"
   >
     <div class="px-8 py-10 print:px-5 print:py-5">
       <section class="space-y-8 print:space-y-3">
@@ -422,7 +422,7 @@
           </ul>
           <div
             class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
-            th:if="${educationEntry.externalLinks != null and !#lists.isEmpty(educationEntry.externalLinks)}"
+            th:if="${educationEntry.externalLinks != null and !educationEntry.externalLinks.isEmpty()}"
           >
             <a
               class="rounded-full bg-slate-100 px-3 py-1 transition hover:bg-slate-200"
