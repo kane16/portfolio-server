@@ -1,0 +1,12 @@
+web:
+  url: http://localhost:9090
+  login:
+    url: http://localhost:8080
+spring:
+  data:
+    mongodb:
+      database: portfolio
+      username: portfolio
+      password: pass
+auth-service:
+  url: http://authserver:8080
