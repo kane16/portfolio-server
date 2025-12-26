@@ -1,6 +1,7 @@
 package pl.delukesoft.portfolioserver.domain.resume
 
 import org.slf4j.LoggerFactory
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.adapters.auth.User
@@ -56,6 +57,7 @@ class ResumeService(
     return resumeModifyRepository.changeShortcutInResume(shortcut, resume)
   }
 
+  @CacheEvict(cacheNames = ["portfolio"], allEntries = true)
   fun unpublishResume(resumeVersion: ResumeVersion, username: String): Boolean {
     return resumeHistoryService.unpublishResumeVersion(resumeVersion, username)
   }
@@ -68,6 +70,7 @@ class ResumeService(
     return resumeHistoryService.findByRole("ROLE_ADMIN").defaultResume?.resume!!
   }
 
+  @CacheEvict(cacheNames = ["portfolio"], allEntries = true)
   fun publishResume(versionToPublish: ResumeVersion, username: String): Boolean {
     return resumeHistoryService.publishResumeVersion(versionToPublish, username)
   }
