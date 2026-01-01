@@ -1,6 +1,11 @@
 auth-service:
   url: http://localhost:8080
 spring:
+  cache:
+    type: caffeine
+    cache-names: portfolio, constraints
+    caffeine:
+      spec: initialCapacity=50,maximumSize=500,expireAfterAccess=1d
   application:
     name: portfolio-service
   profiles:
