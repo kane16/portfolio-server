@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompare
 import org.skyscreamer.jsonassert.JSONCompareMode
+import org.springframework.cache.CacheManager
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
 import pl.delukesoft.portfolioserver.domain.author.AuthorRepository
@@ -23,7 +24,8 @@ class BehaviourTestsSteps(
   private val resumeHistoryRepository: ResumeHistoryRepository,
   private val resumeVersionRepository: ResumeVersionRepository,
   private val generatorRepository: GeneratorRepository,
-  private val authorRepository: AuthorRepository
+  private val authorRepository: AuthorRepository,
+  private val cacheManager: CacheManager
 ) : En {
 
   var result = ResponseEntity.ok("OK")
@@ -41,6 +43,9 @@ class BehaviourTestsSteps(
   @Before
   fun beforeScenario() {
     baseRestClient.resetToken()
+    cacheManager.cacheNames.forEach { cacheName ->
+      cacheManager.getCache(cacheName)?.clear()
+    }
   }
 
   @After

@@ -11,6 +11,6 @@ class AsyncConfig {
   @Bean
   fun applicationTaskExecutor(): TaskExecutor {
     return VirtualThreadTaskExecutor()
-}
+  }
 
 }
