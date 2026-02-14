@@ -1,8 +1,2 @@
-auth-service:
-  url: http://authserver:8080
-spring:
-  data:
-    mongodb:
-      database: portfolio
-      username: portfolio
-      password: pass
+jwt:
+  secret: ${JWT_SECRET}

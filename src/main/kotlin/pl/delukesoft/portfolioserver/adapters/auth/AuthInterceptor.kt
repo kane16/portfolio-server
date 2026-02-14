@@ -12,7 +12,7 @@ import pl.delukesoft.portfolioserver.domain.author.AuthorService
 @Component
 class AuthInterceptor(
   private val userContext: UserContext,
-  private val authRequestService: AuthRequestService,
+  private val authService: AuthService,
   private val authorService: AuthorService
 ) {
 
@@ -24,7 +24,7 @@ class AuthInterceptor(
       return
     }
     log.info("Intercepting token: $token")
-    val user = if (token != null) authRequestService.getUser(token)
+    val user = if (token != null) authService.getUser(token)
       else throw AuthorizationException("Anonymous access is restricted to this endpoint")
     val author = authorService.getAuthor(user)
     val roles = if (author != null) user.roles + "ROLE_CANDIDATE" else user.roles

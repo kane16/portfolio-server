@@ -1,15 +1,17 @@
-package pl.delukesoft.portfolioserver.configuration
+package pl.delukesoft.portfolioserver.utility.configuration
 
 import org.springframework.aot.hint.MemberCategory
 import org.springframework.aot.hint.RuntimeHints
 import org.springframework.aot.hint.RuntimeHintsRegistrar
+import org.springframework.aot.hint.TypeReference
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.ImportRuntimeHints
 
 @Configuration
 @ImportRuntimeHints(
   NativeImageConfiguration.KotlinCollectionsRuntimeHints::class,
-  NativeImageConfiguration.CaffeineRuntimeHints::class
+  NativeImageConfiguration.CaffeineRuntimeHints::class,
+  NativeImageConfiguration.JjwtRuntimeHints::class
 )
 class NativeImageConfiguration {
 
@@ -60,6 +62,33 @@ class NativeImageConfiguration {
           MemberCategory.PUBLIC_FIELDS
         )
       }
+    }
+  }
+
+  class JjwtRuntimeHints : RuntimeHintsRegistrar {
+    override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+      // Register JJWT internal classes for native image compilation
+      listOf(
+        "io.jsonwebtoken.impl.DefaultJwtBuilder",
+        "io.jsonwebtoken.impl.DefaultJwtParserBuilder",
+        "io.jsonwebtoken.impl.DefaultClaimsBuilder",
+        "io.jsonwebtoken.impl.DefaultJwtHeaderBuilder",
+        "io.jsonwebtoken.impl.security.StandardSecureDigestAlgorithms",
+        "io.jsonwebtoken.impl.security.StandardKeyAlgorithms",
+        "io.jsonwebtoken.impl.security.StandardEncryptionAlgorithms",
+        "io.jsonwebtoken.impl.security.StandardHashAlgorithms",
+        "io.jsonwebtoken.impl.security.StandardKeyOperations",
+        "io.jsonwebtoken.impl.io.StandardCompressionAlgorithms",
+        "io.jsonwebtoken.jackson.io.JacksonSerializer",
+        "io.jsonwebtoken.jackson.io.JacksonDeserializer"
+      ).forEach { className ->
+        hints.reflection().registerType(
+          TypeReference.of(className),
+          MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
+          MemberCategory.INVOKE_PUBLIC_METHODS
+        )
+      }
+      hints.resources().registerPattern("META-INF/services/io.jsonwebtoken.*")
     }
   }
 

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
-import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
+import pl.delukesoft.portfolioserver.adapters.auth.AuthService
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.adapters.print.DocumentGenerationService
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
@@ -61,8 +61,8 @@ class TestcontainersConfiguration {
 
   @Bean
   @Primary
-  fun authRequestService(): AuthRequestService {
-    val service = mockk<AuthRequestService>()
+  fun authRequestService(): AuthService {
+    val service = mockk<AuthService>()
     every { service.getUser("Bearer admin") } returns User("admin", "", listOf("ROLE_USER", "ROLE_ADMIN"))
     every { service.getUser("Bearer user") } returns User("user", "", listOf("ROLE_USER"))
     every { service.getUser("Bearer candidate") } returns User("candidate", "", listOf("ROLE_USER", "ROLE_CANDIDATE"))
