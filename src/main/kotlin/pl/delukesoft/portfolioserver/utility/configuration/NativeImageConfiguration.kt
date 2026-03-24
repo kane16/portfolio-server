@@ -79,6 +79,7 @@ class NativeImageConfiguration {
         "io.jsonwebtoken.impl.security.StandardHashAlgorithms",
         "io.jsonwebtoken.impl.security.StandardKeyOperations",
         "io.jsonwebtoken.impl.io.StandardCompressionAlgorithms",
+        "io.jsonwebtoken.impl.security.KeysBridge",
         "io.jsonwebtoken.jackson.io.JacksonSerializer",
         "io.jsonwebtoken.jackson.io.JacksonDeserializer"
       ).forEach { className ->

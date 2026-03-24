@@ -2,9 +2,11 @@ package pl.delukesoft.portfolioserver.adapters.auth
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.security.Keys
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Service
-import java.security.SecureRandom
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
 import java.time.Instant
 import java.util.function.Function
 
@@ -14,9 +16,10 @@ class AuthService(
   private val jwtProperties: JwtProperties
 ) {
 
-  val secretKey = Jwts.SIG.HS512.key()
-    .random(SecureRandom(jwtProperties.secret.toByteArray()))
-    .build()
+  val secretKey = Keys.hmacShaKeyFor(
+    MessageDigest.getInstance("SHA-512")
+      .digest(jwtProperties.secret.toByteArray(StandardCharsets.UTF_8))
+  )
 
   fun getUser(tokenWithBearer: String): User {
     val token = extractToken(tokenWithBearer)
@@ -56,7 +59,7 @@ class AuthService(
         .parseSignedClaims(token)
         .getPayload()
     } catch (e: Exception) {
-      throw InvalidTokenException("Invalid JWT Token")
+      throw InvalidTokenException(e.message ?: "Invalid JWT Token")
     }
   }
 

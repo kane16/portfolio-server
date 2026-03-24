@@ -7,7 +7,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Resume History not found",
+      "message": "Resume History not found",
       "status": 404
     }
     """
@@ -61,7 +61,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Anonymous access is restricted to this endpoint",
+      "message": "Anonymous access is restricted to this endpoint",
       "status": 401
     }
     """
@@ -83,7 +83,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Access denied. Required role: ROLE_CANDIDATE",
+      "message": "Access denied. Required role: ROLE_CANDIDATE",
       "status": 403
     }
     """
@@ -105,7 +105,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": ["resume.shortcut.title length must be at least 5"],
+      "message": ["resume.shortcut.title length must be at least 5"],
       "status": 400
     }
     """
@@ -127,7 +127,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": ["resume.shortcut.title length must be at most 30"],
+      "message": ["resume.shortcut.title length must be at most 30"],
       "status": 400
     }
     """
@@ -149,7 +149,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": ["resume.shortcut.summary length must be at least 30"],
+      "message": ["resume.shortcut.summary length must be at least 30"],
       "status": 400
     }
     """
@@ -170,7 +170,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Request invalid",
+      "message": "Request invalid",
       "status": 400
     }
     """
@@ -191,7 +191,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Request invalid",
+      "message": "Request invalid",
       "status": 400
     }
     """
@@ -209,7 +209,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Request invalid",
+      "message": "Request invalid",
       "status": 400
     }
     """
@@ -223,7 +223,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Request invalid",
+      "message": "Request invalid",
       "status": 400
     }
     """
@@ -244,7 +244,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "Request invalid",
+      "message": "Request invalid",
       "status": 400
     }
     """
@@ -430,7 +430,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "No version has been published yet",
+      "message": "No version has been published yet",
       "status": 400
     }
     """
@@ -486,7 +486,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "error": "CV not found",
+      "message": "CV not found",
       "status": 404
     }
     """
@@ -772,7 +772,7 @@ Feature: Resume creation
     And Response body should be:
       """
       {
-        "error": "Anonymous access is restricted to this endpoint",
+        "message": "Anonymous access is restricted to this endpoint",
         "status": 401
       }
       """
@@ -784,7 +784,7 @@ Feature: Resume creation
     And Response body should be:
       """
       {
-        "error": "Access denied. Required role: ROLE_CANDIDATE",
+        "message": "Access denied. Required role: ROLE_CANDIDATE",
         "status": 403
       }
       """
@@ -796,7 +796,7 @@ Feature: Resume creation
     And Response body should be:
       """
       {
-        "error": "Resume History not found",
+        "message": "Resume History not found",
         "status": 404
       }
       """
@@ -976,7 +976,7 @@ Feature: Resume creation
     And Response body should be:
       """
       {
-        "error" : "Skill with name BBB not found",
+        "message" : "Skill with name BBB not found",
         "status" : 404
       }
       """
@@ -1099,7 +1099,7 @@ Feature: Resume creation
     Then Response body should be:
     """
     {
-      "error" : "Skill with name mmm not found",
+      "message" : "Skill with name mmm not found",
       "status" : 404
     }
     """

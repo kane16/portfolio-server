@@ -36,7 +36,7 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
     request: WebRequest
   ): ResponseEntity<in Any>? {
     val body = mapOf<String, Any>(
-      Pair("error", "Request invalid"),
+      Pair("message", "Request invalid"),
       Pair("status", HttpStatus.BAD_REQUEST.value())
     )
     return ResponseEntity(body, HttpStatus.BAD_REQUEST)
@@ -50,14 +50,14 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
   ): ResponseEntity<Any>? {
     val body = if (ex.bindingResult.fieldErrors.size == 1) {
       mapOf<String, Any>(
-        Pair("error", ex.bindingResult.fieldError?.defaultMessage ?: "Validation failed"),
+        Pair("message", ex.bindingResult.fieldError?.defaultMessage ?: "Validation failed"),
         Pair("status", ex.statusCode.value())
       )
     } else {
       mapOf<String, Any>(
         Pair("timestamp", LocalDateTime.now()),
         Pair("field", ex.bindingResult.fieldError?.field ?: "Unknown"),
-        Pair("error", ex.bindingResult.fieldError?.defaultMessage ?: "Validation failed"),
+        Pair("message", ex.bindingResult.fieldError?.defaultMessage ?: "Validation failed"),
         Pair(
           "validationErrors",
           ex.bindingResult.fieldErrors.map { ResponsePair(it.field, it.defaultMessage ?: "Validation failed") }),
@@ -70,7 +70,7 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
   @ExceptionHandler(ResponseStatusException::class)
   fun handleResponseStatusException(exc: ResponseStatusException, response: WebRequest): ResponseEntity<Any> {
     val body = mapOf<String, Any>(
-      Pair("error", exc.reason!!),
+      Pair("message", exc.reason!!),
       Pair("status", exc.statusCode.value())
     )
     return ResponseEntity(body, exc.statusCode)
@@ -79,7 +79,7 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
   @ExceptionHandler(ValidationFailedException::class)
   fun handleValidationFailedException(exc: ValidationFailedException, response: WebRequest): ResponseEntity<Any> {
     val body = mapOf<String, Any>(
-      Pair("error", exc.validationResults.flatMap { it.errors }),
+      Pair("message", exc.validationResults.flatMap { it.errors }),
       Pair("status", HttpStatus.BAD_REQUEST.value())
     )
     return ResponseEntity(body, HttpStatus.BAD_REQUEST)
@@ -90,7 +90,7 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
     val body = mapOf<String, Any>(
       Pair("timestamp", LocalDateTime.now()),
       Pair("status", 500),
-      Pair("error", "Mongo exception encountered"),
+      Pair("message ", "Mongo exception encountered"),
     )
     log.error("Mongo exception encountered", exc)
     return ResponseEntity(body, HttpStatusCode.valueOf(500))

@@ -116,7 +116,7 @@ Feature: CV View functionality
     And Response body should be:
     """
     {
-    "error": "Access denied. Required role: ROLE_ADMIN",
+    "message": "Access denied. Required role: ROLE_ADMIN",
     "status": 403
     }
     """

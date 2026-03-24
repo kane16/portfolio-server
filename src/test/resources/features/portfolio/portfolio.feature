@@ -191,7 +191,7 @@ Feature: Portfolio data read from server
     And Response body should be:
     """
     {
-      "error": "Anonymous access is restricted to this endpoint",
+      "message": "Anonymous access is restricted to this endpoint",
       "status": 401
     }
     """
@@ -203,7 +203,7 @@ Feature: Portfolio data read from server
     And Response body should be:
     """
     {
-      "error": "CV not found",
+      "message": "CV not found",
       "status": 404
     }
     """

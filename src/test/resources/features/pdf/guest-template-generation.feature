@@ -92,7 +92,7 @@ Feature: CV View functionality
     And Response body should be:
     """
     {
-    "error": "Resume History not found",
+    "message": "Resume History not found",
     "status": 404
     }
     """

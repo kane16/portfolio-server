@@ -24,7 +24,7 @@ Feature: Skill Operations
     And Response body should be:
     """
     {
-      "error": "Skill Domain with name JVM already exists",
+      "message": "Skill Domain with name JVM already exists",
       "status": 400
     }
     """
