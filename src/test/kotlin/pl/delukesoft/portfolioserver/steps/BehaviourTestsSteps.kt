@@ -11,7 +11,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.cache.CacheManager
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
-import pl.delukesoft.portfolioserver.domain.author.AuthorRepository
+import pl.delukesoft.portfolioserver.application.author.AuthorRepository
 import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository

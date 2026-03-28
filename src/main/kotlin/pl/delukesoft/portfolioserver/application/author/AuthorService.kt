@@ -1,8 +1,8 @@
-package pl.delukesoft.portfolioserver.domain.author
+package pl.delukesoft.portfolioserver.application.author
 
 import org.springframework.stereotype.Service
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.domain.author.exception.AuthorNotFound
+import pl.delukesoft.portfolioserver.application.author.exception.AuthorNotFound
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.exception.SkillDomainExistsException

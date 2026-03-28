@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.adapters.auth.exception.AuthenticationException
 import pl.delukesoft.portfolioserver.adapters.auth.exception.AuthorizationException
-import pl.delukesoft.portfolioserver.domain.author.AuthorService
+import pl.delukesoft.portfolioserver.application.author.AuthorService
 
 @Aspect
 @Component

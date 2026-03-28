@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.author
+package pl.delukesoft.portfolioserver.application.author
 
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
