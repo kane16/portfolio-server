@@ -42,7 +42,7 @@ class ResumeController(
   fun initiatePortfolioEdit(
     @Valid @RequestBody shortcut: ResumeShortcutDTO,
     @RequestHeader("Authorization") token: String?
-  ): Boolean {
+  ): ResumeEditDTO {
     log.info("Received request to initiate portfolio edit")
     return resumeFacade.initiateResume(shortcut)
   }
@@ -53,7 +53,7 @@ class ResumeController(
     @PathVariable("id") resumeId: Long,
     @Valid @RequestBody shortcut: ResumeShortcutDTO,
     @RequestHeader("Authorization") token: String?,
-  ): Boolean {
+  ): ResumeEditDTO {
     log.info("Received request to update portfolio shortcut")
     return resumeFacade.editResumeShortcut(resumeId, shortcut)
   }
@@ -63,7 +63,7 @@ class ResumeController(
   fun publishPortfolio(
     @PathVariable("version") version: Long,
     @RequestHeader("Authorization") token: String?,
-  ): Boolean {
+  ): ResumeEditDTO {
     log.info("Received request to publish portfolio")
     return resumeFacade.publishResume(version)
   }
@@ -72,7 +72,7 @@ class ResumeController(
   @PutMapping("/edit/unpublish")
   fun unpublishPortfolio(
     @RequestHeader("Authorization") token: String?,
-  ): Boolean {
+  ): ResumeEditDTO {
     log.info("Received request to unpublish portfolio")
     return resumeFacade.unpublishResume()
   }

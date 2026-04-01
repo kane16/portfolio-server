@@ -53,8 +53,9 @@ class ResumeService(
     return dbResume
   }
 
-  fun editResumeShortcut(resume: Resume, shortcut: ResumeShortcut): Boolean {
-    return resumeModifyRepository.changeShortcutInResume(shortcut, resume)
+  fun editResumeShortcut(resume: Resume, shortcut: ResumeShortcut): Resume {
+    resumeModifyRepository.changeShortcutInResume(shortcut, resume)
+    return resumeRepository.findResumeById(resume.id!!) ?: throw ResumeNotFound()
   }
 
   @CacheEvict(cacheNames = ["portfolio"], allEntries = true)

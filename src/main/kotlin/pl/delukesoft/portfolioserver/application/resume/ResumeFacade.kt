@@ -66,27 +66,28 @@ class ResumeFacade(
     return resumeMapper.mapHistoryToDTO(history)
   }
 
-  fun initiateResume(shortcut: ResumeShortcutDTO): Boolean {
+  fun initiateResume(shortcut: ResumeShortcutDTO): ResumeEditDTO {
     val shortcut = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
-    resumeService.addResume(shortcut)
-    return true
+    val resume = resumeService.addResume(shortcut)
+    return resumeMapper.mapResumeToEditDTO(resume)
   }
 
-  fun unpublishResume(): Boolean {
+  fun unpublishResume(): ResumeEditDTO {
     val publishedVersion = resumeHistoryService.findPublishedResumeVersion(currentUser.username)
     if (publishedVersion?.version == null) {
       throw ResumeOperationNotAllowed("No version has been published yet")
     }
-    return resumeService.unpublishResume(publishedVersion, userContext.user?.username!!)
+    resumeService.unpublishResume(publishedVersion, userContext.user?.username!!)
+    return resumeMapper.mapResumeToEditDTO(resumeService.getResumeById(publishedVersion.resume.id!!, userContext.user))
   }
 
-  fun editResumeShortcut(id: Long, shortcut: ResumeShortcutDTO): Boolean {
+  fun editResumeShortcut(id: Long, shortcut: ResumeShortcutDTO): ResumeEditDTO {
     val resume = resumeService.getResumeById(id, currentUser)
     val shortcut = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
-    return resumeService.editResumeShortcut(resume, shortcut)
+    return resumeMapper.mapResumeToEditDTO(resumeService.editResumeShortcut(resume, shortcut))
   }
 
-  fun publishResume(version: Long): Boolean {
+  fun publishResume(version: Long): ResumeEditDTO {
     val publishedVersion = resumeHistoryService.findPublishedResumeVersion(currentUser.username)
     val versionToPublish = resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username)
     if (publishedVersion != null) {
@@ -95,7 +96,8 @@ class ResumeFacade(
     if (versionToPublish == null) {
       throw ResumeNotFound()
     }
-    return resumeService.publishResume(versionToPublish, userContext.user?.username!!)
+    resumeService.publishResume(versionToPublish, userContext.user?.username!!)
+    return resumeMapper.mapResumeToEditDTO(resumeService.getResumeById(versionToPublish.resume.id!!, userContext.user))
   }
 
 

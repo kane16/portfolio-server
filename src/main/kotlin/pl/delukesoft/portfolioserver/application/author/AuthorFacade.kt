@@ -1,7 +1,10 @@
 package pl.delukesoft.portfolioserver.application.author
 
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
+import pl.delukesoft.portfolioserver.application.author.exception.AuthorExistsException
+import pl.delukesoft.portfolioserver.application.author.exception.AuthorNotFound
 
 @Component
 class AuthorFacade(
@@ -16,12 +19,15 @@ class AuthorFacade(
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun getContextAuthor(): Author {
-    return currentAuthor
+    return authorService.getAuthor(currentUser) ?: throw AuthorNotFound()
   }
 
+  @Transactional
   fun registerAuthorForContextUser(): Author {
+    if (authorService.getAuthor(currentUser) != null) {
+      throw AuthorExistsException()
+    }
     return authorService.createAuthor(currentUser)
   }
-
 
 }
