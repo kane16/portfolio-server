@@ -18,22 +18,24 @@ class ExperienceFacade(
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun addExperienceToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    val resume = resumeVersion.resume
     val resumeSkills = resume.skills
     val experienceToAdd = resumeMapper.mapDTOToExperience(experience, resumeSkills)
-    return experienceService.addExperienceToResume(experienceToAdd, resume)
+    return experienceService.addExperienceToResume(experienceToAdd, resumeVersion)
   }
 
   fun editExperienceInResume(resumeId: Long, experienceId: Long, experience: ExperienceDTO): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    val resume = resumeVersion.resume
     val resumeSkills = resume.skills
     val experienceToEdit = resumeMapper.mapDTOToExperience(experience, resumeSkills).copy(id = experienceId)
-    return experienceService.editResume(experienceToEdit, resume)
+    return experienceService.editResume(experienceToEdit, resumeVersion)
   }
 
   fun deleteExperienceFromResume(resumeId: Long, experienceId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
-    return experienceService.deleteExperienceFromResume(experienceId, resume)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    return experienceService.deleteExperienceFromResume(experienceId, resumeVersion)
   }
 
 }

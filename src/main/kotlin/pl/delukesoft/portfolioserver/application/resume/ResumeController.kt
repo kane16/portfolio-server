@@ -24,7 +24,7 @@ class ResumeController(
     @RequestHeader("Authorization") token: String?
   ): ResumeEditDTO {
     log.info("Received request to fetch Resume by id: {}", id)
-    return resumeFacade.getById(id)
+    return resumeFacade.getEditDTOById(id)
   }
 
   @AuthRequired("ROLE_CANDIDATE")

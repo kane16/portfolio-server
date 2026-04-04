@@ -27,7 +27,7 @@ interface ResumeHistoryRepository : MongoRepository<ResumeHistory, Long> {
       "{ \$project:  { _id : '\$maxVersion' }}"
     ]
   )
-  fun findMaxVersionInResumeHistoryByUsername(username: String): Long
+  fun findMaxVersionInResumeHistoryByUsername(username: String): Long?
 
   @Query("{ 'user.username' : ?0 }")
   @Update("{ \$addToSet: { 'versions': ?1 } }")

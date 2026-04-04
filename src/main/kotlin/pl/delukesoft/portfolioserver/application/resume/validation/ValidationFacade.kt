@@ -42,20 +42,22 @@ class ValidationFacade(
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun validateResume(id: Long): ValidationResultDTO {
-    val resume = resumeService.getResumeById(id, currentUser)
+    val resumeVersion = resumeService.getResumeById(id, currentUser)
+    val resume = resumeVersion.resume
     val validationResult = resumeValidator.validate(resume) as ResumeValidatorResult
     return validationMapper.mapResumeValidationResultToDTO(validationResult)
   }
 
-  fun validateBusiness(id: Long, business: String): SimpleValidationResultDTO {
+  fun validateBusiness(id: Long, businessDTO: String): SimpleValidationResultDTO {
     resumeService.getResumeById(id, currentUser)
-    val business = Business(business)
+    val business = Business(businessDTO)
     val validationResult = businessValidator.validate(business)
     return validationMapper.mapValidationResultToDTO(validationResult, "business")
   }
 
   fun validateExperienceTimeframe(id: Long, timeframe: TimeframeDTO): SimpleValidationResultDTO {
-    val resume = resumeService.getResumeById(id, currentUser)
+    val resumeVersion = resumeService.getResumeById(id, currentUser)
+    val resume = resumeVersion.resume
     val addedTimeframe = Timeframe(timeframe.start, timeframe.end)
     val validationResult = (resume.experience.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
     val validationResults = experienceTimeframeValidator.validateList(validationResult)
@@ -63,7 +65,8 @@ class ValidationFacade(
   }
 
   fun validateSideProjectTimeframe(id: Long, timeframe: TimeframeDTO): SimpleValidationResultDTO {
-    val resume = resumeService.getResumeById(id, currentUser)
+    val resumeVersion = resumeService.getResumeById(id, currentUser)
+    val resume = resumeVersion.resume
     val addedTimeframe = Timeframe(timeframe.start, timeframe.end)
     val validationResult = (resume.sideProjects.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
     val validationResults = lenientTimeframeValidator.validateList(validationResult)
@@ -71,7 +74,8 @@ class ValidationFacade(
   }
 
   fun validateExperienceSkills(id: Long, experienceSkillsDTO: List<SkillDTO>): SimpleValidationResultDTO {
-    val resume = resumeService.getResumeById(id, currentUser)
+    val resumeVersion = resumeService.getResumeById(id, currentUser)
+    val resume = resumeVersion.resume
     val experienceSkills = experienceSkillsDTO.map { skillExperienceDTO ->
       SkillExperience(
         resume.skills.find { it.name == skillExperienceDTO.name } ?: throw SkillNotFound(skillExperienceDTO.name),
@@ -84,7 +88,8 @@ class ValidationFacade(
   }
 
   fun validateExperience(resumeId: Long, experienceDTO: ExperienceDTO): SimpleValidationResultDTO {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    val resume = resumeVersion.resume
     val experience = Experience(
       null,
       Business(experienceDTO.business),
@@ -106,7 +111,8 @@ class ValidationFacade(
   }
 
   fun validateSideProject(resumeId: Long, sideProjectDTO: ExperienceDTO): SimpleValidationResultDTO {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    val resume = resumeVersion.resume
     val sideProject = Experience(
       null,
       Business(sideProjectDTO.business),

@@ -10,6 +10,8 @@ import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 data class Author(
   @Id
   val id: Long? = null,
+  val firstname: String,
+  val lastname: String,
   val username: String,
   val email: String,
   val roles: List<String> = emptyList(),

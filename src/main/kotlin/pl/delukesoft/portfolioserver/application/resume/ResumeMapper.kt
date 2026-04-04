@@ -12,7 +12,6 @@ import pl.delukesoft.portfolioserver.application.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
-import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.education.Education
 import pl.delukesoft.portfolioserver.domain.resume.education.EducationInstitution
 import pl.delukesoft.portfolioserver.domain.resume.education.EducationType
@@ -38,7 +37,7 @@ class ResumeMapper {
 
   fun mapVersionToDTO(version: ResumeVersion): ResumeVersionDTO {
     return ResumeVersionDTO(
-      version.resume.id!!,
+      version.id!!,
       version.resume.shortcut.title,
       version.resume.shortcut.summary,
       version.version,
@@ -46,10 +45,11 @@ class ResumeMapper {
     )
   }
 
-  fun mapResumeToEditDTO(resume: Resume): ResumeEditDTO {
+  fun mapResumeToEditDTO(resumeVersion: ResumeVersion): ResumeEditDTO {
+    val resume = resumeVersion.resume
     return ResumeEditDTO(
-      id = resume.id!!,
-      fullname = "Łukasz Gumiński",
+      id = resumeVersion.id!!,
+      fullname = "${resume.shortcut.user.firstname} ${resume.shortcut.user.lastname}",
       imageSource = resume.shortcut.image?.src ?: "",
       title = resume.shortcut.title,
       summary = resume.shortcut.summary,

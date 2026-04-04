@@ -19,30 +19,31 @@ class LanguageFacade(
   private val currentUser
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
-  fun addLanguageToResume(resumeId: Long, language: LanguageDTO): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+  fun addLanguageToResume(resumeId: Long, languageDTO: LanguageDTO): Boolean {
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val language = Language(
       null,
-      language.name,
-      LanguageLevel.entries.first { it.name == language.level }
+      languageDTO.name,
+      LanguageLevel.entries.first { it.name == languageDTO.level }
     )
-    return languageService.addLanguageToResume(resume, language)
+    return languageService.addLanguageToResume(resumeVersion, language)
   }
 
-  fun editLanguageInResume(resumeId: Long, language: LanguageDTO, languageId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+  fun editLanguageInResume(resumeId: Long, languageDTO: LanguageDTO, languageId: Long): Boolean {
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val language = Language(
       languageId,
-      language.name,
-      LanguageLevel.entries.first { it.name == language.level }
+      languageDTO.name,
+      LanguageLevel.entries.first { it.name == languageDTO.level }
     )
-    return languageService.editLanguageInResume(resume, language)
+    return languageService.editLanguageInResume(resumeVersion, language)
   }
 
   fun deleteLanguageFromResume(resumeId: Long, languageId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
-    val languageToDelete = resume.languages.find { it.id == languageId } ?: throw LanguageNotFound("id: $languageId")
-    return languageService.deleteLanguageFromResume(resume, languageToDelete)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    val languageToDelete =
+      resumeVersion.resume.languages.find { it.id == languageId } ?: throw LanguageNotFound("id: $languageId")
+    return languageService.deleteLanguageFromResume(resumeVersion, languageToDelete)
   }
 
 }

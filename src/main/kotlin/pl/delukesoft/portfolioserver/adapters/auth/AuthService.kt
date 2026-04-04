@@ -27,7 +27,9 @@ class AuthService(
     return User(
       username = extractUsernameFromToken(token),
       email = extractClaim(token, { it["email"].toString() }),
-      roles = extractClaim(token, { it["roles"].toString().split(",") })
+      roles = extractClaim(token, { it["roles"].toString().split(",") }),
+      firstname = extractClaim(token, { it["firstname"].toString() }),
+      lastname = extractClaim(token, { it["lastname"].toString() }),
     )
   }
 

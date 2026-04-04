@@ -34,7 +34,7 @@ class TestcontainersConfiguration {
   @ServiceConnection
   fun mongoDbContainer(): MongoDBContainer {
     return MongoDBContainer(
-      DockerImageName.parse("kane16/delukesoft_test_mongo_db:1.0.0").asCompatibleSubstituteFor("mongo")
+      DockerImageName.parse("kane16/delukesoft_test_portfolio_mongo_db:1.0.0").asCompatibleSubstituteFor("mongo")
     )
       .waitingFor(
         Wait.forLogMessage(".*Waiting for connections.*", 1)
@@ -63,10 +63,22 @@ class TestcontainersConfiguration {
   @Primary
   fun authRequestService(): AuthService {
     val service = mockk<AuthService>()
-    every { service.getUser("Bearer admin") } returns User("admin", "", listOf("ROLE_USER", "ROLE_ADMIN"))
-    every { service.getUser("Bearer user") } returns User("user", "", listOf("ROLE_USER"))
-    every { service.getUser("Bearer candidate") } returns User("candidate", "", listOf("ROLE_USER", "ROLE_CANDIDATE"))
-    every { service.getUser("Bearer candidate_empty") } returns User("candidate_empty", "", listOf("ROLE_CANDIDATE"))
+    every { service.getUser("Bearer admin") } returns User("admin", "", listOf("ROLE_USER", "ROLE_ADMIN"), "", "")
+    every { service.getUser("Bearer user") } returns User("user", "", listOf("ROLE_USER"), "", "")
+    every { service.getUser("Bearer candidate") } returns User(
+      "candidate",
+      "",
+      listOf("ROLE_USER", "ROLE_CANDIDATE"),
+      "",
+      ""
+    )
+    every { service.getUser("Bearer candidate_empty") } returns User(
+      "candidate_empty",
+      "",
+      listOf("ROLE_CANDIDATE"),
+      "Łukasz",
+      "Gumiński"
+    )
     return service
   }
 

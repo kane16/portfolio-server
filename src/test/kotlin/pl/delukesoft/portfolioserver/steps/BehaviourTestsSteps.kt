@@ -11,8 +11,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.cache.CacheManager
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
+import pl.delukesoft.portfolioserver.application.author.Author
 import pl.delukesoft.portfolioserver.application.author.AuthorRepository
-import pl.delukesoft.portfolioserver.domain.resume.ResumeRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorRepository
@@ -20,7 +20,6 @@ import pl.delukesoft.portfolioserver.domain.sequence.GeneratorRepository
 
 class BehaviourTestsSteps(
   private val baseRestClient: BaseRestClient,
-  private val resumeRepository: ResumeRepository,
   private val resumeHistoryRepository: ResumeHistoryRepository,
   private val resumeVersionRepository: ResumeVersionRepository,
   private val generatorRepository: GeneratorRepository,
@@ -30,7 +29,6 @@ class BehaviourTestsSteps(
 
   var result = ResponseEntity.ok("OK")
   private var logger = org.slf4j.LoggerFactory.getLogger(this::class.java)
-  val intialDbResumes = resumeRepository.findAll()
   val initialDbResumeVersions = resumeVersionRepository.findAll()
   val initialDbHistoryResumes = resumeHistoryRepository.findAll()
   val initialSequences = generatorRepository.findAll()
@@ -46,15 +44,25 @@ class BehaviourTestsSteps(
     cacheManager.cacheNames.forEach { cacheName ->
       cacheManager.getCache(cacheName)?.clear()
     }
+    if (authorRepository.findByUsername("candidate_empty") == null) {
+      authorRepository.save(
+        Author(
+          id = 100,
+          firstname = "Łukasz",
+          lastname = "Gumiński",
+          username = "candidate_empty",
+          email = "candidate_empty@example.com",
+          roles = listOf("ROLE_CANDIDATE")
+        )
+      )
+    }
   }
 
   @After
   fun afterScenario() {
     resumeHistoryRepository.deleteAll()
     resumeVersionRepository.deleteAll()
-    resumeRepository.deleteAll()
     generatorRepository.deleteAll()
-    resumeRepository.saveAll(intialDbResumes)
     resumeVersionRepository.saveAll(initialDbResumeVersions)
     resumeHistoryRepository.saveAll(initialDbHistoryResumes)
     generatorRepository.saveAll(initialSequences)
@@ -66,7 +74,6 @@ class BehaviourTestsSteps(
     Given("All resumes are deleted from database") {
       resumeHistoryRepository.deleteAll()
       resumeVersionRepository.deleteAll()
-      resumeRepository.deleteAll()
       generatorRepository.deleteAll()
       authorRepository.deleteAll()
     }

@@ -17,7 +17,7 @@ class AuthorController(
   @PostMapping("/register")
   @AuthRequired
   fun registerAuthor(
-    @RequestHeader("Authorization") token: String?
+    @RequestHeader("Authorization") token: String?,
   ): Author {
     logger.info("Registering author with token: $token")
     return authorFacade.registerAuthorForContextUser()

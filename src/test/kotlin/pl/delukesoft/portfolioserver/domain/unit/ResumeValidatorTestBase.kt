@@ -110,7 +110,7 @@ open class ResumeValidatorTestBase {
     username: String = "alice",
     contact: ContactInfo? = contactInfo()
   ) = ResumeShortcut(
-    user = User(username = username, email = "$username@example.com"),
+    user = User(username = username, email = "$username@example.com", firstname = "Luke", lastname = "Smith"),
     title = title,
     summary = summary,
     image = null,
