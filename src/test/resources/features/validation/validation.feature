@@ -118,3 +118,39 @@ Feature: Resume validation
        ]
     }
     """
+
+  Scenario: Skill experience validation fails when level is not provided
+    When "POST" request is sent to endpoint "/skills/domains" with body:
+    """
+    JVM
+    """
+    When "POST" request is sent to endpoint "/resume/edit/4/skills" with body:
+    """
+    {
+      "name": "Kotlin",
+      "description": "JVM Language",
+      "level": 3,
+      "domains": ["JVM"]
+    }
+    """
+    Then Response status code should be 201
+    When "POST" request is sent to endpoint "/resume/4/validate/experience/skills" with body:
+    """
+    [
+      {
+        "name": "Kotlin",
+        "detail": "Solid production experience",
+        "domains": ["JVM"]
+      }
+    ]
+    """
+    Then Response body should be:
+    """
+    {
+       "isValid" : false,
+       "domain" : "skillExperience",
+       "errors" : [
+          "Experience Skill Level must be between 1 and 5"
+       ]
+    }
+    """
