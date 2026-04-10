@@ -19,7 +19,7 @@ class AuthorController(
   fun registerAuthor(
     @RequestHeader("Authorization") token: String?,
   ): Author {
-    logger.info("Registering author with token: $token")
+    logger.info("Registering author")
     return authorFacade.registerAuthorForContextUser()
   }
 
@@ -28,7 +28,7 @@ class AuthorController(
   fun getContextAuthor(
     @RequestHeader("Authorization") token: String?,
   ): Author {
-    logger.info("Retrieving author context for token: $token")
+    logger.info("Retrieving author")
     return authorFacade.getContextAuthor()
   }
 

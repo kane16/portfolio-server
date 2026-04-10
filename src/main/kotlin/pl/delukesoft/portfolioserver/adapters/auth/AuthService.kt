@@ -24,6 +24,7 @@ class AuthService(
   fun getUser(tokenWithBearer: String): User {
     val token = extractToken(tokenWithBearer)
     if (!isTokenValid(token)) throw InvalidTokenException("Invalid JWT Token")
+    if (!isUserValid(token)) throw InvalidTokenException("User claims are missing in JWT Token")
     return User(
       username = extractUsernameFromToken(token),
       email = extractClaim(token, { it["email"].toString() }),
@@ -31,6 +32,16 @@ class AuthService(
       firstname = extractClaim(token, { it["firstname"].toString() }),
       lastname = extractClaim(token, { it["lastname"].toString() }),
     )
+  }
+
+  fun isUserValid(token: String): Boolean {
+    val userClaims = listOf(
+      "firstname",
+      "lastname",
+      "email",
+      "roles"
+    ).map { extractKeyFromClaim(it, extractClaims(token)) }
+    return userClaims.all { it.isNotBlank() }
   }
 
   fun extractKeyFromClaim(key: String, claims: Claims): String =
