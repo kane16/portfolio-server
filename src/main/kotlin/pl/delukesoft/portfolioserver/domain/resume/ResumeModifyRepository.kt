@@ -7,53 +7,55 @@ import pl.delukesoft.portfolioserver.domain.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.domain.resume.language.Language
 import pl.delukesoft.portfolioserver.domain.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository
 import pl.delukesoft.portfolioserver.domain.validation.*
 
 @Component
 class ResumeModifyRepository(
-  private val resumeRepository: ResumeRepository
+  private val resumeVersionRepository: ResumeVersionRepository
 ) {
 
   @ResumeModification
   @ValidateShortcut
-  fun changeShortcutInResume(shortcut: ResumeShortcut, resume: Resume): Boolean {
-    return resumeRepository.changeShortcutInResume(resume.id!!, shortcut) > 0
+  fun changeShortcutInResume(shortcut: ResumeShortcut, resumeVersion: ResumeVersion): Boolean {
+    return resumeVersionRepository.changeShortcutInResume(resumeVersion.id!!, shortcut) > 0
   }
 
   @ResumeModification
   @ValidateExperiences
-  fun changeExperiencesInResume(experiences: List<Experience>, resume: Resume): Boolean {
-    return resumeRepository.changeExperienceToResume(resume.id!!, experiences) > 0
+  fun changeExperiencesInResume(experiences: List<Experience>, resumeVersion: ResumeVersion): Boolean {
+    return resumeVersionRepository.changeExperienceToResume(resumeVersion.id!!, experiences) > 0
   }
 
   @ResumeModification
   @ValidateHobbies
-  fun changeHobbiesInResume(hobbies: List<Hobby>, resume: Resume): Boolean {
-    return resumeRepository.changeHobbiesInResume(resume.id!!, hobbies) > 0
+  fun changeHobbiesInResume(hobbies: List<Hobby>, resumeVersion: ResumeVersion): Boolean {
+    return resumeVersionRepository.changeHobbiesInResume(resumeVersion.id!!, hobbies) > 0
   }
 
   @ResumeModification
   @ValidateLanguages
-  fun changeLanguagesInResume(languages: List<Language>, resume: Resume): Boolean {
-    return resumeRepository.changeLanguagesInResume(resume.id!!, languages) > 0
+  fun changeLanguagesInResume(languages: List<Language>, resumeVersion: ResumeVersion): Boolean {
+    return resumeVersionRepository.changeLanguagesInResume(resumeVersion.id!!, languages) > 0
   }
 
   @ResumeModification
   @ValidateSideProjects
-  fun changeSideProjectsInResume(sideProjects: List<Experience>, resume: Resume): Boolean {
-    return resumeRepository.changeSideProjectsInResume(resume.id!!, sideProjects) > 0
+  fun changeSideProjectsInResume(sideProjects: List<Experience>, resumeVersion: ResumeVersion): Boolean {
+    return resumeVersionRepository.changeSideProjectsInResume(resumeVersion.id!!, sideProjects) > 0
   }
 
   @ResumeModification
   @ValidateSkill
-  fun changeSkillsInResume(skills: List<Skill>, resume: Resume): Boolean {
-    return resumeRepository.changeSkillsInResume(resume.id!!, skills) > 0
+  fun changeSkillsInResume(skills: List<Skill>, resumeVersion: ResumeVersion): Boolean {
+    return resumeVersionRepository.changeSkillsInResume(resumeVersion.id!!, skills) > 0
   }
 
   @ResumeModification
   @ValidateEducation
-  fun changeEducationInResume(education: List<Education>, resume: Resume): Boolean {
-    return resumeRepository.changeEducationInResume(resume.id!!, education) > 0
+  fun changeEducationInResume(education: List<Education>, resumeVersion: ResumeVersion): Boolean {
+    return resumeVersionRepository.changeEducationInResume(resumeVersion.id!!, education) > 0
   }
 
 }

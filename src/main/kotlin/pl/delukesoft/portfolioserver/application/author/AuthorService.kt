@@ -1,9 +1,7 @@
-package pl.delukesoft.portfolioserver.domain.author
+package pl.delukesoft.portfolioserver.application.author
 
 import org.springframework.stereotype.Service
 import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.domain.author.exception.AuthorNotFound
-import pl.delukesoft.portfolioserver.domain.resume.skill.Skill
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.domain.resume.skill.domain.exception.SkillDomainExistsException
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
@@ -20,20 +18,13 @@ class AuthorService(
 
   fun createAuthor(user: User): Author {
     val author = Author(
+      firstname = user.firstname,
+      lastname = user.lastname,
       username = user.username,
       email = user.email,
       id = generatorService.getAndIncrement("author")
     )
     return authorRepository.save(author)
-  }
-
-  fun getMainAuthor(): Author {
-    return authorRepository.findByRolesContains("ROLE_ADMIN") ?: throw AuthorNotFound()
-  }
-
-  fun addSkillToAuthor(skillToAdd: Skill, author: Author): Boolean {
-    authorRepository.addSkillToAuthor(author.username, skillToAdd)
-    return true
   }
 
   fun addDomainToAuthor(domainToAdd: SkillDomain, author: Author): Boolean {

@@ -11,12 +11,8 @@ class ResumeShortcutValidator(
 ) : Validator<ResumeShortcut>() {
 
   override fun validate(value: ResumeShortcut): ValidationResult {
-    val contactValidationResults: List<ValidationResult> =
-      if (value.contact != null) value.contact.validateConstraintPaths(
-        constraintService::validateConstraint
-      ) else emptyList()
     val validationResults: List<ValidationResult> =
-      value.validateConstraintPaths(constraintService::validateConstraint) + contactValidationResults
+      value.validateConstraintPaths(constraintService::validateConstraint)
 
     return if (validationResults.all { it.isValid }) ValidationResult.build() else ValidationResult.build(
       validationResults.flatMap { it.errors })

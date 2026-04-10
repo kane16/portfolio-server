@@ -1,7 +1,6 @@
 package pl.delukesoft.portfolioserver.domain.resumehistory
 
 import org.springframework.stereotype.Service
-import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resumehistory.exception.ResumeHistoryNotFound
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
@@ -26,10 +25,10 @@ class ResumeHistoryService(
     return resumeHistoryRepository.findResumeHistoryByUsername(username) ?: throw ResumeHistoryNotFound()
   }
 
-  fun addResumeToHistory(resume: Resume): Boolean {
-    return when (resumeHistoryRepository.existsByUser_Username(resume.shortcut.user.username)) {
-      true -> addResumeToExistingHistory(resume)
-      false -> createResumeHistoryAndAddResume(resume)
+  fun addResumeToHistory(resumeVersion: ResumeVersion): Boolean {
+    return when (resumeHistoryRepository.existsByUser_Username(resumeVersion.resume.shortcut.user.username)) {
+      true -> addResumeToExistingHistory(resumeVersion)
+      false -> createResumeHistoryAndAddResume(resumeVersion)
     }
   }
 
@@ -51,44 +50,23 @@ class ResumeHistoryService(
     ) > 0
   }
 
-  private fun createResumeHistoryAndAddResume(resume: Resume): Boolean {
+  private fun createResumeHistoryAndAddResume(resumeVersion: ResumeVersion): Boolean {
     val generatedId = generatorService.getAndIncrement("resume_history")
-    val firstVersion = createResumeVersion(resume, true)
     val resumeHistory = ResumeHistory(
       id = generatedId,
       defaultResume = null,
-      versions = listOf(firstVersion),
-      user = resume.shortcut.user
+      versions = listOf(resumeVersion),
+      user = resumeVersion.resume.shortcut.user
     )
     resumeHistoryRepository.save(resumeHistory)
     return true
   }
 
-  private fun addResumeToExistingHistory(resume: Resume): Boolean {
+  private fun addResumeToExistingHistory(resumeVersion: ResumeVersion): Boolean {
     return resumeHistoryRepository.addResumeHistoryVersionByUsername(
-      resume.shortcut.user.username,
-      createResumeVersion(resume)
+      resumeVersion.resume.shortcut.user.username,
+      resumeVersion
     ) > 0
-  }
-
-  private fun createResumeVersion(resume: Resume, isFirst: Boolean = false): ResumeVersion {
-    val generatedId = generatorService.getAndIncrement("resume_version")
-    val version = when (isFirst) {
-      true -> ResumeVersion(
-        id = generatedId,
-        resume = resume,
-        version = 1,
-        state = ResumeVersionState.DRAFT
-      )
-
-      else -> ResumeVersion(
-        id = generatedId,
-        resume = resume,
-        version = resumeHistoryRepository.findMaxVersionInResumeHistoryByUsername(resume.shortcut.user.username) + 1,
-        state = ResumeVersionState.DRAFT
-      )
-    }
-    return resumeVersionRepository.save(version)
   }
 
   fun findVersionByIdAndUsername(portfolioVersion: Long, username: String): ResumeVersion? {

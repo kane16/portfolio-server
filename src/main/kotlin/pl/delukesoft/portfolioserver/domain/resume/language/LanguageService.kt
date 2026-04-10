@@ -1,8 +1,8 @@
 package pl.delukesoft.portfolioserver.domain.resume.language
 
 import org.springframework.stereotype.Service
-import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.ResumeModifyRepository
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 import pl.delukesoft.portfolioserver.domain.sequence.GeneratorService
 
 @Service
@@ -11,23 +11,26 @@ class LanguageService(
   private val generatorService: GeneratorService
 ) {
 
-  fun addLanguageToResume(resume: Resume, language: Language): Boolean {
+  fun addLanguageToResume(resumeVersion: ResumeVersion, language: Language): Boolean {
+    val resume = resumeVersion.resume
     val languages = resume.languages + language.copy(
       id = generatorService.getAndIncrement("language")
     )
-    return resumeModifyRepository.changeLanguagesInResume(languages, resume)
+    return resumeModifyRepository.changeLanguagesInResume(languages, resumeVersion)
   }
 
-  fun editLanguageInResume(resume: Resume, language: Language): Boolean {
+  fun editLanguageInResume(resumeVersion: ResumeVersion, language: Language): Boolean {
+    val resume = resumeVersion.resume
     val languages = resume.languages.map {
       if (it.id == language.id) language else it
     }
-    return resumeModifyRepository.changeLanguagesInResume(languages, resume)
+    return resumeModifyRepository.changeLanguagesInResume(languages, resumeVersion)
   }
 
-  fun deleteLanguageFromResume(resume: Resume, languageToDelete: Language): Boolean {
+  fun deleteLanguageFromResume(resumeVersion: ResumeVersion, languageToDelete: Language): Boolean {
+    val resume = resumeVersion.resume
     val languages = resume.languages.filter { it.id != languageToDelete.id }
-    return resumeModifyRepository.changeLanguagesInResume(languages, resume)
+    return resumeModifyRepository.changeLanguagesInResume(languages, resumeVersion)
   }
 
 }

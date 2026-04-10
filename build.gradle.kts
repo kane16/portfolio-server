@@ -99,4 +99,11 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
   useJUnitPlatform()
+  jvmArgs(
+    "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+  )
+}
+
+tasks.named("processTestAot") {
+  enabled = false
 }

@@ -9,16 +9,17 @@ import pl.delukesoft.portfolioserver.application.portfolio.model.SkillPortfolioD
 import pl.delukesoft.portfolioserver.application.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.application.resume.education.InstitutionDTO
 import pl.delukesoft.portfolioserver.application.resume.experience.timeframe.TimeframeDTO
-import pl.delukesoft.portfolioserver.domain.resume.Resume
 import pl.delukesoft.portfolioserver.domain.resume.experience.Experience
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
 @Component
 @RegisterReflectionForBinding(SkillPortfolioDTO::class, LanguageDTO::class, ProjectDTO::class)
 class PortfolioMapper {
 
-  fun mapToDTO(resume: Resume): PortfolioDTO {
+  fun mapToDTO(resumeVersion: ResumeVersion): PortfolioDTO {
+    val resume = resumeVersion.resume
     return PortfolioDTO(
-      id = resume.id!!,
+      id = resumeVersion.id!!,
       fullname = "Łukasz Gumiński",
       imageSource = resume.shortcut.image?.src ?: "",
       title = resume.shortcut.title,

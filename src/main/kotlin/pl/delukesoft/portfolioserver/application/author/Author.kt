@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.domain.author
+package pl.delukesoft.portfolioserver.application.author
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -10,6 +10,8 @@ import pl.delukesoft.portfolioserver.domain.resume.skill.domain.SkillDomain
 data class Author(
   @Id
   val id: Long? = null,
+  val firstname: String,
+  val lastname: String,
   val username: String,
   val email: String,
   val roles: List<String> = emptyList(),

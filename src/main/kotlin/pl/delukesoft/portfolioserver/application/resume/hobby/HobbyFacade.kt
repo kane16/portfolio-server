@@ -17,15 +17,15 @@ class HobbyFacade(
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun addHobbyToResume(resumeId: Long, hobbyName: String): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val hobby = Hobby(hobbyName)
-    return hobbyService.addHobbyToResume(hobby, resume)
+    return hobbyService.addHobbyToResume(hobby, resumeVersion)
   }
 
   fun deleteHobbyFromResume(resumeId: Long, hobbyName: String): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val hobby = Hobby(hobbyName)
-    return hobbyService.deleteHobbyFromResume(hobby, resume)
+    return hobbyService.deleteHobbyFromResume(hobby, resumeVersion)
   }
 
 }

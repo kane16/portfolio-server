@@ -4,7 +4,7 @@ spring:
       database: portfolio
       username: root
       password: pass
-      uri: mongodb://localhost:27017
+      uri: mongodb://localhost:27018
   devtools:
     livereload:
       enabled: true

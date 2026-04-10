@@ -25,7 +25,20 @@ Feature: Resume creation
     Then Response status code should be 201
     And Response body should be:
     """
-    true
+    {
+      "id":4,
+      "fullname":"Łukasz Gumiński",
+      "imageSource":"123.jpg",
+      "title":"My Professional Resume",
+      "summary":"Experienced software developer with strong background in web technologies",
+      "skills":[],
+      "languages":[],
+      "sideProjects":[],
+      "workHistory":[],
+      "hobbies":[],
+      "education":[],
+      "contact":null
+    }
     """
     When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200

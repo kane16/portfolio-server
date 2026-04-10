@@ -18,22 +18,22 @@ class EducationFacade(
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun addEducationToResume(resumeId: Long, dto: EducationDTO): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val education = resumeMapper.mapDTOToEducation(dto)
 
-    return educationService.addEducationToResume(education, resume)
+    return educationService.addEducationToResume(education, resumeVersion)
   }
 
   fun modifyEducationInResume(resumeId: Long, education: EducationDTO, educationId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val educationEntry = resumeMapper.mapDTOToEducation(education).copy(id = educationId)
 
-    return educationService.modifyEducationInResume(educationEntry, resume)
+    return educationService.modifyEducationInResume(educationEntry, resumeVersion)
   }
 
   fun deleteEducationFromResume(resumeId: Long, educationId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
-    return educationService.deleteEducationFromResume(educationId, resume)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    return educationService.deleteEducationFromResume(educationId, resumeVersion)
   }
 
 

@@ -4,30 +4,25 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.blog.image.exception.ResumeNotFound
 import pl.delukesoft.blog.image.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.adapters.auth.UserContext
-import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearch
-import pl.delukesoft.portfolioserver.application.portfolio.filter.PortfolioSearchMapper
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeHistoryDTO
 import pl.delukesoft.portfolioserver.application.portfolio.model.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.application.resume.skill.SkillMapper
-import pl.delukesoft.portfolioserver.domain.resume.Resume
-import pl.delukesoft.portfolioserver.domain.resume.ResumeSearchService
 import pl.delukesoft.portfolioserver.domain.resume.ResumeService
 import pl.delukesoft.portfolioserver.domain.resume.skill.SkillService
 import pl.delukesoft.portfolioserver.domain.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryService
+import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersion
 
 @Component
 class ResumeFacade(
   private val resumeService: ResumeService,
   private val resumeHistoryService: ResumeHistoryService,
-  private val resumeSearchService: ResumeSearchService,
-  private val portfolioSearchMapper: PortfolioSearchMapper,
   private val resumeMapper: ResumeMapper,
   private val userContext: UserContext,
   private val skillMapper: SkillMapper,
-  private val skillService: SkillService,
+  private val skillService: SkillService
 ) {
 
   private val currentUser
@@ -36,29 +31,17 @@ class ResumeFacade(
   private val currentAuthor
     get() = requireNotNull(userContext.author) { "Authenticated author is required" }
 
-  fun getById(id: Long, portfolioSearch: PortfolioSearch? = null): Resume {
-    val resumeById = resumeService.getResumeById(id, userContext.user)
-    return getResumeWithOptionalFilter(resumeById, portfolioSearch)
-  }
-
-  fun getById(id: Long): ResumeEditDTO {
+  fun getEditDTOById(id: Long): ResumeEditDTO {
     return resumeMapper.mapResumeToEditDTO(resumeService.getResumeById(id, userContext.user))
   }
 
-  fun getDefaultCV(portfolioSearch: PortfolioSearch? = null): Resume {
-    val defaultResume = resumeService.getDefaultCV(userContext.user)
-    return getResumeWithOptionalFilter(defaultResume, portfolioSearch)
+  fun getById(id: Long): ResumeVersion {
+    return resumeService.getResumeById(id, userContext.user)
   }
 
-  private fun getResumeWithOptionalFilter(
-    defaultResume: Resume,
-    portfolioSearch: PortfolioSearch?
-  ): Resume {
-    val resumeSearch = portfolioSearch?.let { portfolioSearchMapper.mapToSearch(it) }
-    return when (resumeSearch) {
-      null -> defaultResume
-      else -> resumeSearchService.filterResumeWithCriteria(defaultResume, resumeSearch)
-    }
+  fun getDefaultCV(): ResumeVersion {
+    val defaultResume = resumeService.getDefaultCV(userContext.user)
+    return defaultResume
   }
 
   fun getUserHistory(): ResumeHistoryDTO {
@@ -66,27 +49,30 @@ class ResumeFacade(
     return resumeMapper.mapHistoryToDTO(history)
   }
 
-  fun initiateResume(shortcut: ResumeShortcutDTO): Boolean {
-    val shortcut = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
-    resumeService.addResume(shortcut)
-    return true
+  fun initiateResume(shortcutDTO: ResumeShortcutDTO): ResumeEditDTO {
+    val shortcut = resumeMapper.mapShortcutDTOToResume(shortcutDTO, currentUser)
+    val resume = resumeService.addResume(shortcut)
+    return resumeMapper.mapResumeToEditDTO(resume)
   }
 
-  fun unpublishResume(): Boolean {
+  fun unpublishResume(): ResumeEditDTO {
     val publishedVersion = resumeHistoryService.findPublishedResumeVersion(currentUser.username)
     if (publishedVersion?.version == null) {
       throw ResumeOperationNotAllowed("No version has been published yet")
     }
-    return resumeService.unpublishResume(publishedVersion, userContext.user?.username!!)
+    resumeService.unpublishResume(publishedVersion, userContext.user?.username!!)
+    return resumeMapper.mapResumeToEditDTO(
+      resumeService.getResumeById(publishedVersion.id!!, userContext.user)
+    )
   }
 
-  fun editResumeShortcut(id: Long, shortcut: ResumeShortcutDTO): Boolean {
+  fun editResumeShortcut(id: Long, shortcutDTO: ResumeShortcutDTO): ResumeEditDTO {
     val resume = resumeService.getResumeById(id, currentUser)
-    val shortcut = resumeMapper.mapShortcutDTOToResume(shortcut, currentUser)
-    return resumeService.editResumeShortcut(resume, shortcut)
+    val shortcut = resumeMapper.mapShortcutDTOToResume(shortcutDTO, currentUser)
+    return resumeMapper.mapResumeToEditDTO(resumeService.editResumeShortcut(resume, shortcut))
   }
 
-  fun publishResume(version: Long): Boolean {
+  fun publishResume(version: Long): ResumeEditDTO {
     val publishedVersion = resumeHistoryService.findPublishedResumeVersion(currentUser.username)
     val versionToPublish = resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username)
     if (publishedVersion != null) {
@@ -95,7 +81,10 @@ class ResumeFacade(
     if (versionToPublish == null) {
       throw ResumeNotFound()
     }
-    return resumeService.publishResume(versionToPublish, userContext.user?.username!!)
+    resumeService.publishResume(versionToPublish, userContext.user?.username!!)
+    return resumeMapper.mapResumeToEditDTO(
+      resumeService.getResumeById(versionToPublish.id!!, userContext.user)
+    )
   }
 
 
@@ -106,21 +95,24 @@ class ResumeFacade(
   }
 
   fun findSkillsByResumeId(resumeId: Long): List<SkillDTO> {
-    val resume = resumeService.getResumeById(resumeId, userContext.user)
+    val resumeVersion = resumeService.getResumeById(resumeId, userContext.user)
+    val resume = resumeVersion.resume
     return resume.skills.map { skillMapper.mapToDTO(it) }
   }
 
   fun deleteSkillFromResume(resumeId: Long, skillNameToRemove: String): Boolean {
-    val resume = resumeService.getResumeById(resumeId, userContext.user)
+    val resumeVersion = resumeService.getResumeById(resumeId, userContext.user)
+    val resume = resumeVersion.resume
     val skillToRemove = resume.skills.find { it.name == skillNameToRemove } ?: throw SkillNotFound(skillNameToRemove)
-    return skillService.deleteSkillFromResume(resume, skillToRemove)
+    return skillService.deleteSkillFromResume(resumeVersion, skillToRemove)
   }
 
   fun editSkillWithName(resumeId: Long, skillName: String, skill: SkillDTO): Boolean {
-    val resume = resumeService.getResumeById(resumeId, userContext.user)
+    val resumeVersion = resumeService.getResumeById(resumeId, userContext.user)
+    val resume = resumeVersion.resume
     val skillToEdit = resume.skills.find { it.name == skillName } ?: throw SkillNotFound(skillName)
     val skillUpdate = skillMapper.mapToSkill(skill, currentAuthor.domains)
-    return skillService.editSkill(resume, skillToEdit, skillUpdate)
+    return skillService.editSkill(resumeVersion, skillToEdit, skillUpdate)
   }
 
 }

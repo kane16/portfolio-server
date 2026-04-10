@@ -19,22 +19,23 @@ class SideProjectFacade(
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun addSideProjectToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    val resume = resumeVersion.resume
     val resumeSkills = resume.skills
     val sideProjectToAdd = resumeMapper.mapDTOToExperience(experience, resumeSkills)
-    return sideProjectService.addSideProjectToResume(sideProjectToAdd, resume)
+    return sideProjectService.addSideProjectToResume(sideProjectToAdd, resumeVersion)
   }
 
   fun editSideProjectInResume(resumeId: Long, sideProjectId: Long, experience: ExperienceDTO): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
-    val resumeSkills = resume.skills
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    val resumeSkills = resumeVersion.resume.skills
     val sideProjectToEdit = resumeMapper.mapDTOToExperience(experience, resumeSkills).copy(id = sideProjectId)
-    return sideProjectService.editResume(sideProjectToEdit, resume)
+    return sideProjectService.editResume(sideProjectToEdit, resumeVersion)
   }
 
   fun deleteSideProjectFromResume(resumeId: Long, sideProjectId: Long): Boolean {
-    val resume = resumeService.getResumeById(resumeId, currentUser)
-    return sideProjectService.deleteExperienceFromResume(sideProjectId, resume)
+    val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
+    return sideProjectService.deleteExperienceFromResume(sideProjectId, resumeVersion)
   }
 
 }
