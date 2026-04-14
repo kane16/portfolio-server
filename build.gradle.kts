@@ -62,6 +62,7 @@ dependencies {
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
   implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
   testImplementation("io.cucumber:cucumber-spring:${Versions.cucumber}")
   testImplementation("io.cucumber:cucumber-java:${Versions.cucumber}")
   testImplementation("io.cucumber:cucumber-junit-platform-engine:${Versions.cucumber}")

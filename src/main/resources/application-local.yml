@@ -13,3 +13,8 @@ spring:
       enabled: false
 jwt:
   secret: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6ImthbmUxNiIsImVtYWlsIjoibHVrYXN6Lmd1bWluc2tpNjI5QGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSLFJPTEVfQURNSU4sUk9MRV9PUkdBTklaQVRJT04iLCJzdWIiOiJrYW5lMTYiLCJpYXQiOjE3NzEwNjY5NjMsImV4cCI6MTc3MTA2Nzg2M30.UBUbpXn-1cLoJpTnALHW8Ts-2-6uRkAcD7qq5Mkgwu0TMJRlg-CA17uijq-sLaFEcblyRoGVWgj7cBpDs5ZtOA
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

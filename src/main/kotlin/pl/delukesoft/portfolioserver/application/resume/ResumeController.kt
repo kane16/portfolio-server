@@ -1,5 +1,8 @@
 package pl.delukesoft.portfolioserver.application.resume
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -11,6 +14,7 @@ import pl.delukesoft.portfolioserver.application.resume.model.ResumeEditDTO
 
 @RestController
 @RequestMapping("/resume")
+@Tag(name = "Resume", description = "Resume management and editing")
 class ResumeController(
   private val resumeFacade: ResumeFacade,
 ) {
@@ -19,6 +23,8 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @GetMapping("/{id}")
+  @Operation(summary = "Get resume by ID", description = "Retrieve a resume in edit form by its ID")
+  @SecurityRequirement(name = "Bearer Authentication")
   fun getCVById(
     @PathVariable("id") id: Long,
     @RequestHeader("Authorization") token: String?
@@ -29,6 +35,8 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @GetMapping("/history")
+  @Operation(summary = "Get resume history", description = "Retrieve the resume edit history for the current user")
+  @SecurityRequirement(name = "Bearer Authentication")
   fun getHistoryByUser(
     @RequestHeader("Authorization") token: String?
   ): ResumeHistoryDTO {
@@ -39,6 +47,8 @@ class ResumeController(
   @AuthRequired("ROLE_CANDIDATE")
   @PostMapping("/edit/init")
   @ResponseStatus(HttpStatus.CREATED)
+  @Operation(summary = "Initiate resume edit", description = "Start a new resume editing session")
+  @SecurityRequirement(name = "Bearer Authentication")
   fun initiatePortfolioEdit(
     @Valid @RequestBody shortcut: ResumeShortcutDTO,
     @RequestHeader("Authorization") token: String?
@@ -49,6 +59,8 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @PutMapping("/edit/{id}")
+  @Operation(summary = "Update resume shortcut", description = "Update the resume shortcut/summary information")
+  @SecurityRequirement(name = "Bearer Authentication")
   fun updatePortfolioShortcut(
     @PathVariable("id") resumeId: Long,
     @Valid @RequestBody shortcut: ResumeShortcutDTO,
@@ -60,6 +72,8 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @PutMapping("/edit/{version}/publish")
+  @Operation(summary = "Publish resume", description = "Publish a specific version of the resume")
+  @SecurityRequirement(name = "Bearer Authentication")
   fun publishPortfolio(
     @PathVariable("version") version: Long,
     @RequestHeader("Authorization") token: String?,
@@ -70,6 +84,8 @@ class ResumeController(
 
   @AuthRequired("ROLE_CANDIDATE")
   @PutMapping("/edit/unpublish")
+  @Operation(summary = "Unpublish resume", description = "Unpublish the currently published resume")
+  @SecurityRequirement(name = "Bearer Authentication")
   fun unpublishPortfolio(
     @RequestHeader("Authorization") token: String?,
   ): ResumeEditDTO {

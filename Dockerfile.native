@@ -1,3 +1,24 @@
-FROM ubuntu:jammy
-COPY build/native/nativeCompile/portfolio-server portfolio
-ENTRYPOINT ["/portfolio"]
+FROM ghcr.io/graalvm/native-image-community:21-ol9 AS build
+
+RUN microdnf install -y findutils && microdnf clean all
+
+WORKDIR /app
+
+COPY gradle/ gradle/
+COPY gradlew build.gradle.kts settings.gradle.kts ./
+
+RUN chmod +x gradlew && ./gradlew dependencies --no-daemon
+
+COPY src/ src/
+
+RUN ./gradlew nativeCompile --no-daemon -x test
+
+FROM oraclelinux:9-slim
+
+WORKDIR /app
+
+COPY --from=build /app/build/native/nativeCompile/portfolio-server app
+
+EXPOSE 9090
+
+ENTRYPOINT ["./app"]
