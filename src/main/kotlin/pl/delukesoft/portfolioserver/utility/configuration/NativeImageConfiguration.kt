@@ -1,5 +1,18 @@
 package pl.delukesoft.portfolioserver.utility.configuration
 
+import io.swagger.v3.oas.models.*
+import io.swagger.v3.oas.models.info.Contact
+import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.info.License
+import io.swagger.v3.oas.models.media.Content
+import io.swagger.v3.oas.models.media.MediaType
+import io.swagger.v3.oas.models.media.Schema
+import io.swagger.v3.oas.models.parameters.RequestBody
+import io.swagger.v3.oas.models.responses.ApiResponse
+import io.swagger.v3.oas.models.responses.ApiResponses
+import io.swagger.v3.oas.models.security.SecurityRequirement
+import io.swagger.v3.oas.models.security.SecurityScheme
+import io.swagger.v3.oas.models.tags.Tag
 import org.springframework.aot.hint.MemberCategory
 import org.springframework.aot.hint.RuntimeHints
 import org.springframework.aot.hint.RuntimeHintsRegistrar
@@ -11,7 +24,8 @@ import org.springframework.context.annotation.ImportRuntimeHints
 @ImportRuntimeHints(
   NativeImageConfiguration.KotlinCollectionsRuntimeHints::class,
   NativeImageConfiguration.CaffeineRuntimeHints::class,
-  NativeImageConfiguration.JjwtRuntimeHints::class
+  NativeImageConfiguration.JjwtRuntimeHints::class,
+  NativeImageConfiguration.SpringDocRuntimeHints::class
 )
 class NativeImageConfiguration {
 
@@ -90,6 +104,41 @@ class NativeImageConfiguration {
         )
       }
       hints.resources().registerPattern("META-INF/services/io.jsonwebtoken.*")
+    }
+  }
+
+  class SpringDocRuntimeHints : RuntimeHintsRegistrar {
+    override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+      hints.resources().registerPattern("META-INF/resources/**")
+      hints.resources().registerPattern("META-INF/resources/webjars/**")
+
+      listOf(
+        OpenAPI::class.java,
+        Components::class.java,
+        Paths::class.java,
+        PathItem::class.java,
+        Operation::class.java,
+        Info::class.java,
+        Contact::class.java,
+        License::class.java,
+        Tag::class.java,
+        SecurityScheme::class.java,
+        SecurityScheme.Type::class.java,
+        SecurityScheme.In::class.java,
+        SecurityRequirement::class.java,
+        Schema::class.java,
+        Content::class.java,
+        MediaType::class.java,
+        RequestBody::class.java,
+        ApiResponse::class.java,
+        ApiResponses::class.java
+      ).forEach { clazz ->
+        hints.reflection().registerType(
+          clazz,
+          MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
+          MemberCategory.INVOKE_PUBLIC_METHODS
+        )
+      }
     }
   }
 
