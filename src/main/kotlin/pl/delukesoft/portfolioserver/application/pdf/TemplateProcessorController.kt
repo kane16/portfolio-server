@@ -20,7 +20,7 @@ class TemplateProcessorController(
   @AuthRequired(anonymousAllowed = true)
   @GetMapping(produces = ["text/html"])
   @Operation(
-    summary = "Generate default resume PDF",
+    summary = "Generate HTML representation of default resume for PDF conversion",
     description = "Generate an HTML representation of the default resume for PDF conversion"
   )
   fun generatePDF(
