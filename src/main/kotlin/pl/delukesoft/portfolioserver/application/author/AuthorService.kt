@@ -27,6 +27,11 @@ class AuthorService(
     return authorRepository.save(author)
   }
 
+  fun createAuthor(author: Author): Author {
+    val authorToSave = author.copy(id = generatorService.getAndIncrement("author"))
+    return authorRepository.save(authorToSave)
+  }
+
   fun addDomainToAuthor(domainToAdd: SkillDomain, author: Author): Boolean {
     if (authorRepository.addDomainToAuthor(author.username, domainToAdd) == 0) {
       throw SkillDomainExistsException(domainToAdd.name)

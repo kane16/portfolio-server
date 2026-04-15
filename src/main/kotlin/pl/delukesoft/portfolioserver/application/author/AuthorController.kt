@@ -3,6 +3,7 @@ package pl.delukesoft.portfolioserver.application.author
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
@@ -27,6 +28,19 @@ class AuthorController(
   ): Author {
     logger.info("Registering author")
     return authorFacade.registerAuthorForContextUser()
+  }
+
+  @PostMapping("/register/users/{userId}")
+  @AuthRequired("ROLE_ADMIN")
+  @Operation(summary = "Register author for user", description = "Register an author for a specific user by user ID")
+  @SecurityRequirement(name = "Bearer Authentication")
+  fun registerAuthorForUser(
+    @PathVariable("userId") userId: Long,
+    @RequestBody @Valid author: AuthorDTO,
+    @RequestHeader("Authorization") token: String?,
+  ): Author {
+    logger.info("Registering author for user with ID: $userId")
+    return authorFacade.registerAuthorForUser(token!!, userId, author)
   }
 
   @GetMapping
