@@ -44,6 +44,17 @@ class AuthorController(
   }
 
   @GetMapping
+  @AuthRequired("ROLE_ADMIN")
+  @Operation(summary = "Get all authors", description = "Retrieve all registered authors")
+  @SecurityRequirement(name = "Bearer Authentication")
+  fun getAllAuthors(
+    @RequestHeader("Authorization") token: String?,
+  ): List<Author> {
+    logger.info("Retrieving all authors")
+    return authorFacade.getAllAuthors()
+  }
+
+  @GetMapping("context")
   @AuthRequired
   @Operation(
     summary = "Get current author",

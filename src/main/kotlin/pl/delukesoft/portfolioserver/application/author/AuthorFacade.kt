@@ -46,4 +46,8 @@ class AuthorFacade(
     return authorService.createAuthor(authorToSave)
   }
 
+  fun getAllAuthors(): List<Author> {
+    return authorService.getAuthors()
+  }
+
 }

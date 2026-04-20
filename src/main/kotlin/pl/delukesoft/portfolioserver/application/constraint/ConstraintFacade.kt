@@ -9,7 +9,7 @@ class ConstraintFacade(
 ) {
 
   fun getResumeConstraints(): List<ConstraintDTO> {
-    return constraintService.getConstraints().map {
+    return constraintService.getConstraintsForEndpoint().map {
       ConstraintDTO(
         path = it.path,
         constraints = it.constraints

@@ -16,6 +16,8 @@ class AuthorService(
     return authorRepository.findByUsername(user.username)
   }
 
+  fun getAuthors(): List<Author> = authorRepository.findAll()
+
   fun createAuthor(user: User): Author {
     val author = Author(
       firstname = user.firstname,
