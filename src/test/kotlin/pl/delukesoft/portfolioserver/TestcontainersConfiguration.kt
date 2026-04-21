@@ -14,7 +14,9 @@ import org.springframework.context.annotation.Profile
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
-import pl.delukesoft.portfolioserver.adapters.auth.AuthService
+import pl.delukesoft.portfolioserver.adapters.auth.AppUserDTO
+import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
+import pl.delukesoft.portfolioserver.adapters.auth.AuthTokenService
 import pl.delukesoft.portfolioserver.adapters.auth.User
 import pl.delukesoft.portfolioserver.adapters.print.DocumentGenerationService
 import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
@@ -60,9 +62,8 @@ class TestcontainersConfiguration {
   }
 
   @Bean
-  @Primary
-  fun authRequestService(): AuthService {
-    val service = mockk<AuthService>()
+  fun authTokenService(): AuthTokenService {
+    val service = mockk<AuthTokenService>()
     every { service.getUser("Bearer admin") } returns User("admin", "", listOf("ROLE_USER", "ROLE_ADMIN"), "", "")
     every { service.getUser("Bearer user") } returns User("user", "", listOf("ROLE_USER"), "", "")
     every { service.getUser("Bearer candidate") } returns User(
@@ -79,6 +80,21 @@ class TestcontainersConfiguration {
       "Łukasz",
       "Gumiński"
     )
+    return service
+  }
+
+  @Bean
+  fun authRequestService(): AuthRequestService {
+    val service = mockk<AuthRequestService>()
+    every { service.getUserById(any(), 200L) } returns AppUserDTO(
+      id = 200,
+      username = "jane",
+      email = "jane@example.com",
+      firstname = "Jane",
+      lastname = "Doe",
+      roles = listOf("ROLE_USER")
+    )
+    every { service.getUserById(any(), 999L) } returns null
     return service
   }
 

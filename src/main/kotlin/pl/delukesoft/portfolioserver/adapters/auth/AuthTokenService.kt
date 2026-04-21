@@ -12,7 +12,7 @@ import java.util.function.Function
 
 @Service
 @EnableConfigurationProperties(JwtProperties::class)
-class AuthService(
+class AuthTokenService(
   private val jwtProperties: JwtProperties
 ) {
 

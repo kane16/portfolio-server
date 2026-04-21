@@ -1,2 +1,5 @@
 jwt:
   secret: ${JWT_SECRET}
+auth:
+  api:
+    url: ${AUTH_API_URL}

@@ -12,9 +12,11 @@ class AuthorService(
   private val generatorService: GeneratorService
 ) {
 
-  fun getAuthor(user: User): Author? {
-    return authorRepository.findByUsername(user.username)
+  fun getAuthorByUsername(username: String): Author? {
+    return authorRepository.findByUsername(username)
   }
+
+  fun getAuthors(): List<Author> = authorRepository.findAll()
 
   fun createAuthor(user: User): Author {
     val author = Author(
@@ -27,11 +29,25 @@ class AuthorService(
     return authorRepository.save(author)
   }
 
+  fun createAuthor(author: Author): Author {
+    val authorToSave = author.copy(id = generatorService.getAndIncrement("author"))
+    return authorRepository.save(authorToSave)
+  }
+
   fun addDomainToAuthor(domainToAdd: SkillDomain, author: Author): Boolean {
     if (authorRepository.addDomainToAuthor(author.username, domainToAdd) == 0) {
       throw SkillDomainExistsException(domainToAdd.name)
     }
     return true
+  }
+
+  fun updateAuthor(dbAuthor: Author, editAuthor: Author): Author {
+    val authorToUpdate = dbAuthor.copy(
+      firstname = editAuthor.firstname,
+      lastname = editAuthor.lastname,
+      email = editAuthor.email,
+    )
+    return authorRepository.save(authorToUpdate)
   }
 
 }
