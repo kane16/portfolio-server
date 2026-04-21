@@ -22,12 +22,12 @@ class AuthorFacade(
     get() = requireNotNull(userContext.user) { "Authenticated user is required" }
 
   fun getContextAuthor(): Author {
-    return authorService.getAuthor(currentUser) ?: throw AuthorNotFound()
+    return authorService.getAuthorByUsername(currentUser.username) ?: throw AuthorNotFound()
   }
 
   @Transactional
   fun registerAuthorForContextUser(): Author {
-    if (authorService.getAuthor(currentUser) != null) {
+    if (authorService.getAuthorByUsername(currentUser.username) != null) {
       throw AuthorExistsException()
     }
     return authorService.createAuthor(currentUser)
@@ -44,6 +44,18 @@ class AuthorFacade(
       roles = userForAuthor.roles
     )
     return authorService.createAuthor(authorToSave)
+  }
+
+  fun editAuthorForUser(token: String, userId: Long, author: AuthorDTO): Author {
+    val userForAuthor = authRequestService.getUserById(token, userId) ?: throw UserNotFoundException(userId)
+    val dbAuthor = authorService.getAuthorByUsername(userForAuthor.username) ?: throw AuthorNotFound()
+    val editAuthor = Author(
+      username = userForAuthor.username,
+      email = userForAuthor.email,
+      firstname = author.firstname,
+      lastname = author.lastname,
+    )
+    return authorService.updateAuthor(dbAuthor, editAuthor)
   }
 
   fun getAllAuthors(): List<Author> {
