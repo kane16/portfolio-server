@@ -34,7 +34,7 @@ class AuthorFacade(
   }
 
   @Transactional
-  fun registerAuthorForUser(token: String, userId: Long, authorDTO: AuthorDTO): Author {
+  fun registerAuthorForUser(token: String, userId: Long, author: AuthorDTO): Author {
     val userForAuthor = authRequestService.getUserById(token, userId) ?: throw UserNotFoundException(userId)
     val existingAuthorForUser = authorService.getAuthorByUsername(userForAuthor.username)
     if (existingAuthorForUser != null) {
@@ -42,9 +42,9 @@ class AuthorFacade(
     }
     val authorToSave = Author(
       username = userForAuthor.username,
-      email = userForAuthor.email,
-      firstname = authorDTO.firstname,
-      lastname = authorDTO.lastname,
+      email = author.email,
+      firstname = author.firstname,
+      lastname = author.lastname,
       roles = userForAuthor.roles
     )
     return authorService.createAuthor(authorToSave)
@@ -55,7 +55,7 @@ class AuthorFacade(
     val dbAuthor = authorService.getAuthorByUsername(userForAuthor.username) ?: throw AuthorNotFound()
     val editAuthor = Author(
       username = userForAuthor.username,
-      email = userForAuthor.email,
+      email = author.email,
       firstname = author.firstname,
       lastname = author.lastname,
     )

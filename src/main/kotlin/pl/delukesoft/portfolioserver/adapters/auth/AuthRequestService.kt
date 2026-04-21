@@ -27,7 +27,7 @@ class AuthRequestService(
   fun getAllUsers(token: String): List<AppUserDTO> {
     return httpClient.get()
       .uri { it.path("/users").build() }
-      .header("Authorization", "Bearer $token")
+      .header("Authorization", token)
       .exchange(exchangeUsers) ?: emptyList()
   }
 

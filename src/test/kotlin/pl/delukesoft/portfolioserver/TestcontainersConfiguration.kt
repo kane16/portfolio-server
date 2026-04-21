@@ -98,19 +98,4 @@ class TestcontainersConfiguration {
     return service
   }
 
-  @Bean
-  fun bauthRequestService(): AuthRequestService {
-    val service = mockk<AuthRequestService>()
-    every { service.getUserById(any(), 200L) } returns AppUserDTO(
-      id = 200,
-      username = "jane",
-      email = "jane@example.com",
-      firstname = "Jane",
-      lastname = "Doe",
-      roles = listOf("ROLE_USER")
-    )
-    every { service.getUserById(any(), 999L) } returns null
-    return service
-  }
-
 }
