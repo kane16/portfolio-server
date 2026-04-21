@@ -36,6 +36,10 @@ class AuthorFacade(
   @Transactional
   fun registerAuthorForUser(token: String, userId: Long, authorDTO: AuthorDTO): Author {
     val userForAuthor = authRequestService.getUserById(token, userId) ?: throw UserNotFoundException(userId)
+    val existingAuthorForUser = authorService.getAuthorByUsername(userForAuthor.username)
+    if (existingAuthorForUser != null) {
+      throw AuthorExistsException()
+    }
     val authorToSave = Author(
       username = userForAuthor.username,
       email = userForAuthor.email,

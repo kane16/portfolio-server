@@ -22,6 +22,33 @@ Feature: Author Registration
     }
     """
 
+  Scenario: Register author for user fails when username already exists
+    Given User is authorized with token: "admin"
+    When "POST" request is sent to endpoint "/authors/register/users/200" with body:
+    """
+    {
+      "firstname": "Jane",
+      "lastname": "Doe",
+      "email": "jane.doe@example.com"
+    }
+    """
+    And "POST" request is sent to endpoint "/authors/register/users/200" with body:
+    """
+    {
+      "firstname": "Jane",
+      "lastname": "Doe",
+      "email": "jane.doe@example.com"
+    }
+    """
+    Then Response status code should be 400
+    And Response body should be:
+    """
+    {
+      "message": "Author already exists",
+      "status": 400
+    }
+    """
+
   Scenario: Register author for user fails when user does not exist
     Given User is authorized with token: "admin"
     When "POST" request is sent to endpoint "/authors/register/users/999" with body:
