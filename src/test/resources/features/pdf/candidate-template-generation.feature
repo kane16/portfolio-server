@@ -1,3 +1,4 @@
+@pdf
 Feature: CV View functionality
 
   Background: User is authorized with token: "candidate"

@@ -1,3 +1,4 @@
+@portfolio
 Feature: Portfolio data read from server
 
   Scenario: Guest pulls default portfolio

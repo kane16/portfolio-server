@@ -1,3 +1,4 @@
+@author
 Feature: Author Registration
 
   Scenario: Register author for user succeeds when admin provides valid user id
@@ -17,8 +18,11 @@ Feature: Author Registration
       "firstname": "Jane",
       "lastname": "Doe",
       "username": "jane",
-      "email": "jane@example.com",
-      "roles": ["ROLE_USER"]
+      "email": "jane.doe@example.com",
+      "roles": ["ROLE_USER"],
+      "skills" : [],
+      "domains" : [],
+      "businesses" : []
     }
     """
 
@@ -131,7 +135,7 @@ Feature: Author Registration
       "firstname": "Janet",
       "lastname": "Smith",
       "username": "jane",
-      "email": "jane@example.com",
+      "email": "janet.smith@example.com",
       "roles": ["ROLE_USER"]
     }
     """
@@ -194,7 +198,7 @@ Feature: Author Registration
         "firstname": "Jane",
         "lastname": "Doe",
         "username": "jane",
-        "email": "jane@example.com",
+        "email": "jane.doe@example.com",
         "roles": ["ROLE_USER"]
       }
     ]

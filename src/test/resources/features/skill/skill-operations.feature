@@ -1,3 +1,4 @@
+@skill
 Feature: Skill Operations
 
   Background:

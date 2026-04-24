@@ -1,3 +1,4 @@
+@resume
 Feature: Resume creation
 
   Scenario: For given user no history exists, user should be able to initiate resume creation
