@@ -63,6 +63,7 @@ class BehaviourTestsSteps(
     resumeHistoryRepository.deleteAll()
     resumeVersionRepository.deleteAll()
     generatorRepository.deleteAll()
+    authorRepository.deleteAll()
     resumeVersionRepository.saveAll(initialDbResumeVersions)
     resumeHistoryRepository.saveAll(initialDbHistoryResumes)
     generatorRepository.saveAll(initialSequences)

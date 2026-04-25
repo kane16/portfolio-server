@@ -4,7 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
 
-    <include file="db/changelog/db.changelog-master.xml"/>
+    <include file="db/changelog/schema/author.xml"/>
+    <include file="db/changelog/schema/resume.xml"/>
+    <include file="db/changelog/schema/resume-version.xml"/>
+    <include file="db/changelog/schema/resume-history.xml"/>
+    <include file="db/changelog/schema/field-constraint.xml"/>
+    <include file="db/changelog/schema/sequence.xml"/>
     <include file="data/initial-data.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
