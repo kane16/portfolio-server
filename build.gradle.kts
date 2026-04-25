@@ -53,6 +53,8 @@ object Versions {
 
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+  implementation("org.liquibase:liquibase-core")
+  implementation("org.liquibase.ext:liquibase-mongodb:4.29.2")
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-aop")
   implementation("org.springframework.boot:spring-boot-starter-thymeleaf")

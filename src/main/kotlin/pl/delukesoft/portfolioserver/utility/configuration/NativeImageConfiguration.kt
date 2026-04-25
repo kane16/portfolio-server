@@ -25,7 +25,8 @@ import org.springframework.context.annotation.ImportRuntimeHints
   NativeImageConfiguration.KotlinCollectionsRuntimeHints::class,
   NativeImageConfiguration.CaffeineRuntimeHints::class,
   NativeImageConfiguration.JjwtRuntimeHints::class,
-  NativeImageConfiguration.SpringDocRuntimeHints::class
+  NativeImageConfiguration.SpringDocRuntimeHints::class,
+  NativeImageConfiguration.LiquibaseMongoRuntimeHints::class
 )
 class NativeImageConfiguration {
 
@@ -137,6 +138,46 @@ class NativeImageConfiguration {
           clazz,
           MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
           MemberCategory.INVOKE_PUBLIC_METHODS
+        )
+      }
+    }
+  }
+
+  class LiquibaseMongoRuntimeHints : RuntimeHintsRegistrar {
+    override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+      hints.resources().registerPattern("META-INF/services/**")
+
+      listOf(
+        "liquibase.ext.mongodb.database.MongoClientDriver",
+        "liquibase.ext.mongodb.database.MongoConnection",
+        "liquibase.ext.mongodb.database.MongoLiquibaseDatabase",
+        "liquibase.ext.mongodb.change.AdminCommandChange",
+        "liquibase.ext.mongodb.change.CreateCollectionChange",
+        "liquibase.ext.mongodb.change.CreateIndexChange",
+        "liquibase.ext.mongodb.change.DropCollectionChange",
+        "liquibase.ext.mongodb.change.DropIndexChange",
+        "liquibase.ext.mongodb.change.InsertManyChange",
+        "liquibase.ext.mongodb.change.InsertOneChange",
+        "liquibase.ext.mongodb.change.RunCommandChange",
+        "liquibase.ext.mongodb.precondition.CollectionExistsPrecondition",
+        "liquibase.ext.mongodb.precondition.DocumentExistsPrecondition",
+        "liquibase.ext.mongodb.precondition.ExpectedDocumentCountPrecondition",
+        "liquibase.ext.mongodb.lockservice.MongoLockService",
+        "liquibase.ext.mongodb.changelog.MongoHistoryService",
+        "liquibase.nosql.executor.NoSqlExecutor",
+        "liquibase.nosql.executor.NoSqlGenerator",
+        "liquibase.nosql.parser.json.JsonNoSqlChangeLogParser",
+        "liquibase.nosql.snapshot.NoSqlSnapshotGenerator"
+      ).forEach { className ->
+        hints.reflection().registerTypeIfPresent(
+          classLoader,
+          className,
+          MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
+          MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
+          MemberCategory.INVOKE_DECLARED_METHODS,
+          MemberCategory.INVOKE_PUBLIC_METHODS,
+          MemberCategory.DECLARED_FIELDS,
+          MemberCategory.PUBLIC_FIELDS
         )
       }
     }

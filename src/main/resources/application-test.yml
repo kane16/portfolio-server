@@ -3,6 +3,8 @@ web:
 spring:
   data:
     mongodb:
-      database: portfolio
       username: portfolio
       password: pass
+app:
+  liquibase:
+    change-log: classpath:db/changelog-test/db.changelog-master.xml

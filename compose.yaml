@@ -5,53 +5,66 @@ services:
       - "80:8000"
     volumes:
       - ${HTTP_SERVER_VOLUME}:/serve
+    networks:
+      - delukesoft_network
   mongodb:
-    image: 'kane16/delukesoft_dev_mongo_db:1.0.0'
+    image: 'mongo:7.0'
     environment:
-      - MONGO_USERNAME=${MONGO_USERNAME}
-      - MONGO_PASSWORD=${MONGO_PASSWORD}
-      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+      - MONGO_INITDB_DATABASE=${PORTFOLIO_MONGO_DB_NAME}
+      - PORTFOLIO_MONGO_APP_USERNAME=${MONGO_USERNAME}
+      - PORTFOLIO_MONGO_APP_PASSWORD=${MONGO_PASSWORD}
     ports:
-      - 27017:27017
+      - "27018:27017"
     restart: unless-stopped
-  authserver:
-    image: kane16/auth_server:3.0.0
-    restart: always
-    environment:
-      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
-      - AUTH_USERNAME=${AUTH_USERNAME}
-      - AUTH_PASSWORD=${AUTH_PASSWORD}
-      - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - STANDARD_USER_USERNAME=${STANDARD_USER_USERNAME}
-      - STANDARD_USER_PASSWORD=${STANDARD_USER_PASSWORD}
-      - IMAGE_DIRECTORY=${IMAGE_DIRECTORY}
-      - IMAGE_RELATIVE_DIRECTORY=${IMAGES_RELATIVE}
-      - AUTH_DB_URL=${AUTH_DB_URL}
-    ports:
-      - 8080:8080
     volumes:
-      - ${IMAGE_DIRECTORY}:${IMAGE_DIRECTORY}
+      - ./db/init/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - delukesoft_network
+  authserver:
+    image: kane16/centralauthserver-native:latest
+    restart: unless-stopped
+    environment:
+      ACTIVE_PROFILE: ${AUTH_ACTIVE_PROFILE}
+      SPRING_DATASOURCE_URL: ${AUTH_SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${AUTH_SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${AUTH_SPRING_DATASOURCE_PASSWORD}
+      JWT_ISSUER: ${AUTH_JWT_ISSUER}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_TOKEN_EXPIRATION_MINUTES: ${AUTH_JWT_ACCESS_TOKEN_EXPIRATION_MINUTES}
+      JWT_REFRESH_TOKEN_EXPIRATION_DAYS: ${AUTH_JWT_REFRESH_TOKEN_EXPIRATION_DAYS}
+      FILE_UPLOAD_USER_PATH: ${AUTH_FILE_UPLOAD_USER_PATH}
+    ports:
+      - "${AUTH_SERVER_PORT}:8080"
+    volumes:
+      - ${AUTH_FILE_UPLOAD_HOST_PATH}:/app/data/users_batch.csv:ro
     depends_on:
       auth_db:
         condition: service_healthy
+    networks:
+      - delukesoft_network
   auth_db:
-    image: kane16/delukesoft_dev_auth_db:1.0.0
-    restart: always
+    image: postgres:17-alpine
     environment:
-      - MYSQL_ROOT_PASSWORD=${AUTH_PASSWORD}
-      - MYSQL_DATABASE=auth
-    ports:
-      - 3306:3306
+      POSTGRES_DB: ${AUTH_POSTGRES_DB}
+      POSTGRES_USER: ${AUTH_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${AUTH_POSTGRES_PASSWORD}
+    volumes:
+      - auth_data:/var/lib/postgresql/data
     healthcheck:
-      # This line performs a health check by:
-      # 1. Using mysqladmin command-line tool to connect to MySQL at localhost
-      # 2. Running a "ping" command to verify the database is responsive
-      # 3. The command returns 0 if successful, non-zero if failed
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      interval: 3s
-      timeout: 2s
+      test: [ "CMD-SHELL", "pg_isready -U ${AUTH_POSTGRES_USER} -d ${AUTH_POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
       retries: 5
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    networks:
+      - delukesoft_network
+volumes:
+  auth_data:
+  portfolio_mongodata:
 networks:
-  portfolio_net:
+  delukesoft_network:
     driver: bridge

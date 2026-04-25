@@ -5,10 +5,15 @@ web:
 spring:
   data:
     mongodb:
-      database: portfolio
       username: portfolio
       password: pass
+mongo:
+  migration:
+    connection-string: mongodb://localhost:27017
 auth-service:
   url: http://localhost:8080
 jwt:
   secret: secret
+app:
+  liquibase:
+    change-log: classpath:db/changelog-test/db.changelog-master.xml

@@ -3,7 +3,6 @@ package pl.delukesoft.portfolioserver.adapters.auth
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Service
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -11,7 +10,6 @@ import java.time.Instant
 import java.util.function.Function
 
 @Service
-@EnableConfigurationProperties(JwtProperties::class)
 class AuthTokenService(
   private val jwtProperties: JwtProperties
 ) {

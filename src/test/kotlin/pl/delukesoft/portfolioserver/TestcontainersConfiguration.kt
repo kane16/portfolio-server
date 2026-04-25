@@ -35,9 +35,7 @@ class TestcontainersConfiguration {
   @Bean
   @ServiceConnection
   fun mongoDbContainer(): MongoDBContainer {
-    return MongoDBContainer(
-      DockerImageName.parse("kane16/delukesoft_test_portfolio_mongo_db:1.0.0").asCompatibleSubstituteFor("mongo")
-    )
+    return MongoDBContainer(DockerImageName.parse("mongo:7.0"))
       .waitingFor(
         Wait.forLogMessage(".*Waiting for connections.*", 1)
           .withStartupTimeout(Duration.ofMinutes(2))
@@ -45,7 +43,6 @@ class TestcontainersConfiguration {
       .apply {
         withReuse(false)
       }
-
   }
 
   @Bean

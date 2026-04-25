@@ -1,4 +1,4 @@
-package pl.delukesoft.portfolioserver.adapters
+package pl.delukesoft.portfolioserver.adapters.mongo
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
