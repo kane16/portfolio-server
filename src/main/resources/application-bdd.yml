@@ -2,14 +2,9 @@ web:
   url: http://localhost:9090
   login:
     url: http://localhost:8080
-spring:
-  data:
-    mongodb:
-      username: portfolio
-      password: pass
 mongo:
   migration:
-    connection-string: mongodb://localhost:27017
+    connection-string: mongodb://localhost:27017/portfolio
 auth-service:
   url: http://localhost:8080
 jwt:

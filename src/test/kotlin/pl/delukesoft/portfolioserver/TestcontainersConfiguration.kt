@@ -6,11 +6,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.mockk.every
 import io.mockk.mockk
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
+import org.springframework.test.context.DynamicPropertyRegistrar
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
@@ -25,7 +27,10 @@ import java.time.Duration
 
 @TestConfiguration(proxyBeanMethods = false)
 @Profile("test", "bdd")
-class TestcontainersConfiguration {
+class TestcontainersConfiguration(
+  @Value("\${spring.data.mongodb.database}") private val mongoDatabase: String,
+) {
+
   private var jsonMapper = JsonMapper.builder()
     .addModule(JavaTimeModule())
     .addModule(KotlinModule.Builder().build())
@@ -43,6 +48,16 @@ class TestcontainersConfiguration {
       .apply {
         withReuse(false)
       }
+  }
+
+  @Bean
+  fun mongoPropertiesRegistrar(mongoDbContainer: MongoDBContainer): DynamicPropertyRegistrar {
+    return DynamicPropertyRegistrar { registry ->
+      registry.add("spring.data.mongodb.uri") { mongoDbContainer.getReplicaSetUrl(mongoDatabase) }
+      registry.add("mongo.migration.connection-string") { mongoDbContainer.getReplicaSetUrl(mongoDatabase) }
+      registry.add("spring.data.mongodb.username") { "" }
+      registry.add("spring.data.mongodb.password") { "" }
+    }
   }
 
   @Bean
