@@ -8,7 +8,7 @@
 ## Project Context
 
 **Tech Stack**: Spring Boot 3.4.5 + Kotlin 1.9.25 + MongoDB + GraalVM Native
-**Architecture**: Layered architecture with Controller → Facade → Service → Repository
+**Architecture**: Domain-first vertical slices with Controller → Facade → Service → Repository inside each domain
 **Domain**: Resume/CV management with versioning, filtering, and role-based access
 
 ---
@@ -17,14 +17,16 @@
 
 ### 1. **Layer Responsibilities**
 
+The top-level package is split by domain/capability, not by layer. Keep the call flow inside each domain:
+
 ```
-Controller (application/)
+Controller ({domain}/)
   ↓ calls
-Facade (application/)
+Facade ({domain}/)
   ↓ calls
-Service (domain/)
+Service ({domain}/ or {domain}/{subdomain}/)
   ↓ calls
-Repository (domain/)
+Repository ({domain}/ or {domain}/{subdomain}/)
 ```
 
 **Rules**:
@@ -58,31 +60,35 @@ Repository (domain/)
 
 ```
 src/main/kotlin/pl/delukesoft/portfolioserver/
-├── adapters/          # External integrations (auth, image, print)
-├── application/       # Controllers, Facades, DTOs, Mappers (presentation layer)
-│   ├── {feature}/     # Feature-specific (resume, portfolio, constraint)
-│   │   ├── {Feature}Controller.kt
-│   │   ├── {Feature}Facade.kt
-│   │   ├── {Feature}Mapper.kt (if needed)
-│   │   └── model/     # DTOs specific to this feature
-├── domain/            # Business logic, Services, Repositories, domain models
-│   ├── {entity}/      # Entity-specific (resume, skill, education)
-│   │   ├── {Entity}.kt          # Domain model
-│   │   ├── {Entity}Service.kt   # Business logic
-│   │   ├── {Entity}Repository.kt
-│   │   ├── {Entity}Validator.kt (if validation needed)
-│   │   └── exception/           # Domain-specific exceptions
-├── configuration/     # Spring configuration
-└── utility/           # Cross-cutting concerns (logging, exceptions)
+├── author/            # Author registration/profile ownership
+├── resume/            # Resume editing, sections, history, validation, constraints
+│   ├── education/
+│   ├── experience/
+│   ├── history/
+│   ├── skill/
+│   └── validation/
+├── portfolio/         # Portfolio/CV read projection
+├── document/          # HTML/PDF document generation
+├── media/             # External media/image service integration and media value objects
+├── security/          # Auth annotation/interceptor, JWT parsing, user context, auth client
+└── platform/          # Cross-cutting infrastructure: config, Mongo, sequence, logging, errors
 ```
 
-**Rule**: Keep features cohesive. If adding a new feature (e.g., "certification"), create the full vertical slice:
+**Rules**:
+
+- Put entry-point classes in the domain package itself, not in a nested `api` package. Example: `resume/ResumeController.kt`, `resume/ResumeFacade.kt`.
+- Keep subdomain entry points next to their logic. Example: `resume/education/EducationController.kt`, `resume/education/EducationService.kt`.
+- Use `security.User` and `media.Image` for cross-domain boundary/value types.
+- Put external integrations into the owning capability (`media`, `security`, `document`) or `platform` if they are purely technical.
+
+If adding a new resume section (e.g., "certification"), create the vertical slice under `resume/certification/`:
 
 ```
-application/resume/certification/CertificationController.kt
-application/resume/certification/CertificationFacade.kt
-domain/resume/certification/Certification.kt
-domain/resume/certification/CertificationService.kt
+resume/certification/CertificationController.kt
+resume/certification/CertificationFacade.kt
+resume/certification/CertificationDTO.kt
+resume/certification/Certification.kt
+resume/certification/CertificationService.kt
 ```
 
 ---
@@ -102,7 +108,7 @@ class ResumeNotFound(id: Long? = null) :
   LoggableResponseStatusException(HttpStatus.NOT_FOUND, "Resume ${id ?: ""} not found")
 ```
 
-**Pattern**: Create specific exceptions in `domain/{entity}/exception/` package.
+**Pattern**: Create specific exceptions in the owning domain's `exception/` package.
 
 **Global Handler**: `ErrorAdvisor` handles all exceptions. Don't add try-catch unless you need specific recovery logic.
 
@@ -342,7 +348,7 @@ Example: Adding "certifications" to resume.
 **Step 1: Create domain model**
 
 ```kotlin
-// src/main/kotlin/.../domain/resume/certification/Certification.kt
+// src/main/kotlin/.../resume/certification/Certification.kt
 data class Certification(
   val id: Long? = null,
   val name: String,
@@ -543,7 +549,7 @@ fun filterResumeWithCriteria(resume: Resume, search: ResumeSearch): Resume {
 
 When implementing new features or changes, verify:
 
-- [ ] **Layer separation maintained**: Controller → Facade → Service → Repository
+- [ ] **Domain-first structure maintained**: No top-level `application`, `domain`, `adapters`, or `utility` packages
 - [ ] **Naming conventions followed**: Consistent with existing codebase
 - [ ] **Package structure correct**: Feature placed in appropriate package
 - [ ] **Authentication added**: `@AuthRequired` on protected endpoints with Authorization header

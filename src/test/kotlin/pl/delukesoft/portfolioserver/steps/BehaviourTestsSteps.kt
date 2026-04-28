@@ -11,11 +11,11 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.cache.CacheManager
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
-import pl.delukesoft.portfolioserver.application.author.Author
-import pl.delukesoft.portfolioserver.application.author.AuthorRepository
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeHistoryRepository
-import pl.delukesoft.portfolioserver.domain.resumehistory.ResumeVersionRepository
-import pl.delukesoft.portfolioserver.domain.sequence.GeneratorRepository
+import pl.delukesoft.portfolioserver.author.Author
+import pl.delukesoft.portfolioserver.author.AuthorRepository
+import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryRepository
+import pl.delukesoft.portfolioserver.resume.history.ResumeVersionRepository
+import pl.delukesoft.portfolioserver.platform.sequence.GeneratorRepository
 
 
 class BehaviourTestsSteps(

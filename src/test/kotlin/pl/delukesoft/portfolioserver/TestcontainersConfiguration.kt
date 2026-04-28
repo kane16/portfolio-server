@@ -16,12 +16,12 @@ import org.springframework.test.context.DynamicPropertyRegistrar
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
-import pl.delukesoft.portfolioserver.adapters.auth.AppUserDTO
-import pl.delukesoft.portfolioserver.adapters.auth.AuthRequestService
-import pl.delukesoft.portfolioserver.adapters.auth.AuthTokenService
-import pl.delukesoft.portfolioserver.adapters.auth.User
-import pl.delukesoft.portfolioserver.adapters.print.DocumentGenerationService
-import pl.delukesoft.portfolioserver.application.pdf.model.PrintDTO
+import pl.delukesoft.portfolioserver.security.AppUserDTO
+import pl.delukesoft.portfolioserver.security.AuthRequestService
+import pl.delukesoft.portfolioserver.security.AuthTokenService
+import pl.delukesoft.portfolioserver.security.User
+import pl.delukesoft.portfolioserver.document.DocumentGenerationService
+import pl.delukesoft.portfolioserver.document.PrintDTO
 import java.time.Duration
 
 
