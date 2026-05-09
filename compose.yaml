@@ -50,8 +50,6 @@ services:
       POSTGRES_DB: ${AUTH_POSTGRES_DB}
       POSTGRES_USER: ${AUTH_POSTGRES_USER}
       POSTGRES_PASSWORD: ${AUTH_POSTGRES_PASSWORD}
-    volumes:
-      - auth_data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${AUTH_POSTGRES_USER} -d ${AUTH_POSTGRES_DB}" ]
       interval: 5s
@@ -62,9 +60,6 @@ services:
       - "5432:5432"
     networks:
       - delukesoft_network
-volumes:
-  auth_data:
-  portfolio_mongodata:
 networks:
   delukesoft_network:
     driver: bridge

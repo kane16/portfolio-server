@@ -14,14 +14,14 @@ class MongoLiquibaseConfig {
 
   @Bean(initMethod = "run")
   fun mongoLiquibaseRunner(
-    mongoProperties: MongoProperties,
     @Value("\${app.liquibase.change-log}") changeLog: String,
+    @Value("\${spring.data.mongodb.uri}") connectionString: String,
     @Value("\${spring.data.mongodb.username}") mongoUsername: String,
     @Value("\${spring.data.mongodb.password}") mongoPassword: String
-  ): MongoLiquibaseRunner = MongoLiquibaseRunner(mongoProperties, mongoUsername, mongoPassword, changeLog)
+  ): MongoLiquibaseRunner = MongoLiquibaseRunner(connectionString, mongoUsername, mongoPassword, changeLog)
 
   class MongoLiquibaseRunner(
-    private val mongoProperties: MongoProperties,
+    private val connectionString: String,
     private val mongoUsername: String,
     private val mongoPassword: String,
     private val changeLog: String,
@@ -32,7 +32,7 @@ class MongoLiquibaseConfig {
       val changeLogPath = changeLog.removePrefix("classpath:")
 
       val database = DatabaseFactory.getInstance()
-        .openDatabase(mongoProperties.connectionString, mongoUsername, mongoPassword, null, resourceAccessor)
+        .openDatabase(connectionString, mongoUsername, mongoPassword, null, resourceAccessor)
       try {
         Liquibase(changeLogPath, resourceAccessor, database).update("")
       } finally {

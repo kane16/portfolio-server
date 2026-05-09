@@ -4,6 +4,7 @@ spring:
       username: user
       password: user
       port: 27018
+      uri: mongodb://localhost:27018/portfolio
   devtools:
     livereload:
       enabled: true
@@ -17,6 +18,3 @@ springdoc:
 auth:
   api:
     url: http://localhost:8080
-mongo:
-  migration:
-    connection-string: mongodb://localhost:27018/portfolio

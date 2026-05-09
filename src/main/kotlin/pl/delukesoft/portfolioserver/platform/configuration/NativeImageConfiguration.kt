@@ -146,6 +146,9 @@ class NativeImageConfiguration {
   class LiquibaseMongoRuntimeHints : RuntimeHintsRegistrar {
     override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
       hints.resources().registerPattern("META-INF/services/**")
+      hints.resources().registerPattern("www.liquibase.org/xml/ns/mongodb/**")
+      hints.resources().registerPattern("liquibase.parser.core.xml/**")
+      hints.resources().registerResourceBundle("liquibase/i18n/liquibase-mongo")
 
       listOf(
         "liquibase.ext.mongodb.database.MongoClientDriver",
@@ -167,7 +170,45 @@ class NativeImageConfiguration {
         "liquibase.nosql.executor.NoSqlExecutor",
         "liquibase.nosql.executor.NoSqlGenerator",
         "liquibase.nosql.parser.json.JsonNoSqlChangeLogParser",
-        "liquibase.nosql.snapshot.NoSqlSnapshotGenerator"
+        "liquibase.nosql.snapshot.NoSqlSnapshotGenerator",
+        "liquibase.changelog.FastCheckService",
+        "liquibase.changelog.ChangeLogHistoryServiceFactory",
+        "liquibase.changelog.visitor.ValidatingVisitorGeneratorFactory",
+        "liquibase.change.ChangeFactory",
+        "liquibase.changeset.ChangeSetServiceFactory",
+        "liquibase.command.CommandFactory",
+        "liquibase.configuration.ConfiguredValueModifierFactory",
+        "liquibase.configuration.GlobalConfiguration",
+        "liquibase.configuration.LiquibaseConfiguration",
+        "liquibase.configuration.core.DefaultsFileValueProvider",
+        "liquibase.configuration.core.DeprecatedConfigurationValueProvider",
+        "liquibase.configuration.core.EnvironmentValueProvider",
+        "liquibase.configuration.core.ScopeValueProvider",
+        "liquibase.configuration.core.SystemPropertyValueProvider",
+        "liquibase.database.DatabaseFactory",
+        "liquibase.database.LiquibaseTableNamesFactory",
+        "liquibase.executor.ExecutorService",
+        "liquibase.ext.mongodb.configuration.MongoConfiguration",
+        "liquibase.GlobalConfiguration",
+        "liquibase.integration.commandline.LiquibaseCommandLineConfiguration",
+        "liquibase.lockservice.LockServiceFactory",
+        "liquibase.logging.LogFactory",
+        "liquibase.logging.core.LogServiceFactory",
+        "liquibase.logging.core.DefaultLoggerConfiguration",
+        "liquibase.logging.mdc.MdcManagerFactory",
+        "liquibase.parser.ChangeLogParserConfiguration",
+        "liquibase.parser.ChangeLogParserFactory",
+        "liquibase.parser.SqlParserFactory",
+        "liquibase.precondition.PreconditionFactory",
+        "liquibase.resource.PathHandlerFactory",
+        "liquibase.report.ShowSummaryGeneratorFactory",
+        "liquibase.report.StandardShowSummaryGenerator",
+        "liquibase.serializer.ChangeLogSerializerFactory",
+        "liquibase.serializer.SnapshotSerializerFactory",
+        "liquibase.snapshot.SnapshotGeneratorFactory",
+        "liquibase.sql.SqlConfiguration",
+        "liquibase.sqlgenerator.SqlGeneratorFactory",
+        "liquibase.ui.UIServiceFactory"
       ).forEach { className ->
         hints.reflection().registerTypeIfPresent(
           classLoader,
