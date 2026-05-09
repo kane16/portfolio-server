@@ -5,8 +5,9 @@ web:
 mongo:
   migration:
     connection-string: mongodb://localhost:27017/portfolio
-auth-service:
-  url: http://localhost:8080
+auth:
+  api:
+    url: http://localhost:8080
 jwt:
   secret: secret
 app:

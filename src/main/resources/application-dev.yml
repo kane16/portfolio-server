@@ -10,6 +10,9 @@ spring:
       enabled: true
 jwt:
   secret: ${JWT_SECRET}
+mongo:
+  migration:
+    connection-string: ${MONGO_CONNECTION_STRING}
 springdoc:
   api-docs:
     enabled: true
