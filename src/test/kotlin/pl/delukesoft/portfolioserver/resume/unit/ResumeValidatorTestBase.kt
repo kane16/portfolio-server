@@ -3,7 +3,7 @@ package pl.delukesoft.portfolioserver.resume.unit
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertTrue
-import pl.delukesoft.portfolioserver.security.User
+import pl.delukesoft.authplugin.security.User
 import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintRepository
 import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.resume.validation.constraint.FieldConstraint
@@ -110,7 +110,7 @@ open class ResumeValidatorTestBase {
     username: String = "alice",
     contact: ContactInfo? = contactInfo()
   ) = ResumeShortcut(
-    user = User(username = username, email = "$username@example.com", firstname = "Luke", lastname = "Smith"),
+    user = User(null, username, arrayOf("ROLE_USER"), "$username@example.com", "Luke", "Smith"),
     title = title,
     summary = summary,
     image = null,

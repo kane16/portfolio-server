@@ -11,8 +11,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.cache.CacheManager
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
-import pl.delukesoft.portfolioserver.author.Author
-import pl.delukesoft.portfolioserver.author.AuthorRepository
+import pl.delukesoft.portfolioserver.MockAuthPlugin
 import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryRepository
 import pl.delukesoft.portfolioserver.resume.history.ResumeVersionRepository
 import pl.delukesoft.portfolioserver.platform.sequence.GeneratorRepository
@@ -23,7 +22,7 @@ class BehaviourTestsSteps(
   private val resumeHistoryRepository: ResumeHistoryRepository,
   private val resumeVersionRepository: ResumeVersionRepository,
   private val generatorRepository: GeneratorRepository,
-  private val authorRepository: AuthorRepository,
+  private val mockAuthPlugin: MockAuthPlugin,
   private val cacheManager: CacheManager
 ) : En {
 
@@ -32,7 +31,6 @@ class BehaviourTestsSteps(
   val initialDbResumeVersions = resumeVersionRepository.findAll()
   val initialDbHistoryResumes = resumeHistoryRepository.findAll()
   val initialSequences = generatorRepository.findAll()
-  val initialAuthors = authorRepository.findAll()
 
   init {
     defineSteps()
@@ -41,20 +39,9 @@ class BehaviourTestsSteps(
   @Before
   fun beforeScenario() {
     baseRestClient.resetToken()
+    mockAuthPlugin.reset()
     cacheManager.cacheNames.forEach { cacheName ->
       cacheManager.getCache(cacheName)?.clear()
-    }
-    if (authorRepository.findByUsername("candidate_empty") == null) {
-      authorRepository.save(
-        Author(
-          id = 100,
-          firstname = "Łukasz",
-          lastname = "Gumiński",
-          username = "candidate_empty",
-          email = "candidate_empty@example.com",
-          roles = listOf("ROLE_AUTHOR")
-        )
-      )
     }
   }
 
@@ -63,11 +50,10 @@ class BehaviourTestsSteps(
     resumeHistoryRepository.deleteAll()
     resumeVersionRepository.deleteAll()
     generatorRepository.deleteAll()
-    authorRepository.deleteAll()
     resumeVersionRepository.saveAll(initialDbResumeVersions)
     resumeHistoryRepository.saveAll(initialDbHistoryResumes)
     generatorRepository.saveAll(initialSequences)
-    authorRepository.saveAll(initialAuthors)
+    mockAuthPlugin.reset()
   }
 
   fun defineSteps() {
@@ -76,7 +62,6 @@ class BehaviourTestsSteps(
       resumeHistoryRepository.deleteAll()
       resumeVersionRepository.deleteAll()
       generatorRepository.deleteAll()
-      authorRepository.deleteAll()
     }
     When("{string} request is sent to endpoint {string} with no body") { method: String, endpoint: String ->
       try {

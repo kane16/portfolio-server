@@ -6,49 +6,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd
                         http://www.liquibase.org/xml/ns/mongodb http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
 
-    <changeSet id="seed-test-author" author="liquibase">
-        <mongodb:insertMany collectionName="Author">
-            <mongodb:documents>
-                [
-                  {
-                    "_id": 1,
-                    "username": "admin",
-                    "firstname": "John",
-                    "lastname": "Doe",
-                    "email": "john.doe@example.com",
-                    "roles": ["ROLE_USER", "ROLE_AUTHOR", "ROLE_ADMIN"],
-                    "skills": [],
-                    "domains": [
-                      {"name": "Backend"},
-                      {"name": "Frontend"},
-                      {"name": "Framework"},
-                      {"name": "Database"}
-                    ],
-                    "businesses": [],
-                    "_class": "pl.delukesoft.portfolioserver.author.Author"
-                  },
-                  {
-                    "_id": 3,
-                    "username": "candidate",
-                    "firstname": "Alex",
-                    "lastname": "Tech",
-                    "email": "alex.tech@example.com",
-                    "roles": ["ROLE_USER", "ROLE_AUTHOR"],
-                    "skills": [],
-                    "domains": [
-                      {"name": "JVM"},
-                      {"name": "Backend"},
-                      {"name": "Framework"},
-                      {"name": "Database"}
-                    ],
-                    "businesses": [],
-                    "_class": "pl.delukesoft.portfolioserver.author.Author"
-                  }
-                ]
-            </mongodb:documents>
-        </mongodb:insertMany>
-    </changeSet>
-
     <changeSet id="seed-test-resume-version" author="liquibase">
         <mongodb:insertMany collectionName="ResumeVersion">
             <mongodb:documents>
@@ -340,9 +297,8 @@
                   {"_id": 7, "collectionName": "resume_history", "sequenceNumber": 4, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"},
                   {"_id": 8, "collectionName": "resume_version", "sequenceNumber": 4, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"},
                   {"_id": 9, "collectionName": "field_constraint", "sequenceNumber": 15, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"},
-                  {"_id": 10, "collectionName": "author", "sequenceNumber": 4, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"},
-                  {"_id": 11, "collectionName": "education", "sequenceNumber": 5, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"},
-                  {"_id": 12, "collectionName": "experience", "sequenceNumber": 5, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"}
+                  {"_id": 10, "collectionName": "education", "sequenceNumber": 5, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"},
+                  {"_id": 11, "collectionName": "experience", "sequenceNumber": 5, "_class": "pl.delukesoft.portfolioserver.platform.sequence.Sequence"}
                 ]
             </mongodb:documents>
         </mongodb:insertMany>

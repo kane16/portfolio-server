@@ -27,7 +27,6 @@ class OpenApiConfiguration {
       .info(apiInfo())
       .tags(
         listOf(
-          Tag().name("Author").description("Author registration and retrieval"),
           Tag().name("Portfolio").description("Public portfolio/CV endpoints"),
           Tag().name("Resume").description("Resume management and editing"),
           Tag().name("Resume - Education").description("Education entries within a resume"),

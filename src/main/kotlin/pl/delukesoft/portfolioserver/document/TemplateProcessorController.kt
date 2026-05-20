@@ -8,13 +8,18 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.*
 import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
+import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.authplugin.security.AuthRequired
+import pl.delukesoft.authplugin.security.JwtService
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
 
 @RestController
 @RequestMapping("/pdf")
 @Tag(name = "PDF", description = "PDF / HTML resume generation")
 class TemplateProcessorController(
-  val templateProcessorFacade: TemplateProcessorFacade
+  val templateProcessorFacade: TemplateProcessorFacade,
+  private val jwtService: JwtService,
+  private val authContext: AuthContext<PortfolioApplicationAuthor>
 ) {
 
   @AuthRequired(allowAnonymous = true, app = "portfolio")
@@ -28,6 +33,7 @@ class TemplateProcessorController(
     response: HttpServletResponse,
     @RequestHeader("Authorization") token: String? = null
   ): String {
+    authenticateOptionalUser(token)
     val webApplication = JakartaServletWebApplication.buildApplication(request.servletContext)
     val webContext = WebContext(webApplication.buildExchange(request, response), request.locale)
     return templateProcessorFacade.generateDefaultResumePdf(
@@ -51,6 +57,17 @@ class TemplateProcessorController(
     val webApplication = JakartaServletWebApplication.buildApplication(request.servletContext)
     val webContext = WebContext(webApplication.buildExchange(request, response), request.locale)
     return templateProcessorFacade.generateDefaultResumePdfById(webContext, id)
+  }
+
+  private fun authenticateOptionalUser(token: String?) {
+    authContext.setAuthor(null)
+    if (token.isNullOrBlank()) {
+      authContext.setUser(null)
+      authContext.setToken(null)
+      return
+    }
+    authContext.setToken(token)
+    authContext.setUser(jwtService.getUser(token))
   }
 
 }
