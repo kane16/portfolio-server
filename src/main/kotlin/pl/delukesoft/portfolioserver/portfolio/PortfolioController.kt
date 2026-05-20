@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.portfolioserver.portfolio.model.PortfolioDTO
 
 @RestController
@@ -19,7 +19,7 @@ class PortfolioController(
 
   private val log = LoggerFactory.getLogger(PortfolioController::class.java)
 
-  @AuthRequired("ROLE_ADMIN", "ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_ADMIN", app = "portfolio")
   @PostMapping("/{id}")
   @Operation(
     summary = "Get CV by ID",

@@ -116,7 +116,7 @@ class ResumeNotFound(id: Long? = null) :
 
 ```kotlin
 // Controller level
-@AuthRequired("ROLE_CANDIDATE", "ROLE_ADMIN")
+@AuthRequired("ROLE_AUTHOR", "ROLE_ADMIN")
 @GetMapping("/resume/{id}")
 fun getResume(@PathVariable id: Long, @RequestHeader("Authorization") token: String?): ResumeDTO {
   // Implementation
@@ -413,7 +413,7 @@ class CertificationController(
 
   @PostMapping("/resume/edit/{resumeId}/certifications")
   @ResponseStatus(HttpStatus.CREATED)
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired("ROLE_AUTHOR")
   fun addCertification(
     @PathVariable resumeId: Long,
     @Valid @RequestBody certification: CertificationDTO,

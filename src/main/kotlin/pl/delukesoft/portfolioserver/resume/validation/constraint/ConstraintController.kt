@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 
 @RestController
 @RequestMapping("/constraints")
@@ -16,7 +16,7 @@ class ConstraintController(
 ) {
 
   @GetMapping
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @Operation(summary = "Get resume constraints", description = "Retrieve all resume constraint definitions")
   @SecurityRequirement(name = "Bearer Authentication")
   fun getResumeConstraints(): List<ConstraintDTO> {

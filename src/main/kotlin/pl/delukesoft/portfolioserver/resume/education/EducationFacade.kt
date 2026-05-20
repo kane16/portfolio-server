@@ -1,21 +1,21 @@
 package pl.delukesoft.portfolioserver.resume.education
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.security.UserContext
+import pl.delukesoft.authplugin.security.AuthContext
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
 import pl.delukesoft.portfolioserver.resume.ResumeMapper
 import pl.delukesoft.portfolioserver.resume.ResumeService
-import pl.delukesoft.portfolioserver.resume.education.EducationService
 
 @Component
 class EducationFacade(
   private val resumeService: ResumeService,
-  private val userContext: UserContext,
+  private val authContext: AuthContext<PortfolioApplicationAuthor>,
   private val resumeMapper: ResumeMapper,
   private val educationService: EducationService
 ) {
 
   private val currentUser
-    get() = requireNotNull(userContext.user) { "Authenticated user is required" }
+    get() = requireNotNull(authContext.user) { "Authenticated user is required" }
 
   fun addEducationToResume(resumeId: Long, dto: EducationDTO): Boolean {
     val resumeVersion = resumeService.getResumeById(resumeId, currentUser)

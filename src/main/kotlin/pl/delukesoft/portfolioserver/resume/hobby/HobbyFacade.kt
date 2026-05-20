@@ -1,20 +1,19 @@
 package pl.delukesoft.portfolioserver.resume.hobby
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.security.UserContext
+import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.portfolioserver.resume.ResumeService
-import pl.delukesoft.portfolioserver.resume.hobby.Hobby
-import pl.delukesoft.portfolioserver.resume.hobby.HobbyService
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
 
 @Component
 class HobbyFacade(
   private val hobbyService: HobbyService,
   private val resumeService: ResumeService,
-  private val userContext: UserContext
+  private val authContext: AuthContext<PortfolioApplicationAuthor>
 ) {
 
   private val currentUser
-    get() = requireNotNull(userContext.user) { "Authenticated user is required" }
+    get() = requireNotNull(authContext.user) { "Authenticated user is required" }
 
   fun addHobbyToResume(resumeId: Long, hobbyName: String): Boolean {
     val resumeVersion = resumeService.getResumeById(resumeId, currentUser)

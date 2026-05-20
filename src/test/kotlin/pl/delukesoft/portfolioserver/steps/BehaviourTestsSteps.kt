@@ -52,7 +52,7 @@ class BehaviourTestsSteps(
           lastname = "Gumiński",
           username = "candidate_empty",
           email = "candidate_empty@example.com",
-          roles = listOf("ROLE_CANDIDATE")
+          roles = listOf("ROLE_AUTHOR")
         )
       )
     }

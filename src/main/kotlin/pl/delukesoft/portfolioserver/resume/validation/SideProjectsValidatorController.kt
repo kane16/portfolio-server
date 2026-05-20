@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
@@ -19,7 +19,7 @@ class SideProjectsValidatorController(
 
   private val log = LoggerFactory.getLogger(SideProjectsValidatorController::class.java)
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/business")
   @Operation(
     summary = "Validate side project business",
@@ -35,7 +35,7 @@ class SideProjectsValidatorController(
     return validationFacade.validateBusiness(id, business)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/timeframe")
   @Operation(
     summary = "Validate side project timeframe",
@@ -51,7 +51,7 @@ class SideProjectsValidatorController(
     return validationFacade.validateSideProjectTimeframe(id, timeframe)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/skills")
   @Operation(
     summary = "Validate side project skills",
@@ -67,7 +67,7 @@ class SideProjectsValidatorController(
     return validationFacade.validateExperienceSkills(id, skills)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping
   @Operation(summary = "Validate side project", description = "Validate a complete side project entry")
   @SecurityRequirement(name = "Bearer Authentication")

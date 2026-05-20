@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.*
 import org.thymeleaf.context.WebContext
 import org.thymeleaf.web.servlet.JakartaServletWebApplication
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 
 @RestController
 @RequestMapping("/pdf")
@@ -17,7 +17,7 @@ class TemplateProcessorController(
   val templateProcessorFacade: TemplateProcessorFacade
 ) {
 
-  @AuthRequired(anonymousAllowed = true)
+  @AuthRequired(allowAnonymous = true, app = "portfolio")
   @GetMapping(produces = ["text/html"])
   @Operation(
     summary = "Generate HTML representation of default resume for PDF conversion",
@@ -35,7 +35,7 @@ class TemplateProcessorController(
     )
   }
 
-  @AuthRequired("ROLE_ADMIN")
+  @AuthRequired(role = "ROLE_ADMIN", app = "portfolio")
   @GetMapping("/{id}", produces = ["text/html"])
   @Operation(
     summary = "Generate resume PDF by ID",

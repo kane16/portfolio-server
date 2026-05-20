@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 
 @RestController
 @Tag(name = "Resume - Education", description = "Education entries within a resume")
@@ -13,7 +13,7 @@ class EducationController(
   private val educationFacade: EducationFacade
 ) {
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/resume/edit/{resumeId}/education")
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "Add education", description = "Add an education entry to a resume")
@@ -26,7 +26,7 @@ class EducationController(
     return educationFacade.addEducationToResume(resumeId, education)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PutMapping("/resume/edit/{resumeId}/education/{educationId}")
   @Operation(summary = "Edit education", description = "Edit an education entry by ID")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -39,7 +39,7 @@ class EducationController(
     return educationFacade.modifyEducationInResume(resumeId, education, educationId)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @DeleteMapping("/resume/edit/{resumeId}/education/{educationId}")
   @Operation(summary = "Delete education", description = "Delete an education entry by ID")
   @SecurityRequirement(name = "Bearer Authentication")

@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.task.TaskExecutor
 import org.springframework.core.task.VirtualThreadTaskExecutor
+import pl.delukesoft.authplugin.security.AuthContext
+import pl.delukesoft.authplugin.security.AuthInterceptor
 
 @Configuration
 class AsyncConfig {

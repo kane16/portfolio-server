@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 
 @RestController
 @Tag(name = "Resume - Experience", description = "Work experience entries within a resume")
@@ -12,7 +12,7 @@ class ExperienceController(
   private val experienceFacade: ExperienceFacade
 ) {
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/resume/edit/{resumeId}/experience")
   @Operation(summary = "Add experience", description = "Add a work experience entry to a resume")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -24,7 +24,7 @@ class ExperienceController(
     return experienceFacade.addExperienceToResume(resumeId, experience)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PutMapping("/resume/edit/{resumeId}/experience/{experienceId}")
   @Operation(summary = "Edit experience", description = "Edit a work experience entry by ID")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -37,7 +37,7 @@ class ExperienceController(
     return experienceFacade.editExperienceInResume(resumeId, experienceId, experience)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @DeleteMapping("/resume/edit/{resumeId}/experience/{experienceId}")
   @Operation(summary = "Delete experience", description = "Delete a work experience entry by ID")
   @SecurityRequirement(name = "Bearer Authentication")

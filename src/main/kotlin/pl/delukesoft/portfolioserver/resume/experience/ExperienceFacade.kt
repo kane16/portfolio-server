@@ -1,21 +1,21 @@
 package pl.delukesoft.portfolioserver.resume.experience
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.security.UserContext
+import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.portfolioserver.resume.ResumeMapper
 import pl.delukesoft.portfolioserver.resume.ResumeService
-import pl.delukesoft.portfolioserver.resume.experience.ExperienceService
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
 
 @Component
 class ExperienceFacade(
   private val resumeService: ResumeService,
   private val resumeMapper: ResumeMapper,
   private val experienceService: ExperienceService,
-  private val userContext: UserContext
+  private val authContext: AuthContext<PortfolioApplicationAuthor>
 ) {
 
   private val currentUser
-    get() = requireNotNull(userContext.user) { "Authenticated user is required" }
+    get() = requireNotNull(authContext.user) { "Authenticated user is required" }
 
   fun addExperienceToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
     val resumeVersion = resumeService.getResumeById(resumeId, currentUser)

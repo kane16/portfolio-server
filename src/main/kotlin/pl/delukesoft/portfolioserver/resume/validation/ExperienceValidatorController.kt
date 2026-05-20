@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
@@ -18,7 +18,7 @@ class ExperienceValidatorController(
 
   private val log = org.slf4j.LoggerFactory.getLogger(ExperienceValidatorController::class.java)
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/business")
   @Operation(
     summary = "Validate business name",
@@ -34,7 +34,7 @@ class ExperienceValidatorController(
     return validationFacade.validateBusiness(id, business)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/timeframe")
   @Operation(summary = "Validate experience timeframe", description = "Validate the timeframe for an experience entry")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -47,7 +47,7 @@ class ExperienceValidatorController(
     return validationFacade.validateExperienceTimeframe(id, timeframe)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/skills")
   @Operation(summary = "Validate experience skills", description = "Validate the skills list for an experience entry")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -60,7 +60,7 @@ class ExperienceValidatorController(
     return validationFacade.validateExperienceSkills(id, skills)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping
   @Operation(summary = "Validate experience", description = "Validate a complete experience entry")
   @SecurityRequirement(name = "Bearer Authentication")

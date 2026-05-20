@@ -1,30 +1,40 @@
 package pl.delukesoft.portfolioserver.resume.skill
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.security.UserContext
-import pl.delukesoft.portfolioserver.author.AuthorService
+import pl.delukesoft.authplugin.author.AuthorService
+import pl.delukesoft.authplugin.security.AuthContext
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
+import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomain
+import pl.delukesoft.portfolioserver.resume.skill.domain.exception.SkillDomainExistsException
 
 @Component
 class SkillFacade(
   private val skillMapper: SkillMapper,
-  private val userContext: UserContext,
+  private val authContext: AuthContext<PortfolioApplicationAuthor>,
   private val authorService: AuthorService,
 ) {
 
   private val currentAuthor
-    get() = requireNotNull(userContext.author) { "Authenticated author is required" }
+    get() = requireNotNull(authContext.author) { "Authenticated author is required" }
 
-  fun addDomain(name: String): Boolean {
-    val domainToAdd = skillMapper.mapToSkillDomain(name, currentAuthor.domains)
-    return authorService.addDomainToAuthor(domainToAdd, currentAuthor)
+  fun addDomain(name: String): PortfolioApplicationAuthor {
+    if (getSkillDomains().contains(name)) {
+      throw SkillDomainExistsException(name)
+    }
+    val authorWithEdit = currentAuthor.copy(
+      additionalInfo = currentAuthor.additionalInfo.copy(
+        domains = currentAuthor.additionalInfo.domains + SkillDomain(name)
+      )
+    )
+    return authorService.editAuthor("portfolio", authorWithEdit) as PortfolioApplicationAuthor
   }
 
   fun getSkills(): List<SkillDTO> {
-    return currentAuthor.skills.map { skillMapper.mapToDTO(it) }
+    return currentAuthor.additionalInfo.skills.map { skillMapper.mapToDTO(it) }
   }
 
   fun getSkillDomains(): List<String> {
-    return currentAuthor.domains.map { it.name }
+    return currentAuthor.additionalInfo.domains.map { it.name }
   }
 
 

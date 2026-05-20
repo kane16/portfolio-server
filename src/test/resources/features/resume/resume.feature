@@ -97,7 +97,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "message": "Access denied. Required role: ROLE_CANDIDATE",
+      "message": "Access denied. Required role: ROLE_AUTHOR",
       "status": 403
     }
     """
@@ -798,7 +798,7 @@ Feature: Resume creation
     And Response body should be:
       """
       {
-        "message": "Access denied. Required role: ROLE_CANDIDATE",
+        "message": "Access denied. Required role: ROLE_AUTHOR",
         "status": 403
       }
       """

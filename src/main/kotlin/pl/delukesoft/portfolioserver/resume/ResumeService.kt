@@ -4,12 +4,12 @@ import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import pl.delukesoft.authplugin.security.User
+import pl.delukesoft.portfolioserver.platform.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.resume.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.resume.exception.ResumePublicationFailed
-import pl.delukesoft.portfolioserver.security.User
-import pl.delukesoft.portfolioserver.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.resume.history.*
-import pl.delukesoft.portfolioserver.platform.sequence.GeneratorService
+import pl.delukesoft.portfolioserver.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.resume.validation.ValidateShortcut
 
 @Service
@@ -28,7 +28,7 @@ class ResumeService(
       user != null && user.roles.contains("ROLE_ADMIN") -> resumeVersionRepository.findByIdOrNull(id)
         ?: throw ResumeNotFound()
 
-      user != null && user.roles.contains("ROLE_CANDIDATE") -> resumeVersionRepository.findResumeByIdAndUsername(
+      user != null && user.roles.contains("ROLE_AUTHOR") -> resumeVersionRepository.findResumeByIdAndUsername(
         id,
         user.username
       ) ?: throw ResumeNotFound()
@@ -40,7 +40,7 @@ class ResumeService(
   fun getDefaultCV(user: User?): ResumeVersion {
     log.info("Getting default Resume")
     return when {
-      user != null && user.roles.contains("ROLE_CANDIDATE") -> getCandidateResume(user.username)
+      user != null && user.roles.contains("ROLE_AUTHOR") -> getCandidateResume(user.username)
       else -> getDefaultApplicationResume()
     }
   }
@@ -74,7 +74,7 @@ class ResumeService(
   }
 
   private fun getCandidateResume(username: String): ResumeVersion {
-    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_CANDIDATE").defaultResume
+    return resumeHistoryService.findByUsernameAndRole(username, "ROLE_AUTHOR").defaultResume
       ?: throw ResumeNotFound()
   }
 

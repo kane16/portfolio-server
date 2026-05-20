@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.resume.history
 
 import org.springframework.data.mongodb.core.mapping.DBRef
 import org.springframework.data.mongodb.core.mapping.Document
-import pl.delukesoft.portfolioserver.security.User
+import pl.delukesoft.authplugin.security.User
 
 @Document(collection = "ResumeHistory")
 data class ResumeHistory(

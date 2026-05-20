@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 
 @RestController
 @RequestMapping("/resume/{id}/validate")
@@ -16,7 +16,7 @@ class ValidationController(
 
   private val log = getLogger(this::class.java)
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping
   @Operation(summary = "Validate resume", description = "Run full validation on a resume by ID")
   @SecurityRequirement(name = "Bearer Authentication")

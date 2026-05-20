@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
 
 @RestController
@@ -13,7 +13,7 @@ class SideProjectController(
   private val sideProjectFacade: SideProjectFacade
 ) {
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/resume/edit/{resumeId}/sideProjects")
   @Operation(summary = "Add side project", description = "Add a side project entry to a resume")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -25,7 +25,7 @@ class SideProjectController(
     return sideProjectFacade.addSideProjectToResume(resumeId, experience)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PutMapping("/resume/edit/{resumeId}/sideProjects/{sideProjectId}")
   @Operation(summary = "Edit side project", description = "Edit a side project entry by ID")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -38,7 +38,7 @@ class SideProjectController(
     return sideProjectFacade.editSideProjectInResume(resumeId, sideProjectId, experience)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @DeleteMapping("/resume/edit/{resumeId}/sideProjects/{sideProjectId}")
   @Operation(summary = "Delete side project", description = "Delete a side project entry by ID")
   @SecurityRequirement(name = "Bearer Authentication")

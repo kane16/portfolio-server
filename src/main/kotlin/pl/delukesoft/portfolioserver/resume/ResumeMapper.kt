@@ -1,29 +1,24 @@
 package pl.delukesoft.portfolioserver.resume
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.security.User
-import pl.delukesoft.portfolioserver.resume.language.LanguageDTO
-import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryDTO
-import pl.delukesoft.portfolioserver.resume.shortcut.ResumeShortcutDTO
-import pl.delukesoft.portfolioserver.resume.history.ResumeVersionDTO
-import pl.delukesoft.portfolioserver.resume.education.EducationDTO
-import pl.delukesoft.portfolioserver.resume.education.InstitutionDTO
-import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.resume.experience.timeframe.TimeframeDTO
-import pl.delukesoft.portfolioserver.resume.ResumeEditDTO
-import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
-import pl.delukesoft.portfolioserver.resume.education.Education
-import pl.delukesoft.portfolioserver.resume.education.EducationInstitution
-import pl.delukesoft.portfolioserver.resume.education.EducationType
+import pl.delukesoft.authplugin.security.User
+import pl.delukesoft.portfolioserver.resume.education.*
 import pl.delukesoft.portfolioserver.resume.experience.Experience
+import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.resume.experience.skillexperience.SkillExperience
+import pl.delukesoft.portfolioserver.resume.experience.timeframe.TimeframeDTO
+import pl.delukesoft.portfolioserver.resume.history.ResumeHistory
+import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryDTO
+import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
+import pl.delukesoft.portfolioserver.resume.history.ResumeVersionDTO
+import pl.delukesoft.portfolioserver.resume.language.LanguageDTO
 import pl.delukesoft.portfolioserver.resume.shortcut.ResumeShortcut
+import pl.delukesoft.portfolioserver.resume.shortcut.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.resume.skill.Skill
+import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.resume.timespan.Timeframe
-import pl.delukesoft.portfolioserver.resume.history.ResumeHistory
-import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
 
 @Component
 class ResumeMapper {

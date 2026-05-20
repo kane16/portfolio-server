@@ -16,7 +16,7 @@
                     "firstname": "John",
                     "lastname": "Doe",
                     "email": "john.doe@example.com",
-                    "roles": ["ROLE_USER", "ROLE_CANDIDATE", "ROLE_ADMIN"],
+                    "roles": ["ROLE_USER", "ROLE_AUTHOR", "ROLE_ADMIN"],
                     "skills": [],
                     "domains": [
                       {"name": "Backend"},
@@ -33,7 +33,7 @@
                     "firstname": "Alex",
                     "lastname": "Tech",
                     "email": "alex.tech@example.com",
-                    "roles": ["ROLE_USER", "ROLE_CANDIDATE"],
+                    "roles": ["ROLE_USER", "ROLE_AUTHOR"],
                     "skills": [],
                     "domains": [
                       {"name": "JVM"},
@@ -60,7 +60,7 @@
                         "user": {
                           "username": "admin",
                           "email": "john.doe@example.com",
-                          "roles": ["ROLE_USER", "ROLE_CANDIDATE", "ROLE_ADMIN"],
+                          "roles": ["ROLE_USER", "ROLE_AUTHOR", "ROLE_ADMIN"],
                           "firstname": "John",
                           "lastname": "Doe"
                         },
@@ -202,7 +202,7 @@
                         "user": {
                           "username": "candidate",
                           "email": "alex.tech@example.com",
-                          "roles": ["ROLE_USER", "ROLE_CANDIDATE"],
+                          "roles": ["ROLE_USER", "ROLE_AUTHOR"],
                           "firstname": "Alex",
                           "lastname": "Tech"
                         },
@@ -303,7 +303,7 @@
                     "user": {
                       "username": "admin",
                       "email": "john.doe@example.com",
-                      "roles": ["ROLE_USER", "ROLE_CANDIDATE", "ROLE_ADMIN"],
+                      "roles": ["ROLE_USER", "ROLE_AUTHOR", "ROLE_ADMIN"],
                       "firstname": "John",
                       "lastname": "Doe"
                     },
@@ -316,7 +316,7 @@
                     "user": {
                       "username": "candidate",
                       "email": "alex.tech@example.com",
-                      "roles": ["ROLE_USER", "ROLE_CANDIDATE"],
+                      "roles": ["ROLE_USER", "ROLE_AUTHOR"],
                       "firstname": "Alex",
                       "lastname": "Tech"
                     },

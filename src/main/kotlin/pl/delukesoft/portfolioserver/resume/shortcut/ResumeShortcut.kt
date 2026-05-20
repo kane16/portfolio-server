@@ -1,6 +1,6 @@
 package pl.delukesoft.portfolioserver.resume.shortcut
 
-import pl.delukesoft.portfolioserver.security.User
+import pl.delukesoft.authplugin.security.User
 import pl.delukesoft.portfolioserver.media.Image
 import pl.delukesoft.portfolioserver.resume.shortcut.contact.ContactInfo
 import pl.delukesoft.portfolioserver.resume.validation.ValidationResult

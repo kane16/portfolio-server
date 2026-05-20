@@ -41,6 +41,7 @@ graalvmNative {
 }
 
 repositories {
+  mavenLocal()
   mavenCentral()
 }
 
@@ -52,6 +53,7 @@ object Versions {
 }
 
 dependencies {
+  implementation("pl.delukesoft:authplugin:1.0")
   implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
   implementation("org.liquibase:liquibase-core")
   implementation("org.liquibase.ext:liquibase-mongodb:4.29.2")
@@ -82,9 +84,6 @@ dependencies {
   testImplementation("net.java.dev.jna:jna:5.13.0")
   testImplementation("net.java.dev.jna:jna-platform:5.13.0")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-  implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-  runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
-  runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 }
 
 dependencyManagement {

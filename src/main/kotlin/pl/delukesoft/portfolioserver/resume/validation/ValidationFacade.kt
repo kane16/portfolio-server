@@ -2,31 +2,30 @@ package pl.delukesoft.portfolioserver.resume.validation
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.security.UserContext
+import pl.delukesoft.authplugin.security.AuthContext
+import pl.delukesoft.portfolioserver.platform.exception.InvalidMappingException
 import pl.delukesoft.portfolioserver.resume.ResumeMapper
-import pl.delukesoft.portfolioserver.resume.education.EducationDTO
-import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.resume.experience.timeframe.TimeframeDTO
-import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.resume.ResumeService
 import pl.delukesoft.portfolioserver.resume.ResumeValidator
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
 import pl.delukesoft.portfolioserver.resume.education.Education
+import pl.delukesoft.portfolioserver.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.resume.experience.Experience
+import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.resume.experience.skillexperience.SkillExperience
+import pl.delukesoft.portfolioserver.resume.experience.timeframe.TimeframeDTO
+import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.resume.skill.exception.SkillNotFound
 import pl.delukesoft.portfolioserver.resume.timespan.Timeframe
 import pl.delukesoft.portfolioserver.resume.timespan.TimeframeValidator
-import pl.delukesoft.portfolioserver.resume.validation.ResumeValidatorResult
-import pl.delukesoft.portfolioserver.resume.validation.Validator
-import pl.delukesoft.portfolioserver.platform.exception.InvalidMappingException
 
 @Component
 class ValidationFacade(
   private val resumeService: ResumeService,
   private val resumeValidator: ResumeValidator,
   private val businessValidator: Validator<Business>,
-  private val userContext: UserContext,
+  private val userContext: AuthContext<PortfolioApplicationAuthor>,
   private val validationMapper: ValidationMapper,
   @Qualifier("consecutiveTimeframeValidator") private val experienceTimeframeValidator: TimeframeValidator,
   @Qualifier("lenientTimeframeValidator") private val lenientTimeframeValidator: TimeframeValidator,

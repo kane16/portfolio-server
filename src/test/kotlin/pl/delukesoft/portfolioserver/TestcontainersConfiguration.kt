@@ -16,7 +16,7 @@ import org.springframework.test.context.DynamicPropertyRegistrar
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
-import pl.delukesoft.portfolioserver.security.AppUserDTO
+import pl.delukesoft.portfolioserver.security.AppUser
 import pl.delukesoft.portfolioserver.security.AuthRequestService
 import pl.delukesoft.portfolioserver.security.AuthTokenService
 import pl.delukesoft.portfolioserver.security.User
@@ -81,14 +81,14 @@ class TestcontainersConfiguration(
     every { service.getUser("Bearer candidate") } returns User(
       "candidate",
       "",
-      listOf("ROLE_USER", "ROLE_CANDIDATE"),
+      listOf("ROLE_USER", "ROLE_AUTHOR"),
       "",
       ""
     )
     every { service.getUser("Bearer candidate_empty") } returns User(
       "candidate_empty",
       "",
-      listOf("ROLE_CANDIDATE"),
+      listOf("ROLE_AUTHOR"),
       "Łukasz",
       "Gumiński"
     )
@@ -98,7 +98,7 @@ class TestcontainersConfiguration(
   @Bean
   fun authRequestService(): AuthRequestService {
     val service = mockk<AuthRequestService>()
-    every { service.getUserById(any(), 200L) } returns AppUserDTO(
+    every { service.getUserById(any(), 200L) } returns AppUser(
       id = 200,
       username = "jane",
       email = "jane@example.com",

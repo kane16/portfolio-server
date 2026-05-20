@@ -6,8 +6,9 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import pl.delukesoft.portfolioserver.security.AuthRequired
+import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.portfolioserver.resume.ResumeFacade
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
 
 @RestController
 @Tag(name = "Resume - Skills", description = "Skill entries and skill domains")
@@ -19,7 +20,7 @@ class SkillController(
   private val log = LoggerFactory.getLogger(this::class.java)
 
   @GetMapping("/skills")
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @Operation(summary = "Get user skills", description = "Retrieve all skills for the current user")
   @SecurityRequirement(name = "Bearer Authentication")
   fun getUserSkills(
@@ -29,7 +30,7 @@ class SkillController(
   }
 
   @GetMapping("/skills/domains")
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @Operation(summary = "Get skill domains", description = "Retrieve all available skill domain names")
   @SecurityRequirement(name = "Bearer Authentication")
   fun getDomains(
@@ -39,7 +40,7 @@ class SkillController(
   }
 
   @GetMapping("/skills/resume/{resumeId}")
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @Operation(summary = "Get skills by resume ID", description = "Retrieve all skills associated with a specific resume")
   @SecurityRequirement(name = "Bearer Authentication")
   fun getSkillsByResumeId(
@@ -51,17 +52,17 @@ class SkillController(
 
   @PostMapping("/skills/domains")
   @ResponseStatus(HttpStatus.CREATED)
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @Operation(summary = "Add skill domain", description = "Create a new skill domain")
   @SecurityRequirement(name = "Bearer Authentication")
   fun addSkillDomain(
     @RequestBody name: String,
     @RequestHeader("Authorization") token: String?
-  ): Boolean {
+  ): PortfolioApplicationAuthor {
     return skillFacade.addDomain(name)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/resume/edit/{resumeId}/skills")
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "Add skill to resume", description = "Add a skill entry to a resume")
@@ -75,7 +76,7 @@ class SkillController(
     return resumeFacade.addSkillToResume(resumeId, skill)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @DeleteMapping("/resume/edit/{resumeId}/skills/{skillName}")
   @Operation(summary = "Delete skill from resume", description = "Delete a skill from a resume by skill name")
   @SecurityRequirement(name = "Bearer Authentication")
@@ -87,7 +88,7 @@ class SkillController(
     return resumeFacade.deleteSkillFromResume(resumeId, skillName)
   }
 
-  @AuthRequired("ROLE_CANDIDATE")
+  @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PutMapping("/resume/edit/{resumeId}/skills/{skillName}")
   @Operation(summary = "Edit skill in resume", description = "Edit a skill entry in a resume by skill name")
   @SecurityRequirement(name = "Bearer Authentication")

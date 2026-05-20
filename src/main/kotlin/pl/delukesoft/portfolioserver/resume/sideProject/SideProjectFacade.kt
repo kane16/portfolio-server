@@ -1,22 +1,22 @@
 package pl.delukesoft.portfolioserver.resume.sideProject
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.security.UserContext
+import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.portfolioserver.resume.ResumeMapper
-import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
 import pl.delukesoft.portfolioserver.resume.ResumeService
-import pl.delukesoft.portfolioserver.resume.sideProject.SideProjectService
+import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
+import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
 
 @Component
 class SideProjectFacade(
   private val sideProjectService: SideProjectService,
   private val resumeService: ResumeService,
   private val resumeMapper: ResumeMapper,
-  private val userContext: UserContext
+  private val authContext: AuthContext<PortfolioApplicationAuthor>
 ) {
 
   private val currentUser
-    get() = requireNotNull(userContext.user) { "Authenticated user is required" }
+    get() = requireNotNull(authContext.user) { "Authenticated user is required" }
 
   fun addSideProjectToResume(resumeId: Long, experience: ExperienceDTO): Boolean {
     val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
