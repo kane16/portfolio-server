@@ -1,12 +1,12 @@
 package pl.delukesoft.portfolioserver.resume.experience
 
 import org.springframework.beans.factory.annotation.Qualifier
-import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.resume.experience.business.Business
 import pl.delukesoft.portfolioserver.resume.experience.skillexperience.SkillExperience
 import pl.delukesoft.portfolioserver.resume.timespan.TimeframeValidator
 import pl.delukesoft.portfolioserver.resume.validation.ValidationResult
 import pl.delukesoft.portfolioserver.resume.validation.Validator
+import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 
 class ExperienceValidator(
   val timeframeValidator: TimeframeValidator,

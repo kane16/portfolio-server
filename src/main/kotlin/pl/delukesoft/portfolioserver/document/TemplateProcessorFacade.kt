@@ -2,8 +2,6 @@ package pl.delukesoft.portfolioserver.document
 
 import org.springframework.stereotype.Component
 import org.thymeleaf.context.WebContext
-import pl.delukesoft.portfolioserver.document.DocumentGenerationService
-import pl.delukesoft.portfolioserver.document.PrintDTO
 import pl.delukesoft.portfolioserver.portfolio.PortfolioMapper
 import pl.delukesoft.portfolioserver.resume.ResumeFacade
 

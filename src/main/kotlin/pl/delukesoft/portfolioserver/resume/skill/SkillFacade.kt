@@ -1,8 +1,8 @@
 package pl.delukesoft.portfolioserver.resume.skill
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import pl.delukesoft.authplugin.author.Author
 import org.springframework.stereotype.Component
+import pl.delukesoft.authplugin.author.Author
 import pl.delukesoft.authplugin.author.AuthorService
 import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor

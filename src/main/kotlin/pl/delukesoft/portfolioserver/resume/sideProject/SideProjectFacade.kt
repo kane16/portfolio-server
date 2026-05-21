@@ -26,10 +26,15 @@ class SideProjectFacade(
     return sideProjectService.addSideProjectToResume(sideProjectToAdd, resumeVersion)
   }
 
-  fun editSideProjectInResume(resumeId: Long, sideProjectId: Long, experience: ExperienceDTO): Boolean {
+  fun editSideProjectInResume(
+    resumeId: Long,
+    sideProjectId: Long,
+    experience: ExperienceDTO
+  ): Boolean {
     val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val resumeSkills = resumeVersion.resume.skills
-    val sideProjectToEdit = resumeMapper.mapDTOToExperience(experience, resumeSkills).copy(id = sideProjectId)
+    val sideProjectToEdit =
+      resumeMapper.mapDTOToExperience(experience, resumeSkills).copy(id = sideProjectId)
     return sideProjectService.editResume(sideProjectToEdit, resumeVersion)
   }
 

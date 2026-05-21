@@ -1,10 +1,10 @@
 package pl.delukesoft.portfolioserver.resume
 
-import pl.delukesoft.portfolioserver.resume.language.LanguageDTO
 import pl.delukesoft.portfolioserver.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.resume.experience.ExperienceDTO
-import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
+import pl.delukesoft.portfolioserver.resume.language.LanguageDTO
 import pl.delukesoft.portfolioserver.resume.shortcut.contact.ContactInfo
+import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
 
 data class ResumeEditDTO(
   val id: Long,

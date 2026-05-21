@@ -5,7 +5,7 @@ class DomainValidationResult(
   isValid: Boolean,
   validationStatus: ValidationStatus,
   errors: List<String>
-): ValidationResult(
+) : ValidationResult(
   isValid,
   validationStatus,
   errors

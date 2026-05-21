@@ -18,7 +18,10 @@ class ResumeModificationInterceptor(
 ) {
 
   @Before("@annotation(modification) && args(.., resumeVersion)")
-  fun preventModificationOnPublishedResume(modification: ResumeModification, resumeVersion: ResumeVersion) {
+  fun preventModificationOnPublishedResume(
+    modification: ResumeModification,
+    resumeVersion: ResumeVersion
+  ) {
     val dbResumeVersion =
       resumeVersionRepository.findVersionById(resumeVersion.id!!) ?: throw ResumeVersionNotFound()
     if (dbResumeVersion.state == ResumeVersionState.PUBLISHED) {
@@ -31,7 +34,6 @@ class ResumeModificationInterceptor(
   fun modificationCompleted(modification: ResumeModification, resumeVersion: ResumeVersion) {
     resumeVersionRepository.updateLastModified(resumeVersion.id!!, LocalDateTime.now())
   }
-
 
 
 }

@@ -61,7 +61,12 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
         Pair("message", ex.bindingResult.fieldError?.defaultMessage ?: "Validation failed"),
         Pair(
           "validationErrors",
-          ex.bindingResult.fieldErrors.map { ResponsePair(it.field, it.defaultMessage ?: "Validation failed") }),
+          ex.bindingResult.fieldErrors.map {
+            ResponsePair(
+              it.field,
+              it.defaultMessage ?: "Validation failed"
+            )
+          }),
         Pair("status", ex.statusCode.value())
       )
     }
@@ -69,7 +74,10 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
   }
 
   @ExceptionHandler(ResponseStatusException::class)
-  fun handleResponseStatusException(exc: ResponseStatusException, response: WebRequest): ResponseEntity<Any> {
+  fun handleResponseStatusException(
+    exc: ResponseStatusException,
+    response: WebRequest
+  ): ResponseEntity<Any> {
     val body = mapOf<String, Any>(
       Pair("message", exc.reason!!),
       Pair("status", exc.statusCode.value())
@@ -88,7 +96,10 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
   }
 
   @ExceptionHandler(ValidationFailedException::class)
-  fun handleValidationFailedException(exc: ValidationFailedException, response: WebRequest): ResponseEntity<Any> {
+  fun handleValidationFailedException(
+    exc: ValidationFailedException,
+    response: WebRequest
+  ): ResponseEntity<Any> {
     val body = mapOf<String, Any>(
       Pair("message", exc.validationResults.flatMap { it.errors }),
       Pair("status", HttpStatus.BAD_REQUEST.value())

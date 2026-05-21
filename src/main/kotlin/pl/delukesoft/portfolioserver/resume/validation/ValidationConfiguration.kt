@@ -3,7 +3,6 @@ package pl.delukesoft.portfolioserver.resume.validation
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.resume.experience.Experience
 import pl.delukesoft.portfolioserver.resume.experience.ExperienceValidator
 import pl.delukesoft.portfolioserver.resume.experience.business.Business
@@ -15,6 +14,7 @@ import pl.delukesoft.portfolioserver.resume.skill.SkillValidator
 import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomainValidator
 import pl.delukesoft.portfolioserver.resume.timespan.TimeframeValidator
+import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 
 @Configuration
 class ValidationConfiguration {

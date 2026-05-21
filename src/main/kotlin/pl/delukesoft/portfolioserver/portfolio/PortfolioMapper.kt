@@ -2,7 +2,6 @@ package pl.delukesoft.portfolioserver.portfolio
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.resume.language.LanguageDTO
 import pl.delukesoft.portfolioserver.portfolio.model.PortfolioDTO
 import pl.delukesoft.portfolioserver.portfolio.model.ProjectDTO
 import pl.delukesoft.portfolioserver.portfolio.model.SkillPortfolioDTO
@@ -11,6 +10,7 @@ import pl.delukesoft.portfolioserver.resume.education.InstitutionDTO
 import pl.delukesoft.portfolioserver.resume.experience.Experience
 import pl.delukesoft.portfolioserver.resume.experience.timeframe.TimeframeDTO
 import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
+import pl.delukesoft.portfolioserver.resume.language.LanguageDTO
 
 @Component
 @RegisterReflectionForBinding(SkillPortfolioDTO::class, LanguageDTO::class, ProjectDTO::class)

@@ -9,6 +9,7 @@ data class MonthTimestamp(
 ) {
 
   fun toStartLocalDate(): LocalDate = LocalDate.of(year, month, 1)
-  fun toEndLocalDate(): LocalDate = LocalDate.of(year, month, 1).with(TemporalAdjusters.lastDayOfMonth())
+  fun toEndLocalDate(): LocalDate =
+    LocalDate.of(year, month, 1).with(TemporalAdjusters.lastDayOfMonth())
 
 }

@@ -2,7 +2,6 @@ package pl.delukesoft.portfolioserver.resume.skill
 
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.resume.skill.Skill
 import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomain
 
 @Component

@@ -1,6 +1,11 @@
 package pl.delukesoft.portfolioserver.resume.validation
 
-enum class ValidationDomain(val label: String, val weight: Int, val title: String, val endpoint: String) {
+enum class ValidationDomain(
+  val label: String,
+  val weight: Int,
+  val title: String,
+  val endpoint: String
+) {
   SHORTCUT("shortcut", 10, "Shortcut", ""),
   SKILLS("skill", 10, "Skills", "skills"),
   EDUCATION("education", 20, "Education", "education"),

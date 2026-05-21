@@ -1,8 +1,8 @@
 package pl.delukesoft.portfolioserver.resume.history
 
 import org.springframework.stereotype.Service
-import pl.delukesoft.portfolioserver.resume.history.exception.ResumeHistoryNotFound
 import pl.delukesoft.portfolioserver.platform.sequence.GeneratorService
+import pl.delukesoft.portfolioserver.resume.history.exception.ResumeHistoryNotFound
 
 @Service
 class ResumeHistoryService(
@@ -22,7 +22,8 @@ class ResumeHistoryService(
   }
 
   fun findByUsername(username: String): ResumeHistory {
-    return resumeHistoryRepository.findResumeHistoryByUsername(username) ?: throw ResumeHistoryNotFound()
+    return resumeHistoryRepository.findResumeHistoryByUsername(username)
+      ?: throw ResumeHistoryNotFound()
   }
 
   fun addResumeToHistory(resumeVersion: ResumeVersion): Boolean {
@@ -38,8 +39,11 @@ class ResumeHistoryService(
   }
 
   fun unpublishResumeVersion(resumeVersion: ResumeVersion, username: String): Boolean {
-    return resumeVersionRepository.changeResumeStatus(resumeVersion.id!!, ResumeVersionState.DRAFT) > 0 &&
-      resumeHistoryRepository.setDefaultResumeForUser(username, null) > 0
+    return resumeVersionRepository.changeResumeStatus(
+      resumeVersion.id!!,
+      ResumeVersionState.DRAFT
+    ) > 0 &&
+        resumeHistoryRepository.setDefaultResumeForUser(username, null) > 0
   }
 
   fun publishResumeVersion(resumeVersion: ResumeVersion, username: String): Boolean {

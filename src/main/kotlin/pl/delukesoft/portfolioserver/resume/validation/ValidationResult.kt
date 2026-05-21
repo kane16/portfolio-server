@@ -8,8 +8,12 @@ open class ValidationResult(
 
   companion object {
 
-    fun build(errors: List<String>): ValidationResult = ValidationResult(false, ValidationStatus.INVALID, errors)
-    fun build(error: String): ValidationResult = ValidationResult(false, ValidationStatus.INVALID, listOf(error))
+    fun build(errors: List<String>): ValidationResult =
+      ValidationResult(false, ValidationStatus.INVALID, errors)
+
+    fun build(error: String): ValidationResult =
+      ValidationResult(false, ValidationStatus.INVALID, listOf(error))
+
     fun build(): ValidationResult = ValidationResult(true, ValidationStatus.VALID, emptyList())
 
   }

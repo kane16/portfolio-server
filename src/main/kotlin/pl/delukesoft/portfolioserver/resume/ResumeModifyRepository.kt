@@ -3,12 +3,12 @@ package pl.delukesoft.portfolioserver.resume
 import org.springframework.stereotype.Component
 import pl.delukesoft.portfolioserver.resume.education.Education
 import pl.delukesoft.portfolioserver.resume.experience.Experience
+import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
+import pl.delukesoft.portfolioserver.resume.history.ResumeVersionRepository
 import pl.delukesoft.portfolioserver.resume.hobby.Hobby
 import pl.delukesoft.portfolioserver.resume.language.Language
 import pl.delukesoft.portfolioserver.resume.shortcut.ResumeShortcut
 import pl.delukesoft.portfolioserver.resume.skill.Skill
-import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
-import pl.delukesoft.portfolioserver.resume.history.ResumeVersionRepository
 import pl.delukesoft.portfolioserver.resume.validation.*
 
 @Component
@@ -24,7 +24,10 @@ class ResumeModifyRepository(
 
   @ResumeModification
   @ValidateExperiences
-  fun changeExperiencesInResume(experiences: List<Experience>, resumeVersion: ResumeVersion): Boolean {
+  fun changeExperiencesInResume(
+    experiences: List<Experience>,
+    resumeVersion: ResumeVersion
+  ): Boolean {
     return resumeVersionRepository.changeExperienceToResume(resumeVersion.id!!, experiences) > 0
   }
 
@@ -42,7 +45,10 @@ class ResumeModifyRepository(
 
   @ResumeModification
   @ValidateSideProjects
-  fun changeSideProjectsInResume(sideProjects: List<Experience>, resumeVersion: ResumeVersion): Boolean {
+  fun changeSideProjectsInResume(
+    sideProjects: List<Experience>,
+    resumeVersion: ResumeVersion
+  ): Boolean {
     return resumeVersionRepository.changeSideProjectsInResume(resumeVersion.id!!, sideProjects) > 0
   }
 

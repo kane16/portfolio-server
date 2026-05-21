@@ -9,7 +9,12 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConditionalOnProperty(prefix = "app.liquibase", name = ["enabled"], havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(
+  prefix = "app.liquibase",
+  name = ["enabled"],
+  havingValue = "true",
+  matchIfMissing = true
+)
 class MongoLiquibaseConfig {
 
   @Bean(initMethod = "run")
@@ -18,7 +23,8 @@ class MongoLiquibaseConfig {
     @Value("\${spring.data.mongodb.uri}") connectionString: String,
     @Value("\${spring.data.mongodb.username}") mongoUsername: String,
     @Value("\${spring.data.mongodb.password}") mongoPassword: String
-  ): MongoLiquibaseRunner = MongoLiquibaseRunner(connectionString, mongoUsername, mongoPassword, changeLog)
+  ): MongoLiquibaseRunner =
+    MongoLiquibaseRunner(connectionString, mongoUsername, mongoPassword, changeLog)
 
   class MongoLiquibaseRunner(
     private val connectionString: String,

@@ -1,9 +1,9 @@
 package pl.delukesoft.portfolioserver.resume.education
 
 import org.springframework.stereotype.Service
+import pl.delukesoft.portfolioserver.platform.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.resume.ResumeModifyRepository
 import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
-import pl.delukesoft.portfolioserver.platform.sequence.GeneratorService
 
 @Service
 class EducationService(

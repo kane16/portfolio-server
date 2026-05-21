@@ -17,7 +17,10 @@ class ConstraintController(
 
   @GetMapping
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
-  @Operation(summary = "Get resume constraints", description = "Retrieve all resume constraint definitions")
+  @Operation(
+    summary = "Get resume constraints",
+    description = "Retrieve all resume constraint definitions"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun getResumeConstraints(): List<ConstraintDTO> {
     return constraintFacade.getResumeConstraints()

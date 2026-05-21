@@ -34,7 +34,10 @@ class ResumeController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @GetMapping("/history")
-  @Operation(summary = "Get resume history", description = "Retrieve the resume edit history for the current user")
+  @Operation(
+    summary = "Get resume history",
+    description = "Retrieve the resume edit history for the current user"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun getHistoryByUser(
     @RequestHeader("Authorization") token: String?
@@ -58,7 +61,10 @@ class ResumeController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PutMapping("/edit/{id}")
-  @Operation(summary = "Update resume shortcut", description = "Update the resume shortcut/summary information")
+  @Operation(
+    summary = "Update resume shortcut",
+    description = "Update the resume shortcut/summary information"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun updatePortfolioShortcut(
     @PathVariable("id") resumeId: Long,

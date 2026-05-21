@@ -31,7 +31,10 @@ class SkillController(
 
   @GetMapping("/skills/domains")
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
-  @Operation(summary = "Get skill domains", description = "Retrieve all available skill domain names")
+  @Operation(
+    summary = "Get skill domains",
+    description = "Retrieve all available skill domain names"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun getDomains(
     @RequestHeader("Authorization") token: String?
@@ -41,7 +44,10 @@ class SkillController(
 
   @GetMapping("/skills/resume/{resumeId}")
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
-  @Operation(summary = "Get skills by resume ID", description = "Retrieve all skills associated with a specific resume")
+  @Operation(
+    summary = "Get skills by resume ID",
+    description = "Retrieve all skills associated with a specific resume"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun getSkillsByResumeId(
     @PathVariable("resumeId") resumeId: Long,
@@ -78,7 +84,10 @@ class SkillController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @DeleteMapping("/resume/edit/{resumeId}/skills/{skillName}")
-  @Operation(summary = "Delete skill from resume", description = "Delete a skill from a resume by skill name")
+  @Operation(
+    summary = "Delete skill from resume",
+    description = "Delete a skill from a resume by skill name"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun deleteSkill(
     @PathVariable("resumeId") resumeId: Long,
@@ -90,7 +99,10 @@ class SkillController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PutMapping("/resume/edit/{resumeId}/skills/{skillName}")
-  @Operation(summary = "Edit skill in resume", description = "Edit a skill entry in a resume by skill name")
+  @Operation(
+    summary = "Edit skill in resume",
+    description = "Edit a skill entry in a resume by skill name"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun editSkill(
     @PathVariable("resumeId") resumeId: Long,

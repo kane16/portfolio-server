@@ -34,7 +34,8 @@ class ValidationInterceptor(
 
   @Before("@annotation(validateResume) && args(resume,..)")
   fun validate(validateResume: ValidateResume, resume: Resume) {
-    val validationResult: ResumeValidatorResult = resumeValidator.validate(resume) as ResumeValidatorResult
+    val validationResult: ResumeValidatorResult =
+      resumeValidator.validate(resume) as ResumeValidatorResult
     if (!validationResult.isValid) {
       throw ValidationFailedException(validationResult.domainResults)
     }
@@ -44,7 +45,14 @@ class ValidationInterceptor(
   fun validate(validateSkill: ValidateSkill, skill: Skill) {
     val validationResult: ValidationResult = skillValidator.validate(skill)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("skill", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "skill",
+            validationResult
+          )
+        )
+      )
     }
   }
 
@@ -52,7 +60,14 @@ class ValidationInterceptor(
   fun validate(validateSkill: ValidateSkill, skills: List<Skill>) {
     val validationResult: ValidationResult = skillValidator.validateList(skills)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("skill", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "skill",
+            validationResult
+          )
+        )
+      )
     }
   }
 
@@ -60,7 +75,14 @@ class ValidationInterceptor(
   fun validate(validateDomain: ValidateDomain, domain: SkillDomain) {
     val validationResult: ValidationResult = skillDomainValidator.validate(domain)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("skillDomain", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "skillDomain",
+            validationResult
+          )
+        )
+      )
     }
   }
 
@@ -68,7 +90,14 @@ class ValidationInterceptor(
   fun validate(validateExperiences: ValidateExperiences, experiences: List<Experience>) {
     val validationResult: ValidationResult = experienceValidator.validateList(experiences)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("experience", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "experience",
+            validationResult
+          )
+        )
+      )
     }
   }
 
@@ -76,15 +105,30 @@ class ValidationInterceptor(
   fun validate(validateHobbies: ValidateHobbies, hobbies: List<Hobby>) {
     val validationResult: ValidationResult = hobbyValidator.validateList(hobbies)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("hobby", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "hobby",
+            validationResult
+          )
+        )
+      )
     }
   }
 
   @Before("@annotation(validateLanguages) && args(languages,..))")
   fun validate(validateLanguages: ValidateLanguages, languages: List<Language>) {
-    val validationResult: ValidationResult = languagesValidator.validateListForEditOperation(languages)
+    val validationResult: ValidationResult =
+      languagesValidator.validateListForEditOperation(languages)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("language", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "language",
+            validationResult
+          )
+        )
+      )
     }
   }
 
@@ -92,7 +136,14 @@ class ValidationInterceptor(
   fun validate(validateShortcut: ValidateShortcut, shortcut: ResumeShortcut) {
     val validationResult: ValidationResult = shortcutValidator.validate(shortcut)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("shortcut", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "shortcut",
+            validationResult
+          )
+        )
+      )
     }
 
   }
@@ -101,7 +152,14 @@ class ValidationInterceptor(
   fun validate(validateEducation: ValidateEducation, education: List<Education>) {
     val validationResult: ValidationResult = educationValidator.validateList(education)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("education", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "education",
+            validationResult
+          )
+        )
+      )
     }
   }
 
@@ -109,7 +167,14 @@ class ValidationInterceptor(
   fun validate(validateSideProjects: ValidateSideProjects, sideProject: List<Experience>) {
     val validationResult: ValidationResult = sideProjectValidator.validateList(sideProject)
     if (!validationResult.isValid) {
-      throw ValidationFailedException(listOf(DomainValidationResult.build("sideProject", validationResult)))
+      throw ValidationFailedException(
+        listOf(
+          DomainValidationResult.build(
+            "sideProject",
+            validationResult
+          )
+        )
+      )
     }
   }
 

@@ -18,7 +18,10 @@ class EducationValidatorController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping
-  @Operation(summary = "Validate education", description = "Validate an education entry for a resume")
+  @Operation(
+    summary = "Validate education",
+    description = "Validate an education entry for a resume"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun validateEducation(
     @PathVariable("id") id: Long,

@@ -1,9 +1,9 @@
 package pl.delukesoft.portfolioserver.resume.experience.skillexperience
 
-import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.resume.skill.Skill
 import pl.delukesoft.portfolioserver.resume.validation.ValidationResult
 import pl.delukesoft.portfolioserver.resume.validation.Validator
+import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 
 class SkillExperienceValidator(
   private val skillValidator: Validator<Skill>,

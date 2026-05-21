@@ -36,7 +36,10 @@ class ExperienceValidatorController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/timeframe")
-  @Operation(summary = "Validate experience timeframe", description = "Validate the timeframe for an experience entry")
+  @Operation(
+    summary = "Validate experience timeframe",
+    description = "Validate the timeframe for an experience entry"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun validateExperienceTimeframe(
     @PathVariable("id") id: Long,
@@ -49,7 +52,10 @@ class ExperienceValidatorController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping("/skills")
-  @Operation(summary = "Validate experience skills", description = "Validate the skills list for an experience entry")
+  @Operation(
+    summary = "Validate experience skills",
+    description = "Validate the skills list for an experience entry"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun validateSkillsExperience(
     @PathVariable("id") id: Long,

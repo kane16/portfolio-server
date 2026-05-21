@@ -33,8 +33,14 @@ class ResumeValidator(
       DomainValidationResult.build("shortcut", resumeShortcutValidator.validate(value.shortcut)),
       DomainValidationResult.build("skill", skillValidator.validateList(value.skills)),
       DomainValidationResult.build("education", educationValidator.validateList(value.education)),
-      DomainValidationResult.build("experience", jobExperienceValidator.validateList(value.experience)),
-      DomainValidationResult.build("sideProject", sideProjectValidator.validateList(value.sideProjects)),
+      DomainValidationResult.build(
+        "experience",
+        jobExperienceValidator.validateList(value.experience)
+      ),
+      DomainValidationResult.build(
+        "sideProject",
+        sideProjectValidator.validateList(value.sideProjects)
+      ),
       DomainValidationResult.build("hobby", hobbyValidator.validateList(value.hobbies)),
       DomainValidationResult.build("language", languagesValidator.validateList(value.languages))
     )

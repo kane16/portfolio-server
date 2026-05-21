@@ -57,7 +57,8 @@ class ValidationFacade(
     val resumeVersion = resumeService.getResumeById(id, currentUser)
     val resume = resumeVersion.resume
     val addedTimeframe = Timeframe(timeframe.start, timeframe.end)
-    val validationResult = (resume.experience.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
+    val validationResult =
+      (resume.experience.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
     val validationResults = experienceTimeframeValidator.validateList(validationResult)
     return validationMapper.mapValidationResultToDTO(validationResults, "timeframe")
   }
@@ -66,19 +67,26 @@ class ValidationFacade(
     val resumeVersion = resumeService.getResumeById(id, currentUser)
     val resume = resumeVersion.resume
     val addedTimeframe = Timeframe(timeframe.start, timeframe.end)
-    val validationResult = (resume.sideProjects.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
+    val validationResult =
+      (resume.sideProjects.map { it.timeframe } + addedTimeframe).sortedBy { it.start }
     val validationResults = lenientTimeframeValidator.validateList(validationResult)
     return validationMapper.mapValidationResultToDTO(validationResults, "timeframe")
   }
 
-  fun validateExperienceSkills(id: Long, experienceSkillsDTO: List<SkillDTO>): SimpleValidationResultDTO {
+  fun validateExperienceSkills(
+    id: Long,
+    experienceSkillsDTO: List<SkillDTO>
+  ): SimpleValidationResultDTO {
     val resumeVersion = resumeService.getResumeById(id, currentUser)
     val resume = resumeVersion.resume
     val experienceSkills = experienceSkillsDTO.map { skillExperienceDTO ->
       SkillExperience(
-        resume.skills.find { it.name == skillExperienceDTO.name } ?: throw SkillNotFound(skillExperienceDTO.name),
+        resume.skills.find { it.name == skillExperienceDTO.name } ?: throw SkillNotFound(
+          skillExperienceDTO.name
+        ),
         skillExperienceDTO.level,
-        skillExperienceDTO.detail ?: throw InvalidMappingException("Detail is expected to be provided")
+        skillExperienceDTO.detail
+          ?: throw InvalidMappingException("Detail is expected to be provided")
       )
     }
     val validationResults = experienceSkillsValidator.validateList(experienceSkills)
@@ -99,7 +107,8 @@ class ValidationFacade(
         SkillExperience(
           resume.skills.find { it.name == skillExperienceDTO.name }!!,
           skillExperienceDTO.level,
-          skillExperienceDTO.detail ?: throw InvalidMappingException("Detail is expected to be provided")
+          skillExperienceDTO.detail
+            ?: throw InvalidMappingException("Detail is expected to be provided")
         )
       }
     )
@@ -108,7 +117,10 @@ class ValidationFacade(
     return validationMapper.mapValidationResultToDTO(validationResult, "experience")
   }
 
-  fun validateSideProject(resumeId: Long, sideProjectDTO: ExperienceDTO): SimpleValidationResultDTO {
+  fun validateSideProject(
+    resumeId: Long,
+    sideProjectDTO: ExperienceDTO
+  ): SimpleValidationResultDTO {
     val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val resume = resumeVersion.resume
     val sideProject = Experience(
@@ -122,7 +134,8 @@ class ValidationFacade(
         SkillExperience(
           resume.skills.find { it.name == skillExperienceDTO.name }!!,
           skillExperienceDTO.level,
-          skillExperienceDTO.detail ?: throw InvalidMappingException("Detail is expected to be provided")
+          skillExperienceDTO.detail
+            ?: throw InvalidMappingException("Detail is expected to be provided")
         )
       }
     )

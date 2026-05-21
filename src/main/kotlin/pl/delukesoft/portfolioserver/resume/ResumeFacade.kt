@@ -6,13 +6,13 @@ import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 import pl.delukesoft.portfolioserver.resume.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.resume.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryDTO
+import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryService
+import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
 import pl.delukesoft.portfolioserver.resume.shortcut.ResumeShortcutDTO
 import pl.delukesoft.portfolioserver.resume.skill.SkillDTO
 import pl.delukesoft.portfolioserver.resume.skill.SkillMapper
 import pl.delukesoft.portfolioserver.resume.skill.SkillService
 import pl.delukesoft.portfolioserver.resume.skill.exception.SkillNotFound
-import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryService
-import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
 
 @Component
 class ResumeFacade(
@@ -73,7 +73,8 @@ class ResumeFacade(
 
   fun publishResume(version: Long): ResumeEditDTO {
     val publishedVersion = resumeHistoryService.findPublishedResumeVersion(currentUser.username)
-    val versionToPublish = resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username)
+    val versionToPublish =
+      resumeHistoryService.findVersionByIdAndUsername(version, currentUser.username)
     if (publishedVersion != null) {
       throw ResumeOperationNotAllowed("Published version already exists")
     }
@@ -102,7 +103,8 @@ class ResumeFacade(
   fun deleteSkillFromResume(resumeId: Long, skillNameToRemove: String): Boolean {
     val resumeVersion = resumeService.getResumeById(resumeId, authContext.user)
     val resume = resumeVersion.resume
-    val skillToRemove = resume.skills.find { it.name == skillNameToRemove } ?: throw SkillNotFound(skillNameToRemove)
+    val skillToRemove =
+      resume.skills.find { it.name == skillNameToRemove } ?: throw SkillNotFound(skillNameToRemove)
     return skillService.deleteSkillFromResume(resumeVersion, skillToRemove)
   }
 

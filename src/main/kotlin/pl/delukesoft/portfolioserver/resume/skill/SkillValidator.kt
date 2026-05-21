@@ -1,10 +1,10 @@
 package pl.delukesoft.portfolioserver.resume.skill
 
-import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomain
 import pl.delukesoft.portfolioserver.resume.validation.ValidationResult
 import pl.delukesoft.portfolioserver.resume.validation.ValidationStatus
 import pl.delukesoft.portfolioserver.resume.validation.Validator
+import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 
 class SkillValidator(
   private val skillDomainValidator: Validator<SkillDomain>,

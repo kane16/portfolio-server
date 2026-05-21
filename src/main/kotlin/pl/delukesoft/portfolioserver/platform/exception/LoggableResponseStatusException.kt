@@ -5,10 +5,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
 
-open class LoggableResponseStatusException(status: HttpStatus, message: String, exc: Exception? = null): ResponseStatusException(status, message) {
+open class LoggableResponseStatusException(
+  status: HttpStatus,
+  message: String,
+  exc: Exception? = null
+) : ResponseStatusException(status, message) {
 
   init {
-    if(exc != null) {
+    if (exc != null) {
       logger.error(message, exc)
     } else {
       logger.error(message)

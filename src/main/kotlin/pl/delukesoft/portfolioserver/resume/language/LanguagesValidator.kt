@@ -1,10 +1,10 @@
 package pl.delukesoft.portfolioserver.resume.language
 
 import org.springframework.stereotype.Component
-import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.resume.validation.ValidationResult
 import pl.delukesoft.portfolioserver.resume.validation.ValidationStatus
 import pl.delukesoft.portfolioserver.resume.validation.Validator
+import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 
 @Component
 class LanguagesValidator(

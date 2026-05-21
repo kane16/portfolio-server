@@ -1,15 +1,16 @@
 package pl.delukesoft.portfolioserver.resume.experience.business
 
-import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 import pl.delukesoft.portfolioserver.resume.validation.ValidationResult
 import pl.delukesoft.portfolioserver.resume.validation.Validator
+import pl.delukesoft.portfolioserver.resume.validation.constraint.ConstraintService
 
 class BusinessValidator(
   private val constraintService: ConstraintService
 ) : Validator<Business>() {
 
   override fun validate(value: Business): ValidationResult {
-    val validationResults: List<ValidationResult> = value.validateConstraintPaths(constraintService::validateConstraint)
+    val validationResults: List<ValidationResult> =
+      value.validateConstraintPaths(constraintService::validateConstraint)
 
     return if (validationResults.any { !it.isValid }) {
       ValidationResult.build(validationResults.map { it.errors }.flatten())

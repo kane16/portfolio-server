@@ -69,7 +69,10 @@ class SideProjectsValidatorController(
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")
   @PostMapping
-  @Operation(summary = "Validate side project", description = "Validate a complete side project entry")
+  @Operation(
+    summary = "Validate side project",
+    description = "Validate a complete side project entry"
+  )
   @SecurityRequirement(name = "Bearer Authentication")
   fun validateSideProject(
     @PathVariable("id") id: Long,

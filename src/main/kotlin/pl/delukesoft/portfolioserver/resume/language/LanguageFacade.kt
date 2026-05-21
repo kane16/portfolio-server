@@ -39,7 +39,8 @@ class LanguageFacade(
   fun deleteLanguageFromResume(resumeId: Long, languageId: Long): Boolean {
     val resumeVersion = resumeService.getResumeById(resumeId, currentUser)
     val languageToDelete =
-      resumeVersion.resume.languages.find { it.id == languageId } ?: throw LanguageNotFound("id: $languageId")
+      resumeVersion.resume.languages.find { it.id == languageId }
+        ?: throw LanguageNotFound("id: $languageId")
     return languageService.deleteLanguageFromResume(resumeVersion, languageToDelete)
   }
 

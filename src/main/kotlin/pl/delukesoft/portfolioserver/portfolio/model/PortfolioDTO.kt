@@ -20,7 +20,7 @@ data class PortfolioDTO(
   val hobbies: List<String>,
   val education: List<EducationDTO>,
   val contact: ContactInfo? = null
-): PrintDTO {
+) : PrintDTO {
 
   override fun attachDataToContext(context: WebContext) {
     context.setVariable("fullname", fullname)

@@ -2,9 +2,9 @@ package pl.delukesoft.portfolioserver.resume.experience
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
+import pl.delukesoft.portfolioserver.platform.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.resume.ResumeModifyRepository
 import pl.delukesoft.portfolioserver.resume.history.ResumeVersion
-import pl.delukesoft.portfolioserver.platform.sequence.GeneratorService
 import pl.delukesoft.portfolioserver.resume.validation.Validator
 
 @Service
@@ -19,7 +19,8 @@ class ExperienceService(
     val experienceToSave = experienceToAdd.copy(
       id = generatorService.getAndIncrement("experience")
     )
-    val experiences: List<Experience> = (resume.experience + experienceToSave).sortedBy { it.timeframe.start }
+    val experiences: List<Experience> =
+      (resume.experience + experienceToSave).sortedBy { it.timeframe.start }
     return resumeModifyRepository.changeExperiencesInResume(experiences, resumeVersion)
   }
 
