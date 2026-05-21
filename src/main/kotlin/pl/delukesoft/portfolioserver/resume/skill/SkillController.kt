@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.portfolioserver.resume.ResumeFacade
-import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
+import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 
 @RestController
 @Tag(name = "Resume - Skills", description = "Skill entries and skill domains")
@@ -58,7 +58,7 @@ class SkillController(
   fun addSkillDomain(
     @RequestBody name: String,
     @RequestHeader("Authorization") token: String?
-  ): PortfolioApplicationAuthor {
+  ): PortfolioAuthor {
     return skillFacade.addDomain(name)
   }
 

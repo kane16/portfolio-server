@@ -27,7 +27,7 @@ import pl.delukesoft.authplugin.common.ErrorResponse
 import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.authplugin.security.JwtService
 import pl.delukesoft.authplugin.security.User
-import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
+import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthorAdditionalInfo
 import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomain
 import java.time.Duration
@@ -82,7 +82,7 @@ class TestcontainersConfiguration(
   }
 
   @Bean
-  fun mockAuthPlugin(authContext: AuthContext<PortfolioApplicationAuthor>): MockAuthPlugin {
+  fun mockAuthPlugin(authContext: AuthContext<PortfolioAuthor>): MockAuthPlugin {
     return MockAuthPlugin(jsonMapper, authContext)
   }
 
@@ -104,7 +104,7 @@ class TestcontainersConfiguration(
 
 class MockAuthPlugin(
   private val jsonMapper: JsonMapper,
-  private val authContext: AuthContext<PortfolioApplicationAuthor>
+  private val authContext: AuthContext<PortfolioAuthor>
 ) {
   private val users = mapOf(
     "Bearer admin" to User(
@@ -144,6 +144,7 @@ class MockAuthPlugin(
   private val initialAuthors = mapOf(
     "admin" to author(
       1L,
+      1L,
       "John",
       "Doe",
       "admin",
@@ -159,6 +160,7 @@ class MockAuthPlugin(
     ),
     "candidate" to author(
       3L,
+      3L,
       "Alex",
       "Tech",
       "candidate",
@@ -173,6 +175,7 @@ class MockAuthPlugin(
       )
     ),
     "candidate_empty" to author(
+      100L,
       100L,
       "Łukasz",
       "Gumiński",
@@ -221,6 +224,7 @@ class MockAuthPlugin(
         val username = editAuthor.username() ?: currentUsername()
         val existingAuthor = authors[username] ?: throw ErrorResponse(ErrorBody("Author not found", 404))
         val editedAuthor = Author(
+          existingAuthor.id(),
           editAuthor.userId() ?: existingAuthor.userId(),
           editAuthor.firstname() ?: existingAuthor.firstname(),
           editAuthor.lastname() ?: existingAuthor.lastname(),
@@ -234,13 +238,14 @@ class MockAuthPlugin(
   }
 
   private fun author(
+    id: Long,
     userId: Long,
     firstname: String,
     lastname: String,
     username: String,
     additionalInfo: PortfolioAuthorAdditionalInfo
   ): Author {
-    return Author(userId, firstname, lastname, username, jsonMapper.valueToTree(additionalInfo))
+    return Author(id, userId, firstname, lastname, username, jsonMapper.valueToTree(additionalInfo))
   }
 
   private fun currentAuthor(): Author {
@@ -255,6 +260,7 @@ class MockAuthPlugin(
 
   private fun copyAuthor(author: Author): Author {
     return Author(
+      author.id(),
       author.userId(),
       author.firstname(),
       author.lastname(),

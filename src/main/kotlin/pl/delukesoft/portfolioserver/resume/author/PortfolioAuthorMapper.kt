@@ -11,20 +11,21 @@ import pl.delukesoft.authplugin.author.AuthorMapper
 @Component
 class PortfolioAuthorMapper(
     val objectMapper: ObjectMapper
-): AuthorMapper {
+): AuthorMapper<PortfolioAuthor> {
 
-    override fun mapToApplicationAuthor(author: Author): PortfolioApplicationAuthor {
+    override fun mapToApplicationAuthor(author: Author): PortfolioAuthor {
         val additionalInfo = objectMapper.convertValue<PortfolioAuthorAdditionalInfo>(author.additionalInfo)
-        return PortfolioApplicationAuthor(
+        return PortfolioAuthor(
             author,
             additionalInfo
         )
     }
 
-    override fun mapToAuthAuthor(applicationAuthor: ApplicationAuthor): Author {
+    override fun mapToAuthAuthor(applicationAuthor: PortfolioAuthor): Author {
         val additionalInfo = objectMapper.convertValue<JsonNode>(applicationAuthor.domainInfo)
         return Author(
             applicationAuthor.authAuthor.userId,
+            applicationAuthor.authAuthor.id,
             applicationAuthor.authAuthor.firstname,
             applicationAuthor.authAuthor.lastname,
             applicationAuthor.authAuthor.username,

@@ -3,14 +3,14 @@ package pl.delukesoft.portfolioserver.resume.language
 import org.springframework.stereotype.Component
 import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.portfolioserver.resume.ResumeService
-import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
+import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 import pl.delukesoft.portfolioserver.resume.language.exception.LanguageNotFound
 
 @Component
 class LanguageFacade(
   private val languageService: LanguageService,
   private val resumeService: ResumeService,
-  private val userContext: AuthContext<PortfolioApplicationAuthor>
+  private val userContext: AuthContext<PortfolioAuthor>
 ) {
 
   private val currentUser

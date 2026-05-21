@@ -8,8 +8,8 @@ import pl.delukesoft.authplugin.security.AuthContext
 class AuthorConfiguration {
 
     @Bean
-    fun portfolioAuthContext(): AuthContext<PortfolioApplicationAuthor> {
-        return AuthContext<PortfolioApplicationAuthor>()
+    fun portfolioAuthContext(): AuthContext<PortfolioAuthor> {
+        return AuthContext<PortfolioAuthor>()
     }
 
 

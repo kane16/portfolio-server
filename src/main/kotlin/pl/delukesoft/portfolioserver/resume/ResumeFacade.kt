@@ -2,7 +2,7 @@ package pl.delukesoft.portfolioserver.resume
 
 import org.springframework.stereotype.Component
 import pl.delukesoft.authplugin.security.AuthContext
-import pl.delukesoft.portfolioserver.resume.author.PortfolioApplicationAuthor
+import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 import pl.delukesoft.portfolioserver.resume.exception.ResumeNotFound
 import pl.delukesoft.portfolioserver.resume.exception.ResumeOperationNotAllowed
 import pl.delukesoft.portfolioserver.resume.history.ResumeHistoryDTO
@@ -19,7 +19,7 @@ class ResumeFacade(
   private val resumeService: ResumeService,
   private val resumeHistoryService: ResumeHistoryService,
   private val resumeMapper: ResumeMapper,
-  private val authContext: AuthContext<PortfolioApplicationAuthor>,
+  private val authContext: AuthContext<PortfolioAuthor>,
   private val skillMapper: SkillMapper,
   private val skillService: SkillService
 ) {
