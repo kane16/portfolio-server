@@ -1,3 +1,4 @@
+@validation
 Feature: Resume validation
 
   Background: User authorized as admin

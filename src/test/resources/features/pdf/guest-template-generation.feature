@@ -1,3 +1,4 @@
+@pdf
 Feature: CV View functionality
 
   Scenario: Default print

@@ -1,3 +1,4 @@
+@resume
 Feature: Resume creation
 
   Scenario: For given user no history exists, user should be able to initiate resume creation
@@ -96,7 +97,7 @@ Feature: Resume creation
     And Response body should be:
     """
     {
-      "message": "Access denied. Required role: ROLE_CANDIDATE",
+      "message": "User does not have required role",
       "status": 403
     }
     """
@@ -479,7 +480,7 @@ Feature: Resume creation
        ]
     }
     """
-    When "POST" request is sent to endpoint "/cv/4" with no body
+    When "GET" request is sent to endpoint "/resume/4" with no body
     Then Response status code should be 200
 
   Scenario: Update resume fails when resume with given id does not exist
@@ -797,7 +798,7 @@ Feature: Resume creation
     And Response body should be:
       """
       {
-        "message": "Access denied. Required role: ROLE_CANDIDATE",
+        "message": "User does not have required role",
         "status": 403
       }
       """

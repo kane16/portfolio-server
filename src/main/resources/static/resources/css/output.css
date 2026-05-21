@@ -1,12 +1,12 @@
 /* Custom overrides for the portfolio template. */
 .header-gradient {
-    background-color: #082f49;
-    background-image: linear-gradient(135deg, #082f49 0%, #0f4c75 45%, #0284c7 100%);
+  background-color: #082f49;
+  background-image: linear-gradient(135deg, #082f49 0%, #0f4c75 45%, #0284c7 100%);
 }
 
 @media print {
-    .header-gradient {
-        background-image: none;
-        background-color: #ffffff;
-    }
+  .header-gradient {
+    background-image: none;
+    background-color: #ffffff;
+  }
 }
