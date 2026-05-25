@@ -1,8 +1,26 @@
+# syntax=docker/dockerfile:1.4
+FROM ghcr.io/graalvm/native-image-community:17-ol9 AS authplugin-build
+
+RUN microdnf install -y findutils && microdnf clean all
+
+WORKDIR /authplugin
+
+COPY --from=authplugin gradle/ gradle/
+COPY --from=authplugin gradlew build.gradle.kts settings.gradle.kts ./
+
+RUN chmod +x gradlew && ./gradlew dependencies --no-daemon
+
+COPY --from=authplugin src/ src/
+
+RUN ./gradlew publishToMavenLocal --no-daemon -x test
+
 FROM ghcr.io/graalvm/native-image-community:21-ol9 AS build
 
 RUN microdnf install -y findutils && microdnf clean all
 
 WORKDIR /app
+
+COPY --from=authplugin-build /root/.m2 /root/.m2
 
 COPY gradle/ gradle/
 COPY gradlew build.gradle.kts settings.gradle.kts ./
