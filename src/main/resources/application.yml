@@ -4,15 +4,15 @@ spring:
     cache-names: portfolio, constraints
     caffeine:
       spec: initialCapacity=50,maximumSize=500,expireAfterAccess=1d
+  http:
+    converters:
+      preferred-json-mapper: jackson2
   application:
     name: portfolio-service
   profiles:
     active: ${ACTIVE_PROFILE:docker}
   aop:
     proxy-target-class: true
-  data:
-    mongodb:
-      database: portfolio
   liquibase:
     enabled: false
   devtools:
@@ -24,6 +24,14 @@ app:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
+external:
+  service:
+    auth:
+      name: auth-service
+      url: ${AUTH_URL:http://localhost:8080}
+    back-office:
+      name: back-office
+      url: ${BOS_URL:http://localhost:8000}
 server:
   error:
     include-message: always
@@ -34,11 +42,23 @@ server:
       force: true
 springdoc:
   api-docs:
-    enabled: false
+    enabled: true
     path: /v3/api-docs
   swagger-ui:
-    enabled: false
+    enabled: true
     path: /swagger-ui.html
     operations-sorter: method
     tags-sorter: alpha
     try-it-out-enabled: true
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  mongodb:
+    uri: ${MONGO_CONNECTION_STRING}
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

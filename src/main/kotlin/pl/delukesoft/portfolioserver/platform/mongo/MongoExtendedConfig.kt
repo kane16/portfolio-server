@@ -26,7 +26,7 @@ class MongoExtendedConfig {
   }
 
   @ReadingConverter
-  class LanguageLevelReadingConverter : Converter<Int, LanguageLevel> {
+  class LanguageLevelReadingConverter : Converter<Int, LanguageLevel?> {
     override fun convert(source: Int): LanguageLevel? {
       return LanguageLevel.values().find { it.level == source }
     }
@@ -40,7 +40,7 @@ class MongoExtendedConfig {
   }
 
   @ReadingConverter
-  class ResumeVersionStateReadingConverter : Converter<String, ResumeVersionState> {
+  class ResumeVersionStateReadingConverter : Converter<String, ResumeVersionState?> {
     override fun convert(source: String): ResumeVersionState? {
       return ResumeVersionState.values().find { it.name == source }
     }

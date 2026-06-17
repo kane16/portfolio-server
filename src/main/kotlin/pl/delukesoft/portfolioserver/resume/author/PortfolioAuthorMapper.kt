@@ -14,6 +14,22 @@ class PortfolioAuthorMapper(
   val objectMapper: ObjectMapper
 ) : AuthorMapper<PortfolioAuthor> {
 
+  fun mapToApplicationAuthor(author: PortfolioAuthorRequest): PortfolioAuthor {
+    val requestAuthor = requireNotNull(author.author)
+    val additionalInfo = requireNotNull(author.additionalInfo)
+    return PortfolioAuthor(
+      Author(
+        requestAuthor.id,
+        requireNotNull(requestAuthor.userId),
+        requireNotNull(requestAuthor.firstname),
+        requireNotNull(requestAuthor.lastname),
+        requireNotNull(requestAuthor.username),
+        objectMapper.valueToTree(additionalInfo)
+      ),
+      additionalInfo
+    )
+  }
+
   override fun mapToApplicationAuthor(author: Author): PortfolioAuthor {
     try {
       val additionalInfo =

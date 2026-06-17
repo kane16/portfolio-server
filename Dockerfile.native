@@ -14,7 +14,7 @@ COPY --from=authplugin src/ src/
 
 RUN ./gradlew publishToMavenLocal --no-daemon -x test
 
-FROM ghcr.io/graalvm/native-image-community:21-ol9 AS build
+FROM ghcr.io/graalvm/native-image-community:25 AS build
 
 RUN microdnf install -y findutils && microdnf clean all
 

@@ -7,16 +7,10 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.databind.JsonNode
 import io.mockk.every
 import io.mockk.mockk
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
-import org.springframework.test.context.DynamicPropertyRegistrar
-import org.testcontainers.containers.MongoDBContainer
-import org.testcontainers.containers.wait.strategy.Wait
-import org.testcontainers.utility.DockerImageName
 import pl.delukesoft.portfolioserver.document.DocumentGenerationService
 import pl.delukesoft.portfolioserver.document.PrintDTO
 import pl.delukesoft.authplugin.author.Author
@@ -30,43 +24,17 @@ import pl.delukesoft.authplugin.security.User
 import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthorAdditionalInfo
 import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomain
-import java.time.Duration
 
 
 @TestConfiguration(proxyBeanMethods = false)
 @Profile("test", "bdd")
-class TestcontainersConfiguration(
-  @Value("\${spring.data.mongodb.database}") private val mongoDatabase: String,
-) {
+class TestcontainersConfiguration {
 
   private var jsonMapper = JsonMapper.builder()
     .addModule(JavaTimeModule())
     .addModule(KotlinModule.Builder().build())
     .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
     .build()
-
-  @Bean
-  @ServiceConnection
-  fun mongoDbContainer(): MongoDBContainer {
-    return MongoDBContainer(DockerImageName.parse("mongo:7.0"))
-      .waitingFor(
-        Wait.forLogMessage(".*Waiting for connections.*", 1)
-          .withStartupTimeout(Duration.ofMinutes(2))
-      )
-      .apply {
-        withReuse(false)
-      }
-  }
-
-  @Bean
-  fun mongoPropertiesRegistrar(mongoDbContainer: MongoDBContainer): DynamicPropertyRegistrar {
-    return DynamicPropertyRegistrar { registry ->
-      registry.add("spring.data.mongodb.uri") { mongoDbContainer.getReplicaSetUrl(mongoDatabase) }
-      registry.add("mongo.migration.connection-string") { mongoDbContainer.getReplicaSetUrl(mongoDatabase) }
-      registry.add("spring.data.mongodb.username") { "" }
-      registry.add("spring.data.mongodb.password") { "" }
-    }
-  }
 
   @Bean
   @Primary

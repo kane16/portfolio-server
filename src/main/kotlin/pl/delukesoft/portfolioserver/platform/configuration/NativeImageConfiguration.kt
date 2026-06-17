@@ -19,16 +19,44 @@ import org.springframework.aot.hint.RuntimeHintsRegistrar
 import org.springframework.aot.hint.TypeReference
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.ImportRuntimeHints
+import pl.delukesoft.authplugin.author.Author
+import java.lang.reflect.RecordComponent
 
 @Configuration
 @ImportRuntimeHints(
   NativeImageConfiguration.KotlinCollectionsRuntimeHints::class,
+  NativeImageConfiguration.KotlinReflectionRuntimeHints::class,
   NativeImageConfiguration.CaffeineRuntimeHints::class,
   NativeImageConfiguration.JjwtRuntimeHints::class,
   NativeImageConfiguration.SpringDocRuntimeHints::class,
-  NativeImageConfiguration.LiquibaseMongoRuntimeHints::class
+  NativeImageConfiguration.LiquibaseMongoRuntimeHints::class,
+  NativeImageConfiguration.AuthorReflectionRuntimeHints::class
 )
 class NativeImageConfiguration {
+
+  /**
+   * The authplugin [Author] is a Java record exposed through the API. When springdoc builds
+   * the OpenAPI doc, Kotlin reflection reads the record's component accessors via
+   * `RecordComponent.getAccessor()`, which fails in the native image ("Can't find
+   * `getAccessor` method"). `@RegisterReflectionForBinding` on the controller covers the
+   * portfolio-owned author types but not this third-party record, and binding hints don't register
+   * the record-component accessor path that Kotlin reflection needs.
+   */
+  class AuthorReflectionRuntimeHints : RuntimeHintsRegistrar {
+    override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+      hints.reflection().registerType(
+        Author::class.java,
+        MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
+        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
+        MemberCategory.INVOKE_DECLARED_METHODS,
+        MemberCategory.INVOKE_PUBLIC_METHODS,
+        MemberCategory.INTROSPECT_DECLARED_METHODS,
+        MemberCategory.INTROSPECT_PUBLIC_METHODS,
+        MemberCategory.DECLARED_FIELDS,
+        MemberCategory.PUBLIC_FIELDS,
+      )
+    }
+  }
 
   class KotlinCollectionsRuntimeHints : RuntimeHintsRegistrar {
     override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
@@ -49,6 +77,15 @@ class NativeImageConfiguration {
           MemberCategory.PUBLIC_FIELDS
         )
       }
+    }
+  }
+
+  class KotlinReflectionRuntimeHints : RuntimeHintsRegistrar {
+    override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+      hints.reflection().registerType(
+        RecordComponent::class.java,
+        MemberCategory.INVOKE_PUBLIC_METHODS
+      )
     }
   }
 
@@ -146,6 +183,7 @@ class NativeImageConfiguration {
   class LiquibaseMongoRuntimeHints : RuntimeHintsRegistrar {
     override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
       hints.resources().registerPattern("META-INF/services/**")
+      hints.resources().registerPattern("www.liquibase.org/xml/ns/dbchangelog/**")
       hints.resources().registerPattern("www.liquibase.org/xml/ns/mongodb/**")
       hints.resources().registerPattern("liquibase.parser.core.xml/**")
       hints.resources().registerResourceBundle("liquibase/i18n/liquibase-mongo")

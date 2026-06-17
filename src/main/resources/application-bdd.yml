@@ -2,9 +2,12 @@ web:
   url: http://localhost:9090
   login:
     url: http://localhost:8080
-auth:
-  api:
-    url: http://localhost:8080
+external:
+  service:
+    auth:
+      url: http://localhost:8080
+    back-office:
+      url: http://localhost:8000
 jwt:
   secret: secret
 app:

@@ -33,7 +33,7 @@ class BaseRestClient(
         this.token = token
     }
 
-    fun <R> get(endpoint: String, responseType: Class<R>): ResponseEntity<R> {
+    fun <R : Any> get(endpoint: String, responseType: Class<R>): ResponseEntity<R> {
         val request = restClient.get()
             .uri(endpoint)
         
@@ -43,7 +43,7 @@ class BaseRestClient(
             .toEntity(responseType)
     }
 
-    fun <T: Any, R> post(endpoint: String, body: T, responseType: Class<R>): ResponseEntity<R> {
+    fun <T : Any, R : Any> post(endpoint: String, body: T, responseType: Class<R>): ResponseEntity<R> {
         val request = restClient.post()
             .uri(endpoint)
             .accept(MediaType.APPLICATION_JSON)
@@ -56,7 +56,7 @@ class BaseRestClient(
             .toEntity(responseType)
     }
 
-    fun <T: Any, R> put(endpoint: String, body: T, responseType: Class<R>): ResponseEntity<R> {
+    fun <T : Any, R : Any> put(endpoint: String, body: T, responseType: Class<R>): ResponseEntity<R> {
         val request = restClient.put()
             .uri(endpoint)
             .accept(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ class BaseRestClient(
             .toEntity(responseType)
     }
 
-    fun <R> delete(endpoint: String, responseType: Class<R>): ResponseEntity<R> {
+    fun <R : Any> delete(endpoint: String, responseType: Class<R>): ResponseEntity<R> {
         val request = restClient.delete()
             .uri(endpoint)
             

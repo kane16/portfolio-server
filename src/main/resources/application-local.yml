@@ -1,16 +1,12 @@
 spring:
-  data:
-    mongodb:
-      username: user
-      password: user
-      port: 27018
-      uri: mongodb://localhost:27018/portfolio
+  mongodb:
+    uri: mongodb://root:pass@localhost:27018/portfolio
   devtools:
     livereload:
       enabled: true
   docker:
     compose:
-      enabled: true
+      enabled: false
       stop:
         command: down
 jwt:
@@ -20,6 +16,9 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
-auth:
-  api:
-    url: http://localhost:8080
+external:
+  service:
+    auth:
+      url: ${AUTH_URL:http://localhost:8080}
+    back-office:
+      url: ${BOS_URL:http://localhost:8000}

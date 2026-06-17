@@ -1,19 +1,37 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-  kotlin("jvm") version "1.9.25"
-  kotlin("plugin.spring") version "1.9.25"
-  id("org.springframework.boot") version "3.4.5"
+  val kotlinVersion = "2.3.10"
+  id("org.springframework.boot") version "4.1.0"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.graalvm.buildtools.native") version "0.10.6"
+  id("org.graalvm.buildtools.native") version "0.11.5"
+  kotlin("jvm") version kotlinVersion
+  kotlin("plugin.spring") version kotlinVersion
 }
 
 group = "pl.delukesoft"
 version = "0.0.1-SNAPSHOT"
 
+object Versions {
+  const val liquibase = "5.0.3"
+  const val springdocOpenApi = "3.0.3"
+  const val cucumber = "7.22.1"
+}
+
 java {
   toolchain {
-    languageVersion = JavaLanguageVersion.of(21)
+    languageVersion = JavaLanguageVersion.of(25)
+  }
+}
+
+kotlin {
+  jvmToolchain(25)
+  compilerOptions {
+    jvmTarget.set(JvmTarget.JVM_25)
+    freeCompilerArgs.addAll(
+      "-Xjsr305=strict",
+      "-Xannotation-default-target=param-property",
+    )
   }
 }
 
@@ -45,28 +63,21 @@ repositories {
   mavenCentral()
 }
 
-extra["springCloudVersion"] = "2024.0.1"
-
-object Versions {
-  const val cucumber = "7.22.1"
-  const val vintage = "5.7.2"
-}
-
 dependencies {
   implementation("pl.delukesoft:authplugin:1.0")
   implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-  implementation("org.liquibase:liquibase-core")
-  implementation("org.liquibase.ext:liquibase-mongodb:4.29.2")
-  implementation("org.springframework.boot:spring-boot-starter-web")
-  implementation("org.springframework.boot:spring-boot-starter-aop")
+  implementation("org.liquibase:liquibase-core:${Versions.liquibase}")
+  implementation("org.liquibase.ext:liquibase-mongodb:${Versions.liquibase}")
+  implementation("org.springframework.boot:spring-boot-starter-webmvc")
+  implementation("org.springframework.boot:spring-boot-starter-aspectj")
   implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
   implementation("org.springframework.boot:spring-boot-starter-validation")
   implementation("org.springframework.boot:spring-boot-starter-cache")
   implementation("com.github.ben-manes.caffeine:caffeine")
+  implementation("org.springframework.boot:spring-boot-jackson2")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
-  implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${Versions.springdocOpenApi}")
   testImplementation("io.cucumber:cucumber-spring:${Versions.cucumber}")
   testImplementation("io.cucumber:cucumber-java:${Versions.cucumber}")
   testImplementation("io.cucumber:cucumber-junit-platform-engine:${Versions.cucumber}")
@@ -78,25 +89,12 @@ dependencies {
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("org.springframework.boot:spring-boot-testcontainers")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-  testImplementation("org.testcontainers:junit-jupiter")
-  testImplementation("org.testcontainers:mongodb:1.21.3")
-  testImplementation("io.mockk:mockk:1.13.2")
+  testImplementation("org.testcontainers:testcontainers-junit-jupiter")
+  testImplementation("org.testcontainers:testcontainers-mongodb")
+  testImplementation("io.mockk:mockk:1.14.11")
   testImplementation("net.java.dev.jna:jna:5.13.0")
   testImplementation("net.java.dev.jna:jna-platform:5.13.0")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-dependencyManagement {
-  imports {
-    mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-  }
-}
-
-tasks.withType<KotlinCompile> {
-  kotlinOptions {
-    freeCompilerArgs = listOf("-Xjsr305=strict")
-    jvmTarget = "21"
-  }
 }
 
 tasks.withType<Test> {
