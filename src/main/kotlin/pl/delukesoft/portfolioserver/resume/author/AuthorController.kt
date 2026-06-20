@@ -11,21 +11,13 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import pl.delukesoft.authplugin.author.Author
+import org.springframework.web.bind.annotation.*
 import pl.delukesoft.authplugin.author.AuthorService
 import pl.delukesoft.authplugin.security.AuthRequired
 
 @RestController
 @RequestMapping("/authors")
-@RegisterReflectionForBinding(value = [PortfolioAuthor::class, PortfolioAuthorRequest::class])
+@RegisterReflectionForBinding(value = [PortfolioAuthorDTO::class, PortfolioAuthorRequest::class])
 @Tag(name = "Authors", description = "Portfolio author profile management")
 class AuthorController(
   private val authorService: AuthorService,
@@ -45,7 +37,7 @@ class AuthorController(
         description = "Authors successfully retrieved",
         content = [
           Content(
-            array = ArraySchema(schema = Schema(implementation = Author::class))
+            array = ArraySchema(schema = Schema(implementation = PortfolioAuthorDTO::class))
           )
         ]
       ),
@@ -57,8 +49,8 @@ class AuthorController(
   fun getAllAuthors(
     @Parameter(description = "Authorization token", required = true)
     @RequestHeader("Authorization") token: String?
-  ): List<Author> {
-    return authorService.getAllAuthors(PORTFOLIO_APP)
+  ): List<PortfolioAuthorDTO> {
+    return authorService.getAllAuthors(PORTFOLIO_APP).map { authorMapper.mapToDto(it) }
   }
 
   @AuthRequired(role = "ROLE_AUTHOR", app = PORTFOLIO_APP)
@@ -72,7 +64,7 @@ class AuthorController(
       ApiResponse(
         responseCode = "200",
         description = "Current author successfully retrieved",
-        content = [Content(schema = Schema(implementation = PortfolioAuthor::class))]
+        content = [Content(schema = Schema(implementation = PortfolioAuthorDTO::class))]
       ),
       ApiResponse(responseCode = "401", description = "Unauthorized"),
       ApiResponse(responseCode = "403", description = "Author role required"),
@@ -83,8 +75,8 @@ class AuthorController(
   fun getContextAuthor(
     @Parameter(description = "Authorization token", required = true)
     @RequestHeader("Authorization") token: String?
-  ): PortfolioAuthor {
-    return authorService.getContextAuthor(PORTFOLIO_APP) as PortfolioAuthor
+  ): PortfolioAuthorDTO {
+    return authorMapper.mapToDto(authorService.getContextAuthor(PORTFOLIO_APP) as PortfolioAuthor)
   }
 
   @AuthRequired(role = "ROLE_ADMIN", app = PORTFOLIO_APP)
@@ -98,7 +90,7 @@ class AuthorController(
       ApiResponse(
         responseCode = "200",
         description = "Author successfully retrieved",
-        content = [Content(schema = Schema(implementation = Author::class))]
+        content = [Content(schema = Schema(implementation = PortfolioAuthorDTO::class))]
       ),
       ApiResponse(responseCode = "401", description = "Unauthorized"),
       ApiResponse(responseCode = "403", description = "Admin role required"),
@@ -111,8 +103,8 @@ class AuthorController(
     @PathVariable("authorId") authorId: Long,
     @Parameter(description = "Authorization token", required = true)
     @RequestHeader("Authorization") token: String?
-  ): Author {
-    return authorService.getAuthorById(authorId)
+  ): PortfolioAuthorDTO {
+    return authorMapper.mapToDto(authorService.getAuthorById(authorId))
   }
 
   @AuthRequired(role = "ROLE_AUTHOR", app = PORTFOLIO_APP)
@@ -126,7 +118,7 @@ class AuthorController(
       ApiResponse(
         responseCode = "200",
         description = "Author successfully updated",
-        content = [Content(schema = Schema(implementation = PortfolioAuthor::class))]
+        content = [Content(schema = Schema(implementation = PortfolioAuthorDTO::class))]
       ),
       ApiResponse(responseCode = "400", description = "Invalid author data"),
       ApiResponse(responseCode = "401", description = "Unauthorized"),
@@ -140,30 +132,9 @@ class AuthorController(
     @Valid @RequestBody author: PortfolioAuthorRequest,
     @Parameter(description = "Authorization token", required = true)
     @RequestHeader("Authorization") token: String?
-  ): PortfolioAuthor {
+  ): PortfolioAuthorDTO {
     val portfolioAuthor = authorMapper.mapToApplicationAuthor(author)
-    return authorService.editAuthor(PORTFOLIO_APP, portfolioAuthor) as PortfolioAuthor
-  }
-
-  @AuthRequired(role = "ROLE_ADMIN", app = PORTFOLIO_APP)
-  @DeleteMapping("/{authorId}")
-  @Operation(summary = "Delete author", description = "Delete an author by their author ID")
-  @ApiResponses(
-    value = [
-      ApiResponse(responseCode = "200", description = "Author successfully deleted"),
-      ApiResponse(responseCode = "401", description = "Unauthorized"),
-      ApiResponse(responseCode = "403", description = "Admin role required"),
-      ApiResponse(responseCode = "404", description = "Author not found")
-    ]
-  )
-  @SecurityRequirement(name = "Bearer Authentication")
-  fun deleteAuthor(
-    @Parameter(description = "Author ID", required = true)
-    @PathVariable("authorId") authorId: Long,
-    @Parameter(description = "Authorization token", required = true)
-    @RequestHeader("Authorization") token: String?
-  ) {
-    authorService.deleteAuthor(authorId)
+    return authorMapper.mapToDto(authorService.editAuthor(PORTFOLIO_APP, portfolioAuthor) as PortfolioAuthor)
   }
 
   private companion object {

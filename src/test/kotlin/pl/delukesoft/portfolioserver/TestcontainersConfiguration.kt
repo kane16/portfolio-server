@@ -16,6 +16,8 @@ import pl.delukesoft.portfolioserver.document.PrintDTO
 import pl.delukesoft.authplugin.author.Author
 import pl.delukesoft.authplugin.author.EditAuthor
 import pl.delukesoft.authplugin.common.AuthClient
+import pl.delukesoft.authplugin.config.external.ExternalServiceProperties
+import pl.delukesoft.authplugin.config.external.ExternalServicesConfiguration
 import pl.delukesoft.authplugin.common.ErrorBody
 import pl.delukesoft.authplugin.common.ErrorResponse
 import pl.delukesoft.authplugin.security.AuthContext
@@ -173,8 +175,15 @@ class MockAuthPlugin(
   }
 
   fun authClient(): AuthClient {
-    return object : AuthClient() {
-      override fun <R : Any?> get(endpoint: String, responseType: Class<R>): R {
+    return object : AuthClient(
+      ExternalServicesConfiguration(
+        ExternalServiceProperties(
+          ExternalServiceProperties.ServiceConnection("auth", null),
+          ExternalServiceProperties.ServiceConnection("backOffice", null)
+        )
+      )
+    ) {
+      override fun <R> get(endpoint: String, responseType: Class<R>): R {
         val response = when (endpoint) {
           "/authors/context?app=portfolio" -> currentAuthor()
           "/authors?app=portfolio", "/authors" -> authors.values.toTypedArray()
@@ -183,7 +192,7 @@ class MockAuthPlugin(
         return responseType.cast(response)
       }
 
-      override fun <T : Any?, R : Any?> patch(endpoint: String, body: T, responseType: Class<R>): R {
+      override fun <T, R> patch(endpoint: String, body: T, responseType: Class<R>): R {
         if (endpoint != "/authors/portfolio") {
           throw ErrorResponse(ErrorBody("Auth endpoint not mocked: $endpoint", 500))
         }

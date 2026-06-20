@@ -42,6 +42,31 @@ class PortfolioAuthorMapper(
     }
   }
 
+  fun mapToDto(author: Author): PortfolioAuthorDTO {
+    val additionalInfo = author.additionalInfo
+      ?.takeUnless { it.isNull }
+      ?.let { objectMapper.convertValue<PortfolioAuthorAdditionalInfo>(it) }
+    return PortfolioAuthorDTO(
+      author.id,
+      author.userId,
+      author.firstname,
+      author.lastname,
+      author.username,
+      additionalInfo
+    )
+  }
+
+  fun mapToDto(author: PortfolioAuthor): PortfolioAuthorDTO {
+    return PortfolioAuthorDTO(
+      author.authAuthor.id,
+      author.authAuthor.userId,
+      author.authAuthor.firstname,
+      author.authAuthor.lastname,
+      author.authAuthor.username,
+      author.additionalInfo
+    )
+  }
+
   override fun mapToAuthAuthor(applicationAuthor: PortfolioAuthor): Author {
     val additionalInfo = objectMapper.convertValue<JsonNode>(applicationAuthor.domainInfo)
     return Author(

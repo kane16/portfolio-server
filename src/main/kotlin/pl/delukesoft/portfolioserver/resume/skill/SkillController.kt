@@ -8,13 +8,15 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.portfolioserver.resume.ResumeFacade
-import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
+import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthorDTO
+import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthorMapper
 
 @RestController
 @Tag(name = "Resume - Skills", description = "Skill entries and skill domains")
 class SkillController(
   private val skillFacade: SkillFacade,
-  private val resumeFacade: ResumeFacade
+  private val resumeFacade: ResumeFacade,
+  private val authorMapper: PortfolioAuthorMapper
 ) {
 
   private val log = LoggerFactory.getLogger(this::class.java)
@@ -64,8 +66,8 @@ class SkillController(
   fun addSkillDomain(
     @RequestBody name: String,
     @RequestHeader("Authorization") token: String?
-  ): PortfolioAuthor {
-    return skillFacade.addDomain(name)
+  ): PortfolioAuthorDTO {
+    return authorMapper.mapToDto(skillFacade.addDomain(name))
   }
 
   @AuthRequired(role = "ROLE_AUTHOR", app = "portfolio")

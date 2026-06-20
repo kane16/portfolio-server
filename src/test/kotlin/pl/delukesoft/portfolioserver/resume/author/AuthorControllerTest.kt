@@ -2,13 +2,10 @@ package pl.delukesoft.portfolioserver.resume.author
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
 import io.mockk.verify
 import jakarta.validation.Validation
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test
 import pl.delukesoft.authplugin.author.Author
 import pl.delukesoft.authplugin.author.AuthorService
@@ -26,7 +23,7 @@ class AuthorControllerTest {
 
     val result = authorController.getAllAuthors("Bearer token")
 
-    assertSame(authors, result)
+    assertEquals(authors.map { authorMapper.mapToDto(it) }, result)
     verify(exactly = 1) { authorService.getAllAuthors("portfolio") }
   }
 
@@ -37,7 +34,7 @@ class AuthorControllerTest {
 
     val result = authorController.getContextAuthor("Bearer token")
 
-    assertSame(author, result)
+    assertEquals(authorMapper.mapToDto(author), result)
     verify(exactly = 1) { authorService.getContextAuthor("portfolio") }
   }
 
@@ -48,7 +45,7 @@ class AuthorControllerTest {
 
     val result = authorController.getAuthorById(7L, "Bearer token")
 
-    assertSame(author, result)
+    assertEquals(authorMapper.mapToDto(author), result)
     verify(exactly = 1) { authorService.getAuthorById(7L) }
   }
 
@@ -61,17 +58,8 @@ class AuthorControllerTest {
 
     val result = authorController.editAuthor(author, "Bearer token")
 
-    assertSame(editedAuthor, result)
+    assertEquals(authorMapper.mapToDto(editedAuthor), result)
     verify(exactly = 1) { authorService.editAuthor("portfolio", mappedAuthor) }
-  }
-
-  @Test
-  fun `should delete author by id`() {
-    every { authorService.deleteAuthor(7L) } just runs
-
-    authorController.deleteAuthor(7L, "Bearer token")
-
-    verify(exactly = 1) { authorService.deleteAuthor(7L) }
   }
 
   @Test
