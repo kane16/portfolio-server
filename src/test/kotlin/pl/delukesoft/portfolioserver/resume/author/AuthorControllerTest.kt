@@ -7,21 +7,23 @@ import io.mockk.verify
 import jakarta.validation.Validation
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import pl.delukesoft.authplugin.author.Author
+import pl.delukesoft.authplugin.author.ApplicationAuthor
 import pl.delukesoft.authplugin.author.AuthorService
+import pl.delukesoft.authplugin.security.AuthContext
 
 class AuthorControllerTest {
 
   private val authorService = mockk<AuthorService>()
-  private val authorMapper = PortfolioAuthorMapper(ObjectMapper())
+  private val authContext = mockk<AuthContext>()
+  private val authorMapper = PortfolioAuthorMapper(ObjectMapper(), authContext)
   private val authorController = AuthorController(authorService, authorMapper)
 
   @Test
   fun `should get all portfolio authors`() {
-    val authors = listOf(testAuthor())
+    val authors = listOf<ApplicationAuthor>(testPortfolioAuthor())
     every { authorService.getAllAuthors("portfolio") } returns authors
 
-    val result = authorController.getAllAuthors("Bearer token")
+    val result = authorController.getAllAuthors()
 
     assertEquals(authors.map { authorMapper.mapToDto(it) }, result)
     verify(exactly = 1) { authorService.getAllAuthors("portfolio") }
@@ -40,20 +42,24 @@ class AuthorControllerTest {
 
   @Test
   fun `should get author by id`() {
-    val author = testAuthor(id = 7L)
-    every { authorService.getAuthorById(7L) } returns author
+    val author = testPortfolioAuthor(id = 7L)
+    every { authorService.getAuthorById(7L, "portfolio") } returns author
 
-    val result = authorController.getAuthorById(7L, "Bearer token")
+    val result = authorController.getAuthorById(7L)
 
     assertEquals(authorMapper.mapToDto(author), result)
-    verify(exactly = 1) { authorService.getAuthorById(7L) }
+    verify(exactly = 1) { authorService.getAuthorById(7L, "portfolio") }
   }
 
   @Test
   fun `should edit portfolio author`() {
     val author = testPortfolioAuthorRequest()
-    val mappedAuthor = authorMapper.mapToApplicationAuthor(author)
+    val contextAuthor = testPortfolioAuthor()
+    val mappedAuthor = contextAuthor.copy(
+      additionalInfo = requireNotNull(author.additionalInfo)
+    )
     val editedAuthor = testPortfolioAuthor(firstname = "Edited")
+    every { authContext.getAuthor() } returns contextAuthor
     every { authorService.editAuthor("portfolio", mappedAuthor) } returns editedAuthor
 
     val result = authorController.editAuthor(author, "Bearer token")
@@ -83,16 +89,6 @@ class AuthorControllerTest {
     )
   }
 
-  private fun testAuthor(
-    id: Long = 1L,
-    userId: Long = id,
-    firstname: String = "Luke",
-    lastname: String = "Kane",
-    username: String = "kane16"
-  ): Author {
-    return Author(id, userId, firstname, lastname, username, null)
-  }
-
   private fun testPortfolioAuthor(
     id: Long = 1L,
     userId: Long = id,
@@ -102,14 +98,11 @@ class AuthorControllerTest {
   ): PortfolioAuthor {
     val additionalInfo = PortfolioAuthorAdditionalInfo()
     return PortfolioAuthor(
-      Author(
-        id,
-        userId,
-        firstname,
-        lastname,
-        username,
-        ObjectMapper().valueToTree(additionalInfo)
-      ),
+      id,
+      userId,
+      username,
+      firstname,
+      lastname,
       additionalInfo
     )
   }

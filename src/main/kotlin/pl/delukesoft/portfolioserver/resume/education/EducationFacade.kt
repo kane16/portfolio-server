@@ -4,12 +4,11 @@ import org.springframework.stereotype.Component
 import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.portfolioserver.resume.ResumeMapper
 import pl.delukesoft.portfolioserver.resume.ResumeService
-import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 
 @Component
 class EducationFacade(
   private val resumeService: ResumeService,
-  private val authContext: AuthContext<PortfolioAuthor>,
+  private val authContext: AuthContext,
   private val resumeMapper: ResumeMapper,
   private val educationService: EducationService
 ) {

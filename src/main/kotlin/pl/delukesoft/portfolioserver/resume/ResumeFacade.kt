@@ -19,7 +19,7 @@ class ResumeFacade(
   private val resumeService: ResumeService,
   private val resumeHistoryService: ResumeHistoryService,
   private val resumeMapper: ResumeMapper,
-  private val authContext: AuthContext<PortfolioAuthor>,
+  private val authContext: AuthContext,
   private val skillMapper: SkillMapper,
   private val skillService: SkillService
 ) {
@@ -28,7 +28,7 @@ class ResumeFacade(
     get() = requireNotNull(authContext.user) { "Authenticated user is required" }
 
   private val currentAuthor
-    get() = requireNotNull(authContext.author) { "Authenticated author is required" }
+    get() = requireNotNull(authContext.author as PortfolioAuthor) { "Authenticated author is required" }
 
   fun getEditDTOById(id: Long): ResumeEditDTO {
     return resumeMapper.mapResumeToEditDTO(resumeService.getResumeById(id, authContext.user))

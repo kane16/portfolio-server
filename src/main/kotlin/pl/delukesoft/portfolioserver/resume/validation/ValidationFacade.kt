@@ -7,7 +7,6 @@ import pl.delukesoft.portfolioserver.platform.exception.InvalidMappingException
 import pl.delukesoft.portfolioserver.resume.ResumeMapper
 import pl.delukesoft.portfolioserver.resume.ResumeService
 import pl.delukesoft.portfolioserver.resume.ResumeValidator
-import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 import pl.delukesoft.portfolioserver.resume.education.Education
 import pl.delukesoft.portfolioserver.resume.education.EducationDTO
 import pl.delukesoft.portfolioserver.resume.experience.Experience
@@ -25,7 +24,7 @@ class ValidationFacade(
   private val resumeService: ResumeService,
   private val resumeValidator: ResumeValidator,
   private val businessValidator: Validator<Business>,
-  private val userContext: AuthContext<PortfolioAuthor>,
+  private val userContext: AuthContext,
   private val validationMapper: ValidationMapper,
   @Qualifier("consecutiveTimeframeValidator") private val experienceTimeframeValidator: TimeframeValidator,
   @Qualifier("lenientTimeframeValidator") private val lenientTimeframeValidator: TimeframeValidator,
