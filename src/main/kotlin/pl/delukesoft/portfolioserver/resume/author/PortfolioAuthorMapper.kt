@@ -1,57 +1,67 @@
 package pl.delukesoft.portfolioserver.resume.author
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import pl.delukesoft.authplugin.author.ApplicationAuthor
 import pl.delukesoft.authplugin.author.Author
 import pl.delukesoft.authplugin.author.AuthorMapper
-import pl.delukesoft.portfolioserver.platform.exception.LoggableResponseStatusException
+import pl.delukesoft.authplugin.security.AuthContext
 
 @Component
 class PortfolioAuthorMapper(
-  val objectMapper: ObjectMapper
-) : AuthorMapper<PortfolioAuthor> {
+  val objectMapper: ObjectMapper,
+  val authContext: AuthContext
+) : AuthorMapper {
 
-  fun mapToApplicationAuthor(author: PortfolioAuthorRequest): PortfolioAuthor {
-    val requestAuthor = requireNotNull(author.author)
-    val additionalInfo = requireNotNull(author.additionalInfo)
+  override fun mapToApplicationAuthor(author: Author): ApplicationAuthor {
+    val additionalInfo = if(author.additionalInfo != null && !author.additionalInfo.isNull)
+      objectMapper.convertValue<PortfolioAuthorAdditionalInfo>(author.additionalInfo)
+    else PortfolioAuthorAdditionalInfo()
+
     return PortfolioAuthor(
-      Author(
-        requestAuthor.id,
-        requireNotNull(requestAuthor.userId),
-        requireNotNull(requestAuthor.firstname),
-        requireNotNull(requestAuthor.lastname),
-        requireNotNull(requestAuthor.username),
-        objectMapper.valueToTree(additionalInfo)
-      ),
-      additionalInfo
+      id = author.id,
+      userId = author.userId,
+      username = author.username,
+      firstname = author.firstname,
+      lastname = author.lastname,
+      additionalInfo = additionalInfo
     )
   }
 
-  override fun mapToApplicationAuthor(author: Author): PortfolioAuthor {
-    try {
-      val additionalInfo =
-        objectMapper.convertValue<PortfolioAuthorAdditionalInfo>(author.additionalInfo)
-      return PortfolioAuthor(
-        author, additionalInfo
-      )
-    } catch (e: IllegalArgumentException) {
-      throw LoggableResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid additional info format")
-    }
-  }
-
-  override fun mapToAuthAuthor(applicationAuthor: PortfolioAuthor): Author {
-    val additionalInfo = objectMapper.convertValue<JsonNode>(applicationAuthor.domainInfo)
+  override fun mapToAuthAuthor(appAuthor: ApplicationAuthor): Author {
     return Author(
-      applicationAuthor.authAuthor.userId,
-      applicationAuthor.authAuthor.id,
-      applicationAuthor.authAuthor.firstname,
-      applicationAuthor.authAuthor.lastname,
-      applicationAuthor.authAuthor.username,
-      additionalInfo
+      appAuthor.authorId,
+      appAuthor.authorUserId,
+      appAuthor.authorFirstname,
+      appAuthor.authorLastname,
+      appAuthor.authorUsername,
+      objectMapper.convertValue(appAuthor.domainInfo)
     )
   }
+
+  fun mapToDto(appAuthor: ApplicationAuthor): PortfolioAuthorDTO {
+    return PortfolioAuthorDTO(
+      appAuthor.authorId,
+      appAuthor.authorUserId,
+      appAuthor.authorFirstname,
+      appAuthor.authorLastname,
+      appAuthor.authorUsername,
+      appAuthor.domainInfo as PortfolioAuthorAdditionalInfo
+    )
+  }
+
+  fun mapFromRequestToDomainAuthor(authorRequest: PortfolioAuthorRequest): PortfolioAuthor {
+    val contextAuthor = authContext.getAuthor()
+    return PortfolioAuthor(
+      id = contextAuthor.authorId,
+      userId = contextAuthor.authorUserId,
+      username = contextAuthor.authorUsername,
+      firstname = contextAuthor.authorFirstname,
+      lastname = contextAuthor.authorLastname,
+      additionalInfo = objectMapper.convertValue(authorRequest.additionalInfo)
+    )
+  }
+
 
 }

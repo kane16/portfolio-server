@@ -14,14 +14,14 @@ import org.springframework.context.annotation.Profile
 import pl.delukesoft.portfolioserver.document.DocumentGenerationService
 import pl.delukesoft.portfolioserver.document.PrintDTO
 import pl.delukesoft.authplugin.author.Author
-import pl.delukesoft.authplugin.author.EditAuthor
 import pl.delukesoft.authplugin.common.AuthClient
+import pl.delukesoft.authplugin.config.external.ExternalServiceProperties
+import pl.delukesoft.authplugin.config.external.ExternalServicesConfiguration
 import pl.delukesoft.authplugin.common.ErrorBody
 import pl.delukesoft.authplugin.common.ErrorResponse
 import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.authplugin.security.JwtService
 import pl.delukesoft.authplugin.security.User
-import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthorAdditionalInfo
 import pl.delukesoft.portfolioserver.resume.skill.domain.SkillDomain
 
@@ -50,7 +50,7 @@ class TestcontainersConfiguration {
   }
 
   @Bean
-  fun mockAuthPlugin(authContext: AuthContext<PortfolioAuthor>): MockAuthPlugin {
+  fun mockAuthPlugin(authContext: AuthContext): MockAuthPlugin {
     return MockAuthPlugin(jsonMapper, authContext)
   }
 
@@ -72,7 +72,7 @@ class TestcontainersConfiguration {
 
 class MockAuthPlugin(
   private val jsonMapper: JsonMapper,
-  private val authContext: AuthContext<PortfolioAuthor>
+  private val authContext: AuthContext
 ) {
   private val users = mapOf(
     "Bearer admin" to User(
@@ -159,9 +159,6 @@ class MockAuthPlugin(
   }
 
   fun reset() {
-    authContext.setUser(null)
-    authContext.setAuthor(null)
-    authContext.setToken(null)
     authors.clear()
     initialAuthors.forEach { (username, author) ->
       authors[username] = copyAuthor(author)
@@ -173,8 +170,15 @@ class MockAuthPlugin(
   }
 
   fun authClient(): AuthClient {
-    return object : AuthClient() {
-      override fun <R : Any?> get(endpoint: String, responseType: Class<R>): R {
+    return object : AuthClient(
+      ExternalServicesConfiguration(
+        ExternalServiceProperties(
+          ExternalServiceProperties.ServiceConnection("auth", null),
+          ExternalServiceProperties.ServiceConnection("backOffice", null)
+        )
+      )
+    ) {
+      override fun <R> get(endpoint: String, responseType: Class<R>): R {
         val response = when (endpoint) {
           "/authors/context?app=portfolio" -> currentAuthor()
           "/authors?app=portfolio", "/authors" -> authors.values.toTypedArray()
@@ -183,11 +187,11 @@ class MockAuthPlugin(
         return responseType.cast(response)
       }
 
-      override fun <T : Any?, R : Any?> patch(endpoint: String, body: T, responseType: Class<R>): R {
+      override fun <T, R> patch(endpoint: String, body: T, responseType: Class<R>): R {
         if (endpoint != "/authors/portfolio") {
           throw ErrorResponse(ErrorBody("Auth endpoint not mocked: $endpoint", 500))
         }
-        val editAuthor = body as? EditAuthor
+        val editAuthor = body as? Author
           ?: throw ErrorResponse(ErrorBody("Unexpected auth request body", 500))
         val username = editAuthor.username() ?: currentUsername()
         val existingAuthor = authors[username] ?: throw ErrorResponse(ErrorBody("Author not found", 404))

@@ -11,7 +11,6 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication
 import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.authplugin.security.AuthRequired
 import pl.delukesoft.authplugin.security.JwtService
-import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 
 @RestController
 @RequestMapping("/pdf")
@@ -19,7 +18,7 @@ import pl.delukesoft.portfolioserver.resume.author.PortfolioAuthor
 class TemplateProcessorController(
   val templateProcessorFacade: TemplateProcessorFacade,
   private val jwtService: JwtService,
-  private val authContext: AuthContext<PortfolioAuthor>
+  private val authContext: AuthContext
 ) {
 
   @AuthRequired(allowAnonymous = true, app = "portfolio")

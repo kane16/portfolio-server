@@ -1,15 +1,34 @@
 package pl.delukesoft.portfolioserver.resume.author
 
 import pl.delukesoft.authplugin.author.ApplicationAuthor
-import pl.delukesoft.authplugin.author.Author
 
 data class PortfolioAuthor(
-  val author: Author,
+  val id: Long,
+  val userId: Long,
+  val username: String,
+  val firstname: String,
+  val lastname: String,
   val additionalInfo: PortfolioAuthorAdditionalInfo
 ) : ApplicationAuthor {
 
-  override fun getAuthAuthor(): Author {
-    return author
+  override fun getAuthorId(): Long? {
+    return id
+  }
+
+  override fun getAuthorUserId(): Long? {
+    return userId
+  }
+
+  override fun getAuthorUsername(): String? {
+    return username
+  }
+
+  override fun getAuthorFirstname(): String? {
+    return firstname
+  }
+
+  override fun getAuthorLastname(): String? {
+    return lastname
   }
 
   override fun getDomainInfo(): PortfolioAuthorAdditionalInfo {
