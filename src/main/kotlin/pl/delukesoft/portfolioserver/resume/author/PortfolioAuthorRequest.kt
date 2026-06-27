@@ -18,11 +18,11 @@ data class AuthorRequest(
   val id: Long?,
   @field:NotNull(message = "Author user ID is required")
   @field:Positive(message = "Author user ID should be positive")
-  val userId: Long?,
+  val userId: Long,
   @field:NotBlank(message = "Author firstname shouldn't be blank")
-  val firstname: String?,
+  val firstname: String,
   @field:NotBlank(message = "Author lastname shouldn't be blank")
-  val lastname: String?,
+  val lastname: String,
   @field:NotBlank(message = "Author username shouldn't be blank")
-  val username: String?
+  val username: String
 )

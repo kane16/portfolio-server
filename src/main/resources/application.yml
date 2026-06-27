@@ -15,11 +15,15 @@ spring:
     proxy-target-class: true
   liquibase:
     enabled: false
-  devtools:
-    livereload:
-      enabled: true
   thymeleaf:
     cache: false
+  web:
+    error:
+      include-message: always
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
 app:
   liquibase:
     enabled: true
@@ -33,13 +37,7 @@ external:
       name: back-office
       url: ${BOS_URL:http://localhost:8000}
 server:
-  error:
-    include-message: always
   port: 9090
-  servlet:
-    encoding:
-      charset: UTF-8
-      force: true
 springdoc:
   api-docs:
     enabled: true
