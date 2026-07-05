@@ -1,11 +1,8 @@
 package pl.delukesoft.portfolioserver.steps
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.cucumber.java.ParameterType
 
 class CucumberParameters {
-
-  private val objectMapper = ObjectMapper()
 
   @ParameterType("should|should not")
   fun should(value: String): Truthy {

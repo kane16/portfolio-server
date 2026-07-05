@@ -1,7 +1,7 @@
 package pl.delukesoft.portfolioserver.resume.author
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.convertValue
+import tools.jackson.databind.ObjectMapper
+import tools.jackson.module.kotlin.convertValue
 import org.springframework.stereotype.Component
 import pl.delukesoft.authplugin.author.ApplicationAuthor
 import pl.delukesoft.authplugin.author.Author
