@@ -1,6 +1,6 @@
 package pl.delukesoft.portfolioserver.resume.skill
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -16,7 +16,7 @@ class SkillControllerTest {
 
   private val skillFacade = mockk<SkillFacade>()
   private val resumeFacade = mockk<ResumeFacade>()
-  private val authorMapper = PortfolioAuthorMapper(ObjectMapper(), mockk<AuthContext>())
+  private val authorMapper = PortfolioAuthorMapper(jacksonObjectMapper(), mockk<AuthContext>())
   private val skillController = SkillController(skillFacade, resumeFacade, authorMapper)
 
   @Test

@@ -1,6 +1,6 @@
 package pl.delukesoft.portfolioserver.resume.author
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -15,7 +15,7 @@ class AuthorControllerTest {
 
   private val authorService = mockk<AuthorService>()
   private val authContext = mockk<AuthContext>()
-  private val authorMapper = PortfolioAuthorMapper(ObjectMapper(), authContext)
+  private val authorMapper = PortfolioAuthorMapper(jacksonObjectMapper(), authContext)
   private val authorController = AuthorController(authorService, authorMapper)
 
   @Test

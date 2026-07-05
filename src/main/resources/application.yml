@@ -4,9 +4,9 @@ spring:
     cache-names: portfolio, constraints
     caffeine:
       spec: initialCapacity=50,maximumSize=500,expireAfterAccess=1d
-  http:
-    converters:
-      preferred-json-mapper: jackson2
+  jackson:
+    deserialization:
+      fail-on-null-for-primitives: false
   application:
     name: portfolio-service
   profiles:
