@@ -75,7 +75,7 @@ class ResumeHistoryService(
 
   fun findVersionByIdAndUsername(portfolioVersion: Long, username: String): ResumeVersion? {
     val resumeHistory = findByUsername(username)
-    return resumeHistory.versions.find { it.version == portfolioVersion }
+    return resumeHistory.versions.find { it.id == portfolioVersion }
   }
 
 }

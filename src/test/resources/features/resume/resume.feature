@@ -368,7 +368,7 @@ Feature: Resume creation
        ]
     }
     """
-    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
+    When "PUT" request is sent to endpoint "/resume/edit/4/publish" with no body
     Then Response status code should be 200
     When "GET" request is sent to endpoint "/resume/history" with no body
     And Response body should be:
@@ -531,7 +531,7 @@ Feature: Resume creation
     }
     """
     Then Response status code should be 200
-    When "PUT" request is sent to endpoint "/resume/edit/1/publish" with no body
+    When "PUT" request is sent to endpoint "/resume/edit/4/publish" with no body
     Then Response status code should be 200
     When "GET" request is sent to endpoint "/resume/history" with no body
     Then Response status code should be 200
