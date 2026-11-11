@@ -103,7 +103,6 @@ tasks.withType<Test> {
   )
 }
 
-// Bean conditions (@Profile, @ConditionalOnProperty) are fixed during AOT; -PaotProfiles=prod builds a prod-only image
 tasks.named<org.springframework.boot.gradle.tasks.aot.ProcessAot>("processAot") {
   providers.gradleProperty("aotProfiles").orNull?.let { args("--spring.profiles.active=$it") }
 }
