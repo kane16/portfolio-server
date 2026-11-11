@@ -29,7 +29,8 @@ RUN chmod +x gradlew && ./gradlew dependencies --no-daemon
 
 COPY src/ src/
 
-RUN ./gradlew nativeCompile --no-daemon -x test
+ARG AOT_PROFILES=""
+RUN ./gradlew nativeCompile --no-daemon -x test ${AOT_PROFILES:+-PaotProfiles=${AOT_PROFILES}}
 
 FROM oraclelinux:9-slim
 

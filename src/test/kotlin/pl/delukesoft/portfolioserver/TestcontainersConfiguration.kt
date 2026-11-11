@@ -8,14 +8,14 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
+import org.springframework.http.HttpStatus
+import org.springframework.web.server.ResponseStatusException
 import pl.delukesoft.portfolioserver.document.DocumentGenerationService
 import pl.delukesoft.portfolioserver.document.PrintDTO
 import pl.delukesoft.authplugin.author.Author
 import pl.delukesoft.authplugin.common.AuthClient
 import pl.delukesoft.authplugin.config.external.ExternalServiceProperties
 import pl.delukesoft.authplugin.config.external.ExternalServicesConfiguration
-import pl.delukesoft.authplugin.common.ErrorBody
-import pl.delukesoft.authplugin.common.ErrorResponse
 import pl.delukesoft.authplugin.security.AuthContext
 import pl.delukesoft.authplugin.security.JwtService
 import pl.delukesoft.authplugin.security.User
@@ -161,7 +161,7 @@ class MockAuthPlugin(
   }
 
   fun userFor(token: String): User {
-    return users[token] ?: throw ErrorResponse(ErrorBody("Invalid JWT Token", 401))
+    return users[token] ?: throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid JWT Token")
   }
 
   fun authClient(): AuthClient {
@@ -177,19 +177,19 @@ class MockAuthPlugin(
         val response = when (endpoint) {
           "/authors/context?app=portfolio" -> currentAuthor()
           "/authors?app=portfolio", "/authors" -> authors.values.toTypedArray()
-          else -> throw ErrorResponse(ErrorBody("Auth endpoint not mocked: $endpoint", 500))
+          else -> throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Auth endpoint not mocked: $endpoint")
         }
         return responseType.cast(response)
       }
 
       override fun <T, R> patch(endpoint: String, body: T, responseType: Class<R>): R {
         if (endpoint != "/authors/portfolio") {
-          throw ErrorResponse(ErrorBody("Auth endpoint not mocked: $endpoint", 500))
+          throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Auth endpoint not mocked: $endpoint")
         }
         val editAuthor = body as? Author
-          ?: throw ErrorResponse(ErrorBody("Unexpected auth request body", 500))
+          ?: throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected auth request body")
         val username = editAuthor.username() ?: currentUsername()
-        val existingAuthor = authors[username] ?: throw ErrorResponse(ErrorBody("Author not found", 404))
+        val existingAuthor = authors[username] ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found")
         val editedAuthor = Author(
           existingAuthor.id(),
           editAuthor.userId() ?: existingAuthor.userId(),
@@ -217,11 +217,11 @@ class MockAuthPlugin(
 
   private fun currentAuthor(): Author {
     val username = currentUsername()
-    return authors[username]?.let(::copyAuthor) ?: throw ErrorResponse(ErrorBody("Author not found", 404))
+    return authors[username]?.let(::copyAuthor) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found")
   }
 
   private fun currentUsername(): String {
-    val token = authContext.token ?: throw ErrorResponse(ErrorBody("Anonymous access is restricted to this endpoint", 401))
+    val token = authContext.token ?: throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "Anonymous access is restricted to this endpoint")
     return token.removePrefix("Bearer ")
   }
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import pl.delukesoft.authplugin.common.ErrorResponse
 import pl.delukesoft.portfolioserver.resume.validation.exception.ValidationFailedException
 import java.time.LocalDateTime
 
@@ -83,16 +82,6 @@ class ErrorAdvisor : ResponseEntityExceptionHandler() {
       Pair("status", exc.statusCode.value())
     )
     return ResponseEntity(body, exc.statusCode)
-  }
-
-  @ExceptionHandler(ErrorResponse::class)
-  fun handleAuthPluginError(exc: ErrorResponse, response: WebRequest): ResponseEntity<Any> {
-    val authResponse = exc.response
-    val body = mapOf<String, Any>(
-      Pair("message", authResponse.message()),
-      Pair("status", authResponse.status())
-    )
-    return ResponseEntity(body, HttpStatusCode.valueOf(authResponse.status()))
   }
 
   @ExceptionHandler(ValidationFailedException::class)

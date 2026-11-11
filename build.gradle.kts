@@ -64,7 +64,7 @@ repositories {
 }
 
 dependencies {
-  implementation("pl.delukesoft:authplugin:1.2")
+  implementation("pl.delukesoft:authplugin:2.0")
   implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
   implementation("org.liquibase:liquibase-core:${Versions.liquibase}")
   implementation("org.liquibase.ext:liquibase-mongodb:${Versions.liquibase}")
@@ -101,6 +101,10 @@ tasks.withType<Test> {
   jvmArgs(
     "--add-opens", "java.base/java.lang=ALL-UNNAMED",
   )
+}
+
+tasks.named<org.springframework.boot.gradle.tasks.aot.ProcessAot>("processAot") {
+  providers.gradleProperty("aotProfiles").orNull?.let { args("--spring.profiles.active=$it") }
 }
 
 tasks.named("processTestAot") {
